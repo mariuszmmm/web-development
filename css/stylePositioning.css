@@ -1,0 +1,73 @@
+.contentPositioning {
+   color: white;
+   position: relative;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.labelPositioning {
+   position: absolute;
+   left: 5px;
+   top: 5px;
+}
+
+.topPositioning {
+   position: absolute;
+   top: 5px;
+   left: 50%;
+   transform: translateX(-50%)
+}
+
+.leftPositioning {
+   position: absolute;
+   left: 5px;
+   top: 50%;
+   transform: translateY(-50%)
+}
+
+.rightPositioning {
+   position: absolute;
+   right: 5px;
+   top: 50%;
+   transform: translateY(-50%)
+}
+
+.bottomPositioning {
+   position: absolute;
+   bottom: 5px;
+   left: 50%;
+   transform: translateX(-50%)
+}
+
+.centerPositioning {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%)
+}
+
+.paternPositioning {
+   position: relative;
+   border: 2px dashed white;
+   width: 80%;
+   height: 80%;
+   transition: 0.5s;
+}
+
+.childPositioning {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: black;
+   font-weight: bold;
+   position: absolute;
+   background-color: #32fa64;
+   border-radius: 10px;
+   width: 100px;
+   height: 100px;
+   transition: 0.5s;
+}
