@@ -7,9 +7,9 @@
          { name: "left", type: "side", active: false },
       ];
       let sideValue = [
-         { name: "auto", type: "sideValue", active: false },
-         { name: "50px", type: "sideValue", active: false },
-         { name: "-50px", type: "sideValue", active: false },
+         { name: "auto", type: "sideValue", active: true },
+         { name: "30px", type: "sideValue", active: false },
+         { name: "-30px", type: "sideValue", active: false },
          { name: "50%", type: "sideValue", active: false },
          { name: "-50%", type: "sideValue", active: false },
          { name: "100%", type: "sideValue", active: false },
@@ -20,7 +20,7 @@
          { name: "transform", type: "transform", active: false },
       ];
       let transformValue = [
-         { name: "none", type: "transformValue", active: false },
+         { name: "none", type: "transformValue", active: true },
          { name: "translate(50px, 100px)", type: "transformValue", active: false },
          { name: "scale(2, 2)", type: "transformValue", active: false },
          { name: "rotate(45deg)", type: "transformValue", active: false },
@@ -29,7 +29,7 @@
          { name: "position", type: "position", active: false },
       ];
       let positionValue = [
-         { name: "static", type: "positionValue", active: false },
+         { name: "static", type: "positionValue", active: true },
          { name: "relative", type: "positionValue", active: false },
          { name: "absolute", type: "positionValue", active: false },
          { name: "fixed", type: "positionValue", active: false },
@@ -57,10 +57,10 @@
          </div>
          <div class="contentsButtons">
             <div class="propertieButtons">
-               ${renderButtons(position)} :
+               ${renderButtons(side)} :
             </div>
             <div class="valueButtons">
-               ${renderButtons(positionValue)}
+               ${renderButtons(sideValue)}
             </div>
             <div class="propertieButtons">
                ${renderButtons(transform)} :
@@ -69,10 +69,10 @@
                ${renderButtons(transformValue)}
             </div>
             <div class="propertieButtons">
-               ${renderButtons(side)} :
+               ${renderButtons(position)} :
             </div>
             <div class="valueButtons">
-               ${renderButtons(sideValue)}
+               ${renderButtons(positionValue)}
             </div>
          </div>     
          `;
@@ -88,29 +88,31 @@
          let labelElement = "";
 
          labelElement += `
-            <div class="styleContents">patern{</div>
+            <div class="styleContents">parent{</div>
             <div class="styleContent">
-               position : relative;
+               <p>  position: relative; </p>
+               <p>  border: 3px dashed white; </p>
+               <p>  background: purple; </p>
             </div>
             <div class="styleContents">}</div>
                &nbsp
             <div class="styleContents">child{</div>
             <div class="styleContent">
-               <div>
-                  ${(positionActive === undefined) ? "&nbsp" : (positionActive.name)}
-                  : 
-                  ${(positionValueActive === undefined) ? "&nbsp" : (positionValueActive.name)};
-               </div> 
-               <div>
-                  ${(transformActive === undefined) ? "&nbsp" : (transformActive.name)}
-                  : 
-                  ${(transformValueActive === undefined) ? "&nbsp" : (transformValueActive.name)};
-               </div>
-               <div>
+               <p>
                   ${(sideActive === undefined) ? "&nbsp" : (sideActive.name)}
                   : 
                   ${(sideValuesActive === undefined) ? "&nbsp" : (sideValuesActive.name)};
-               </div>
+               </p>
+               <p>
+                  ${(transformActive === undefined) ? "&nbsp" : (transformActive.name)}
+                  : 
+                  ${(transformValueActive === undefined) ? "&nbsp" : (transformValueActive.name)};
+               </p>
+               <p>
+                  ${(positionActive === undefined) ? "&nbsp" : (positionActive.name)}
+                  : 
+                  ${(positionValueActive === undefined) ? "&nbsp" : (positionValueActive.name)};
+               </p> 
             </div>
             <div class="styleContents">}</div>
          `;
@@ -258,9 +260,10 @@
             <div class="leftPositioning">LEFT</div>
             <div class="rightPositioning">RIGHT</div>
             <div class="bottomPositioning">BOTTOM</div>
-            <div class="centerPositioning">Patern</div>
-            <div class="paternPositioning">
-               <div class="childPositioning js-child">Child</div>
+            <div class="centerPositioning">parent</div>
+            <div class="parentPositioning">
+               <p class="childPositioning js-child">child</p>
+               <p class="childPositioning--default">child with default settings</p>
             </div>
          </div>
          `;
