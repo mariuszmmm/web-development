@@ -7,38 +7,40 @@
    flex-direction: column;
    justify-content: center;
    align-items: center;
+   background-color: black;
+   border-radius: 10px;
 }
 
 .labelPositioning {
    position: absolute;
-   left: 5px;
-   top: 5px;
+   left: 10px;
+   top: 10px;
 }
 
 .topPositioning {
    position: absolute;
-   top: 5px;
+   top: 10px;
    left: 50%;
    transform: translateX(-50%)
 }
 
 .leftPositioning {
    position: absolute;
-   left: 5px;
+   left: 10px;
    top: 50%;
    transform: translateY(-50%)
 }
 
 .rightPositioning {
    position: absolute;
-   right: 5px;
+   right: 10px;
    top: 50%;
    transform: translateY(-50%)
 }
 
 .bottomPositioning {
    position: absolute;
-   bottom: 5px;
+   bottom: 10px;
    left: 50%;
    transform: translateX(-50%)
 }
@@ -52,7 +54,7 @@
 
 .paternPositioning {
    position: relative;
-   border: 2px dashed white;
+   border: 3px dashed white;
    width: 80%;
    height: 80%;
    transition: 0.5s;
