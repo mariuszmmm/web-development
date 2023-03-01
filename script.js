@@ -220,15 +220,15 @@
          const topButtonElement = document.querySelector(".js-topButton");
 
          topButtonElement.addEventListener("click", () => {
-            topButtonToggle();
+            top = buttonPropertyToggle(top);
+            render();
          });
       };
 
-      const topButtonToggle = () => {
-         top = top.map((prop) =>
+      const buttonPropertyToggle = (buttonProperty) => {
+         return buttonProperty.map((prop) =>
             ({ ...prop, active: !prop.active })
          );
-         render();
       };
 
       const bindTopValueButtons = () => {
@@ -236,35 +236,30 @@
 
          topValueButtonElements.forEach((button) => {
             button.addEventListener("click", () => {
-               topValueButtonToggle(button);
+               topValue = buttonValueToggle(button, topValue);
+               render();
             });
          });
       };
 
-      const topValueButtonToggle = (button) => {
-         topValue = topValue.map((prop) =>
+      const buttonValueToggle = (button, buttonsValues) => {
+         return buttonsValues.map((prop) =>
             (prop.name === button.innerText)
                ?
                { ...prop, active: true }
                :
                { ...prop, active: false }
          );
-         render();
+      
       };
 
       const bindRightButton = () => {
          const rightButtonElement = document.querySelector(".js-rightButton");
 
          rightButtonElement.addEventListener("click", () => {
-            rightButtonToggle();
+            right = buttonPropertyToggle(right);
+            render();
          });
-      };
-
-      const rightButtonToggle = () => {
-         right = right.map((prop) =>
-            ({ ...prop, active: !prop.active })
-         );
-         render();
       };
 
       const bindRightValueButtons = () => {
@@ -272,35 +267,19 @@
 
          rightValueButtonElements.forEach((button) => {
             button.addEventListener("click", () => {
-               rightValueButtonToggle(button);
+               rightValue = buttonValueToggle(button, rightValue);
+               render();
             });
          });
-      };
-
-      const rightValueButtonToggle = (button) => {
-         rightValue = rightValue.map((prop) =>
-            (prop.name === button.innerText)
-               ?
-               { ...prop, active: true }
-               :
-               { ...prop, active: false }
-         );
-         render();
       };
 
       const bindBottomButton = () => {
          const bottomButtonElement = document.querySelector(".js-bottomButton");
 
          bottomButtonElement.addEventListener("click", () => {
-            bottomButtonToggle();
+            bottom = buttonPropertyToggle(bottom);
+            render();
          });
-      };
-
-      const bottomButtonToggle = () => {
-         bottom = bottom.map((prop) =>
-            ({ ...prop, active: !prop.active })
-         );
-         render();
       };
 
       const bindBottomValueButtons = () => {
@@ -308,35 +287,19 @@
 
          bottomValueButtonElements.forEach((button) => {
             button.addEventListener("click", () => {
-               bottomValueButtonToggle(button);
+               bottomValue = buttonValueToggle(button, bottomValue);
+               render();
             });
          });
-      };
-
-      const bottomValueButtonToggle = (button) => {
-         bottomValue = bottomValue.map((prop) =>
-            (prop.name === button.innerText)
-               ?
-               { ...prop, active: true }
-               :
-               { ...prop, active: false }
-         );
-         render();
       };
 
       const bindLeftButton = () => {
          const leftButtonElement = document.querySelector(".js-leftButton");
 
          leftButtonElement.addEventListener("click", () => {
-            leftButtonToggle();
+            left = buttonPropertyToggle(left);
+            render();
          });
-      };
-
-      const leftButtonToggle = () => {
-         left = left.map((prop) =>
-            ({ ...prop, active: !prop.active })
-         );
-         render();
       };
 
       const bindLeftValueButtons = () => {
@@ -344,35 +307,19 @@
 
          leftValueButtonElements.forEach((button) => {
             button.addEventListener("click", () => {
-               leftValueButtonToggle(button);
+               leftValue = buttonValueToggle(button, leftValue);
+               render();
             });
          });
-      };
-
-      const leftValueButtonToggle = (button) => {
-         leftValue = leftValue.map((prop) =>
-            (prop.name === button.innerText)
-               ?
-               { ...prop, active: true }
-               :
-               { ...prop, active: false }
-         );
-         render();
       };
 
       const bindTransformButton = () => {
          const transformButtonElement = document.querySelector(".js-transformButton");
 
          transformButtonElement.addEventListener("click", () => {
-            transformButtonToggle();
+            transform = buttonPropertyToggle(transform);
+            render();
          });
-      };
-
-      const transformButtonToggle = () => {
-         transform = transform.map((prop) =>
-            ({ ...prop, active: !prop.active })
-         );
-         render();
       };
 
       const bindTransformValueButtons = () => {
@@ -380,35 +327,19 @@
 
          transformValueButtonElements.forEach((button) => {
             button.addEventListener("click", () => {
-               transformValueButtonToggle(button);
+               transformValue = buttonValueToggle(button, transformValue);
+               render();
             });
          });
-      };
-
-      const transformValueButtonToggle = (button) => {
-         transformValue = transformValue.map((prop) =>
-            (prop.name === button.innerText)
-               ?
-               { ...prop, active: true }
-               :
-               { ...prop, active: false }
-         );
-         render();
       };
 
       const bindPositionButton = () => {
          const positionButtonElement = document.querySelector(".js-positionButton");
 
          positionButtonElement.addEventListener("click", () => {
-            positionButtonToggle();
+            position = buttonPropertyToggle(position);
+            render();
          });
-      };
-
-      const positionButtonToggle = () => {
-         position = position.map((prop) =>
-            ({ ...prop, active: !prop.active })
-         );
-         render();
       };
 
       const bindPositionValueButtons = () => {
@@ -416,20 +347,10 @@
 
          positionValueButtonElements.forEach((button) => {
             button.addEventListener("click", () => {
-               positionValueButtonToggle(button);
+               positionValue = buttonValueToggle(button, positionValue);
+               render();
             });
          });
-      };
-
-      const positionValueButtonToggle = (button) => {
-         positionValue = positionValue.map((prop) =>
-            (prop.name === button.innerText)
-               ?
-               { ...prop, active: true }
-               :
-               { ...prop, active: false }
-         );
-         render();
       };
 
       const renderContents = () => {
