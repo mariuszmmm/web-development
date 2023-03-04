@@ -19,13 +19,6 @@
          };
       });
 
-      const render = () => {
-         renderSettings();
-         renderContents();
-         bindPropertyButtons();
-         bindValueButtons();
-      };
-
       const renderSettings = () => {
          const setingsElement = document.querySelector(".js-setings");
 
@@ -112,6 +105,39 @@
          return propsElements
       };
 
+      const renderContents = () => {
+         const contentsElement = document.querySelector(".js-contents");
+
+         contentsElement.innerHTML = "";
+         contentsElement.innerHTML += `
+         <div class="contentPositioning">
+            <div class="labelPositioning">OUTPUT :</div>
+            <div class="topPositioning">TOP</div>
+            <div class="leftPositioning">LEFT</div>
+            <div class="rightPositioning">RIGHT</div>
+            <div class="bottomPositioning">BOTTOM</div>
+            <div class="centerPositioning">parent</div>
+            <div class="parentPositioning">
+               <p class="childPositioning js-child">child</p>
+               <p class="childPositioning--default">child with default settings</p>
+            </div>
+         </div>
+         `;
+
+         styles();
+      };
+
+      const styles = () => {
+         const childStyles = document.querySelector(".childPositioning");
+
+         buttonsObjects.forEach((buttons) => {
+            const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
+            const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
+            childStyles.style[
+               ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
+         });
+      };
+
       const bindPropertyButtons = () => {
          const buttonPropertyElements = document.querySelectorAll(".js-propertyButton");
 
@@ -163,37 +189,11 @@
          });
       };
 
-      const renderContents = () => {
-         const contentsElement = document.querySelector(".js-contents");
-
-         contentsElement.innerHTML = "";
-         contentsElement.innerHTML += `
-         <div class="contentPositioning">
-            <div class="labelPositioning">OUTPUT :</div>
-            <div class="topPositioning">TOP</div>
-            <div class="leftPositioning">LEFT</div>
-            <div class="rightPositioning">RIGHT</div>
-            <div class="bottomPositioning">BOTTOM</div>
-            <div class="centerPositioning">parent</div>
-            <div class="parentPositioning">
-               <p class="childPositioning js-child">child</p>
-               <p class="childPositioning--default">child with default settings</p>
-            </div>
-         </div>
-         `;
-
-         addStyles();
-      };
-
-      const addStyles = () => {
-         const childStyles = document.querySelector(".childPositioning");
-
-         buttonsObjects.forEach((buttons) => {
-            const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
-            const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
-            childStyles.style[
-               ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
-         });
+      const render = () => {
+         renderSettings();
+         renderContents();
+         bindPropertyButtons();
+         bindValueButtons();
       };
 
       const init = () => {
