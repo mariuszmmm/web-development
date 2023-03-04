@@ -190,10 +190,9 @@
 
          buttonsObjects.forEach((buttons) => {
             const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
-
             const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
-
-            childStyles.style[activeProperties.name] = activeValuesProperties.name;
+            childStyles.style[
+               ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
          });
       };
 
