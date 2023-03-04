@@ -1,92 +1,29 @@
 {
    const parametrs = () => {
-      let top = [
-         { name: "top", type: "top", active: true },
+
+      let buttonsObjectsRaw = [
+         { properties: ["top"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
+         { properties: ["right"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
+         { properties: ["bottom"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
+         { properties: ["left"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
+         { properties: ["transform"], propertiesValues: ["none", "translate(50px, 100px)", "scale(2, 2)", "rotate(45deg)"] },
+         { properties: ["position"], propertiesValues: ["static", "relative", "absolute", "fixed", "sticky"] },
       ];
-      let topValue = [
-         { name: "auto", type: "topValue", active: true },
-         { name: "30px", type: "topValue", active: false },
-         { name: "-30px", type: "topValue", active: false },
-         { name: "50%", type: "topValue", active: false },
-         { name: "-50%", type: "topValue", active: false },
-         { name: "100%", type: "topValue", active: false },
-         { name: "-100%", type: "topValue", active: false },
-         { name: "0", type: "topValue", active: false },
-      ];
-      let right = [
-         { name: "right", type: "right", active: true },
-      ];
-      let rightValue = [
-         { name: "auto", type: "rightValue", active: true },
-         { name: "30px", type: "rightValue", active: false },
-         { name: "-30px", type: "rightValue", active: false },
-         { name: "50%", type: "rightValue", active: false },
-         { name: "-50%", type: "rightValue", active: false },
-         { name: "100%", type: "rightValue", active: false },
-         { name: "-100%", type: "rightValue", active: false },
-         { name: "0", type: "rightValue", active: false },
-      ];
-      let bottom = [
-         { name: "bottom", type: "bottom", active: true },
-      ];
-      let bottomValue = [
-         { name: "auto", type: "bottomValue", active: true },
-         { name: "30px", type: "bottomValue", active: false },
-         { name: "-30px", type: "bottomValue", active: false },
-         { name: "50%", type: "bottomValue", active: false },
-         { name: "-50%", type: "bottomValue", active: false },
-         { name: "100%", type: "bottomValue", active: false },
-         { name: "-100%", type: "bottomValue", active: false },
-         { name: "0", type: "bottomValue", active: false },
-      ];
-      let left = [
-         { name: "left", type: "left", active: true },
-      ];
-      let leftValue = [
-         { name: "auto", type: "leftValue", active: true },
-         { name: "30px", type: "leftValue", active: false },
-         { name: "-30px", type: "leftValue", active: false },
-         { name: "50%", type: "leftValue", active: false },
-         { name: "-50%", type: "leftValue", active: false },
-         { name: "100%", type: "leftValue", active: false },
-         { name: "-100%", type: "leftValue", active: false },
-         { name: "0", type: "leftValue", active: false },
-      ];
-      let transform = [
-         { name: "transform", type: "transform", active: true },
-      ];
-      let transformValue = [
-         { name: "none", type: "transformValue", active: true },
-         { name: "translate(50px, 100px)", type: "transformValue", active: false },
-         { name: "scale(2, 2)", type: "transformValue", active: false },
-         { name: "rotate(45deg)", type: "transformValue", active: false },
-      ];
-      let position = [
-         { name: "position", type: "position", active: true },
-      ];
-      let positionValue = [
-         { name: "static", type: "positionValue", active: true },
-         { name: "relative", type: "positionValue", active: false },
-         { name: "absolute", type: "positionValue", active: false },
-         { name: "fixed", type: "positionValue", active: false },
-         { name: "sticky", type: "positionValue", active: false },
-      ];
+
+      let buttonsObjects = buttonsObjectsRaw.map((obj) => {
+         return {
+            properties: [{ name: obj.properties[0], active: true }],
+            propertiesValues: obj.propertiesValues.map((val, index) => {
+               return { name: val, active: index === 0 }
+            }),
+         };
+      });
 
       const render = () => {
          renderSettings();
          renderContents();
-         bindTopButton();
-         bindTopValueButtons();
-         bindRightButton();
-         bindRightValueButtons();
-         bindBottomButton();
-         bindBottomValueButtons();
-         bindLeftButton();
-         bindLeftValueButtons();
-         bindTransformButton();
-         bindTransformValueButtons();
-         bindPositionButton();
-         bindPositionValueButtons();
+         bindPropertyButtons();
+         bindValueButtons();
       };
 
       const renderSettings = () => {
@@ -95,63 +32,40 @@
          setingsElement.innerHTML = "";
          setingsElement.innerHTML += `
          <div class="labelSetings">
-            ${renderLabelSettings()}
+         ${settingsLabelContainer()}
          </div>
-         <div class="contentsButtons">
-            <div class="propertieButtons">
-               ${renderButtons(position)} :
-            </div>
-            <div class="valueButtons">
-               ${renderButtons(positionValue)}
-            </div>
-            <div class="propertieButtons">
-               ${renderButtons(top)} :
-            </div>
-            <div class="valueButtons">
-               ${renderButtons(topValue)}
-            </div>
-            <div class="propertieButtons">
-               ${renderButtons(right)} :
-            </div>
-            <div class="valueButtons">
-               ${renderButtons(rightValue)}
-            </div>
-            <div class="propertieButtons">
-               ${renderButtons(bottom)} :
-            </div>
-            <div class="valueButtons">
-               ${renderButtons(bottomValue)}
-            </div>
-            <div class="propertieButtons">
-               ${renderButtons(left)} :
-            </div>
-            <div class="valueButtons">
-               ${renderButtons(leftValue)}
-            </div>
-            <div class="propertieButtons">
-               ${renderButtons(transform)} :
-            </div>
-            <div class="valueButtons">
-               ${renderButtons(transformValue)}
-            </div>
-         </div>     
+         ${buttonsContainer()}
          `;
       };
 
-      const renderLabelSettings = () => {
-         const topActive = top.find((prop) => prop.active === true);
-         const topValuesActive = topValue.find((prop) => prop.active === true);
-         const rightActive = right.find((prop) => prop.active === true);
-         const rightValuesActive = rightValue.find((prop) => prop.active === true);
-         const bottomActive = bottom.find((prop) => prop.active === true);
-         const bottomValuesActive = bottomValue.find((prop) => prop.active === true);
-         const leftActive = left.find((prop) => prop.active === true);
-         const leftValuesActive = leftValue.find((prop) => prop.active === true);
-         const transformActive = transform.find((prop) => prop.active === true);
-         const transformValueActive = transformValue.find((prop) => prop.active === true);
-         const positionActive = position.find((prop) => prop.active === true);
-         const positionValueActive = positionValue.find((prop) => prop.active === true);
+      const settingsLabelContainer = () => {
          let labelElement = "";
+
+         const labelProperties = () => {
+            let labelElement = "";
+            buttonsObjects.forEach((buttons) => {
+               const active = (buttons.properties.find((buttons) => buttons.active === true))
+
+               buttons.properties.forEach((prop) => {
+                  if (prop.active) {
+                     labelElement += ` <p>
+               ${prop.active ? prop.name : ""} `
+                     const a = prop.active ? prop.name : "";
+                  }
+               })
+               if (active !== undefined) {
+                  buttons.propertiesValues.forEach((prop) => {
+
+                     if (prop.active) {
+                        labelElement += ` :
+               ${prop.active ? prop.name : ""} </p>`
+                        const b = prop.active ? prop.name : "";
+                     }
+                  })
+               }
+            })
+            return labelElement;
+         };
 
          labelElement += `
             <div class="styleContents">.parent{</div>
@@ -164,36 +78,7 @@
                &nbsp
             <div class="styleContents">.child{</div>
             <div class="styleContent">
-               <p>
-                  ${(positionActive === undefined) ? "&nbsp" : (positionActive.name)}
-                  : 
-                  ${(positionValueActive === undefined) ? "&nbsp" : (positionValueActive.name)};
-               </p> 
-               <p>
-                  ${(topActive === undefined) ? "&nbsp" : (topActive.name)}
-                  : 
-                  ${(topValuesActive === undefined) ? "&nbsp" : (topValuesActive.name)};
-               </p>
-               <p>
-                  ${(rightActive === undefined) ? "&nbsp" : (rightActive.name)}
-                  : 
-                  ${(rightValuesActive === undefined) ? "&nbsp" : (rightValuesActive.name)};
-               </p>
-               <p>
-                  ${(bottomActive === undefined) ? "&nbsp" : (bottomActive.name)}
-                  : 
-                  ${(bottomValuesActive === undefined) ? "&nbsp" : (bottomValuesActive.name)};
-               </p>
-               <p>
-                  ${(leftActive === undefined) ? "&nbsp" : (leftActive.name)}
-                  : 
-                  ${(leftValuesActive === undefined) ? "&nbsp" : (leftValuesActive.name)};
-               </p>
-               <p>
-                  ${(transformActive === undefined) ? "&nbsp" : (transformActive.name)}
-                  : 
-                  ${(transformValueActive === undefined) ? "&nbsp" : (transformValueActive.name)};
-               </p>
+         ${labelProperties()}
             </div>
             <div class="styleContents">}</div>
          `;
@@ -201,155 +86,80 @@
          return labelElement;
       };
 
-      const renderButtons = (props) => {
+      const buttonsContainer = () => {
          let propsElements = "";
 
-         props.forEach((prop) => {
-            propsElements +=
-               `<button class="button ${(prop.active) ? "button--active" : ""} 
-                  js-${prop.type}Button">
-                  ${prop.name}
+         propsElements += `<div class="contentsButtons">`
+         buttonsObjects.forEach((object) => {
+            property = object.properties[0];
+            propsElements += `<div class="propertyButtons">
+               <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
+                  ${property.name}
                </button>
-               `;
+               </div>
+               <div class="valueButtons"> &nbsp : `
+            object.propertiesValues.forEach((obj) => {
+               propsElements += `
+               <button class="button ${(obj.active) ? "button--active" : ""} js-${property.name}ValueButton">
+                  ${obj.name}
+               </button>
+            `;
+            })
+            propsElements += `</div>`
          });
+         propsElements += `</div>`
 
-         return propsElements;
+         return propsElements
       };
 
-      const bindTopButton = () => {
-         const topButtonElement = document.querySelector(".js-topButton");
+      const bindPropertyButtons = () => {
+         const buttonPropertyElements = document.querySelectorAll(".js-propertyButton");
 
-         topButtonElement.addEventListener("click", () => {
-            top = buttonPropertyToggle(top);
-            render();
-         });
-      };
-
-      const buttonPropertyToggle = (buttonProperty) => {
-         return buttonProperty.map((prop) =>
-            ({ ...prop, active: !prop.active })
-         );
-      };
-
-      const bindTopValueButtons = () => {
-         const topValueButtonElements = document.querySelectorAll(".js-topValueButton");
-
-         topValueButtonElements.forEach((button) => {
+         buttonPropertyElements.forEach((button) => {
             button.addEventListener("click", () => {
-               topValue = buttonValueToggle(button, topValue);
+               activeValue = buttonPropertyToggle(button);
                render();
             });
          });
       };
 
-      const buttonValueToggle = (button, buttonsValues) => {
-         return buttonsValues.map((prop) =>
-            (prop.name === button.innerText)
-               ?
-               { ...prop, active: true }
-               :
-               { ...prop, active: false }
-         );
-      
+      const buttonPropertyToggle = (button) => {
+         buttonsObjects.forEach((buttonsObject, index) => {
+            buttonsObject.properties.forEach(prop => {
+               if (prop.name === button.innerText) {
+                  prop.active = !prop.active;
+               }
+            });
+         })
       };
 
-      const bindRightButton = () => {
-         const rightButtonElement = document.querySelector(".js-rightButton");
+      const bindValueButtons = () => {
+         const buttonElements = [
+            { selector: ".js-topValueButton", value: 0 },
+            { selector: ".js-rightValueButton", value: 1 },
+            { selector: ".js-bottomValueButton", value: 2 },
+            { selector: ".js-leftValueButton", value: 3 },
+            { selector: ".js-transformValueButton", value: 4 },
+            { selector: ".js-positionValueButton", value: 5 },
+         ];
 
-         rightButtonElement.addEventListener("click", () => {
-            right = buttonPropertyToggle(right);
-            render();
-         });
-      };
+         buttonElements.forEach((button) => {
+            const buttonValueElements = document.querySelectorAll(button.selector);
 
-      const bindRightValueButtons = () => {
-         const rightValueButtonElements = document.querySelectorAll(".js-rightValueButton");
-
-         rightValueButtonElements.forEach((button) => {
-            button.addEventListener("click", () => {
-               rightValue = buttonValueToggle(button, rightValue);
-               render();
+            buttonValueElements.forEach((buttonValue) => {
+               buttonValue.addEventListener("click", () => {
+                  activeValue = buttonValueToggle(buttonValue, button.value);
+                  render();
+               });
             });
          });
       };
 
-      const bindBottomButton = () => {
-         const bottomButtonElement = document.querySelector(".js-bottomButton");
-
-         bottomButtonElement.addEventListener("click", () => {
-            bottom = buttonPropertyToggle(bottom);
-            render();
-         });
-      };
-
-      const bindBottomValueButtons = () => {
-         const bottomValueButtonElements = document.querySelectorAll(".js-bottomValueButton");
-
-         bottomValueButtonElements.forEach((button) => {
-            button.addEventListener("click", () => {
-               bottomValue = buttonValueToggle(button, bottomValue);
-               render();
-            });
-         });
-      };
-
-      const bindLeftButton = () => {
-         const leftButtonElement = document.querySelector(".js-leftButton");
-
-         leftButtonElement.addEventListener("click", () => {
-            left = buttonPropertyToggle(left);
-            render();
-         });
-      };
-
-      const bindLeftValueButtons = () => {
-         const leftValueButtonElements = document.querySelectorAll(".js-leftValueButton");
-
-         leftValueButtonElements.forEach((button) => {
-            button.addEventListener("click", () => {
-               leftValue = buttonValueToggle(button, leftValue);
-               render();
-            });
-         });
-      };
-
-      const bindTransformButton = () => {
-         const transformButtonElement = document.querySelector(".js-transformButton");
-
-         transformButtonElement.addEventListener("click", () => {
-            transform = buttonPropertyToggle(transform);
-            render();
-         });
-      };
-
-      const bindTransformValueButtons = () => {
-         const transformValueButtonElements = document.querySelectorAll(".js-transformValueButton");
-
-         transformValueButtonElements.forEach((button) => {
-            button.addEventListener("click", () => {
-               transformValue = buttonValueToggle(button, transformValue);
-               render();
-            });
-         });
-      };
-
-      const bindPositionButton = () => {
-         const positionButtonElement = document.querySelector(".js-positionButton");
-
-         positionButtonElement.addEventListener("click", () => {
-            position = buttonPropertyToggle(position);
-            render();
-         });
-      };
-
-      const bindPositionValueButtons = () => {
-         const positionValueButtonElements = document.querySelectorAll(".js-positionValueButton");
-
-         positionValueButtonElements.forEach((button) => {
-            button.addEventListener("click", () => {
-               positionValue = buttonValueToggle(button, positionValue);
-               render();
-            });
+      const buttonValueToggle = (button, index) => {
+         buttonsObjects[index].propertiesValues.forEach(prop => {
+            if (prop.name === button.innerText) {
+               prop.active = true;
+            } else { prop.active = false }
          });
       };
 
@@ -371,42 +181,20 @@
             </div>
          </div>
          `;
+
          addStyles();
       };
 
       const addStyles = () => {
          const childStyles = document.querySelector(".childPositioning");
-         const topActive = top.find((prop) => prop.active === true);
-         const topValueActive = topValue.find((prop) => prop.active === true);
-         const rightActive = right.find((prop) => prop.active === true);
-         const rightValueActive = rightValue.find((prop) => prop.active === true);
-         const bottomActive = bottom.find((prop) => prop.active === true);
-         const bottomValueActive = bottomValue.find((prop) => prop.active === true);
-         const leftActive = left.find((prop) => prop.active === true);
-         const leftValueActive = leftValue.find((prop) => prop.active === true);
-         const transformActive = transform.find((prop) => prop.active === true);
-         const ptransformValueActive = transformValue.find((prop) => prop.active === true);
-         const positionActive = position.find((prop) => prop.active === true);
-         const positionValueActive = positionValue.find((prop) => prop.active === true);
-         const topStyle = topActive === undefined ? null : topActive.name;
-         const topValueStyle = topValueActive === undefined ? null : topValueActive.name;
-         const rightStyle = rightActive === undefined ? null : rightActive.name;
-         const rightValueStyle = rightValueActive === undefined ? null : rightValueActive.name;
-         const bottomStyle = bottomActive === undefined ? null : bottomActive.name;
-         const bottomValueStyle = bottomValueActive === undefined ? null : bottomValueActive.name;
-         const leftStyle = leftActive === undefined ? null : leftActive.name;
-         const leftValueStyle = leftValueActive === undefined ? null : leftValueActive.name;
-         const transformStyle = transformActive === undefined ? null : transformActive.name;
-         const transformValueStyle = ptransformValueActive === undefined ? null : ptransformValueActive.name;
-         const positionStyle = positionActive === undefined ? null : positionActive.name;
-         const positionValueStyle = positionValueActive === undefined ? null : positionValueActive.name;
 
-         childStyles.style[topStyle] = topValueStyle;
-         childStyles.style[rightStyle] = rightValueStyle;
-         childStyles.style[bottomStyle] = bottomValueStyle;
-         childStyles.style[leftStyle] = leftValueStyle;
-         childStyles.style[transformStyle] = transformValueStyle;
-         childStyles.style[positionStyle] = positionValueStyle;
+         buttonsObjects.forEach((buttons) => {
+            const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
+
+            const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
+
+            childStyles.style[activeProperties.name] = activeValuesProperties.name;
+         });
       };
 
       const init = () => {
@@ -415,6 +203,7 @@
          positioningElement.addEventListener("click", () => {
             render();
             positioningElement.classList.add("button--active")
+
          })
       };
 
