@@ -2,12 +2,12 @@
    const parametrs = () => {
 
       let buttonsObjectsRaw = [
+         { properties: ["position"], propertiesValues: ["static", "relative", "absolute", "fixed", "sticky"] },
          { properties: ["top"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
          { properties: ["right"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
          { properties: ["bottom"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
          { properties: ["left"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
          { properties: ["transform"], propertiesValues: ["none", "translate(50px, 100px)", "scale(2, 2)", "rotate(45deg)"] },
-         { properties: ["position"], propertiesValues: ["static", "relative", "absolute", "fixed", "sticky"] },
       ];
 
       let buttonsObjects = buttonsObjectsRaw.map((obj) => {
@@ -135,12 +135,12 @@
 
       const bindValueButtons = () => {
          const buttonElements = [
-            { selector: ".js-topValueButton", value: 0 },
-            { selector: ".js-rightValueButton", value: 1 },
-            { selector: ".js-bottomValueButton", value: 2 },
-            { selector: ".js-leftValueButton", value: 3 },
-            { selector: ".js-transformValueButton", value: 4 },
-            { selector: ".js-positionValueButton", value: 5 },
+            { selector: ".js-positionValueButton", value: 0 },
+            { selector: ".js-topValueButton", value: 1 },
+            { selector: ".js-rightValueButton", value: 2 },
+            { selector: ".js-bottomValueButton", value: 3 },
+            { selector: ".js-leftValueButton", value: 4 },
+            { selector: ".js-transformValueButton", value: 5 },
          ];
 
          buttonElements.forEach((button) => {
@@ -201,6 +201,7 @@
 
          positioningElement.addEventListener("click", () => {
             render();
+            console.log(buttonsObjects);
             positioningElement.classList.add("button--active")
 
          })
