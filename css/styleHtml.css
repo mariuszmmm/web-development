@@ -1,0 +1,25 @@
+.labelSetingsHtml {
+   display: inline-block;
+   min-width: max-content;
+   height: 24em;
+   background-color: rgb(60, 206, 250);
+   border: 1px solid black;
+   border-radius: 5px;
+   padding: 5px;
+   flex-grow: 1;
+   font-weight: 900;
+   overflow: auto;
+}
+
+
+.styleContentsHtml {
+   display: flex;
+   justify-content: space-between;
+   margin: 20px 250px 10px 10px;
+   line-height: 3;
+   }
+
+.styleContentHtml {
+   margin: 0 0 20px 30px;
+   line-height: 1.5;
+}

@@ -75,6 +75,7 @@
    height: 100px;
    font-size: 25px;
    margin: 0;
+   z-index: 1;
 }
 
 .childPositioning--default {

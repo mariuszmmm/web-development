@@ -9,9 +9,9 @@ html {
 body {
    font-family: 'Montserrat', sans-serif;
    background-color: grey;
-   font-size: 15px;
+   font-size: 12px;
    padding: 0 20px;
-
+   height: 100%
 }
 
 .container {
@@ -21,16 +21,17 @@ body {
    border: 1px solid black;
    margin: 10px auto;
    min-width: max-content;
-   max-width: 900px;
-   min-height: 700px;
-   max-height: max-content;
+   max-width: 950px;
+   height: 650px;
    align-content: space-between;
 }
 
 .nav {
+   display: flex;
+   flex-direction: column;
    grid-row: 1 / 3;
    border-right: 1px solid black;
-   width: max-content;
+   width: content;
    height: 100%;
    font-weight: 900;
    padding: 5px;
@@ -69,11 +70,10 @@ body {
    padding: 10px;
 }
 
-.labelSetings {
-   display: inline-block;
-   min-width: 320px;
-   max-width: 320px;
-   height: max-content;
+.labelSetingsPositioning {
+   display: block;
+   width: 250px;
+   max-height: 230px;
    background-color: rgb(60, 206, 250);
    border: 1px solid black;
    border-radius: 5px;
@@ -100,12 +100,11 @@ body {
    align-self: end;
 }
 
-.styleContents {
+.styleContentsPositioning {
    margin: 0;
-   line-height: 1.5;
 }
 
-.styleContent {
+.styleContentPositioning {
    margin: 0;
    margin-left: 20px;
 }
@@ -117,5 +116,10 @@ body {
 }
 
 p {
-   margin: 5px 0;
+   margin: 2px 0;
+}
+
+.strong {
+   font-size: 15px;
+   text-shadow: 0.5px 0.5px rgb(70, 70, 70);
 }
