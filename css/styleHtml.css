@@ -1,7 +1,7 @@
-.labelSetingsHtml {
+.labelSetingsHtmlTags {
    display: inline-block;
    min-width: max-content;
-   height: 24em;
+   height: 25em;
    background-color: rgb(60, 206, 250);
    border: 1px solid black;
    border-radius: 5px;
@@ -11,15 +11,33 @@
    overflow: auto;
 }
 
-
-.styleContentsHtml {
+.styleContentsHtmlTags {
    display: flex;
    justify-content: space-between;
-   margin: 20px 250px 10px 10px;
+   margin: 0 20px -10px 10px;
    line-height: 3;
-   }
+}
 
-.styleContentHtml {
+.styleContentHtmlTags {
    margin: 0 0 20px 30px;
    line-height: 1.5;
+}
+
+.contentHtmlTags {
+   color: white;
+   position: relative;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   background-color: black;
+   border-radius: 10px;
+}
+
+.labelHtmlTags {
+   position: absolute;
+   left: 10px;
+   top: 10px;
 }

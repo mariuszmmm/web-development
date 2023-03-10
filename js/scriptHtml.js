@@ -5,7 +5,7 @@ export const html = () => {
 
       setingsElement.innerHTML = "";
       setingsElement.innerHTML += `
-         <div class="labelSetingsHtml">
+         <div class="labelSetingsHtmlTags">
          ${settingsLabelContainer()}
          </div>
       `;
@@ -14,14 +14,14 @@ export const html = () => {
    const settingsLabelContainer = () => {
       let labelElement = "";
       labelElement += `
-      <div class="styleContentsHtml strong">
+      <div class="styleContentsHtmlTags strong">
          Structure Tags : 
-         <button class="button js-propertyButton">
+         <button id="StructureTagsButton" class="button js-propertyButton">
             example
          </button>
       </div>
             
-      <div class="styleContentHtml">
+      <div class="styleContentHtmlTags">
          <p>
             <span class="strong"> &lt;!DOCTYPE html&gt; &nbsp; → &nbsp; </span>
             specifies the document type and version of HTML
@@ -52,14 +52,14 @@ export const html = () => {
          </p>
       </div>
 
-      <div class="styleContentsHtml strong">
+      <div class="styleContentsHtmlTags strong">
          Container Tags : 
-         <button class="button js-propertyButton">
+         <button id="ContainerTagsButton" class="button js-propertyButton">
             example
          </button>
       </div>
 
-      <div class="styleContentHtml">
+      <div class="styleContentHtmlTags">
          <p>
             <span class="strong"> &lt;div&gt; &nbsp; → &nbsp; </span>
             division or section of an HTML document
@@ -70,14 +70,14 @@ export const html = () => {
          </p>
       </div>
 
-      <div class="styleContentsHtml strong">
+      <div class="styleContentsHtmlTags strong">
          Form Tags : 
-         <button class="button js-propertyButton">
+         <button id="FormTagsButton" class="button js-propertyButton">
             example
          </button>
       </div>
 
-      <div class="styleContentHtml">
+      <div class="styleContentHtmlTags">
          <p>
             <span class="strong"> &lt;form&gt; &nbsp; → &nbsp; </span>
             form for user input
@@ -91,7 +91,8 @@ export const html = () => {
             drop-down list
          </p>
          <p>
-            <span class="strong"> &lt;option&gt; &nbsp; → &nbsp; </span> option in drop-down list
+            <span class="strong"> &lt;option&gt; &nbsp; → &nbsp; </span> 
+            option in drop-down list
          </p>
          <p>
             <span class="strong"> &lt;textarea&gt; &nbsp; → &nbsp; </span> multi-line input control
@@ -110,14 +111,14 @@ export const html = () => {
          </p>
       </div>
 
-      <div class="styleContentsHtml strong">
+      <div class="styleContentsHtmlTags strong">
          Semantic Tags : 
-         <button class="button js-propertyButton">
+         <button id="SemanticTagsButton" class="button js-propertyButton">
             example
          </button>
       </div>
 
-      <div class="styleContentHtml">
+      <div class="styleContentHtmlTags">
          <p>
             <span class="strong"> &lt;header&gt; &nbsp; → &nbsp; </span>
             header for document or section
@@ -148,14 +149,14 @@ export const html = () => {
          </p>
       </div>
       
-      <div class="styleContentsHtml strong">
+      <div class="styleContentsHtmlTags strong">
          Text Formatting Tags :
-         <button class="button js-propertyButton">
+         <button id="TextFormattingTagsButton" class="button js-propertyButton">
             example
          </button>
       </div>
          
-      <div class="styleContentHtml">
+      <div class="styleContentHtmlTags">
          <p>
             <span class="strong"> &lt;h1&gt; to &lt;h6&gt; &nbsp; → &nbsp; </span> 
             heading
@@ -190,14 +191,14 @@ export const html = () => {
          </p>
       </div>
       
-      <div class="styleContentsHtml strong">
+      <div class="styleContentsHtmlTags strong">
          List Tags :
-         <button class="button js-propertyButton">
+         <button id="ListTagsButton" class="button js-propertyButton">
             example
          </button>
       </div>
             
-      <div class="styleContentHtml">
+      <div class="styleContentHtmlTags">
          <p>
             <span class="strong"> &lt;ul&gt; &nbsp; → &nbsp; </span>
             unordered list 
@@ -212,14 +213,14 @@ export const html = () => {
          </p>
       </div>
       
-      <div class="styleContentsHtml strong">
+      <div class="styleContentsHtmlTags strong">
          Table Tags :
-         <button class="button js-propertyButton">
+         <button id="TableTagsButton" class="button js-propertyButton">
             example
          </button>
       </div>
             
-      <div class="styleContentHtml">
+      <div class="styleContentHtmlTags">
          <p>
             <span class="strong"> &lt;table&gt; &nbsp; → &nbsp; </span>
             table 
@@ -238,14 +239,14 @@ export const html = () => {
          </p>
       </div>
 
-      <div class="styleContentsHtml strong">
+      <div class="styleContentsHtmlTags strong">
          Multimedia Tags :
-         <button class="button js-propertyButton">
+         <button id="MultimediaTagsButton" class="button js-propertyButton">
             example
          </button>
       </div>
 
-      <div class="styleContentHtml">
+      <div class="styleContentHtmlTags">
          <p>
             <span class="strong"> &lt;a&gt; &nbsp; → &nbsp; </span>
             hyperlink
@@ -256,14 +257,14 @@ export const html = () => {
          </p>
       </div>
 
-      <div class="styleContentsHtml strong">
+      <div class="styleContentsHtmlTags strong">
          Script and Style Tags :
-         <button class="button js-propertyButton">
+         <button id="ScriptAndStyleTagsButton" class="button js-propertyButton">
             example
          </button>
       </div>
 
-      <div class="styleContentHtml">
+      <div class="styleContentHtmlTags">
          <p>
             <span class="strong"> &lt;script&gt; &nbsp; → &nbsp; </span>
             client-side script
@@ -274,14 +275,14 @@ export const html = () => {
          </p>
       </div>
 
-      <div class="styleContentsHtml strong">
+      <div class="styleContentsHtmlTags strong">
          Button Tags :
-         <button class="button js-propertyButton">
+         <button id="ButtonTagsButton" class="button js-propertyButton">
             example
          </button>
       </div>
 
-      <div class="styleContentHtml">
+      <div class="styleContentHtmlTags">
          <p>
             <span class="strong"> &lt;button&gt; &nbsp; → &nbsp; </span>
             clickable button
@@ -292,17 +293,62 @@ export const html = () => {
       return labelElement
    };
 
-   const renderContents = () => {
+   const onClick = ({ target }) => {
+
+      switch (target.id) {
+         case "StructureTagsButton":
+            renderExample();
+            renderOutput();
+            break
+         case "ContainerTagsButton":
+            renderExample();
+            renderOutput();
+            break
+      }
+   };
+
+   const bindButtons = () => {
+      const buttonElements = document.querySelectorAll(".js-propertyButton");
+
+      buttonElements.forEach((button) => {
+         button.addEventListener("click", onClick)
+      })
+   };
+
+   const renderExample = () => {
       const contentsElement = document.querySelector(".js-contents");
 
       contentsElement.innerHTML = "";
+      contentsElement.innerHTML += `
+         <div class="contentHtmlTags">
+            <div class="labelHtmlTags">HTML :</div>
+            
+         </div>
+         `;
    }
+
+   const renderOutput = () => {
+      const contentsElement = document.querySelector(".js-contents");
+
+      contentsElement.innerHTML += `
+         <div class="contentHtmlTags">
+            <div class="labelHtmlTags">OUTPUT :</div>
+      
+         </div>
+         `;
+   }
+
+   const renderContents = () => {
+      const contentsElement = document.querySelector(".js-contents");
+      renderExample();
+      renderOutput();
+   };
 
    const render = () => {
       renderSettings();
+      bindButtons();
       renderContents();
    };
 
    render();
-
 };

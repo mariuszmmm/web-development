@@ -23,7 +23,7 @@ body {
    min-width: max-content;
    max-width: 950px;
    height: 650px;
-   align-content: space-between;
+   align-content: space-around;
 }
 
 .nav {
@@ -46,7 +46,6 @@ body {
    padding: 5px;
    margin: 5px;
    font-weight: 900;
-   transition: 0.15s;
    cursor: pointer;
 }
 
@@ -68,18 +67,6 @@ body {
    width: content;
    height: content;
    padding: 10px;
-}
-
-.labelSetingsPositioning {
-   display: block;
-   width: 250px;
-   max-height: 230px;
-   background-color: rgb(60, 206, 250);
-   border: 1px solid black;
-   border-radius: 5px;
-   padding: 5px;
-   flex-grow: 1;
-   font-weight: 900;
 }
 
 .contentsButtons {
@@ -112,7 +99,9 @@ body {
 .contents {
    width: 100%;
    height: 100%;
-   padding: 10px;
+   padding: 0 10px 10px;
+   display: flex;
+   gap: 10px;
 }
 
 p {

@@ -53,7 +53,13 @@ export const terminal = () => {
    const renderContents = () => {
       const contentsElement = document.querySelector(".js-contents");
 
-      contentsElement.innerHTML = "";
+      contentsElement.innerHTML = ""
+      contentsElement.innerHTML += `
+            <div class="contentTerminal">
+               <div class="labelTerminal">TERMINAL :</div>
+         
+            </div>
+            `;
    }
 
    const render = () => {
@@ -62,5 +68,4 @@ export const terminal = () => {
    };
 
    render();
-
 };
