@@ -1,9 +1,9 @@
-import { html } from './scriptHtml.js';
+import { htmlTags } from './scriptHtmlTags.js';
 import { terminal } from './scriptTerminal.js';
 import { positioning } from './scriptPositioning.js';
 
 const init = () => {
-   const buttons = document.querySelectorAll('.js-buttonRadio');
+   const buttons = document.querySelectorAll('.js-buttonNav');
 
    const changeActiveButton = (event) => {
       buttons.forEach(button => {
@@ -17,7 +17,7 @@ const init = () => {
             break;
          case "CSS Positioning": positioning();
             break;
-            case "HTML Tags": html();
+         case "HTML Tags": htmlTags();
             break;
       };
    };

@@ -1,12 +1,30 @@
 export const positioning = () => {
 
    let buttonsObjectsRaw = [
-      { properties: ["position"], propertiesValues: ["static", "relative", "absolute", "fixed", "sticky"] },
-      { properties: ["top"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
-      { properties: ["right"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
-      { properties: ["bottom"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
-      { properties: ["left"], propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"] },
-      { properties: ["transform"], propertiesValues: ["none", "translate(-50px, -50px)", "scale(2, 2)", "rotate(45deg)"] },
+      {
+         properties: ["position"],
+         propertiesValues: ["static", "relative", "absolute", "fixed", "sticky"]
+      },
+      {
+         properties: ["top"],
+         propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
+      },
+      {
+         properties: ["right"],
+         propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
+      },
+      {
+         properties: ["bottom"],
+         propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
+      },
+      {
+         properties: ["left"],
+         propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
+      },
+      {
+         properties: ["transform"],
+         propertiesValues: ["none", "translate(-50px, -50px)", "scale(2, 2)", "rotate(45deg)"]
+      },
    ];
 
    let buttonsObjects = buttonsObjectsRaw.map((obj) => {
@@ -19,69 +37,65 @@ export const positioning = () => {
    });
 
    const renderSettings = () => {
-      const setingsElement = document.querySelector(".js-setings");
+      const settingsElement = document.querySelector(".js-settingsContainer");
 
-      setingsElement.innerHTML = "";
-      setingsElement.innerHTML += `
-         <div class="labelSetingsPositioning">
-         ${settingsLabelContainer()}
-         </div>
+      settingsElement.innerHTML = "";
+      settingsElement.innerHTML += `
+         ${settingsContents()}
          ${buttonsContainer()}
-         `;
+      `;
    };
 
-   const settingsLabelContainer = () => {
-      let labelElement = "";
+   const settingsContents = () => {
+      let contentsElement = "";
 
-      const labelProperties = () => {
-         let labelElement = "";
+      const settingsLabel = () => {
+         let contentsElement = "";
          buttonsObjects.forEach((buttons) => {
             const active = (buttons.properties.find((buttons) => buttons.active === true))
 
             buttons.properties.forEach((prop) => {
                if (prop.active) {
-                  labelElement += ` <p>
-               ${prop.active ? prop.name : ""} `
-                  const a = prop.active ? prop.name : "";
-               }
-            })
+                  contentsElement += ` <p class="settingsParagraph settingsParagraph--positioning">
+                  ${prop.active ? prop.name : ""} `
+               };
+            });
             if (active !== undefined) {
                buttons.propertiesValues.forEach((prop) => {
-
                   if (prop.active) {
-                     labelElement += ` :
-               ${prop.active ? prop.name : ""} </p>`
-                     const b = prop.active ? prop.name : "";
-                  }
-               })
-            }
-         })
-         return labelElement;
+                     contentsElement += ` :
+                     ${prop.active ? prop.name : ""} </p>`
+                  };
+               });
+            };
+         });
+         return contentsElement;
       };
 
-      labelElement += `
-            <div class="styleContentsPositioning">.parent{</div>
-            <div class="styleContentPositioning">
-               <p>  position: relative; </p>
-               <p>  border: 3px dashed white; </p>
-               <p>  background: purple; </p>
+      contentsElement += `
+         <div class="settingsContents settingsContents--positioning">
+            <p class="settingsHeader">.parent{</p>
+            <div>
+               <p class="settingsParagraph settingsParagraph--positioning">  position: relative; </p>
+               <p class="settingsParagraph settingsParagraph--positioning">  border: 3px dashed white; </p>
+               <p class="settingsParagraph settingsParagraph--positioning">  background: purple; </p>
             </div>
-            <div class="styleContents">}</div>
-               &nbsp
-            <div class="styleContents">.child{</div>
-            <div class="styleContent">
-         ${labelProperties()}
+            <p class="settingsHeader">}</p>
+            <p class="settingsHeader">.child{</p>
+            <div>
+               ${settingsLabel()}
             </div>
-            <div class="styleContents">}</div>
+            <p class="settingsHeader">}</p>
+         </div>
          `;
 
-      return labelElement;
+      return contentsElement;
    };
 
    const buttonsContainer = () => {
       let propsElements = "";
 
-      propsElements += `<div class="contentsButtons">`
+      propsElements += `<div class="settingsButtons">`
       buttonsObjects.forEach((object) => {
          let property = object.properties[0];
          propsElements += `<div class="propertyButtons">
@@ -105,20 +119,20 @@ export const positioning = () => {
    };
 
    const renderContents = () => {
-      const contentsElement = document.querySelector(".js-contents");
+      const contentsElement = document.querySelector(".js-outputContainer");
 
       contentsElement.innerHTML = "";
       contentsElement.innerHTML += `
-         <div class="contentPositioning">
-            <div class="labelPositioning">OUTPUT :</div>
-            <div class="topPositioning">TOP</div>
-            <div class="leftPositioning">LEFT</div>
-            <div class="rightPositioning">RIGHT</div>
-            <div class="bottomPositioning">BOTTOM</div>
-            <div class="centerPositioning">parent</div>
-            <div class="parentPositioning">
-               <p class="childPositioning js-child">child</p>
-               <p class="childPositioning--default">child with default settings</p>
+         <div class="outputContents">
+            <div class="outputLabel">OUTPUT :</div>
+            <div class="outputLabelTop">TOP</div>
+            <div class="outputLabelLeft">LEFT</div>
+            <div class="outputLabelRight">RIGHT</div>
+            <div class="outputLabelBottom">BOTTOM</div>
+            <div class="outputLabelCenter">parent</div>
+            <div class="outputParent">
+               <p class="outputChild js-child">child</p>
+               <p class="outputChild--default">child with default settings</p>
             </div>
          </div>
          `;
@@ -127,7 +141,7 @@ export const positioning = () => {
    };
 
    const styles = () => {
-      const childStyles = document.querySelector(".childPositioning");
+      const childStyles = document.querySelector(".js-child");
 
       buttonsObjects.forEach((buttons) => {
          const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
@@ -142,15 +156,15 @@ export const positioning = () => {
 
       buttonPropertyElements.forEach((button) => {
          button.addEventListener("click", () => {
-            let activeValue = buttonPropertyToggle(button);
+            buttonPropertyToggle(button);
             render();
          });
       });
    };
 
    const buttonPropertyToggle = (button) => {
-      buttonsObjects.forEach((buttonsObject, index) => {
-         buttonsObject.properties.forEach(prop => {
+      buttonsObjects.forEach(({ properties }) => {
+         properties.forEach(prop => {
             if (prop.name === button.innerText) {
                prop.active = !prop.active;
             }
@@ -173,7 +187,7 @@ export const positioning = () => {
 
          buttonValueElements.forEach((buttonValue) => {
             buttonValue.addEventListener("click", () => {
-               let activeValue = buttonValueToggle(buttonValue, button.value);
+               buttonValueToggle(buttonValue, button.value);
                render();
             });
          });

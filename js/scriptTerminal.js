@@ -1,11 +1,11 @@
 export const terminal = () => {
 
    const renderSettings = () => {
-      const setingsElement = document.querySelector(".js-setings");
+      const settingsElement = document.querySelector(".js-settingsContainer");
 
-      setingsElement.innerHTML = "";
-      setingsElement.innerHTML += `
-         <div class="labelSetingsTerminal">
+      settingsElement.innerHTML = "";
+      settingsElement.innerHTML += `
+         <div class="settingsContents">
          ${settingsLabelContainer()}
          </div>
       `;
@@ -14,33 +14,33 @@ export const terminal = () => {
    const settingsLabelContainer = () => {
       let labelElement = "";
       labelElement += `
-      <div class="styleContentsTerminal strong">Terminal commands :</div>
-      <div class="styleContentTerminal">
-         <p>
+      <h1 class="settingsHeader settingsHeader--terminal">Terminal commands :</h1>
+      <div>
+         <p class="settingsParagraph">
             <span class="strong">dir &nbsp; → &nbsp; </span>
             list directory contents
          </p>
-         <p>
+         <p class="settingsParagraph">
             <span class="strong">cd C:\\dev &nbsp; &nbsp; → &nbsp; </span>
             change directory to C:\\dev
          </p>
-         <p>
+         <p class="settingsParagraph">
             <span class="strong">cd .. &nbsp; &nbsp; → &nbsp; </span>
             change directory to the parent directory
          </p>
-         <p>
+         <p class="settingsParagraph">
             <span class="strong">cd ../..  &nbsp; &nbsp; → &nbsp; </span>
             change directory to two parent directories up
          </p>
-         <p>
+         <p class="settingsParagraph">
             <span class="strong">cd  &nbsp; &nbsp; → &nbsp; </span>
             change directory to the user's home directory
          </p>
-         <p>
+         <p class="settingsParagraph">
             <span class="strong">code .  &nbsp; &nbsp; → &nbsp; </span>
             open Visual Studio Code in the current directory
          </p>
-         <p>
+         <p class="settingsParagraph">
             <span class="strong">code directory_name  &nbsp; &nbsp; → &nbsp; </span>
             open Visual Studio Code in the specified directory.
          </p>
@@ -51,12 +51,12 @@ export const terminal = () => {
    };
 
    const renderContents = () => {
-      const contentsElement = document.querySelector(".js-contents");
+      const contentsElement = document.querySelector(".js-outputContainer");
 
       contentsElement.innerHTML = ""
       contentsElement.innerHTML += `
-            <div class="contentTerminal">
-               <div class="labelTerminal">TERMINAL :</div>
+            <div class="outputContents">
+               <div class="outputLabel">TERMINAL :</div>
          
             </div>
             `;

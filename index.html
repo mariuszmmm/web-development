@@ -16,23 +16,23 @@
    <link href="css/style.css" rel="stylesheet">
    <link href="css/stylePositioning.css" rel="stylesheet">
    <link href="css/styleTerminal.css" rel="stylesheet">
-   <link href="css/styleHtml.css" rel="stylesheet">
+   <link href="css/styleHtmlTags.css" rel="stylesheet">
    <script defer type="module" src="js/script.js"></script>
    <script defer type="module" src="js/scriptPositioning.js"></script>
    <script defer type="module" src="js/scriptTerminal.js"></script>
-   <script defer type="module" src="js/scriptHtml.js"></script>
+   <script defer type="module" src="js/scriptHtmlTags.js"></script>
 </head>
 
 <body>
    <div class="container">
-      <div class="nav">
-         <button name="button" type="radio" class="button js-buttonRadio">Terminal</button>
-         <button name="button" type="radio" class="button js-buttonRadio">HTML Tags</button>
-         <button name="button" type="radio" class="button js-buttonRadio">CSS Positioning</button>
+      <nav class="navContainer">
+         <button name="button" type="radio" class="button js-buttonNav">Terminal</button>
+         <button name="button" type="radio" class="button js-buttonNav">HTML Tags</button>
+         <button name="button" type="radio" class="button js-buttonNav">CSS Positioning</button>
+      </nav>
+      <div class="settingsContainer js-settingsContainer">
       </div>
-      <div class="setings js-setings">
-      </div>
-      <div class="contents js-contents">
+      <div class="outputContainer js-outputContainer">
       </div>
    </div>
 </body>
