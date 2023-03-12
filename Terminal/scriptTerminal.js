@@ -1,3 +1,5 @@
+
+
 export const terminal = () => {
 
    const renderSettings = () => {
@@ -56,7 +58,8 @@ export const terminal = () => {
       contentsElement.innerHTML = ""
       contentsElement.innerHTML += `
             <div class="outputContents">
-               <div class="outputLabel">TERMINAL :</div>
+               <div class="outputLabel"></div>
+               <img width=100% height=95% src="Terminal/images/terminal.gif" alt="terminal">
          
             </div>
             `;
