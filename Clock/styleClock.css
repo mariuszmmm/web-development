@@ -1,0 +1,19 @@
+.settingsContents--clock {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 50px;
+   height: 100px;
+}
+
+.clockContents {
+   font-family: 'Chivo Mono', monospace;
+   padding: 30px;
+   margin: 50px;
+   width: 450px;
+   font-size: 80px;
+   border: 5px solid silver;
+   border-radius: 25px;
+   box-shadow: 0px 0px 10px 10px rgb(60, 206, 250);
+   text-align: center;
+}

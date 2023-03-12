@@ -106,11 +106,11 @@ export const htmlTags = () => {
             </p>
             <p class="settingsParagraph">
                <span class="strong"> &lt;fieldset&gt; &nbsp;  → &nbsp; </span>
-               a set of form controls
+               set of form controls
             </p>
             <p class="settingsParagraph">
                <span class="strong"> &lt;legend&gt; &nbsp;  → &nbsp; </span>
-               a caption for a &lt;fieldset&gt; element
+               caption for a &lt;fieldset&gt; element
             </p>
          </div>
          <button id="FormTagsButton" class="button js-exampleButton">
@@ -238,15 +238,15 @@ export const htmlTags = () => {
             </p>
             <p class="settingsParagraph">
                <span class="strong"> &lt;tr&gt; &nbsp; → &nbsp; </span>
-               table table row
+               table row
             </p>
             <p class="settingsParagraph">
                <span class="strong"> &lt;th&gt; &nbsp; → &nbsp; </span>
-               table table header cell
+               table header cell
             </p>
             <p class="settingsParagraph">
                <span class="strong"> &lt;td&gt; &nbsp; → &nbsp; </span>
-               table table data cell
+               table data cell
             </p>
          </div>
          <button id="TableTagsButton" class="button js-exampleButton">

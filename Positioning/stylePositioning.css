@@ -1,5 +1,6 @@
 .settingsContents--positioning {
-   width: 270px;
+   max-width: 270px;
+   height: 290px;
 }
 
 .settingsParagraph--positioning {
