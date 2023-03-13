@@ -6,6 +6,7 @@ import { clock } from './Clock/scriptClock.js';
 const init = () => {
    const buttons = document.querySelectorAll('.js-buttonNav');
 
+   const intervalId = setInterval(clock, 1000)
    const changeActiveButton = (event) => {
       clearInterval(intervalId)
       buttons.forEach(button => {
@@ -28,7 +29,7 @@ const init = () => {
       button.addEventListener("click", changeActiveButton);
    });
 
-   const intervalId = setInterval(clock, 1000)
+
 };
 
 init();
