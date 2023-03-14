@@ -1,6 +1,7 @@
 import { tagsArray } from "./tagsArray.js"
 
 export const htmlTags = () => {
+   let tagsCategoryWithActive = [];
 
    const renderSettings = () => {
       const settingsElement = document.querySelector(".js-settingsContainer");
@@ -8,25 +9,26 @@ export const htmlTags = () => {
       settingsElement.innerHTML = "";
       settingsElement.innerHTML += `
          <div class="settingsContents settingsContents--HtmlTags">
-         ${settingsLabelContainer()}
+         ${renderSettingsContents()}
          </div>
       `;
    };
 
-   const settingsLabelContainer = () => {
+   const renderSettingsContents = () => {
       let tagsCategory = [];
       tagsArray.forEach((tag) => {
          if (!tagsCategory.includes(tag.category)) {
             tagsCategory.push(tag.category)
          };
       })
+      console.log(tagsCategory);
 
-      const tagsCategoryWithActive = tagsCategory.map((tag) => ({
-         name:tag, active: false
+      tagsCategoryWithActive = tagsCategory.map((tag) => ({
+         name: tag, active: false
       }))
 
       let labelElement = "";
-      tagsCategoryWithActive.map((tagCategory) => {
+      tagsCategoryWithActive.forEach((tagCategory) => {
 
          labelElement += `
             <div class="settingsHeader settingsHeader--HtmlTags">
@@ -48,7 +50,7 @@ export const htmlTags = () => {
 
          labelElement += `   
                </div>
-               <button id="StructureTagsButton" 
+               <button id="${tagCategory.name}" 
                   class="button ${tagCategory.active ? "button--active" : ""} 
                   js-exampleButton">
                   example
@@ -60,29 +62,17 @@ export const htmlTags = () => {
       return labelElement
    };
 
-   const onClick = ({ target }) => {
-      const activeButton = () => {
-         target.id.classList.add("active--button")
-      }
-      console.log(target.id)
-
-      switch (target.id) {
-         case "StructureTagsButton":
-            renderExample();
-            renderOutput();
-            break
-         case "ContainerTagsButton":
-            renderExample();
-            renderOutput();
-            break
-      }
-   };
-
    const bindButtons = () => {
       const buttonElements = document.querySelectorAll(".js-exampleButton");
 
       buttonElements.forEach((button) => {
          button.addEventListener("click", onClick)
+         button.classList.remove("button--active")
+         tagsCategoryWithActive.forEach((tag) => {
+            if ((button.id === tag.name) && tag.active) {
+               button.classList.add("button--active")
+            }
+         })
       })
    };
 
@@ -115,11 +105,67 @@ export const htmlTags = () => {
       renderOutput();
    };
 
+   const onClick = ({ target }) => {
+      tagsCategoryWithActive.map((tag) => {
+         if (tag.name === target.id) {
+            tag.active = true
+         } else {
+            tag.active = false
+         }
+      })
+
+      switch (target.id) {
+         case "Structure Tags":
+            renderExample();
+            renderOutput();
+            break;
+         case "Container Tags":
+            renderExample();
+            renderOutput();
+            break;
+         case "Form Tags":
+            renderExample();
+            renderOutput();
+            break;
+         case "Semantic Tags":
+            renderExample();
+            renderOutput();
+            break;
+         case "Text Formatting Tags":
+            renderExample();
+            renderOutput();
+            break;
+         case "List Tags":
+            renderExample();
+            renderOutput();
+            break;
+         case "Table Tags":
+            renderExample();
+            renderOutput();
+            break;
+         case "Multimedia Tags":
+            renderExample();
+            renderOutput();
+            break;
+         case "Script and Style Tags":
+            renderExample();
+            renderOutput();
+            break;
+         case "Button Tags":
+            renderExample();
+            renderOutput();
+            break;
+
+      }
+      render();
+   };
+
+
    const render = () => {
-      renderSettings();
       bindButtons();
       renderContents();
    };
 
+   renderSettings();
    render();
 };
