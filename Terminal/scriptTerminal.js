@@ -1,5 +1,3 @@
-
-
 export const terminal = () => {
 
    const renderSettings = () => {
@@ -52,7 +50,7 @@ export const terminal = () => {
       return labelElement
    };
 
-   const renderContents = () => {
+   const renderOutput = () => {
       const contentsElement = document.querySelector(".js-outputContainer");
 
       contentsElement.innerHTML = ""
@@ -67,7 +65,7 @@ export const terminal = () => {
 
    const render = () => {
       renderSettings();
-      renderContents();
+      renderOutput();
    };
 
    render();

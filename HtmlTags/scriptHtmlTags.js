@@ -21,7 +21,6 @@ export const htmlTags = () => {
             tagsCategory.push(tag.category)
          };
       })
-      console.log(tagsCategory);
 
       tagsCategoryWithActive = tagsCategory.map((tag) => ({
          name: tag, active: false
@@ -76,96 +75,119 @@ export const htmlTags = () => {
       })
    };
 
-   const renderExample = () => {
-      const contentsElement = document.querySelector(".js-outputContainer");
+   const renderExample = (event, example) => {
 
+      const contentsElement = document.querySelector(".js-outputContainer");
+      console.log(contentsElement)
       contentsElement.innerHTML = "";
-      contentsElement.innerHTML += `
+
+      let contentsExample = "";
+      contentsExample += `
          <div class="outputContents">
             <div class="outputLabel">HTML :</div>
-            
-         </div>
+      `;
+
+      if (!!event) {
+         contentsExample += `
+            <img class="outputImage" src="HtmlTags/images/${example}.gif" alt="HtmlTags_example_1">
          `;
+      };
+
+      contentsExample += `
+         </div>
+      `;
+
+      contentsElement.innerHTML += contentsExample;
+   }
+
+   const renderExampleOutput = (event, example_output) => {
+      const contentsElement = document.querySelector(".js-outputContainer");
+
+      let contentsOutput = "";
+      contentsOutput += `
+         <div class="outputContents">
+            <div class="outputLabel">OUTPUT :</div>
+      `;
+
+      if (!!event) {
+         contentsOutput += `
+            <img class="outputImage" src="HtmlTags/images/${example_output}.gif" alt="HtmlTags_example_output">
+         `;
+      };
+
+      contentsOutput += `
+         </div>
+      `;
+      contentsElement.innerHTML += contentsOutput;
    }
 
    const renderOutput = () => {
-      const contentsElement = document.querySelector(".js-outputContainer");
-
-      contentsElement.innerHTML += `
-         <div class="outputContents">
-            <div class="outputLabel">OUTPUT :</div>
-      
-         </div>
-         `;
-   }
-
-   const renderContents = () => {
-      const contentsElement = document.querySelector(".js-outputContainer");
       renderExample();
-      renderOutput();
+      renderExampleOutput();
    };
 
-   const onClick = ({ target }) => {
+   const onClick = (event) => {
       tagsCategoryWithActive.map((tag) => {
-         if (tag.name === target.id) {
+         if (tag.name === event.target.id) {
             tag.active = true
          } else {
             tag.active = false
          }
       })
 
-      switch (target.id) {
+      bindButtons();
+
+      switch (event.target.id) {
          case "Structure Tags":
-            renderExample();
-            renderOutput();
-            break;
-         case "Container Tags":
-            renderExample();
-            renderOutput();
-            break;
-         case "Form Tags":
-            renderExample();
-            renderOutput();
-            break;
-         case "Semantic Tags":
-            renderExample();
-            renderOutput();
+            renderExample(event, "example_1");
+            renderExampleOutput(event, "exampleOutput_1");
             break;
          case "Text Formatting Tags":
-            renderExample();
-            renderOutput();
+            renderExample(event, "example_2");
+            renderExampleOutput(event, "exampleOutput_2");
+            break;
+         case "Container Tags":
+            renderExample(event, "example_3");
+            renderExampleOutput(event, "exampleOutput_3");
+            break;
+         case "Form Tags":
+            renderExample(event, "example_4");
+            renderExampleOutput(event, "exampleOutput_4");
+            break;
+         case "Semantic Tags":
+            renderExample(event, "example_5");
+            renderExampleOutput(event, "exampleOutput_5");
             break;
          case "List Tags":
-            renderExample();
-            renderOutput();
+            renderExample(event, "example_6");
+            renderExampleOutput(event, "exampleOutput_6");
             break;
          case "Table Tags":
-            renderExample();
-            renderOutput();
+            renderExample(event, "example_7");
+            renderExampleOutput(event, "exampleOutput_7");
             break;
          case "Multimedia Tags":
-            renderExample();
-            renderOutput();
+            renderExample(event, "example_8");
+            renderExampleOutput(event, "exampleOutput_8");
             break;
          case "Script and Style Tags":
-            renderExample();
-            renderOutput();
+            renderExample(event, "example_9");
+            renderExampleOutput(event, "exampleOutput_9");
             break;
          case "Button Tags":
-            renderExample();
-            renderOutput();
+            renderExample(event, "example_10");
+            renderExampleOutput(event, "exampleOutput_10");
             break;
 
       }
-      render();
+
    };
 
-
-   const render = () => {
+   const renderChanges = () => {
       bindButtons();
-      renderContents();
+      renderOutput();
    };
 
    renderSettings();
-   render();
+   renderChanges();
 };

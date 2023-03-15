@@ -4,9 +4,10 @@ import { positioning } from './Positioning/scriptPositioning.js';
 import { clock } from './Clock/scriptClock.js';
 
 const init = () => {
+   console.log("start init")
    const buttons = document.querySelectorAll('.js-buttonNav');
 
-   const intervalId = setInterval(clock, 1000)
+   const intervalId = setInterval(clock, 100)
    const changeActiveButton = (event) => {
       clearInterval(intervalId)
       buttons.forEach(button => {

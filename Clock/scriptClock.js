@@ -13,7 +13,7 @@ export const clock = () => {
       `;
    }
 
-   const renderContents = () => {
+   const renderOutput = () => {
       const outputElement = document.querySelector(".js-outputContainer");
 
       const time = new Date();
@@ -47,7 +47,7 @@ export const clock = () => {
 
    const render = () => {
       renderSettings();
-      renderContents();
+      renderOutput();
    };
 
    render();

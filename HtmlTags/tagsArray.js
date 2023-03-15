@@ -36,6 +36,46 @@ export const tagsArray = [
       category: "Structure Tags",
    },
    {
+      name: "h1 to h6",
+      description: "heading",
+      category: "Text Formatting Tags",
+   },
+   {
+      name: "p",
+      description: "paragraph",
+      category: "Text Formatting Tags",
+   },
+   {
+      name: "strong",
+      description: "strong emphasis",
+      category: "Text Formatting Tags",
+   },
+   {
+      name: "em",
+      description: "emphasized text",
+      category: "Text Formatting Tags",
+   },
+   {
+      name: "b",
+      description: "bold text",
+      category: "Text Formatting Tags",
+   },
+   {
+      name: "i",
+      description: "italicized text tag",
+      category: "Text Formatting Tags",
+   },
+   {
+      name: "br",
+      description: "line break",
+      category: "Text Formatting Tags",
+   },
+   {
+      name: "hr",
+      description: "horizontal rule or line",
+      category: "Text Formatting Tags",
+   },
+   {
       name: "div",
       description: "division or section of an HTML document",
       category: "Container Tags",
@@ -119,46 +159,6 @@ export const tagsArray = [
       name: "main",
       description: "main content of a document",
       category: "Semantic Tags",
-   },
-   {
-      name: "h1 to h6",
-      description: "heading",
-      category: "Text Formatting Tags",
-   },
-   {
-      name: "p",
-      description: "paragraph",
-      category: "Text Formatting Tags",
-   },
-   {
-      name: "strong",
-      description: "strong emphasis",
-      category: "Text Formatting Tags",
-   },
-   {
-      name: "em",
-      description: "emphasized text",
-      category: "Text Formatting Tags",
-   },
-   {
-      name: "b",
-      description: "bold text",
-      category: "Text Formatting Tags",
-   },
-   {
-      name: "i",
-      description: "italicized text tag",
-      category: "Text Formatting Tags",
-   },
-   {
-      name: "br",
-      description: "line break",
-      category: "Text Formatting Tags",
-   },
-   {
-      name: "hr",
-      description: "horizontal rule or line",
-      category: "Text Formatting Tags",
    },
    {
       name: "ul",

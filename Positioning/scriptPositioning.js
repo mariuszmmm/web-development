@@ -118,7 +118,7 @@ export const positioning = () => {
       return propsElements
    };
 
-   const renderContents = () => {
+   const renderOutput = () => {
       const contentsElement = document.querySelector(".js-outputContainer");
 
       contentsElement.innerHTML = "";
@@ -204,7 +204,7 @@ export const positioning = () => {
 
    const render = () => {
       renderSettings();
-      renderContents();
+      renderOutput();
       bindPropertyButtons();
       bindValueButtons();
    };
