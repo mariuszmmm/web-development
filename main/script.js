@@ -1,10 +1,10 @@
-import { htmlTags } from '../HtmlTags/scriptHtmlTags.js';
 import { terminal } from '../Terminal/scriptTerminal.js';
+import { htmlTags } from '../HtmlTags/scriptHtmlTags.js';
+import { sectionsInHtml } from '../SectionsInHtml/scriptSectionsInHtml.js';
 import { positioning } from '../Positioning/scriptPositioning.js';
 import { clock } from '../Clock/scriptClock.js';
 
 const init = () => {
-   console.log("start init")
    const buttons = document.querySelectorAll('.js-buttonNav');
 
    const intervalId = setInterval(clock, 100)
@@ -19,9 +19,11 @@ const init = () => {
       switch (event.target.innerText) {
          case "Terminal": terminal();
             break;
-         case "CSS Positioning": positioning();
+         case "Sections HTML": sectionsInHtml();
             break;
          case "HTML Tags": htmlTags();
+            break;
+         case "CSS Positioning": positioning();
             break;
       };
    };
@@ -29,7 +31,6 @@ const init = () => {
    buttons.forEach(button => {
       button.addEventListener("click", changeActiveButton);
    });
-
 
 };
 
