@@ -76,11 +76,9 @@ export const htmlTags = () => {
    };
 
    const renderExample = (event, example) => {
-
       const contentsElement = document.querySelector(".js-outputContainer");
-      console.log(contentsElement)
-      contentsElement.innerHTML = "";
 
+      contentsElement.innerHTML = "";
       let contentsExample = "";
       contentsExample += `
          <div class="outputContents">
