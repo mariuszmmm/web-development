@@ -1,13 +1,13 @@
-export const sectionsInHtml = () => {
+export const sectionsHtml = () => {
 
    const renderSettings = () => {
       const settingsElement = document.querySelector(".js-settingsContainer");
 
       settingsElement.innerHTML = "";
       settingsElement.innerHTML = `
-       <div class="settingsContents settingsContents--sectionsInHtml">
-         <div class="settingsHeader settingsHeader--sectionsInHtml">
-            Semantic tags - HTML structure
+       <div class="settingsContents settingsContents--sectionsHtml">
+         <div class="settingsHeader settingsHeader--sectionsHtml">
+         semantic tags - sections HTML
          </div>
       </div>         
       `;
@@ -20,7 +20,7 @@ export const sectionsInHtml = () => {
       outputElement.innerHTML = `
          <div class="outputContents">
             <div class="outputLabel"></div>
-            <img class="outputImage--sectionsInHtml" src="SectionsInHtml/images/sectionsInHtml.png" alt="SectionsInHtml">
+            <img class="outputImage--sectionsHtml" src="SectionsHtml/images/sectionsHtml.png" alt="sectionsHtml">
          </div>
       `;
    }

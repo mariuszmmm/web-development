@@ -1,7 +1,7 @@
 import { clock } from '../Clock/scriptClock.js';
 import { terminal } from '../Terminal/scriptTerminal.js';
 import { htmlTags } from '../HtmlTags/scriptHtmlTags.js';
-import { sectionsInHtml } from '../SectionsInHtml/scriptSectionsInHtml.js';
+import { sectionsHtml } from '../SectionsHtml/scriptSectionsHtml.js';
 import { positioning } from '../Positioning/scriptPositioning.js';
 
 const init = () => {
@@ -19,7 +19,7 @@ const init = () => {
       switch (event.target.innerText) {
          case "Terminal": terminal();
             break;
-         case "Sections HTML": sectionsInHtml();
+         case "Sections HTML": sectionsHtml();
             break;
          case "HTML Tags": htmlTags();
             break;

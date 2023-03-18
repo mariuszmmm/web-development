@@ -1,11 +1,11 @@
-.settingsContents--sectionsInHtml {
+.settingsContents--sectionsHtml {
    display: flex;
    justify-content: center;
    align-items: start;
    height: 87px;
 }
 
-.settingsHeader--sectionsInHtml {
+.settingsHeader--sectionsHtml {
    color: white;
    text-align: center;
    padding: 2px;
@@ -16,7 +16,7 @@
    width: 100%;
 }
 
-.outputImage--sectionsInHtml {
+.outputImage--sectionsHtml {
    width: 60%;
    height: 95%;
 }
