@@ -1,8 +1,8 @@
+import { clock } from '../Clock/scriptClock.js';
 import { terminal } from '../Terminal/scriptTerminal.js';
 import { htmlTags } from '../HtmlTags/scriptHtmlTags.js';
 import { sectionsInHtml } from '../SectionsInHtml/scriptSectionsInHtml.js';
 import { positioning } from '../Positioning/scriptPositioning.js';
-import { clock } from '../Clock/scriptClock.js';
 
 const init = () => {
    const buttons = document.querySelectorAll('.js-buttonNav');
