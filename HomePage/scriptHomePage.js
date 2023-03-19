@@ -1,4 +1,4 @@
-export const clock = () => {
+export const homePage = () => {
 
    const renderSettings = () => {
       const settingsElement = document.querySelector(".js-settingsContainer");

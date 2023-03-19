@@ -1,4 +1,4 @@
-import { clock } from '../Clock/scriptClock.js';
+import { homePage } from '../HomePage/scriptHomePage.js';
 import { terminal } from '../Terminal/scriptTerminal.js';
 import { htmlTags } from '../HtmlTags/scriptHtmlTags.js';
 import { sectionsHtml } from '../SectionsHtml/scriptSectionsHtml.js';
@@ -7,7 +7,7 @@ import { positioning } from '../Positioning/scriptPositioning.js';
 const init = () => {
    const buttons = document.querySelectorAll('.js-buttonNav');
 
-   const intervalId = setInterval(clock, 100)
+   const intervalId = setInterval(homePage, 1000)
    const changeActiveButton = (event) => {
       clearInterval(intervalId)
       buttons.forEach(button => {
