@@ -85,7 +85,7 @@ export const htmlTags = () => {
             <div class="outputLabel">HTML :</div>
       `;
 
-      if (!!event) {
+      if (event) {
          contentsExample += `
             <img class="outputImage--HtmlTags" src="HtmlTags/images/${example}.gif" alt="HtmlTags_example">
          `;
@@ -107,7 +107,7 @@ export const htmlTags = () => {
             <div class="outputLabel">OUTPUT :</div>
       `;
 
-      if (!!event) {
+      if (event) {
          contentsOutput += `
             <img class="outputImage--HtmlTags" src="HtmlTags/images/${example_output}.gif" alt="HtmlTags_example_output">
          `;
@@ -176,9 +176,7 @@ export const htmlTags = () => {
             renderExample(event, "example_10");
             renderExampleOutput(event, "exampleOutput_10");
             break;
-
       }
-
    };
 
    const renderChanges = () => {

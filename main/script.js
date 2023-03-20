@@ -6,8 +6,8 @@ import { positioning } from '../Positioning/scriptPositioning.js';
 
 const init = () => {
    const buttons = document.querySelectorAll('.js-buttonNav');
-      
-      startPage();
+
+   startPage();
    const intervalClock = setInterval(startPage, 1000);
    const changeActiveButton = (event) => {
       clearInterval(intervalClock)
@@ -32,7 +32,6 @@ const init = () => {
    buttons.forEach(button => {
       button.addEventListener("click", changeActiveButton);
    });
-
 };
 
 init();
