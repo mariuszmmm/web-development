@@ -56,14 +56,14 @@ export const positioning = () => {
 
             buttons.properties.forEach((prop) => {
                if (prop.active) {
-                  contentsElement += ` <p class="settingsParagraph settingsParagraph--positioning">
-                  ${prop.active ? prop.name : ""} `
+                  contentsElement += `<p class="settingsParagraph settingsParagraph--positioning">
+                  ${prop.active ? prop.name : ""}`
                };
             });
             if (active !== undefined) {
                buttons.propertiesValues.forEach((prop) => {
                   if (prop.active) {
-                     contentsElement += ` :
+                     contentsElement += `:
                      ${prop.active ? prop.name : ""} </p>`
                   };
                });
@@ -103,7 +103,7 @@ export const positioning = () => {
                   ${property.name}
                </button>
                </div>
-               <div class="valueButtons"> &nbsp : `
+               <div class="valueButtons"> &nbsp <strong>:</strong>`
          object.propertiesValues.forEach((obj) => {
             propsElements += `
                <button class="button ${(obj.active) ? "button--active" : ""} js-${property.name}ValueButton">
