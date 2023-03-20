@@ -7,7 +7,7 @@ export const sectionsHtml = () => {
       settingsElement.innerHTML = `
        <div class="settingsContents settingsContents--sectionsHtml">
          <div class="settingsHeader settingsHeader--sectionsHtml">
-         semantic tags - sections HTML
+         Semantic tags - sections HTML
          </div>
       </div>         
       `;
