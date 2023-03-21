@@ -3,6 +3,8 @@ import { terminal } from '../Terminal/scriptTerminal.js';
 import { htmlTags } from '../HtmlTags/scriptHtmlTags.js';
 import { sectionsHtml } from '../SectionsHtml/scriptSectionsHtml.js';
 import { positioning } from '../Positioning/scriptPositioning.js';
+import { flex } from '../Flex/scriptFlex.js';
+import { grid } from '../Grid/scriptGrid.js';
 
 const init = () => {
    const buttons = document.querySelectorAll('.js-buttonNav');
@@ -25,6 +27,10 @@ const init = () => {
          case "HTML Tags": htmlTags();
             break;
          case "CSS Positioning": positioning();
+            break;
+         case "CSS Flex": flex();
+            break;
+         case "CSS Grid": grid();
             break;
       };
    };
