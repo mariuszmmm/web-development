@@ -33,9 +33,9 @@ export const startPage = () => {
       settingsElement.innerHTML = "";
       settingsElement.innerHTML = `
        <div class="settingsContents settingsContents--clock">
-         <div class="settingsHeader">
+      
             TIME
-         </div>
+      
       </div>         
       `;
    }

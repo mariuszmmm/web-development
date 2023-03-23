@@ -1,17 +1,18 @@
 .settingsHeader--terminal {
-   color: white;
+   /* color: white;
    text-align: left;
-   padding: 5px 100px;
+   padding: 5px;
    background-color: black;
    border-radius: 10px;
    font-size: 16px;
-   margin: 25px 5px 15px;
-   margin-bottom: 0;
+   margin: 5px 5px 15px;
+   margin-bottom: 0; */
 }
 
 .outputImage--terminal {
-   position: relative;
-   top: 10px;
-   width: 85%;
+   position: absolute;
+   top: 30px;
+   width: 95%;
    height: 85%;
+   object-fit: contain;
 }

@@ -33,7 +33,7 @@ export const htmlTags = () => {
             <div class="settingsHeader settingsHeader--HtmlTags">
                ${tagCategory.name} :
             </div>    
-            <div class="settingsContainer settingsContainer--HtmlTags">
+            <div class="settingsSubcontainer--HtmlTags">
                <div>`
 
          tagsArray.forEach((tag) => {
@@ -50,11 +50,11 @@ export const htmlTags = () => {
          labelElement += `   
                </div>
                <button id="${tagCategory.name}" 
-                  class="button ${tagCategory.active ? "button--active" : ""} 
+                  class="button button--example ${tagCategory.active ? "button--active" : ""} 
                   js-exampleButton">
                   example
-               </button>   
-            </div>
+               </button> 
+               </div>
          `;
       });
 
