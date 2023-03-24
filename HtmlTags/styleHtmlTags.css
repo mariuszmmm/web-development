@@ -29,13 +29,13 @@
 
 .outputImage--HtmlTags {
    position: relative;
-   top: 5px;
+   top: 10px;
    width: 100%;
    height: 85%;
 }
 
 .button--example {
-   margin-top: 20px;
+   margin-top: 15px;
    margin-right: 40px;
 
 }
