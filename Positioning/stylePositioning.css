@@ -1,12 +1,10 @@
 .settingsContents--positioning {
    max-width: 270px;
-   min-height: 275px;
+   height: 290px;
 }
 
 .settingsParagraph--positioning {
-margin-top: 5px;
-margin-bottom: 5px;
-
+   /* line-height: 0.5; */
 }
 
 .propertyButtons {
