@@ -87,7 +87,7 @@ export const htmlTags = () => {
 
       if (event) {
          contentsExample += `
-            <img class="outputImage--HtmlTags" src="HtmlTags/images/${example}.gif" alt="HtmlTags_example">
+            <img class="outputImage--HtmlTags" src="./HtmlTags/images/${example}.gif" alt="HtmlTags_example">
          `;
       };
 
@@ -109,7 +109,7 @@ export const htmlTags = () => {
 
       if (event) {
          contentsOutput += `
-            <img class="outputImage--HtmlTags" src="HtmlTags/images/${example_output}.gif" alt="HtmlTags_example_output">
+            <img class="outputImage--HtmlTags" src="./HtmlTags/images/${example_output}.gif" alt="HtmlTags_example_output">
          `;
       };
 

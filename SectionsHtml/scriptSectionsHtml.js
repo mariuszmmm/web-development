@@ -20,7 +20,7 @@ export const sectionsHtml = () => {
       outputElement.innerHTML = `
          <div class="outputContents">
             <div class="outputLabel"></div>
-            <img class="outputImage--sectionsHtml" src="SectionsHtml/images/sectionsHtml.png" alt="sectionsHtml">
+            <img class="outputImage--sectionsHtml" src="./SectionsHtml/images/sectionsHtml.png" alt="sectionsHtml">
          </div>
       `;
    }
