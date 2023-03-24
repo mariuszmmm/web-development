@@ -17,6 +17,8 @@
 }
 
 .outputImage--sectionsHtml {
-   width: 60%;
+   min-width: 60%;
    height: 95%;
+   margin: 10px;
+   /* object-fit: contain; */
 }
