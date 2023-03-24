@@ -14,7 +14,7 @@ export const terminal = () => {
    const settingsLabelContainer = () => {
       let labelElement = "";
       labelElement += `
-      <h1 class="settingsHeader settingsHeader--terminal">Terminal commands :</h1>
+      <h1 class="settingsHeader">Terminal commands :</h1>
       <div>
          <p class="settingsParagraph">
             <span class="strong">dir &nbsp; → &nbsp; </span>

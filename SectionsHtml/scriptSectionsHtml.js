@@ -5,8 +5,8 @@ export const sectionsHtml = () => {
 
       settingsElement.innerHTML = "";
       settingsElement.innerHTML = `
-       <div class="settingsContents settingsContents--sectionsHtml">
-         <div class="settingsHeader settingsHeader--sectionsHtml">
+       <div class="settingsContents">
+         <div class="settingsHeader">
          Semantic tags - sections HTML
          </div>
       </div>         
