@@ -110,7 +110,7 @@ body {
    flex-grow: 1;
    font-weight: 700;
    /* line-height: 1; */
-   min-height: max-content;
+   min-height: 100px;
 
 
 }
@@ -129,13 +129,13 @@ body {
 
 .settingsParagraph {
    margin-left: 30px;
-   /* line-height: 1; */
+   line-height: 1;
 
 }
 
 @media (max-width: 768px) {
    .settingsParagraph {
-      margin-left: 4vw;
+      margin-left: 4%;
    }
 }
 
@@ -154,10 +154,9 @@ body {
 
 .outputContainer {
    width: 100%;
-   /* height: 45vw; */
+   height: 100%;
    padding: 0 10px 10px;
    display: flex;
-   flex-direction: row;
    grid-column: 2 / 4;
    gap: 10px;
    font-size: 15px;
@@ -174,8 +173,6 @@ body {
       grid-column: 1 / 3;
       display: flex;
       flex-direction: column;
-      display: flex;
-      flex-direction: column;
    }
 }
 
@@ -190,8 +187,6 @@ body {
    align-items: center;
    background-color: black;
    border-radius: 10px;
-   /* object-fit: contain; */
-
 }
 
 @media (max-width: 768px) {
