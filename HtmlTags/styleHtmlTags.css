@@ -15,12 +15,16 @@
 }
 
 .settingsSubcontainer--HtmlTags {
-   display:flex;
+   display: flex;
    justify-content: space-between;
    align-items: start;
    gap: 20px;
    padding: 0;
 
+}
+
+.outputContents--HtmlTags {
+   aspect-ratio: 10/9;
 }
 
 .outputImage--HtmlTags {

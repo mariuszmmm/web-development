@@ -1,22 +1,23 @@
 .settingsContents--sectionsHtml {
-   display: flex;
+   /* display: flex;
    justify-content: center;
    align-items: start;
-   height: 87px;
+   height: 87px; */
 }
 
 .settingsHeader--sectionsHtml {
-   color: white;
+   /* color: white;
    text-align: center;
    padding: 5px;
    background-color: black;
    border-radius: 10px;
    margin: 25px 5px;
    font-size: 16px;
-   width: 100%;
+   width: 100%; */
 }
 
 .outputImage--sectionsHtml {
-   width: 60%;
-   height: 95%;
+   min-width: 60%;
+   margin: 10px;
+   object-fit: contain;
 }
