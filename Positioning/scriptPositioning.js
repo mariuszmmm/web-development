@@ -98,12 +98,15 @@ export const positioning = () => {
       propsElements += `<div class="settingsButtons">`
       buttonsObjects.forEach((object) => {
          let property = object.properties[0];
-         propsElements += `<div class="propertyButtons">
+         propsElements += `
+            <div class="propertyButtons">
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                   ${property.name}
                </button>
-               </div>
-               <div class="valueButtons"> &nbsp <strong>:</strong>`
+               <strong>:</strong>
+            </div>
+            <div class="valueButtons">
+         `
          object.propertiesValues.forEach((obj) => {
             propsElements += `
                <button class="button ${(obj.active) ? "button--active" : ""} js-${property.name}ValueButton">
@@ -123,7 +126,7 @@ export const positioning = () => {
 
       contentsElement.innerHTML = "";
       contentsElement.innerHTML += `
-         <div class="outputContents">
+         <div class="outputContents outputContents--positioning">
             <div class="outputLabel">OUTPUT :</div>
             <div class="outputLabelTop">TOP</div>
             <div class="outputLabelLeft">LEFT</div>
