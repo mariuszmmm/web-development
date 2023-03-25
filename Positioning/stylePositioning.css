@@ -82,6 +82,7 @@
    font-size: 3vmin;
    margin: 0;
    z-index: 1;
+   padding: 1%;
 }
 
 .outputChild--default {
@@ -99,4 +100,5 @@
    max-height: 100px;
    font-size: 1.8vmin;
    margin: 0;
+   padding: 1%;
 }
