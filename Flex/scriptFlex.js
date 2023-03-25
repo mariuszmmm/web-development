@@ -71,16 +71,16 @@ export const flex = () => {
       contentsElement += `
          <div class="settingsContents settingsContents--flex">
             <p class="settingsParagraph--flex">.parent{</p>
-            <div>
+            
                <p class="settingsParagraph settingsParagraph--flex">  position: relative; </p>
                <p class="settingsParagraph settingsParagraph--flex">  border: 3px dashed white; </p>
                <p class="settingsParagraph settingsParagraph--flex">  background: purple; </p>
-            </div>
+            
             <p class="settingsParagraph--flex">}</p>
             <p class="settingsParagraph--flex">.child{</p>
-            <div>
+            
                ${settingsLabel()}
-            </div>
+            
             <p class="settingsParagraph--flex">}</p>
          </div>
          `;
@@ -127,10 +127,12 @@ export const flex = () => {
             <div class="outputLabelRight">RIGHT</div>
             <div class="outputLabelBottom">BOTTOM</div>
             <div class="outputLabelCenter">parent</div>
-            <div class="outputParent">
+            <div class="outputParent js-outputParent">
                <div class="outputChild js-child">1</div>
                <div class="outputChild js-child">2</div>
                <div class="outputChild js-child">3</div>
+               <div class="outputChild js-child">4</div>
+               <div class="outputChild js-child">5</div>
             </div>
          </div>
          `;
@@ -139,7 +141,7 @@ export const flex = () => {
    };
 
    const styles = () => {
-      const childStyles = document.querySelector(".js-child");
+      const childStyles = document.querySelector(".js-outputParent");
 
       buttonsObjects.forEach((buttons) => {
          const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));

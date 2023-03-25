@@ -71,16 +71,16 @@ export const grid = () => {
       contentsElement += `
          <div class="settingsContents settingsContents--grid">
             <p class="settingsParagraph--grid">.parent{</p>
-            <div>
+            
                <p class="settingsParagraph settingsParagraph--grid">  position: relative; </p>
                <p class="settingsParagraph settingsParagraph--grid">  border: 3px dashed white; </p>
                <p class="settingsParagraph settingsParagraph--grid">  background: purple; </p>
-            </div>
+            
             <p class="settingsParagraph--grid">}</p>
             <p class="settingsParagraph--grid">.child{</p>
-            <div>
+            
                ${settingsLabel()}
-            </div>
+            
             <p class="settingsParagraph--grid">}</p>
          </div>
          `;
@@ -130,6 +130,9 @@ export const grid = () => {
             <div class="outputParent js-outputParent">
                <div class="outputChild js-child">1</div>
                <div class="outputChild js-child">2</div>
+               <div class="outputChild js-child">3</div>
+               <div class="outputChild js-child">4</div>
+               <div class="outputChild js-child">5</div>
             </div>
          </div>
          `;
