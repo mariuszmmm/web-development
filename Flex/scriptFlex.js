@@ -70,18 +70,18 @@ export const flex = () => {
 
       contentsElement += `
          <div class="settingsContents settingsContents--flex">
-            <p class="settingsHeader">.parent{</p>
+            <p class="settingsParagraph--flex">.parent{</p>
             <div>
                <p class="settingsParagraph settingsParagraph--flex">  position: relative; </p>
                <p class="settingsParagraph settingsParagraph--flex">  border: 3px dashed white; </p>
                <p class="settingsParagraph settingsParagraph--flex">  background: purple; </p>
             </div>
-            <p class="settingsHeader">}</p>
-            <p class="settingsHeader">.child{</p>
+            <p class="settingsParagraph--flex">}</p>
+            <p class="settingsParagraph--flex">.child{</p>
             <div>
                ${settingsLabel()}
             </div>
-            <p class="settingsHeader">}</p>
+            <p class="settingsParagraph--flex">}</p>
          </div>
          `;
 
@@ -98,8 +98,9 @@ export const flex = () => {
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                   ${property.name}
                </button>
+                &nbsp <strong>:</strong>
                </div>
-               <div class="valueButtons"> &nbsp <strong>:</strong>`
+               <div class="valueButtons">`
          object.propertiesValues.forEach((obj) => {
             propsElements += `
                <button class="button ${(obj.active) ? "button--active" : ""} js-${property.name}ValueButton">
@@ -119,7 +120,7 @@ export const flex = () => {
 
       contentsElement.innerHTML = "";
       contentsElement.innerHTML += `
-         <div class="outputContents">
+         <div class="outputContents outputContents--flex">
             <div class="outputLabel">OUTPUT :</div>
             <div class="outputLabelTop">TOP</div>
             <div class="outputLabelLeft">LEFT</div>
@@ -127,8 +128,9 @@ export const flex = () => {
             <div class="outputLabelBottom">BOTTOM</div>
             <div class="outputLabelCenter">parent</div>
             <div class="outputParent">
-               <p class="outputChild js-child">child</p>
-               <p class="outputChild--default">child with default settings</p>
+               <div class="outputChild js-child">1</div>
+               <div class="outputChild js-child">2</div>
+               <div class="outputChild js-child">3</div>
             </div>
          </div>
          `;
@@ -170,12 +172,11 @@ export const flex = () => {
 
    const bindValueButtons = () => {
       const buttonElements = [
-         { selector: ".js-positionValueButton", value: 0 },
-         { selector: ".js-topValueButton", value: 1 },
-         { selector: ".js-rightValueButton", value: 2 },
-         { selector: ".js-bottomValueButton", value: 3 },
-         { selector: ".js-leftValueButton", value: 4 },
-         { selector: ".js-transformValueButton", value: 5 },
+         { selector: ".js-displayValueButton", value: 0 },
+         { selector: ".js-justify-contentValueButton", value: 1 },
+         { selector: ".js-align-contentValueButton", value: 2 },
+         { selector: ".js-flex-wrapValueButton", value: 3 },
+         { selector: ".js-align-itemsValueButton", value: 4 },
       ];
 
       buttonElements.forEach((button) => {

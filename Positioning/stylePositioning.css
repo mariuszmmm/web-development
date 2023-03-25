@@ -75,9 +75,9 @@
    font-weight: bold;
    background-color: #32fa64;
    border-radius: 5px;
-   width: 10vw;
+   width: 12vw;
    max-width: 100px;
-   height: 10vw;
+   height: 12vw;
    max-height: 100px;
    font-size: 3vmin;
    margin: 0;
@@ -94,11 +94,11 @@
    font-weight: bold;
    background-color: #32fa64;
    border-radius: 5px;
-   width: 10vw;
+   width: 12vw;
    max-width: 100px;
-   height: 10vw;
+   height: 12vw;
    max-height: 100px;
-   font-size: 1.8vmin;
+   font-size: 2vmin;
    margin: 0;
    padding: 1%;
 }

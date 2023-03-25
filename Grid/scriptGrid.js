@@ -70,18 +70,18 @@ export const grid = () => {
 
       contentsElement += `
          <div class="settingsContents settingsContents--grid">
-            <p class="settingsHeader">.parent{</p>
+            <p class="settingsParagraph--grid">.parent{</p>
             <div>
                <p class="settingsParagraph settingsParagraph--grid">  position: relative; </p>
                <p class="settingsParagraph settingsParagraph--grid">  border: 3px dashed white; </p>
                <p class="settingsParagraph settingsParagraph--grid">  background: purple; </p>
             </div>
-            <p class="settingsHeader">}</p>
-            <p class="settingsHeader">.child{</p>
+            <p class="settingsParagraph--grid">}</p>
+            <p class="settingsParagraph--grid">.child{</p>
             <div>
                ${settingsLabel()}
             </div>
-            <p class="settingsHeader">}</p>
+            <p class="settingsParagraph--grid">}</p>
          </div>
          `;
 
@@ -98,8 +98,9 @@ export const grid = () => {
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                   ${property.name}
                </button>
+                &nbsp <strong>:</strong>
                </div>
-               <div class="valueButtons"> &nbsp <strong>:</strong>`
+               <div class="valueButtons">`
          object.propertiesValues.forEach((obj) => {
             propsElements += `
                <button class="button ${(obj.active) ? "button--active" : ""} js-${property.name}ValueButton">
@@ -119,16 +120,16 @@ export const grid = () => {
 
       contentsElement.innerHTML = "";
       contentsElement.innerHTML += `
-         <div class="outputContents">
+         <div class="outputContents outputContents--grid">
             <div class="outputLabel">OUTPUT :</div>
             <div class="outputLabelTop">TOP</div>
             <div class="outputLabelLeft">LEFT</div>
             <div class="outputLabelRight">RIGHT</div>
             <div class="outputLabelBottom">BOTTOM</div>
             <div class="outputLabelCenter">parent</div>
-            <div class="outputParent">
-               <p class="outputChild js-child">child</p>
-               <p class="outputChild--default">child with default settings</p>
+            <div class="outputParent js-outputParent">
+               <div class="outputChild js-child">1</div>
+               <div class="outputChild js-child">2</div>
             </div>
          </div>
          `;
@@ -137,7 +138,7 @@ export const grid = () => {
    };
 
    const styles = () => {
-      const childStyles = document.querySelector(".js-child");
+      const childStyles = document.querySelector(".js-outputParent");
 
       buttonsObjects.forEach((buttons) => {
          const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
@@ -170,12 +171,11 @@ export const grid = () => {
 
    const bindValueButtons = () => {
       const buttonElements = [
-         { selector: ".js-positionValueButton", value: 0 },
-         { selector: ".js-topValueButton", value: 1 },
-         { selector: ".js-rightValueButton", value: 2 },
-         { selector: ".js-bottomValueButton", value: 3 },
-         { selector: ".js-leftValueButton", value: 4 },
-         { selector: ".js-transformValueButton", value: 5 },
+         { selector: ".js-displayValueButton", value: 0 },
+         { selector: ".js-justify-contentValueButton", value: 1 },
+         { selector: ".js-align-contentValueButton", value: 2 },
+         { selector: ".js-justify-itemsValueButton", value: 3 },
+         { selector: ".js-align-itemsValueButton", value: 4 },
       ];
 
       buttonElements.forEach((button) => {

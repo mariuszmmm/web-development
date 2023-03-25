@@ -1,0 +1,14 @@
+settingsContents--grid {
+   min-width: 265px;
+   min-height: 275px;
+   flex-grow: 0;
+}
+
+.settingsParagraph--grid {
+   margin-top: 5px;
+   margin-bottom: 5px;
+}
+
+.outputContents--grid {
+   aspect-ratio: 16/9;
+}
