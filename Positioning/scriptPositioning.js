@@ -64,7 +64,7 @@ export const positioning = () => {
                buttons.propertiesValues.forEach((prop) => {
                   if (prop.active) {
                      contentsElement += `:
-                     ${prop.active ? prop.name : ""} </p>`
+                     ${prop.active ? prop.name : ""}; </p>`
                   };
                });
             };
