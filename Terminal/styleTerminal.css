@@ -1,7 +1,6 @@
 .outputImage--terminal {
-   position: absolute;
-   top: 30px;
-   width: 95%;
-   height: 85%;
-   object-fit: contain;
+  min-width: 60%;
+  height: 95%;
+  margin: 20px 10px 10px;
+  object-fit: contain;
 }
