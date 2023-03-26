@@ -96,8 +96,8 @@ export const grid = () => {
                <div class="valueButtons">`
          object.propertiesValues.forEach((obj) => {
             propsElements += `
-               <button class="button ${(obj.active) ? "button--active" : ""} js-${property.name}ValueButton">
-                  ${obj.name}
+               <button ${(property.active) ? "" : " disabled"} class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.name}ValueButton">
+                 ${obj.name}
                </button>
             `;
          })

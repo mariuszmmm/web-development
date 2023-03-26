@@ -1,78 +1,78 @@
 export const positioning = () => {
 
-   let buttonsObjectsRaw = [
-      {
-         properties: ["position"],
-         propertiesValues: ["static", "relative", "absolute", "fixed", "sticky"]
+  let buttonsObjectsRaw = [
+    {
+      properties: ["position"],
+      propertiesValues: ["static", "relative", "absolute", "fixed", "sticky"]
       },
-      {
-         properties: ["top"],
-         propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
+    {
+      properties: ["top"],
+      propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
       },
-      {
-         properties: ["right"],
-         propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
+    {
+      properties: ["right"],
+      propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
       },
-      {
-         properties: ["bottom"],
-         propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
+    {
+      properties: ["bottom"],
+      propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
       },
-      {
-         properties: ["left"],
-         propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
+    {
+      properties: ["left"],
+      propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
       },
-      {
-         properties: ["transform"],
-         propertiesValues: ["none", "translate(-50px, -50px)", "scale(2, 2)", "rotate(45deg)"]
+    {
+      properties: ["transform"],
+      propertiesValues: ["none", "translate(-50px, -50px)", "scale(2, 2)", "rotate(45deg)"]
       },
    ];
 
-   let buttonsObjects = buttonsObjectsRaw.map((obj) => {
-      return {
-         properties: [{ name: obj.properties[0], active: true }],
-         propertiesValues: obj.propertiesValues.map((val, index) => {
-            return { name: val, active: index === 0 }
-         }),
-      };
-   });
+  let buttonsObjects = buttonsObjectsRaw.map((obj) => {
+    return {
+      properties: [{ name: obj.properties[0], active: true }],
+      propertiesValues: obj.propertiesValues.map((val, index) => {
+        return { name: val, active: index === 0 }
+      }),
+    };
+  });
 
-   const renderSettings = () => {
-      const settingsElement = document.querySelector(".js-settingsContainer");
+  const renderSettings = () => {
+    const settingsElement = document.querySelector(".js-settingsContainer");
 
-      settingsElement.innerHTML = "";
-      settingsElement.innerHTML += `
+    settingsElement.innerHTML = "";
+    settingsElement.innerHTML += `
          ${settingsContents()}
          ${buttonsContainer()}
       `;
-   };
+  };
 
-   const settingsContents = () => {
+  const settingsContents = () => {
+    let contentsElement = "";
+
+    const settingsLabel = () => {
       let contentsElement = "";
+      buttonsObjects.forEach((buttons) => {
+        const active = (buttons.properties.find((buttons) => buttons.active === true))
 
-      const settingsLabel = () => {
-         let contentsElement = "";
-         buttonsObjects.forEach((buttons) => {
-            const active = (buttons.properties.find((buttons) => buttons.active === true))
-
-            buttons.properties.forEach((prop) => {
-               if (prop.active) {
-                  contentsElement += `<p class="settingsParagraph settingsParagraph--positioning">
+        buttons.properties.forEach((prop) => {
+          if (prop.active) {
+            contentsElement += `<p class="settingsParagraph settingsParagraph--positioning">
                   ${prop.active ? prop.name : ""}`
-               };
-            });
-            if (active !== undefined) {
-               buttons.propertiesValues.forEach((prop) => {
-                  if (prop.active) {
-                     contentsElement += `:
+          };
+        });
+        if (active !== undefined) {
+          buttons.propertiesValues.forEach((prop) => {
+            if (prop.active) {
+              contentsElement += `:
                      ${prop.active ? prop.name : ""}; </p>`
-                  };
-               });
             };
-         });
-         return contentsElement;
-      };
+          });
+        };
+      });
+      return contentsElement;
+    };
 
-      contentsElement += `
+    contentsElement += `
          <div class="settingsContents settingsContents--positioning">
             <p class="settingsParagraph--positioning">.parent{</p>
             
@@ -89,16 +89,16 @@ export const positioning = () => {
          </div>
          `;
 
-      return contentsElement;
-   };
+    return contentsElement;
+  };
 
-   const buttonsContainer = () => {
-      let propsElements = "";
+  const buttonsContainer = () => {
+    let propsElements = "";
 
-      propsElements += `<div class="settingsButtons">`
-      buttonsObjects.forEach((object) => {
-         let property = object.properties[0];
-         propsElements += `
+    propsElements += `<div class="settingsButtons">`
+    buttonsObjects.forEach((object) => {
+      let property = object.properties[0];
+      propsElements += `
             <div class="propertyButtons">
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                   ${property.name}
@@ -107,25 +107,25 @@ export const positioning = () => {
             </div>
             <div class="valueButtons">
          `
-         object.propertiesValues.forEach((obj) => {
-            propsElements += `
-               <button class="button ${(obj.active) ? "button--active" : ""} js-${property.name}ValueButton">
+      object.propertiesValues.forEach((obj) => {
+        propsElements += `
+               <button ${(property.active) ? "" : " disabled"} class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.name}ValueButton">
                   ${obj.name}
                </button>
             `;
-         })
-         propsElements += `</div>`
-      });
+      })
       propsElements += `</div>`
+    });
+    propsElements += `</div>`
 
-      return propsElements
-   };
+    return propsElements
+  };
 
-   const renderOutput = () => {
-      const contentsElement = document.querySelector(".js-outputContainer");
+  const renderOutput = () => {
+    const contentsElement = document.querySelector(".js-outputContainer");
 
-      contentsElement.innerHTML = "";
-      contentsElement.innerHTML += `
+    contentsElement.innerHTML = "";
+    contentsElement.innerHTML += `
          <div class="outputContents outputContents--positioning">
             <div class="outputLabel">OUTPUT :</div>
             <div class="outputLabelTop">TOP</div>
@@ -140,83 +140,77 @@ export const positioning = () => {
          </div>
          `;
 
-      styles();
-   };
+    styles();
+  };
 
-   const styles = () => {
-      const childStyles = document.querySelector(".js-child");
+  const styles = () => {
+    const childStyles = document.querySelector(".js-child");
 
-      buttonsObjects.forEach((buttons) => {
-         const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
-         const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
-         childStyles.style[
-            ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
+    buttonsObjects.forEach((buttons) => {
+      const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
+      const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
+      childStyles.style[
+        ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
+    });
+  };
+
+  const bindPropertyButtons = () => {
+    const buttonPropertyElements = document.querySelectorAll(".js-propertyButton");
+
+    buttonPropertyElements.forEach((button) => {
+      button.addEventListener("click", () => {
+        buttonPropertyToggle(button);
+        render();
       });
-   };
+    });
+  };
 
-   const bindPropertyButtons = () => {
-      const buttonPropertyElements = document.querySelectorAll(".js-propertyButton");
-
-      buttonPropertyElements.forEach((button) => {
-         button.addEventListener("click", () => {
-            buttonPropertyToggle(button);
-            render();
-         });
+  const buttonPropertyToggle = (button) => {
+    buttonsObjects.forEach(({ properties }) => {
+      properties.forEach(prop => {
+        if (prop.name === button.innerText) {
+          prop.active = !prop.active;
+        }
       });
-   };
+    })
+  };
 
-   const buttonPropertyToggle = (button) => {
-      buttonsObjects.forEach(({ properties }) => {
-         properties.forEach(prop => {
-            if (prop.name === button.innerText) {
-               prop.active = !prop.active;
-            }
-         });
-      })
-   };
-
-   const bindValueButtons = () => {
-      const buttonElements = [
-         { selector: ".js-positionValueButton", value: 0 },
-         { selector: ".js-topValueButton", value: 1 },
-         { selector: ".js-rightValueButton", value: 2 },
-         { selector: ".js-bottomValueButton", value: 3 },
-         { selector: ".js-leftValueButton", value: 4 },
-         { selector: ".js-transformValueButton", value: 5 },
+  const bindValueButtons = () => {
+    const buttonElements = [
+      { selector: ".js-positionValueButton", value: 0 },
+      { selector: ".js-topValueButton", value: 1 },
+      { selector: ".js-rightValueButton", value: 2 },
+      { selector: ".js-bottomValueButton", value: 3 },
+      { selector: ".js-leftValueButton", value: 4 },
+      { selector: ".js-transformValueButton", value: 5 },
       ];
 
-      buttonElements.forEach((button) => {
-         const buttonValueElements = document.querySelectorAll(button.selector);
+    buttonElements.forEach((button) => {
+      const buttonValueElements = document.querySelectorAll(button.selector);
 
-         buttonValueElements.forEach((buttonValue) => {
-            buttonValue.addEventListener("click", () => {
-               buttonValueToggle(buttonValue, button.value);
-               render();
-            });
-         });
+      buttonValueElements.forEach((buttonValue) => {
+        buttonValue.addEventListener("click", () => {
+          buttonValueToggle(buttonValue, button.value);
+          render();
+        });
       });
-   };
+    });
+  };
 
-   const buttonValueToggle = (button, index) => {
-      buttonsObjects[index].propertiesValues.forEach(prop => {
-         if (prop.name === button.innerText) {
-            prop.active = true;
-         } else { prop.active = false }
-      });
-   };
+  const buttonValueToggle = (button, index) => {
+    buttonsObjects[index].propertiesValues.forEach(prop => {
+      if (prop.name === button.innerText) {
+        prop.active = true;
+      } else { prop.active = false }
+    });
+  };
 
-   const render = () => {
-      renderSettings();
-      renderOutput();
-      bindPropertyButtons();
-      bindValueButtons();
-   };
+  const render = () => {
+    renderSettings();
+    renderOutput();
+    bindPropertyButtons();
+    bindValueButtons();
+  };
 
-   render();
+  render();
 };
-
-
-
-
-
-
