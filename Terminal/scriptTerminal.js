@@ -17,31 +17,31 @@ export const terminal = () => {
       <h1 class="settingsHeader">Terminal commands :</h1>
       <div>
          <p class="settingsParagraph">
-            <span class="strong">dir &nbsp; → &nbsp; </span>
+            <span class="strong">dir &nbsp; → </span>
             list directory contents
          </p>
          <p class="settingsParagraph">
-            <span class="strong">cd C:\\dev &nbsp; &nbsp; → &nbsp; </span>
+            <span class="strong">cd C:\\dev &nbsp; → </span>
             change directory to C:\\dev
          </p>
          <p class="settingsParagraph">
-            <span class="strong">cd .. &nbsp; &nbsp; → &nbsp; </span>
+            <span class="strong">cd .. &nbsp; → </span>
             change directory to the parent directory
          </p>
          <p class="settingsParagraph">
-            <span class="strong">cd ../..  &nbsp; &nbsp; → &nbsp; </span>
+            <span class="strong">cd ../..  &nbsp; → </span>
             change directory to two parent directories up
          </p>
          <p class="settingsParagraph">
-            <span class="strong">cd  &nbsp; &nbsp; → &nbsp; </span>
+            <span class="strong">cd  &nbsp; → </span>
             change directory to the user's home directory
          </p>
          <p class="settingsParagraph">
-            <span class="strong">code .  &nbsp; &nbsp; → &nbsp; </span>
+            <span class="strong">code .  &nbsp; → </span>
             open Visual Studio Code in the current directory
          </p>
          <p class="settingsParagraph">
-            <span class="strong">code directory_name  &nbsp; &nbsp; → &nbsp; </span>
+            <span class="strong">code directory_name  &nbsp; → </span>
             open Visual Studio Code in the specified directory.
          </p>
       </div>

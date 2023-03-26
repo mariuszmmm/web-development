@@ -40,7 +40,7 @@ export const htmlTags = () => {
             if (tag.category === tagCategory.name) {
                labelElement += `
                   <p class="settingsParagraph">
-                     <span class="strong"> &lt;${tag.name}&gt; &nbsp; → &nbsp; </span>
+                     <span class="strong"> &lt;${tag.name}&gt; &nbsp; → </span>
                      ${tag.description}
                   </p>
                `;
