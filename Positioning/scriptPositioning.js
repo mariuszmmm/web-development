@@ -134,8 +134,8 @@ export const positioning = () => {
             <div class="outputLabelBottom">BOTTOM</div>
             <div class="outputLabelCenter">parent</div>
             <div class="outputParent">
-               <div class="outputChild js-child">child</div>
-               <div class="outputChild--default">child with default settings</div>
+               <div class="outputChild--withSize js-child">child</div>
+               <div class="outputChild--withSize">child with default settings</div>
             </div>
          </div>
          `;
