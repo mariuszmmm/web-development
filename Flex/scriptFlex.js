@@ -95,15 +95,6 @@ export const flex = () => {
     let propsElements = "";
 
     propsElements += `<div class="settingsButtons">
-    <div class="propertyButtons">
-      <div class="settingsChild">Children</div>
-      <span class="strong"> :</span>
-    </div>
-    <div class="valueButtons">
-      <button class="button settingsChild js-minusButton">-</button>
-      <span class="settingsChild">${child}</span>
-      <button class="button settingsChild js-plusButton">+</button>
-     </div>
     `;
   
     buttonsObjects.forEach((object) => {
@@ -124,7 +115,19 @@ export const flex = () => {
       })
       propsElements += `</div>`
     });
-    propsElements += `</div>`
+    propsElements += `
+    
+    <div class="propertyButtons">
+      <div class="settingsChild">Children</div>
+      <span class="strong"> :</span>
+    </div>
+    <div class="valueButtons">
+      <button class="button settingsChild js-minusButton">-</button>
+      <span class="settingsChild">${child}</span>
+      <button class="button settingsChild js-plusButton">+</button>
+     </div>
+    
+    </div>`
 
     return propsElements
   };
