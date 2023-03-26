@@ -72,13 +72,6 @@ export const flex = () => {
          <div class="settingsContents settingsContents--flex">
             <p class="settingsParagraph--flex">.parent{</p>
             
-               <p class="settingsParagraph settingsParagraph--flex">  position: relative; </p>
-               <p class="settingsParagraph settingsParagraph--flex">  border: 3px dashed white; </p>
-               <p class="settingsParagraph settingsParagraph--flex">  background: purple; </p>
-            
-            <p class="settingsParagraph--flex">}</p>
-            <p class="settingsParagraph--flex">.child{</p>
-            
                ${settingsLabel()}
             
             <p class="settingsParagraph--flex">}</p>
@@ -98,7 +91,7 @@ export const flex = () => {
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                   ${property.name}
                </button>
-                &nbsp <strong>:</strong>
+                <span class="strong">:</span>
                </div>
                <div class="valueButtons">`
          object.propertiesValues.forEach((obj) => {

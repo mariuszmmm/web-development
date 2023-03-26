@@ -103,7 +103,7 @@ export const positioning = () => {
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                   ${property.name}
                </button>
-               <strong>:</strong>
+               <span class="strong">:</span>
             </div>
             <div class="valueButtons">
          `

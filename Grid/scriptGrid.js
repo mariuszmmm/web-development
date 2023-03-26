@@ -72,13 +72,6 @@ export const grid = () => {
          <div class="settingsContents settingsContents--grid">
             <p class="settingsParagraph--grid">.parent{</p>
             
-               <p class="settingsParagraph settingsParagraph--grid">  position: relative; </p>
-               <p class="settingsParagraph settingsParagraph--grid">  border: 3px dashed white; </p>
-               <p class="settingsParagraph settingsParagraph--grid">  background: purple; </p>
-            
-            <p class="settingsParagraph--grid">}</p>
-            <p class="settingsParagraph--grid">.child{</p>
-            
                ${settingsLabel()}
             
             <p class="settingsParagraph--grid">}</p>
@@ -98,7 +91,7 @@ export const grid = () => {
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                   ${property.name}
                </button>
-                &nbsp <strong>:</strong>
+              <span class="strong">:</span>
                </div>
                <div class="valueButtons">`
          object.propertiesValues.forEach((obj) => {
