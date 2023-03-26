@@ -171,20 +171,29 @@ body {
    border: 1px solid black;
    border-radius: 5px;
    box-shadow: 2px 2px 1px 1px;
-   height: min-content;
+   height: max-content;
+   min-width: max-content;
    padding: 5px;
    margin: 5px;
    font-weight: 900;
    cursor: pointer;
 }
 
+.settingsChild {
+    height: min-content;
+    min-width: 40px;
+    padding: 5px;
+    margin: 5px;
+    font-weight: 900;
+    font-size: 20px;
+    display: inline-block;
+    text-align: center;
+}
+
 .button:active {
    transform: translate(1px, 1px);
    box-shadow: 1px 1px 0 0;
-}
-
-.button:disabled {
-  
+   background-color: #32fa64;
 }
 
 .button--active {
@@ -239,7 +248,7 @@ body {
 }
 
 .outputParent {
-   position: relative;
+   position: static;
    border: 3px dashed white;
    width: 85%;
    height: 75%;

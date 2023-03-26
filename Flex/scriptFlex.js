@@ -39,6 +39,8 @@ export const flex = () => {
       }),
     };
   });
+  
+  let child = 3;
 
   const renderSettings = () => {
     const settingsElement = document.querySelector(".js-settingsContainer");
@@ -76,7 +78,7 @@ export const flex = () => {
       return contentsElement;
     };
 
-    contentsElement += `
+    contentsElement +=`
          <div class="settingsContents settingsContents--flex">
             <p class="settingsParagraph--flex">.parent{</p>
             
@@ -92,7 +94,18 @@ export const flex = () => {
   const buttonsContainer = () => {
     let propsElements = "";
 
-    propsElements += `<div class="settingsButtons">`
+    propsElements += `<div class="settingsButtons">
+    <div class="propertyButtons">
+      <div class="settingsChild">Children</div>
+      <span class="strong"> :</span>
+    </div>
+    <div class="valueButtons">
+      <button class="button settingsChild js-minusButton">-</button>
+      <span class="settingsChild">${child}</span>
+      <button class="button settingsChild js-plusButton">+</button>
+     </div>
+    `;
+  
     buttonsObjects.forEach((object) => {
       let property = object.properties[0];
       propsElements += `<div class="propertyButtons">
@@ -118,6 +131,17 @@ export const flex = () => {
 
   const renderOutput = () => {
     const contentsElement = document.querySelector(".js-outputContainer");
+    
+    
+    
+    const children = () => {
+    let contents= "";
+      	for (let k = 1; k <= child; k++) {
+       
+      contents += `<div class="outputChild ${(k===1)?"js-child":""}">${k}</div>
+      `}
+      return contents
+    }
 
     contentsElement.innerHTML = "";
     contentsElement.innerHTML += `
@@ -129,11 +153,7 @@ export const flex = () => {
             <div class="outputLabelBottom">BOTTOM</div>
             <div class="outputLabelCenter">parent</div>
             <div class="outputParent js-outputParent">
-               <div class="outputChild js-child">1</div>
-               <div class="outputChild js-child">2</div>
-               <div class="outputChild js-child">3</div>
-               <div class="outputChild js-child">4</div>
-               <div class="outputChild js-child">5</div>
+               ${children()}
             </div>
          </div>
          `;
@@ -151,6 +171,24 @@ export const flex = () => {
         ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
     });
   };
+  
+  const bindSettingsChild = () => {
+    const minusButtonElements = document.querySelector(".js-minusButton");
+    const plusButtonElements = document.querySelector(".js-plusButton");
+    
+  minusButtonElements.addEventListener("click", () => {
+    if (child > 0) { child-- }
+    render();
+  });
+  
+  plusButtonElements.addEventListener("click", () => {
+     if (child < 10) { child++ }
+     render();
+  });
+    
+  };
+  
+  
 
   const bindPropertyButtons = () => {
     const buttonPropertyElements = document.querySelectorAll(".js-propertyButton");
@@ -207,6 +245,7 @@ export const flex = () => {
   const render = () => {
     renderSettings();
     renderOutput();
+    bindSettingsChild();
     bindPropertyButtons();
     bindValueButtons();
   };
