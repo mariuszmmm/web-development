@@ -6,21 +6,29 @@ export const flex = () => {
       propertiesValues: ["flex"]
       },
     {
+      properties: ["flex-direction"],
+      propertiesValues: ["row", "column", "row-reverse", "column-reverse"]
+      },
+    {
       properties: ["justify-content"],
       propertiesValues: ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly"]
-      },
+    },
     {
       properties: ["align-content"],
-      propertiesValues: ["center"]
-      },
-    {
-      properties: ["flex-wrap"],
-      propertiesValues: ["nowrap", "wrap", "wrap-reverse"]
+      propertiesValues: ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly", "stretch"]
       },
     {
       properties: ["align-items"],
       propertiesValues: ["flex-start", "center", "flex-end", "baseline", "stretch"]
-      },
+    },
+    {
+      properties: ["flex-wrap"],
+      propertiesValues: ["nowrap", "wrap", "wrap-reverse"]
+    },
+    {
+      properties: ["gap"],
+      propertiesValues: ["none", "10px", "10%"]
+    },
    ];
 
   let buttonsObjects = buttonsObjectsRaw.map((obj) => {
@@ -168,10 +176,12 @@ export const flex = () => {
   const bindValueButtons = () => {
     const buttonElements = [
       { selector: ".js-displayValueButton", value: 0 },
-      { selector: ".js-justify-contentValueButton", value: 1 },
-      { selector: ".js-align-contentValueButton", value: 2 },
-      { selector: ".js-flex-wrapValueButton", value: 3 },
+      { selector: ".js-flex-directionValueButton", value: 1 },
+      { selector: ".js-justify-contentValueButton", value: 2 },
+      { selector: ".js-align-contentValueButton", value: 3 },
       { selector: ".js-align-itemsValueButton", value: 4 },
+      { selector: ".js-flex-wrapValueButton", value: 5 },
+      { selector: ".js-gapValueButton", value: 6 },
       ];
 
     buttonElements.forEach((button) => {

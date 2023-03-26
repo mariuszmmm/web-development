@@ -22,7 +22,7 @@ const init = () => {
       switch (event.target.innerText) {
          case "Terminal": terminal();
             break;
-         case "Sections HTML": sectionsHtml();
+         case "HTML Sections": sectionsHtml();
             break;
          case "HTML Tags": htmlTags();
             break;
