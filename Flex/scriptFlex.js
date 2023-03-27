@@ -3,31 +3,63 @@ export const flex = () => {
   let buttonsObjectsRaw = [
     {
       properties: ["display"],
-      propertiesValues: ["flex"]
+      propertiesValues: ["flex"],
+      destiny: "parent"
       },
     {
       properties: ["flex-direction"],
-      propertiesValues: ["row", "column", "row-reverse", "column-reverse"]
+      propertiesValues: ["row", "column", "row-reverse", "column-reverse"],
+      destiny: "parent"
       },
     {
       properties: ["justify-content"],
-      propertiesValues: ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly"]
+      propertiesValues: ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly"],
+      destiny: "parent"
     },
     {
       properties: ["align-content"],
-      propertiesValues: ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly", "stretch"]
+      propertiesValues: ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly", "stretch"],
+      destiny: "parent"
       },
     {
       properties: ["align-items"],
-      propertiesValues: ["flex-start", "center", "flex-end", "baseline", "stretch"]
+      propertiesValues: ["flex-start", "center", "flex-end", "baseline", "stretch"],
+      destiny: "parent"
     },
     {
       properties: ["flex-wrap"],
-      propertiesValues: ["nowrap", "wrap", "wrap-reverse"]
+      propertiesValues: ["nowrap", "wrap", "wrap-reverse"],
+      destiny: "parent"
     },
     {
       properties: ["gap"],
-      propertiesValues: ["none", "10px", "10%"]
+      propertiesValues: ["none", "10px", "10%"],
+      destiny: "parent"
+    },
+    {
+      properties: ["order"],
+      propertiesValues: ["0", "1", "2","-1"],
+      destiny: "child"
+    },
+    {
+      properties: ["flex-grow"],
+      propertiesValues: ["0", "1", "2", "-1"],
+      destiny: "child"
+    },
+    {
+      properties: ["flex-shrink"],
+      propertiesValues: ["1", "2", "3", "-1"],
+      destiny: "child"
+    },
+    {
+      properties: ["align-self"],
+      propertiesValues: ["flex-start", "center", "flex-end", "baseline", "stretch"],
+      destiny: "child"
+    },
+    {
+      properties: ["flex-basis"],
+      propertiesValues: ["12vw", "30px", "10%"],
+      destiny: "child"
     },
    ];
 
@@ -37,6 +69,7 @@ export const flex = () => {
       propertiesValues: obj.propertiesValues.map((val, index) => {
         return { name: val, active: index === 0 }
       }),
+      destiny: obj.destiny,
     };
   });
   
@@ -48,7 +81,9 @@ export const flex = () => {
     settingsElement.innerHTML = "";
     settingsElement.innerHTML += `
          ${settingsContents()}
-         ${buttonsContainer()}
+         ${buttonsContainer("parent")}
+         ${buttonsContainer("child")}
+         ${buttonsNumbers()}
       `;
   };
 
@@ -91,13 +126,20 @@ export const flex = () => {
     return contentsElement;
   };
 
-  const buttonsContainer = () => {
+  const buttonsContainer = (container) => {
     let propsElements = "";
+    
+    
 
     propsElements += `<div class="settingsButtons">
     `;
   
     buttonsObjects.forEach((object) => {
+      
+     console.log(object)
+     // console.log(container);
+      
+      if (object.destiny === container) {
       let property = object.properties[0];
       propsElements += `<div class="propertyButtons">
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
@@ -114,8 +156,21 @@ export const flex = () => {
         `;
       })
       propsElements += `</div>`
+      };
     });
-    propsElements += `
+    
+    propsElements += `</div>`
+
+    return propsElements
+  };
+  
+  const buttonsNumbers = () => {
+    let propsElements = "";
+
+    propsElements += `<div class="settingsButtons">
+    `;
+  
+  propsElements += `
     
     <div class="propertyButtons">
       <span class="settingsChild">Children</span>
@@ -128,10 +183,14 @@ export const flex = () => {
       <button class="button settingsChild js-plusButton">&nbsp+&nbsp</button>
      </div>
     
-    </div>`
+      </div>`
 
     return propsElements
   };
+  
+  
+  
+  
 
   const renderOutput = () => {
     const contentsElement = document.querySelector(".js-outputContainer");
