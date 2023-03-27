@@ -113,7 +113,7 @@ body {
 
 .strong {
    font-weight: 700;
-   font-size: 18px;
+   font-size: 15px;
    text-shadow: 0.5px 0.5px rgb(70, 70, 70);
    line-height: 1;
 }
@@ -172,7 +172,7 @@ body {
    border-radius: 5px;
    box-shadow: 2px 2px 1px 1px;
    height: max-content;
-   min-width: max-content;
+   width: content;
    padding: 5px;
    margin: 5px;
    font-weight: 900;
@@ -180,14 +180,15 @@ body {
 }
 
 .settingsChild {
-    height: min-content;
-    min-width: 40px;
-    padding: 5px;
-    margin: 5px;
-    font-weight: 900;
-    font-size: 20px;
-    display: inline-block;
-    text-align: center;
+   display: inline-block;
+   text-align: center;
+   min-height: content;
+   min-width: 40px;
+   width: content;
+   margin-top: 25px;
+   font-weight: 900;
+   padding: 5px;
+   font-size: 20px;
 }
 
 .button:active {
@@ -267,9 +268,7 @@ body {
    border-radius: 5px;
    
    min-width: 12vw;
-   
    min-height: 12vw;
-   
    font-size: 3vw;
    margin: 0;
    z-index: 1;

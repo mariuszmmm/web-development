@@ -118,13 +118,14 @@ export const flex = () => {
     propsElements += `
     
     <div class="propertyButtons">
-      <div class="settingsChild">Children</div>
-      <span class="strong"> :</span>
+      <span class="settingsChild">Children</span>
+       <span class="strong">:</span>
+      
     </div>
     <div class="valueButtons">
-      <button class="button settingsChild js-minusButton">-</button>
+      <button class="button settingsChild js-minusButton">&nbsp-&nbsp</button>
       <span class="settingsChild">${child}</span>
-      <button class="button settingsChild js-plusButton">+</button>
+      <button class="button settingsChild js-plusButton">&nbsp+&nbsp</button>
      </div>
     
     </div>`
