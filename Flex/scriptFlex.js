@@ -191,11 +191,6 @@ export const flex = () => {
   };
 
 
-
-
-
-
-
   const renderOutput = () => {
     const contentsElement = document.querySelector(".js-outputContainer");
 
@@ -278,9 +273,7 @@ export const flex = () => {
       render();
     });
 
-
   };
-
 
 
   const bindPropertyButtons = () => {
@@ -305,33 +298,15 @@ export const flex = () => {
   };
 
   const bindValueButtons = () => {
-    const buttonElements = [
-      { selector: ".js-displayValueButton", value: 0 },
-      { selector: ".js-flex-directionValueButton", value: 1 },
-      { selector: ".js-justify-contentValueButton", value: 2 },
-      { selector: ".js-align-contentValueButton", value: 3 },
-      { selector: ".js-align-itemsValueButton", value: 4 },
-      { selector: ".js-flex-wrapValueButton", value: 5 },
-      { selector: ".js-gapValueButton", value: 6 },
-
-      { selector: ".js-orderValueButton", value: 7 },
-      { selector: ".js-flex-growValueButton", value: 8 },
-      { selector: ".js-flex-shrinkValueButton", value: 9 },
-      { selector: ".js-align-selfValueButton", value: 10 },
-      { selector: ".js-flex-basisValueButton", value: 11 },
-    ];
-///// test nowego obiektu 
-    let newButtonElements = buttonsObjects.map((buttons) => 
-  
-    buttons.properties 
+    const buttonElements = buttonsObjects.map((buttons, index) => {
         
-  )
-
-    console.log("newButtonElements",newButtonElements);
-    console.log("buttonElements",buttonElements);
-    console.log("buttonsObjects",buttonsObjects);
-/////
-
+       let name = ".js-" + buttons.properties[0].name+ "ValueButton";
+       
+       
+      return {selector: name, value: index}
+      
+  });
+  
     buttonElements.forEach((button) => {
       const buttonValueElements = document.querySelectorAll(button.selector);
 
