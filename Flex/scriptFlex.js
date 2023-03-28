@@ -74,6 +74,7 @@ export const flex = () => {
   });
   
   let child = 3;
+  let childSelected = 1;
 
   const renderSettings = () => {
     const settingsElement = document.querySelector(".js-settingsContainer");
@@ -81,9 +82,7 @@ export const flex = () => {
     settingsElement.innerHTML = "";
     settingsElement.innerHTML += `
          ${settingsContents()}
-         ${buttonsContainer("parent")}
-         ${buttonsContainer("child")}
-         ${buttonsNumbers()}
+         ${buttonsContainer()}
       `;
   };
 
@@ -126,28 +125,23 @@ export const flex = () => {
     return contentsElement;
   };
 
-  const buttonsContainer = (container) => {
+  const buttonsContainer = () => {
     let propsElements = "";
-    
-    
-
-    propsElements += `<div class="settingsButtons">
-    `;
   
-    buttonsObjects.forEach((object) => {
+    const buttonsSettings = (container) => {
       
-     console.log(object)
-     // console.log(container);
+        let propsElements = "";
+    buttonsObjects.forEach((object) => {
       
       if (object.destiny === container) {
       let property = object.properties[0];
-      propsElements += `<div class="propertyButtons">
+      propsElements += `<div class="propertyButtons propertyButtons--${container}">
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                   ${property.name}
                </button>
                 <span class="strong">:</span>
-               </div>
-               <div class="valueButtons">`
+        </div>
+        <div class="valueButtons">`
       object.propertiesValues.forEach((obj) => {
         propsElements += `
           <button ${(property.active) ? "" : " disabled"} class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.name}ValueButton">
@@ -159,34 +153,40 @@ export const flex = () => {
       };
     });
     
-    propsElements += `</div>`
-
     return propsElements
-  };
-  
-  const buttonsNumbers = () => {
+    };
+    
+    const buttonsNumbers = (number) => {
     let propsElements = "";
-
-    propsElements += `<div class="settingsButtons">
-    `;
   
-  propsElements += `
+    propsElements += `
     
     <div class="propertyButtons">
-      <span class="settingsChild">Children</span>
+      <span class="settingsChild">${number}</span>
        <span class="strong">:</span>
-      
     </div>
     <div class="valueButtons">
-      <button class="button settingsChild js-minusButton">&nbsp-&nbsp</button>
+      <button class="button settingsChild js-minusButton${number}">&nbsp-&nbsp</button>
       <span class="settingsChild">${child}</span>
-      <button class="button settingsChild js-plusButton">&nbsp+&nbsp</button>
-     </div>
+      <button class="button settingsChild js-plusButton${number}">&nbsp+&nbsp</button>
+    </div>`
     
-      </div>`
+    return propsElements
+  };
+    
+    propsElements += `
+      <div class="settingsButtons">
+        ${buttonsSettings("parent")}
+        ${buttonsNumbers("Selected")}
+        ${buttonsSettings("child")}
+        ${buttonsNumbers("Children")}
+      </div>
+    `;
 
     return propsElements
   };
+  
+
   
   
   
