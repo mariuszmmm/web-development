@@ -81,7 +81,7 @@ export const positioning = () => {
                <p class="settingsParagraph settingsParagraph--positioning">  background: purple; </p>
             
             <p class="settingsParagraph--positioning">}</p>
-            <p class="settingsParagraph--positioning">.child{</p>
+            <p class="settingsParagraph--positioning">.child_1{</p>
             
                ${settingsLabel()}
             
@@ -134,8 +134,8 @@ export const positioning = () => {
             <div class="outputLabelBottom">BOTTOM</div>
             <div class="outputLabelCenter">parent</div>
             <div class="outputParent">
-               <div class="outputChild--withSize js-child">child</div>
-               <div class="outputChild--withSize">child with default settings</div>
+               <div class="outputChild--withSize js-child">child_1</div>
+               <div class="outputChild--withSize">child_2</div>
             </div>
          </div>
          `;

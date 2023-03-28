@@ -5,12 +5,12 @@ export const flex = () => {
       properties: ["display"],
       propertiesValues: ["flex"],
       destiny: "parent"
-      },
+    },
     {
       properties: ["flex-direction"],
       propertiesValues: ["row", "column", "row-reverse", "column-reverse"],
       destiny: "parent"
-      },
+    },
     {
       properties: ["justify-content"],
       propertiesValues: ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly"],
@@ -20,7 +20,7 @@ export const flex = () => {
       properties: ["align-content"],
       propertiesValues: ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly", "stretch"],
       destiny: "parent"
-      },
+    },
     {
       properties: ["align-items"],
       propertiesValues: ["flex-start", "center", "flex-end", "baseline", "stretch"],
@@ -38,7 +38,7 @@ export const flex = () => {
     },
     {
       properties: ["order"],
-      propertiesValues: ["0", "1", "2","-1"],
+      propertiesValues: ["0", "1", "2", "-1"],
       destiny: "child"
     },
     {
@@ -48,7 +48,7 @@ export const flex = () => {
     },
     {
       properties: ["flex-shrink"],
-      propertiesValues: ["1", "2", "3", "-1"],
+      propertiesValues: ["0", "1", "2", "3", "-1"],
       destiny: "child"
     },
     {
@@ -58,10 +58,10 @@ export const flex = () => {
     },
     {
       properties: ["flex-basis"],
-      propertiesValues: ["12vw", "30px", "10%"],
+      propertiesValues: ["12vw", "20vw", "300px", "50%"],
       destiny: "child"
     },
-   ];
+  ];
 
   let buttonsObjects = buttonsObjectsRaw.map((obj) => {
     return {
@@ -72,7 +72,7 @@ export const flex = () => {
       destiny: obj.destiny,
     };
   });
-  
+
   let child = 3;
   let childSelected = 1;
 
@@ -89,9 +89,10 @@ export const flex = () => {
   const settingsContents = () => {
     let contentsElement = "";
 
-    const settingsLabel = () => {
+    const settingsLabel = (name) => {
       let contentsElement = "";
       buttonsObjects.forEach((buttons) => {
+      if (buttons.destiny === name) {
         const active = (buttons.properties.find((buttons) => buttons.active === true))
 
         buttons.properties.forEach((prop) => {
@@ -108,18 +109,21 @@ export const flex = () => {
             };
           });
         };
+      };
+
       });
       return contentsElement;
     };
 
-    contentsElement +=`
-         <div class="settingsContents settingsContents--flex">
-            <p class="settingsParagraph--flex">.parent{</p>
-            
-               ${settingsLabel()}
-            
-            <p class="settingsParagraph--flex">}</p>
-         </div>
+    contentsElement += `
+      <div class="settingsContents settingsContents--flex">
+          <p class="settingsParagraph--flex strong">.parent {</p>
+            ${settingsLabel("parent")}
+          <p class="settingsParagraph--flex strong">}</p>
+          <p class="settingsParagraph--flex strong">.child_${childSelected} {</p>
+            ${(childSelected > 0) ? settingsLabel("child"): ""}
+          <p class="settingsParagraph--flex strong">}</p>
+      </div>
          `;
 
     return contentsElement;
@@ -127,81 +131,81 @@ export const flex = () => {
 
   const buttonsContainer = () => {
     let propsElements = "";
-  
+
     const buttonsSettings = (container) => {
-      
-        let propsElements = "";
-    buttonsObjects.forEach((object) => {
-      
-      if (object.destiny === container) {
-      let property = object.properties[0];
-      propsElements += `<div class="propertyButtons propertyButtons--${container}">
+
+      let propsElements = "";
+      buttonsObjects.forEach((object) => {
+
+        if (object.destiny === container) {
+          let property = object.properties[0];
+          propsElements += `<div class="propertyButtons propertyButtons--${container}">
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                   ${property.name}
                </button>
                 <span class="strong">:</span>
         </div>
         <div class="valueButtons">`
-      object.propertiesValues.forEach((obj) => {
-        propsElements += `
+          object.propertiesValues.forEach((obj) => {
+            propsElements += `
           <button ${(property.active) ? "" : " disabled"} class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.name}ValueButton">
             ${obj.name}
           </button>
         `;
-      })
-      propsElements += `</div>`
-      };
-    });
-    
-    return propsElements
+          })
+          propsElements += `</div>`
+        };
+      });
+
+      return propsElements
     };
-    
-    const buttonsNumbers = (number) => {
-    let propsElements = "";
-  
-    propsElements += `
+
+    const buttonsNumbers = (name, value) => {
+      let propsElements = "";
+
+      propsElements += `
     
     <div class="propertyButtons">
-      <span class="settingsChild">${number}</span>
+      <span class="settingsChild">${name}</span>
        <span class="strong">:</span>
     </div>
     <div class="valueButtons">
-      <button class="button settingsChild js-minusButton${number}">&nbsp-&nbsp</button>
-      <span class="settingsChild">${child}</span>
-      <button class="button settingsChild js-plusButton${number}">&nbsp+&nbsp</button>
+      <button class="button settingsChild js-minusButton${name}">&nbsp-&nbsp</button>
+      <span class="settingsChild">${value}</span>
+      <button class="button settingsChild js-plusButton${name}">&nbsp+&nbsp</button>
     </div>`
-    
-    return propsElements
-  };
-    
+
+      return propsElements
+    };
+
     propsElements += `
       <div class="settingsButtons">
         ${buttonsSettings("parent")}
-        ${buttonsNumbers("Selected")}
+        ${buttonsNumbers("Selected", childSelected)}
         ${buttonsSettings("child")}
-        ${buttonsNumbers("Children")}
+        ${buttonsNumbers("Children", child)}
       </div>
     `;
 
     return propsElements
   };
-  
 
-  
-  
-  
-  
+
+
+
+
+
 
   const renderOutput = () => {
     const contentsElement = document.querySelector(".js-outputContainer");
-    
-    
-    
+
+
+
     const children = () => {
-    let contents= "";
-      	for (let k = 1; k <= child; k++) {
-       
-      contents += `<div class="outputChild ${(k===1)?"js-child":""}">${k}</div>
+      let contents = "";
+      for (let k = 1; k <= child; k++) {
+
+        contents += `<div class="outputChild ${(k === childSelected) ? "childSelected js-child" : ""}">${k}</div>
       `}
       return contents
     }
@@ -225,33 +229,59 @@ export const flex = () => {
   };
 
   const styles = () => {
-    const childStyles = document.querySelector(".js-outputParent");
+    const parentStyles = document.querySelector(".js-outputParent");
+    const childStyles = document.querySelector(".js-child");
 
     buttonsObjects.forEach((buttons) => {
+
       const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
       const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
-      childStyles.style[
+
+      if (buttons.destiny === "parent") {
+      parentStyles.style[
         ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
+      }
+
+      if (buttons.destiny === "child") {
+        childStyles.style[
+          ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
+        }
+
     });
   };
-  
+
   const bindSettingsChild = () => {
-    const minusButtonElements = document.querySelector(".js-minusButton");
-    const plusButtonElements = document.querySelector(".js-plusButton");
-    
-  minusButtonElements.addEventListener("click", () => {
-    if (child > 0) { child-- }
-    render();
-  });
-  
-  plusButtonElements.addEventListener("click", () => {
-     if (child < 10) { child++ }
-     render();
-  });
-    
+    const minusButtonSelectedElements = document.querySelector(".js-minusButtonSelected");
+    const plusButtonSelectedElements = document.querySelector(".js-plusButtonSelected");
+    const minusButtonChildrenElements = document.querySelector(".js-minusButtonChildren");
+    const plusButtonChildrenElements = document.querySelector(".js-plusButtonChildren");
+
+
+    minusButtonSelectedElements.addEventListener("click", () => {
+      if (childSelected > 1) { childSelected-- }
+      render();
+    });
+
+    plusButtonSelectedElements.addEventListener("click", () => {
+      if (childSelected < child) { childSelected++ }
+      render();
+    });
+
+    minusButtonChildrenElements.addEventListener("click", () => {
+      if (child > 1) { child-- }
+      if (childSelected > child) {childSelected = child}
+      render();
+    });
+
+    plusButtonChildrenElements.addEventListener("click", () => {
+      if (child < 10) { child++ }
+      render();
+    });
+
+
   };
-  
-  
+
+
 
   const bindPropertyButtons = () => {
     const buttonPropertyElements = document.querySelectorAll(".js-propertyButton");
@@ -283,7 +313,24 @@ export const flex = () => {
       { selector: ".js-align-itemsValueButton", value: 4 },
       { selector: ".js-flex-wrapValueButton", value: 5 },
       { selector: ".js-gapValueButton", value: 6 },
-      ];
+
+      { selector: ".js-orderValueButton", value: 7 },
+      { selector: ".js-flex-growValueButton", value: 8 },
+      { selector: ".js-flex-shrinkValueButton", value: 9 },
+      { selector: ".js-align-selfValueButton", value: 10 },
+      { selector: ".js-flex-basisValueButton", value: 11 },
+    ];
+///// test nowego obiektu 
+    let newButtonElements = buttonsObjects.map((buttons) => 
+  
+    buttons.properties 
+        
+  )
+
+    console.log("newButtonElements",newButtonElements);
+    console.log("buttonElements",buttonElements);
+    console.log("buttonsObjects",buttonsObjects);
+/////
 
     buttonElements.forEach((button) => {
       const buttonValueElements = document.querySelectorAll(button.selector);
