@@ -3,27 +3,27 @@ export const flex = () => {
   let buttonsObjectsRaw = [
     {
       properties: ["display"],
-      propertiesValues: ["flex"],
+      propertiesValues: ["flex", "inline-flex"],
       destiny: "parent"
     },
     {
       properties: ["flex-direction"],
-      propertiesValues: ["row", "column", "row-reverse", "column-reverse"],
+      propertiesValues: ["row", "row-reverse", "column", "column-reverse"],
       destiny: "parent"
     },
     {
       properties: ["justify-content"],
-      propertiesValues: ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly"],
+      propertiesValues: ["normal", "flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly"],
       destiny: "parent"
     },
     {
       properties: ["align-content"],
-      propertiesValues: ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly", "stretch"],
+      propertiesValues: ["normal", "flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly", "stretch"],
       destiny: "parent"
     },
     {
       properties: ["align-items"],
-      propertiesValues: ["flex-start", "center", "flex-end", "baseline", "stretch"],
+      propertiesValues: ["normal", "flex-start", "flex-end", "center", "stretch"],
       destiny: "parent"
     },
     {
@@ -43,22 +43,22 @@ export const flex = () => {
     },
     {
       properties: ["flex-grow"],
-      propertiesValues: ["0", "1", "2", "-1"],
-      destiny: "child"
-    },
-    {
-      properties: ["flex-shrink"],
       propertiesValues: ["0", "1", "2", "3", "-1"],
       destiny: "child"
     },
     {
+      properties: ["flex-shrink"],
+      propertiesValues: ["1", "2", "3", "-1", "0"],
+      destiny: "child"
+    },
+    {
       properties: ["align-self"],
-      propertiesValues: ["flex-start", "center", "flex-end", "baseline", "stretch"],
+      propertiesValues: ["auto", "normal", "flex-start", "flex-end", "center", "stretch"],
       destiny: "child"
     },
     {
       properties: ["flex-basis"],
-      propertiesValues: ["12vw", "20vw", "300px", "50%"],
+      propertiesValues: ["auto", "12vw", "20vw", "100px", "50%"],
       destiny: "child"
     },
   ];
@@ -164,7 +164,11 @@ export const flex = () => {
       let propsElements = "";
 
       propsElements += `
-    
+      
+    <div class="sectionBorder">&nbsp</div>
+    <div class="sectionBorder"> 
+    </div>
+      
     <div class="propertyButtons">
       <span class="settingsChild">${name}</span>
        <span class="strong">:</span>
@@ -245,7 +249,7 @@ export const flex = () => {
     });
   };
 
-  const bindSettingsChild = () => {
+  const bindSettingsChildButtons = () => {
     const minusButtonSelectedElements = document.querySelector(".js-minusButtonSelected");
     const plusButtonSelectedElements = document.querySelector(".js-plusButtonSelected");
     const minusButtonChildrenElements = document.querySelector(".js-minusButtonChildren");
@@ -330,7 +334,7 @@ export const flex = () => {
   const render = () => {
     renderSettings();
     renderOutput();
-    bindSettingsChild();
+    bindSettingsChildButtons();
     bindPropertyButtons();
     bindValueButtons();
   };

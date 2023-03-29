@@ -298,3 +298,8 @@ body {
 .childSelected {
    border : 0.25em solid red;
 }
+
+.sectionBorder {
+  border-bottom: 1px solid black;
+  width: 100%;
+}
