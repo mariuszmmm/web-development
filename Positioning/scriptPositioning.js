@@ -74,18 +74,18 @@ export const positioning = () => {
 
     contentsElement += `
          <div class="settingsContents settingsContents--positioning">
-            <p class="settingsParagraph--positioning">.parent{</p>
+            <p class="settingsParagraph--positioning strong">.parent {</p>
             
                <p class="settingsParagraph settingsParagraph--positioning">  position: relative; </p>
                <p class="settingsParagraph settingsParagraph--positioning">  border: 3px dashed white; </p>
                <p class="settingsParagraph settingsParagraph--positioning">  background: purple; </p>
             
-            <p class="settingsParagraph--positioning">}</p>
-            <p class="settingsParagraph--positioning">.child_1{</p>
+            <p class="settingsParagraph--positioning strong">}</p>
+            <p class="settingsParagraph--positioning strong">.child_1 {</p>
             
                ${settingsLabel()}
             
-            <p class="settingsParagraph--positioning">}</p>
+            <p class="settingsParagraph--positioning strong">}</p>
          </div>
          `;
 
