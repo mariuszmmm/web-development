@@ -3,76 +3,92 @@ export const flex = () => {
   let buttonsObjectsRaw = [
     {
       properties: ["display"],
-      propertiesValues: ["flex", "inline-flex"],
-      destiny: "parent"
+      propertiesValues: ["flex"],
+      destiny: ["parent"],
     },
     {
       properties: ["flex-direction"],
       propertiesValues: ["row", "row-reverse", "column", "column-reverse"],
-      destiny: "parent"
+      destiny: ["parent"],
     },
     {
       properties: ["justify-content"],
-      propertiesValues: ["normal", "flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly"],
-      destiny: "parent"
+      propertiesValues: ["flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly"],
+      destiny: ["parent"],
     },
     {
       properties: ["align-content"],
-      propertiesValues: ["normal", "flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly", "stretch"],
-      destiny: "parent"
+      propertiesValues: ["flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly", "stretch"],
+      destiny: ["parent"],
     },
     {
       properties: ["align-items"],
-      propertiesValues: ["normal", "flex-start", "flex-end", "center", "stretch"],
-      destiny: "parent"
+      propertiesValues: ["stretch", "flex-start", "flex-end", "center"],
+      destiny: ["parent"],
     },
     {
       properties: ["flex-wrap"],
       propertiesValues: ["nowrap", "wrap", "wrap-reverse"],
-      destiny: "parent"
+      destiny: ["parent"],
     },
     {
       properties: ["gap"],
-      propertiesValues: ["none", "10px", "10%"],
-      destiny: "parent"
+      propertiesValues: ["none", "10px", "10%", "-10px"],
+      destiny: ["parent"],
     },
     {
       properties: ["order"],
       propertiesValues: ["0", "1", "2", "-1"],
-      destiny: "child"
+      destiny: ["child", "child_all"],
     },
     {
       properties: ["flex-grow"],
-      propertiesValues: ["0", "1", "2", "3", "-1"],
-      destiny: "child"
+      propertiesValues: ["0", "1", "2", "3"],
+      destiny: ["child", "child_all"],
     },
     {
       properties: ["flex-shrink"],
-      propertiesValues: ["1", "2", "3", "-1", "0"],
-      destiny: "child"
+      propertiesValues: ["1", "2", "3", "0"],
+      destiny: ["child", "child_all"],
     },
     {
       properties: ["align-self"],
-      propertiesValues: ["auto", "normal", "flex-start", "flex-end", "center", "stretch"],
-      destiny: "child"
+      propertiesValues: ["stretch", "flex-start", "flex-end", "center"],
+      destiny: ["child", "child_all"],
     },
     {
       properties: ["flex-basis"],
-      propertiesValues: ["auto", "12vw", "20vw", "100px", "50%"],
-      destiny: "child"
+      propertiesValues: ["auto", "12vw", "18vw", "200px", "50%", "0"],
+      destiny: ["child"],
+    },
+    {
+      properties: ["flex"],
+      propertiesValues: ["0 1 auto", "1 1 auto", "0 0 auto", "1 0 0", "0 0 100px"],
+      destiny: ["child_all"],
     },
   ];
 
   let buttonsObjects = buttonsObjectsRaw.map((obj) => {
+    // let activeValue = (obj.destiny.find((destiny) => destiny === "child")) ? false : true;
+
+    obj.destiny.forEach((val) => {  
+
     return {
+      destiny: val,
       properties: [{ name: obj.properties[0], active: true }],
       propertiesValues: obj.propertiesValues.map((val, index) => {
         return { name: val, active: index === 0 }
       }),
-      destiny: obj.destiny,
+    
     };
+  })
+
+
+
   });
 
+
+  console.log(buttonsObjects);
   let child = 3;
   let childSelected = 1;
 
@@ -92,7 +108,7 @@ export const flex = () => {
     const settingsLabel = (name) => {
       let contentsElement = "";
       buttonsObjects.forEach((buttons) => {
-      if (buttons.destiny === name) {
+      if (buttons.destiny.find((destiny) => destiny === name)) {
         const active = (buttons.properties.find((buttons) => buttons.active === true))
 
         buttons.properties.forEach((prop) => {
@@ -120,8 +136,13 @@ export const flex = () => {
           <p class="settingsParagraph--flex strong">.parent {</p>
             ${settingsLabel("parent")}
           <p class="settingsParagraph--flex strong">}</p>
+          <p></p>
+          <p class="settingsParagraph--flex strong">.child_all {</p>
+            ${settingsLabel("child_all")}
+          <p class="settingsParagraph--flex strong">}</p>
+          <p></p>
           <p class="settingsParagraph--flex strong">.child_${childSelected} {</p>
-            ${(childSelected > 0) ? settingsLabel("child"): ""}
+            ${settingsLabel("child")}
           <p class="settingsParagraph--flex strong">}</p>
       </div>
          `;
@@ -137,7 +158,7 @@ export const flex = () => {
       let propsElements = "";
       buttonsObjects.forEach((object) => {
 
-        if (object.destiny === container) {
+        if (object.destiny.find((destiny) => destiny === container)) {
           let property = object.properties[0];
           propsElements += `<div class="propertyButtons propertyButtons--${container}">
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
@@ -175,7 +196,7 @@ export const flex = () => {
     </div>
     <div class="valueButtons">
       <button class="button settingsChild js-minusButton${name}">&nbsp-&nbsp</button>
-      <span class="settingsChild">${value}</span>
+      <span style="${(name === "Selected") ? "color: red" : ""}" class="settingsChild">${value}</span>
       <button class="button settingsChild js-plusButton${name}">&nbsp+&nbsp</button>
     </div>`
 
@@ -185,6 +206,7 @@ export const flex = () => {
     propsElements += `
       <div class="settingsButtons">
         ${buttonsSettings("parent")}
+        ${buttonsSettings("child_all")}
         ${buttonsNumbers("Selected", childSelected)}
         ${buttonsSettings("child")}
         ${buttonsNumbers("Children", child)}
@@ -193,7 +215,6 @@ export const flex = () => {
 
     return propsElements
   };
-
 
   const renderOutput = () => {
     const contentsElement = document.querySelector(".js-outputContainer");
@@ -204,7 +225,7 @@ export const flex = () => {
       let contents = "";
       for (let k = 1; k <= child; k++) {
 
-        contents += `<div class="outputChild ${(k === childSelected) ? "childSelected js-child" : ""}">${k}</div>
+        contents += `<div class="outputChild js-child_all ${(k === childSelected) ? "childSelected js-child" : ""}">${k}</div>
       `}
       return contents
     }
@@ -229,6 +250,7 @@ export const flex = () => {
 
   const styles = () => {
     const parentStyles = document.querySelector(".js-outputParent");
+    const childAllStyles = document.querySelector(".js-child_all");
     const childStyles = document.querySelector(".js-child");
 
     buttonsObjects.forEach((buttons) => {
@@ -236,12 +258,17 @@ export const flex = () => {
       const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
       const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
 
-      if (buttons.destiny === "parent") {
+      if (buttons.destiny.find((destiny) => destiny === "parent")) {
       parentStyles.style[
         ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
       }
 
-      if (buttons.destiny === "child") {
+      if (buttons.destiny.find((destiny) => destiny === "child_all")) {
+        childAllStyles.style[
+          ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
+        }
+
+      if (buttons.destiny.find((destiny) => destiny === "child")) {
         childStyles.style[
           ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
         }
