@@ -67,25 +67,40 @@ export const flex = () => {
       destiny: ["child_all"],
     },
   ];
+  
+       let buttonsObjects = [];
 
-  let buttonsObjects = buttonsObjectsRaw.map((obj) => {
+ buttonsObjectsRaw.map((obj) => {
     // let activeValue = (obj.destiny.find((destiny) => destiny === "child")) ? false : true;
 
-    obj.destiny.forEach((val) => {  
+  // obj.destiny.some(() => {  
 
-    return {
-      destiny: val,
-      properties: [{ name: obj.properties[0], active: true }],
-      propertiesValues: obj.propertiesValues.map((val, index) => {
-        return { name: val, active: index === 0 }
-      }),
+     
+
+  for (const val of obj.destiny) {
     
-    };
-  })
+    buttonsObjects = [
+ ...buttonsObjects, {properties: [{ name: obj.properties[0], active: true }],
+   propertiesValues: obj.propertiesValues.map((val, index) => {
+      return { name: val, active: index === 0 }
+     }),
+     destiny: val
+   
+   
+ },
+];
+}
+})
 
-
-
-  });
+     
+    //  properties: [{ name: obj.properties[0], active: true }],
+     // propertiesValues: obj.propertiesValues.map((val, index) => {
+    //    return { name: val, active: index === 0 }
+    //  }),
+    
+    
+// });
+  
 
 
   console.log(buttonsObjects);
@@ -108,7 +123,7 @@ export const flex = () => {
     const settingsLabel = (name) => {
       let contentsElement = "";
       buttonsObjects.forEach((buttons) => {
-      if (buttons.destiny.find((destiny) => destiny === name)) {
+      if (buttons.destiny === name) {
         const active = (buttons.properties.find((buttons) => buttons.active === true))
 
         buttons.properties.forEach((prop) => {
@@ -158,7 +173,7 @@ export const flex = () => {
       let propsElements = "";
       buttonsObjects.forEach((object) => {
 
-        if (object.destiny.find((destiny) => destiny === container)) {
+        if (object.destiny === container) {
           let property = object.properties[0];
           propsElements += `<div class="propertyButtons propertyButtons--${container}">
                <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
@@ -258,17 +273,17 @@ export const flex = () => {
       const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
       const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
 
-      if (buttons.destiny.find((destiny) => destiny === "parent")) {
+      if (buttons.destiny === "parent") {
       parentStyles.style[
         ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
       }
 
-      if (buttons.destiny.find((destiny) => destiny === "child_all")) {
+      if (buttons.destiny === "child_all") {
         childAllStyles.style[
           ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
         }
 
-      if (buttons.destiny.find((destiny) => destiny === "child")) {
+      if (buttons.destiny === "child") {
         childStyles.style[
           ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
         }
