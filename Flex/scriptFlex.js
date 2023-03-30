@@ -67,55 +67,29 @@ export const flex = () => {
       destiny: ["child_all"],
     },
   ];
-  
-       let buttonsObjects = [];
 
- buttonsObjectsRaw.map((obj) => {
-    // let activeValue = (obj.destiny.find((destiny) => destiny === "child")) ? false : true;
+  let buttonsObjects = [];
+  let index = 0;
 
-  // obj.destiny.some(() => {  
+  buttonsObjectsRaw.map((obj) => {
+    for (const val of obj.destiny) {
+      buttonsObjects = [...buttonsObjects, {
+        properties: [{ name: obj.properties[0], active: true, key: `${index}` }],
+        propertiesValues: obj.propertiesValues.map((val, i) => {
+          index++;
 
-     
+          return { name: val, active: i === 0, key: `${index}` }
+        }),
+        destiny: val
+      },
+      ];
 
-  for (const val of obj.destiny) {
-    
-    buttonsObjects = [
- ...buttonsObjects, {properties: [{ name: obj.properties[0], active: true }],
-   propertiesValues: obj.propertiesValues.map((val, index) => {
-      return { name: val, active: index === 0 }
-     }),
-     destiny: val
-   
-   
- },
-];
-}
-})
+      index++;
+    }
+  })
 
-     
-    //  properties: [{ name: obj.properties[0], active: true }],
-     // propertiesValues: obj.propertiesValues.map((val, index) => {
-    //    return { name: val, active: index === 0 }
-    //  }),
-    
-    
-// });
-  
-
-
-  console.log(buttonsObjects);
   let child = 3;
   let childSelected = 1;
-
-  const renderSettings = () => {
-    const settingsElement = document.querySelector(".js-settingsContainer");
-
-    settingsElement.innerHTML = "";
-    settingsElement.innerHTML += `
-         ${settingsContents()}
-         ${buttonsContainer()}
-      `;
-  };
 
   const settingsContents = () => {
     let contentsElement = "";
@@ -123,44 +97,48 @@ export const flex = () => {
     const settingsLabel = (name) => {
       let contentsElement = "";
       buttonsObjects.forEach((buttons) => {
-      if (buttons.destiny === name) {
-        const active = (buttons.properties.find((buttons) => buttons.active === true))
+        if (buttons.destiny === name) {
+          const active = (buttons.properties.find((buttons) => buttons.active === true))
 
-        buttons.properties.forEach((prop) => {
-          if (prop.active) {
-            contentsElement += `<p class="settingsParagraph settingsParagraph--flex">
-                  ${prop.active ? prop.name : ""}`
-          };
-        });
-        if (active !== undefined) {
-          buttons.propertiesValues.forEach((prop) => {
+          buttons.properties.forEach((prop) => {
             if (prop.active) {
-              contentsElement += `:
-                     ${prop.active ? prop.name : ""} </p>`
+              contentsElement += `
+                <p class="settingsParagraph settingsParagraph--flex">
+                ${prop.active ? prop.name : ""}
+              `;
             };
           });
-        };
-      };
 
+          if (active !== undefined) {
+            buttons.propertiesValues.forEach((prop) => {
+              if (prop.active) {
+                contentsElement += `
+                  : ${prop.active ? prop.name : ""} </p>
+                `;
+              };
+            });
+          };
+        };
       });
+
       return contentsElement;
     };
 
     contentsElement += `
       <div class="settingsContents settingsContents--flex">
-          <p class="settingsParagraph--flex strong">.parent {</p>
-            ${settingsLabel("parent")}
-          <p class="settingsParagraph--flex strong">}</p>
-          <p></p>
-          <p class="settingsParagraph--flex strong">.child_all {</p>
-            ${settingsLabel("child_all")}
-          <p class="settingsParagraph--flex strong">}</p>
-          <p></p>
-          <p class="settingsParagraph--flex strong">.child_${childSelected} {</p>
-            ${settingsLabel("child")}
-          <p class="settingsParagraph--flex strong">}</p>
+        <p class="settingsParagraph--flex strong">.parent {</p>
+          ${settingsLabel("parent")}
+        <p class="settingsParagraph--flex strong">}</p>
+        <p></p>
+        <p class="settingsParagraph--flex strong">.child_all {</p>
+          ${settingsLabel("child_all")}
+        <p class="settingsParagraph--flex strong">}</p>
+        <p></p>
+        <p class="settingsParagraph--flex strong">.child_${childSelected} {</p>
+          ${settingsLabel("child")}
+        <p class="settingsParagraph--flex strong">}</p>
       </div>
-         `;
+    `;
 
     return contentsElement;
   };
@@ -169,25 +147,31 @@ export const flex = () => {
     let propsElements = "";
 
     const buttonsSettings = (container) => {
-
       let propsElements = "";
       buttonsObjects.forEach((object) => {
 
         if (object.destiny === container) {
           let property = object.properties[0];
-          propsElements += `<div class="propertyButtons propertyButtons--${container}">
-               <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
-                  ${property.name}
-               </button>
-                <span class="strong">:</span>
-        </div>
-        <div class="valueButtons">`
+          let key = object.properties[0].key;
+
+          propsElements += `
+            <div class="propertyButtons propertyButtons--${container}">
+              <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
+                ${property.name}
+              </button>
+              <span class="strong">:</span>
+            </div>
+            <div class="valueButtons">
+          `;
+
           object.propertiesValues.forEach((obj) => {
             propsElements += `
-          <button ${(property.active) ? "" : " disabled"} class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.name}ValueButton">
-            ${obj.name}
-          </button>
-        `;
+              <button id="${obj.key}" 
+                ${(property.active) ? "" : " disabled"} 
+                class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.key}ValueButton">
+                ${obj.name}
+              </button>
+            `;
           })
           propsElements += `</div>`
         };
@@ -200,20 +184,17 @@ export const flex = () => {
       let propsElements = "";
 
       propsElements += `
-      
-    <div class="sectionBorder">&nbsp</div>
-    <div class="sectionBorder"> 
-    </div>
-      
-    <div class="propertyButtons">
-      <span class="settingsChild">${name}</span>
-       <span class="strong">:</span>
-    </div>
-    <div class="valueButtons">
-      <button class="button settingsChild js-minusButton${name}">&nbsp-&nbsp</button>
-      <span style="${(name === "Selected") ? "color: red" : ""}" class="settingsChild">${value}</span>
-      <button class="button settingsChild js-plusButton${name}">&nbsp+&nbsp</button>
-    </div>`
+        <div class="sectionBorder">&nbsp</div>
+        <div class="sectionBorder"></div>
+        <div class="propertyButtons">
+          <span class="settingsChild">${name}</span>
+          <span class="strong">:</span>
+        </div>
+        <div class="valueButtons">
+          <button class="button settingsChild js-minusButton${name}">&nbsp-&nbsp</button>
+          <span style="${(name === "Selected") ? "color: red" : ""}" class="settingsChild">${value}</span>
+          <button class="button settingsChild js-plusButton${name}">&nbsp+&nbsp</button>
+        </div>`
 
       return propsElements
     };
@@ -231,19 +212,29 @@ export const flex = () => {
     return propsElements
   };
 
+  const renderSettings = () => {
+    const settingsElement = document.querySelector(".js-settingsContainer");
+
+    settingsElement.innerHTML = "";
+    settingsElement.innerHTML += `
+         ${settingsContents()}
+         ${buttonsContainer()}
+      `;
+  };
+
   const renderOutput = () => {
     const contentsElement = document.querySelector(".js-outputContainer");
-
-
 
     const children = () => {
       let contents = "";
       for (let k = 1; k <= child; k++) {
+        contents += `
+          <div class="outputChild js-child_all ${(k === childSelected) ? "childSelected js-child" : ""}">${k}</div>
+        `;
+      };
 
-        contents += `<div class="outputChild js-child_all ${(k === childSelected) ? "childSelected js-child" : ""}">${k}</div>
-      `}
       return contents
-    }
+    };
 
     contentsElement.innerHTML = "";
     contentsElement.innerHTML += `
@@ -274,19 +265,19 @@ export const flex = () => {
       const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
 
       if (buttons.destiny === "parent") {
-      parentStyles.style[
-        ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
+        parentStyles.style[
+          ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
       }
 
       if (buttons.destiny === "child_all") {
         childAllStyles.style[
           ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
-        }
+      }
 
       if (buttons.destiny === "child") {
         childStyles.style[
           ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
-        }
+      }
 
     });
   };
@@ -310,7 +301,7 @@ export const flex = () => {
 
     minusButtonChildrenElements.addEventListener("click", () => {
       if (child > 1) { child-- }
-      if (childSelected > child) {childSelected = child}
+      if (childSelected > child) { childSelected = child }
       render();
     });
 
@@ -327,6 +318,7 @@ export const flex = () => {
 
     buttonPropertyElements.forEach((button) => {
       button.addEventListener("click", () => {
+        console.log(button)
         buttonPropertyToggle(button);
         render();
       });
@@ -336,7 +328,8 @@ export const flex = () => {
   const buttonPropertyToggle = (button) => {
     buttonsObjects.forEach(({ properties }) => {
       properties.forEach(prop => {
-        if (prop.name === button.innerText) {
+        console.log(prop.key, button.id)
+        if (prop.key === button.id) {
           prop.active = !prop.active;
         }
       });
@@ -345,14 +338,12 @@ export const flex = () => {
 
   const bindValueButtons = () => {
     const buttonElements = buttonsObjects.map((buttons, index) => {
-        
-       let name = ".js-" + buttons.properties[0].name+ "ValueButton";
-       
-       
-      return {selector: name, value: index}
-      
-  });
-  
+
+      let name = ".js-" + buttons.properties[0].key + "ValueButton";
+
+      return { selector: name, value: index }
+    });
+
     buttonElements.forEach((button) => {
       const buttonValueElements = document.querySelectorAll(button.selector);
 
@@ -362,12 +353,14 @@ export const flex = () => {
           render();
         });
       });
+
     });
+
   };
 
   const buttonValueToggle = (button, index) => {
     buttonsObjects[index].propertiesValues.forEach(prop => {
-      if (prop.name === button.innerText) {
+      if (prop.key === button.id) {
         prop.active = true;
       } else { prop.active = false }
     });
