@@ -33,7 +33,7 @@ export const flex = () => {
     },
     {
       properties: ["gap"],
-      propertiesValues: ["none", "10px", "10%", "-10px"],
+      propertiesValues: ["none", "10px", "10%", "10vw"],
       destiny: ["parent"],
     },
     {
@@ -256,7 +256,7 @@ export const flex = () => {
 
   const styles = () => {
     const parentStyles = document.querySelector(".js-outputParent");
-    const childAllStyles = document.querySelector(".js-child_all");
+    const childAllStyles = document.querySelectorAll(".js-child_all");
     const childStyles = document.querySelector(".js-child");
 
     buttonsObjects.forEach((buttons) => {
@@ -270,8 +270,10 @@ export const flex = () => {
       }
 
       if (buttons.destiny === "child_all") {
-        childAllStyles.style[
+        childAllStyles.forEach((child) => { 
+        child.style[
           ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
+        })
       }
 
       if (buttons.destiny === "child") {

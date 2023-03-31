@@ -21,7 +21,7 @@ body {
    margin: 10px auto;
    min-width: 320px;
    width: 100%;
-   max-width: 1200px;
+   max-width: 1400px;
    height: content;
    min-height: 675px;
 }
@@ -247,7 +247,7 @@ body {
    top: 50%;
    transform: translate(-50%, -50%);
    font-size: 2em;
-         z-index: 2;
+
       
 }
 
@@ -258,7 +258,7 @@ body {
    height: 75%;
    background: purple;
    padding: 0;
-         z-index: 0;
+
 }
 
 .outputChild {
@@ -274,10 +274,11 @@ body {
    min-width: 12vw;
    min-height: 12vw; */
    font-size: 2em;
-   /*flex-basis: 12vw; */
+   flex-basis: 12vw;
    margin: 0;
    padding: 1%;
-      z-index: 3;
+
+      position: relative;
 }
 
 .outputChild--withSize {
