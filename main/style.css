@@ -246,8 +246,9 @@ body {
    left: 50%;
    top: 50%;
    transform: translate(-50%, -50%);
-   z-index: 1;
    font-size: 2em;
+         z-index: 2;
+      
 }
 
 .outputParent {
@@ -257,6 +258,7 @@ body {
    height: 75%;
    background: purple;
    padding: 0;
+         z-index: 0;
 }
 
 .outputChild {
@@ -272,10 +274,10 @@ body {
    min-width: 12vw;
    min-height: 12vw; */
    font-size: 2em;
-   flex-basis: 12vw;
+   /*flex-basis: 12vw; */
    margin: 0;
-   z-index: 1;
    padding: 1%;
+      z-index: 3;
 }
 
 .outputChild--withSize {
@@ -304,4 +306,3 @@ body {
   border-bottom: 1px solid black;
   width: 100%;
 }
-

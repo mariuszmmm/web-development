@@ -74,7 +74,7 @@ export const flex = () => {
   buttonsObjectsRaw.map((obj) => {
     for (const val of obj.destiny) {
       buttonsObjects = [...buttonsObjects, {
-        properties: [{ name: obj.properties[0], active: true, key: `${index}` }],
+        properties: [{ name: obj.properties[0], active: val === "parent", key: `${index}` }],
         propertiesValues: obj.propertiesValues.map((val, i) => {
           index++;
 
@@ -202,10 +202,10 @@ export const flex = () => {
     propsElements += `
       <div class="settingsButtons">
         ${buttonsSettings("parent")}
+        ${buttonsNumbers("Children", child)}
         ${buttonsSettings("child_all")}
         ${buttonsNumbers("Selected", childSelected)}
         ${buttonsSettings("child")}
-        ${buttonsNumbers("Children", child)}
       </div>
     `;
 
