@@ -248,7 +248,7 @@ body {
    transform: translate(-50%, -50%);
    font-size: 2em;
 
-      
+
 }
 
 .outputParent {
@@ -262,9 +262,9 @@ body {
 }
 
 .outputChild {
-   display: grid;
-   place-content: center;
-   text-align: center;
+   /* display: grid; */
+   /* place-content: center; */
+   /* text-align: center; */
    border: 1px solid black;
    color: black;
    font-weight: bold;
@@ -274,11 +274,10 @@ body {
    min-width: 12vw;
    min-height: 12vw; */
    font-size: 2em;
-   flex-basis: 12vw;
+   /* flex-basis: 12vw; */
    margin: 0;
    padding: 1%;
-
-      position: relative;
+   position: relative;
 }
 
 .outputChild--withSize {
@@ -304,6 +303,6 @@ body {
 }
 
 .sectionBorder {
-  border-bottom: 1px solid black;
-  width: 100%;
+   border-bottom: 1px solid black;
+   width: 100%;
 }

@@ -18,7 +18,7 @@ export const flex = () => {
     },
     {
       properties: ["align-content"],
-      propertiesValues: ["flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly", "stretch"],
+      propertiesValues: ["stretch", "flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly"],
       destiny: ["parent"],
     },
     {
@@ -33,22 +33,22 @@ export const flex = () => {
     },
     {
       properties: ["gap"],
-      propertiesValues: ["none", "10px", "10%", "10vw"],
+      propertiesValues: ["none", "10px", "50px", "10%", "10vw"],
       destiny: ["parent"],
     },
     {
       properties: ["order"],
-      propertiesValues: ["0", "1", "2", "-1"],
+      propertiesValues: ["0", "1", "2", "3", "-1"],
       destiny: ["child", "child_all"],
     },
     {
       properties: ["flex-grow"],
-      propertiesValues: ["0", "1", "2", "3"],
+      propertiesValues: ["0", "1", "2", "3", "4"],
       destiny: ["child", "child_all"],
     },
     {
       properties: ["flex-shrink"],
-      propertiesValues: ["1", "2", "3", "0"],
+      propertiesValues: ["1", "2", "3", "4", "0"],
       destiny: ["child", "child_all"],
     },
     {
@@ -58,8 +58,8 @@ export const flex = () => {
     },
     {
       properties: ["flex-basis"],
-      propertiesValues: ["auto", "12vw", "18vw", "200px", "50%", "0"],
-      destiny: ["child"],
+      propertiesValues: ["auto", "100px", "200px", "12vw", "18vw", "50%", "0"],
+      destiny: ["child", "child_all"],
     },
     {
       properties: ["flex"],
@@ -88,8 +88,14 @@ export const flex = () => {
     }
   })
 
-  let child = 3;
+  let children = 3;
   let childSelected = 1;
+  const childrenMax = 20;
+  const lorem =
+  {
+    childSelected: false,
+    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa molestiae laboriosam, error suscipit excepturi quos maxime quidem odit repellendus, odio dolorem natus fuga dolorum autem, alias laborum id. Possimus, ullam?"
+  };
 
   const settingsContents = () => {
     let contentsElement = "";
@@ -157,7 +163,7 @@ export const flex = () => {
           propsElements += `
             <div class="propertyButtons propertyButtons--${container}">
               <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
-                ${property.name}
+              &nbsp${property.name}&nbsp
               </button>
               <span class="strong">:</span>
             </div>
@@ -169,7 +175,7 @@ export const flex = () => {
               <button id="${obj.key}" 
                 ${(property.active) ? "" : " disabled"} 
                 class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.key}ValueButton">
-                ${obj.name}
+                &nbsp${obj.name}&nbsp
               </button>
             `;
           })
@@ -194,7 +200,8 @@ export const flex = () => {
           <button class="button settingsChild js-minusButton${name}">&nbsp-&nbsp</button>
           <span style="${(name === "Selected") ? "color: red" : ""}" class="settingsChild">${value}</span>
           <button class="button settingsChild js-plusButton${name}">&nbsp+&nbsp</button>
-        </div>`
+          ${(name === "Selected") ? `<button class="button settingsChild js-loremButton ${(lorem.childSelected) ? "button--active" : ""}">&nbsp Lorem ipsum &nbsp</button>` : ""}  
+        </div>`;
 
       return propsElements
     };
@@ -202,7 +209,7 @@ export const flex = () => {
     propsElements += `
       <div class="settingsButtons">
         ${buttonsSettings("parent")}
-        ${buttonsNumbers("Children", child)}
+        ${buttonsNumbers("Children", children)}
         ${buttonsSettings("child_all")}
         ${buttonsNumbers("Selected", childSelected)}
         ${buttonsSettings("child")}
@@ -225,11 +232,12 @@ export const flex = () => {
   const renderOutput = () => {
     const contentsElement = document.querySelector(".js-outputContainer");
 
-    const children = () => {
+    const childrenChange = () => {
       let contents = "";
-      for (let k = 1; k <= child; k++) {
+      for (let k = 1; k <= children; k++) {
         contents += `
-          <div class="outputChild js-child_all ${(k === childSelected) ? "childSelected js-child" : ""}">${k}</div>
+          <div class="outputChild js-child_all ${(k === childSelected) ? "childSelected js-child" : ""}">${k}${((lorem.childSelected) & (k === childSelected)) ? ". " + lorem.text : ""}
+          </div>
         `;
       };
 
@@ -246,14 +254,14 @@ export const flex = () => {
             <div class="outputLabelBottom">BOTTOM</div>
             <div class="outputLabelCenter">parent</div>
             <div class="outputParent js-outputParent">
-               ${children()}
+               ${childrenChange()}
             </div>
          </div>
          `;
 
-            styleAdd("parent");
-            styleAdd("child_all");
-            styleAdd("child");
+    styleAdd("parent");
+    styleAdd("child_all");
+    styleAdd("child");
   };
 
   const styleAdd = (container) => {
@@ -261,28 +269,28 @@ export const flex = () => {
     const childAllStyles = document.querySelectorAll(".js-child_all");
     const childStyles = document.querySelectorAll(".js-child");
 
-   buttonsObjects.forEach((buttons) => {
+    buttonsObjects.forEach((buttons) => {
       const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
       const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
       let element;
-    
-    switch (container) {
-       case "parent" : 
-         element = parentStyles
-         break;
-       case "child_all" : 
-         element = childAllStyles
-         break;
-      case "child":
-         element = childStyles
-         break;
-    }
-    
+
+      switch (container) {
+        case "parent":
+          element = parentStyles
+          break;
+        case "child_all":
+          element = childAllStyles
+          break;
+        case "child":
+          element = childStyles
+          break;
+      }
+
       if (buttons.destiny === container) {
-        
+
         element.forEach((elem) => {
-        elem.style[
-          ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
+          elem.style[
+            ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
         })
       }
     })
@@ -293,6 +301,7 @@ export const flex = () => {
     const plusButtonSelectedElements = document.querySelector(".js-plusButtonSelected");
     const minusButtonChildrenElements = document.querySelector(".js-minusButtonChildren");
     const plusButtonChildrenElements = document.querySelector(".js-plusButtonChildren");
+    const loremButtonElements = document.querySelector(".js-loremButton");
 
 
     minusButtonSelectedElements.addEventListener("click", () => {
@@ -301,30 +310,33 @@ export const flex = () => {
     });
 
     plusButtonSelectedElements.addEventListener("click", () => {
-      if (childSelected < child) { childSelected++ }
+      if (childSelected < children) { childSelected++ }
       render();
     });
 
     minusButtonChildrenElements.addEventListener("click", () => {
-      if (child > 1) { child-- }
-      if (childSelected > child) { childSelected = child }
+      if (children > 1) { children-- }
+      if (childSelected > children) { childSelected = children }
       render();
     });
 
     plusButtonChildrenElements.addEventListener("click", () => {
-      if (child < 10) { child++ }
+      if (children < childrenMax) { children++ }
+      render();
+    });
+
+    loremButtonElements.addEventListener("click", () => {
+      lorem.childSelected = !lorem.childSelected
       render();
     });
 
   };
-
 
   const bindPropertyButtons = () => {
     const buttonPropertyElements = document.querySelectorAll(".js-propertyButton");
 
     buttonPropertyElements.forEach((button) => {
       button.addEventListener("click", () => {
-        console.log(button)
         buttonPropertyToggle(button);
         render();
       });
@@ -334,7 +346,6 @@ export const flex = () => {
   const buttonPropertyToggle = (button) => {
     buttonsObjects.forEach(({ properties }) => {
       properties.forEach(prop => {
-        console.log(prop.key, button.id)
         if (prop.key === button.id) {
           prop.active = !prop.active;
         }
