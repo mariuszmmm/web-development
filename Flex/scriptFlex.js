@@ -251,37 +251,41 @@ export const flex = () => {
          </div>
          `;
 
-    styles();
+            styleAdd("parent");
+            styleAdd("child_all");
+            styleAdd("child");
   };
 
-  const styles = () => {
-    const parentStyles = document.querySelector(".js-outputParent");
+  const styleAdd = (container) => {
+    const parentStyles = document.querySelectorAll(".js-outputParent");
     const childAllStyles = document.querySelectorAll(".js-child_all");
-    const childStyles = document.querySelector(".js-child");
+    const childStyles = document.querySelectorAll(".js-child");
 
-    buttonsObjects.forEach((buttons) => {
-
+   buttonsObjects.forEach((buttons) => {
       const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
       const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
-
-      if (buttons.destiny === "parent") {
-        parentStyles.style[
-          ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
-      }
-
-      if (buttons.destiny === "child_all") {
-        childAllStyles.forEach((child) => { 
-        child.style[
+      let element;
+    
+    switch (container) {
+       case "parent" : 
+         element = parentStyles
+         break;
+       case "child_all" : 
+         element = childAllStyles
+         break;
+      case "child":
+         element = childStyles
+         break;
+    }
+    
+      if (buttons.destiny === container) {
+        
+        element.forEach((elem) => {
+        elem.style[
           ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
         })
       }
-
-      if (buttons.destiny === "child") {
-        childStyles.style[
-          ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
-      }
-
-    });
+    })
   };
 
   const bindSettingsChildButtons = () => {
