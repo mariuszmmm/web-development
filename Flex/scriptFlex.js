@@ -169,7 +169,7 @@ export const flex = () => {
     };
 
     buttonsElement += `
-  
+      
         <div class="settingsButtons">
           ${buttonsSettings("parent")}
         </div>

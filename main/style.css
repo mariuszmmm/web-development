@@ -20,8 +20,8 @@ body {
    border: 1px solid black;
    margin: 10px auto;
    min-width: 320px;
-   width: 100%;
-   max-width: 2800px;
+  /* width: 100%;  */
+  width: 1650px; 
    height: content;
    min-height: 675px;
 }
@@ -124,11 +124,6 @@ body {
    }
 }
 
-.buttonsContainer {
-   display: flex;
-   flex-direction: row;
-}
-
 .settingsButtons {
    display: grid;
    grid-template-columns: auto auto;
@@ -175,6 +170,7 @@ body {
 
 .valueButtons {
    text-align: left;
+   min-width: 210px;
 }
 
 .outputLabelTop {
@@ -275,7 +271,7 @@ body {
    min-height: content;
    min-width: 40px;
    width: content;
-   margin-top: 25px;
+   margin-top: 5px;
    font-weight: 900;
    padding: 5px;
    font-size: 20px;
