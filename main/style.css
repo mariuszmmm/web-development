@@ -9,7 +9,7 @@ html {
 body {
    font-family: 'Montserrat', sans-serif;
    background-color: grey;
-   font-size: 12px;
+   font-size: 15px;
    padding: 0 10px;
 }
 
@@ -21,7 +21,7 @@ body {
    margin: 10px auto;
    min-width: 320px;
    width: 100%;
-   max-width: 1400px;
+   max-width: 1450px;
    height: content;
    min-height: 675px;
 }
@@ -178,18 +178,21 @@ body {
 .button {
    border: 1px solid black;
    border-radius: 5px;
-   box-shadow: 2px 2px 1px 1px;
-   height: max-content;
-   width: max-content;
+   box-shadow: 2px 2px;
+   min-width: max-content;
    padding: 5px;
    margin: 5px;
-   font-weight: 900;
+   font-weight: 700;
    cursor: pointer;
+}
+
+.button--nav {
+   font-weight: 900;
 }
 
 @media (min-width: 1199px) {
    .button--nav {
-      width: 92%;
+      width: 93%;
    }
 }
 

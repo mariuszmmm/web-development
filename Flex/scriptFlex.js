@@ -162,7 +162,7 @@ export const flex = () => {
               &nbsp Lorem ipsum &nbsp
             </button>
           ` : ""
-        };  
+        }  
         </div>`;
 
       return element
