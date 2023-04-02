@@ -97,6 +97,17 @@ export const flex = () => {
     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa molestiae laboriosam, error suscipit excepturi quos maxime quidem odit repellendus, odio dolorem natus fuga dolorum autem, alias laborum id. Possimus, ullam?"
   };
 
+
+  const renderSettings = () => {
+    const settingsElement = document.querySelector(".js-settingsContainer");
+
+    settingsElement.innerHTML = "";
+    settingsElement.innerHTML += `
+         ${settingsContents()}
+         ${buttonsContainer()}
+      `;
+  };
+
   const settingsContents = () => {
     let contentsElement = "";
 
@@ -219,16 +230,6 @@ export const flex = () => {
     return propsElements
   };
 
-  const renderSettings = () => {
-    const settingsElement = document.querySelector(".js-settingsContainer");
-
-    settingsElement.innerHTML = "";
-    settingsElement.innerHTML += `
-         ${settingsContents()}
-         ${buttonsContainer()}
-      `;
-  };
-
   const renderOutput = () => {
     const contentsElement = document.querySelector(".js-outputContainer");
 
@@ -290,7 +291,7 @@ export const flex = () => {
 
         element.forEach((elem) => {
           elem.style[
-            ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
+            ((!activeProperties) ? "" : activeProperties.name)] = ((!activeValuesProperties) ? "" : activeValuesProperties.name);
         })
       }
     })
