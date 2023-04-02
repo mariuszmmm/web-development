@@ -1,89 +1,21 @@
+import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
+
 export const flex = () => {
-
-  let buttonsObjectsRaw = [
-    {
-      properties: ["display"],
-      propertiesValues: ["flex"],
-      destiny: ["parent"],
-    },
-    {
-      properties: ["flex-direction"],
-      propertiesValues: ["row", "row-reverse", "column", "column-reverse"],
-      destiny: ["parent"],
-    },
-    {
-      properties: ["justify-content"],
-      propertiesValues: ["flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly"],
-      destiny: ["parent"],
-    },
-    {
-      properties: ["align-content"],
-      propertiesValues: ["stretch", "flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly"],
-      destiny: ["parent"],
-    },
-    {
-      properties: ["align-items"],
-      propertiesValues: ["stretch", "flex-start", "flex-end", "center"],
-      destiny: ["parent"],
-    },
-    {
-      properties: ["flex-wrap"],
-      propertiesValues: ["nowrap", "wrap", "wrap-reverse"],
-      destiny: ["parent"],
-    },
-    {
-      properties: ["gap"],
-      propertiesValues: ["none", "10px", "50px", "10%", "10vw"],
-      destiny: ["parent"],
-    },
-    {
-      properties: ["order"],
-      propertiesValues: ["0", "1", "2", "3", "-1"],
-      destiny: ["child", "child_all"],
-    },
-    {
-      properties: ["flex-grow"],
-      propertiesValues: ["0", "1", "2", "3", "4"],
-      destiny: ["child", "child_all"],
-    },
-    {
-      properties: ["flex-shrink"],
-      propertiesValues: ["1", "2", "3", "4", "0"],
-      destiny: ["child", "child_all"],
-    },
-    {
-      properties: ["align-self"],
-      propertiesValues: ["stretch", "flex-start", "flex-end", "center"],
-      destiny: ["child", "child_all"],
-    },
-    {
-      properties: ["flex-basis"],
-      propertiesValues: ["auto", "100px", "200px", "12vw", "18vw", "50%", "0"],
-      destiny: ["child", "child_all"],
-    },
-    {
-      properties: ["flex"],
-      propertiesValues: ["0 1 auto", "1 1 auto", "0 0 auto", "1 0 0", "0 0 100px"],
-      destiny: ["child_all"],
-    },
-  ];
-
-  let buttonsObjects = [];
+  let buttonsArray = [];
   let index = 0;
 
-  buttonsObjectsRaw.map((obj) => {
-    for (const val of obj.destiny) {
-      buttonsObjects = [...buttonsObjects, {
-        properties: [{ name: obj.properties[0], active: val === "parent", key: `${index}` }],
-        propertiesValues: obj.propertiesValues.map((val, i) => {
+  buttonsArrayRaw.forEach((buttons) => {
+    for (const value of buttons.destiny) {
+      buttonsArray = [...buttonsArray, {
+        properties: [{ name: buttons.properties[0], active: value === "parent", key: `${index}` }],
+        propertiesValues: buttons.propertiesValues.map((val, i) => {
           index++;
 
           return { name: val, active: i === 0, key: `${index}` }
         }),
-        destiny: val
+        destiny: value
       },
       ];
-
       index++;
     }
   })
@@ -93,10 +25,9 @@ export const flex = () => {
   const childrenMax = 20;
   const lorem =
   {
-    childSelected: false,
+    loremActive: false,
     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa molestiae laboriosam, error suscipit excepturi quos maxime quidem odit repellendus, odio dolorem natus fuga dolorum autem, alias laborum id. Possimus, ullam?"
   };
-
 
   const renderSettings = () => {
     const settingsElement = document.querySelector(".js-settingsContainer");
@@ -104,7 +35,7 @@ export const flex = () => {
     settingsElement.innerHTML = "";
     settingsElement.innerHTML += `
          ${settingsContents()}
-         ${buttonsContainer()}
+         ${settingsButtons()}
       `;
   };
 
@@ -112,25 +43,27 @@ export const flex = () => {
     let contentsElement = "";
 
     const settingsLabel = (name) => {
-      let contentsElement = "";
-      buttonsObjects.forEach((buttons) => {
+      let element = "";
+      
+      buttonsArray.forEach((buttons) => {
         if (buttons.destiny === name) {
-          const active = (buttons.properties.find((buttons) => buttons.active === true))
+          const active = !!buttons.properties[0].active;
 
           buttons.properties.forEach((prop) => {
             if (prop.active) {
-              contentsElement += `
+              element += `
                 <p class="settingsParagraph settingsParagraph--flex">
                 ${prop.active ? prop.name : ""}
               `;
             };
           });
 
-          if (active !== undefined) {
+          if (active) {
             buttons.propertiesValues.forEach((prop) => {
               if (prop.active) {
-                contentsElement += `
-                  : ${prop.active ? prop.name : ""} </p>
+                element += `
+                  : ${prop.active ? prop.name : ""} 
+                  </p>
                 `;
               };
             });
@@ -138,21 +71,21 @@ export const flex = () => {
         };
       });
 
-      return contentsElement;
+      return element;
     };
 
     contentsElement += `
       <div class="settingsContents settingsContents--flex">
         <p class="settingsParagraph--flex strong">.parent {</p>
-          ${settingsLabel("parent")}
+        ${settingsLabel("parent")}
         <p class="settingsParagraph--flex strong">}</p>
         <p></p>
         <p class="settingsParagraph--flex strong">.child_all {</p>
-          ${settingsLabel("child_all")}
+        ${settingsLabel("child_all")}
         <p class="settingsParagraph--flex strong">}</p>
         <p></p>
         <p class="settingsParagraph--flex strong">.child_${childSelected} {</p>
-          ${settingsLabel("child")}
+        ${settingsLabel("child")}
         <p class="settingsParagraph--flex strong">}</p>
       </div>
     `;
@@ -160,93 +93,149 @@ export const flex = () => {
     return contentsElement;
   };
 
-  const buttonsContainer = () => {
-    let propsElements = "";
+  const settingsButtons = () => {
+    let buttonsElement = "";
 
     const buttonsSettings = (container) => {
-      let propsElements = "";
-      buttonsObjects.forEach((object) => {
+      let element = "";
 
-        if (object.destiny === container) {
-          let property = object.properties[0];
-          let key = object.properties[0].key;
+      buttonsArray.forEach((buttons) => {
+        if (buttons.destiny === container) {
+          let property = buttons.properties[0];
+          let key = buttons.properties[0].key;
 
-          propsElements += `
-            <div class="propertyButtons propertyButtons--${container}">
+          element += `
+            <div class="propertyButtons">
               <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
-              &nbsp${property.name}&nbsp
+                &nbsp${property.name}&nbsp
               </button>
-              <span class="strong">:</span>
+              <span class="strong">
+                :
+              </span>
             </div>
             <div class="valueButtons">
           `;
 
-          object.propertiesValues.forEach((obj) => {
-            propsElements += `
-              <button id="${obj.key}" 
-                ${(property.active) ? "" : " disabled"} 
-                class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.key}ValueButton">
-                &nbsp${obj.name}&nbsp
+          buttons.propertiesValues.forEach((button) => {
+            element += `
+              <button id="${button.key}" 
+                ${(property.active) ? "" : "disabled"} 
+                class="button ${(button.active && property.active) ? "button--active" : ""} js-${property.name}groupValueButtons">
+                &nbsp${button.name}&nbsp
               </button>
             `;
           })
-          propsElements += `</div>`
+          element += `
+            </div>
+          `;
         };
       });
 
-      return propsElements
+      return element
     };
 
     const buttonsNumbers = (name, value) => {
-      let propsElements = "";
+      let element = "";
 
-      propsElements += `
-        <div class="sectionBorder">&nbsp</div>
-        <div class="sectionBorder"></div>
+      element += `
         <div class="propertyButtons">
-          <span class="settingsChild">${name}</span>
-          <span class="strong">:</span>
+          <span class="settingsChild">
+            ${name}
+          </span>
+          <span class="strong">
+            :
+          </span>
         </div>
         <div class="valueButtons">
-          <button class="button settingsChild js-minusButton${name}">&nbsp-&nbsp</button>
-          <span style="${(name === "Selected") ? "color: red" : ""}" class="settingsChild">${value}</span>
-          <button class="button settingsChild js-plusButton${name}">&nbsp+&nbsp</button>
-          ${(name === "Selected") ? `<button class="button settingsChild js-loremButton ${(lorem.childSelected) ? "button--active" : ""}">&nbsp Lorem ipsum &nbsp</button>` : ""}  
+          <button class="button settingsChild js-minusButton${name}">
+            &nbsp-&nbsp
+          </button>
+          <span style="${(name === "Selected") ? "color: red" : ""}" class="settingsChild">
+            ${value}
+          </span>
+          <button class="button settingsChild js-plusButton${name}">
+            &nbsp+&nbsp
+          </button>
+          ${(name === "Selected") ? `
+            <button class="button settingsChild js-loremButton 
+              ${(lorem.loremActive) ? "button--active" : ""}">
+              &nbsp Lorem ipsum &nbsp
+            </button>
+          ` : ""
+        };  
         </div>`;
 
-      return propsElements
+      return element
     };
 
-    propsElements += `
+    buttonsElement += `
       <div class="settingsButtons">
         ${buttonsSettings("parent")}
+        <div class="sectionBorder">&nbsp</div>
+        <div class="sectionBorder">&nbsp</div>
         ${buttonsNumbers("Children", children)}
         ${buttonsSettings("child_all")}
+        <div class="sectionBorder">&nbsp</div>
+        <div class="sectionBorder">&nbsp</div>
         ${buttonsNumbers("Selected", childSelected)}
         ${buttonsSettings("child")}
       </div>
     `;
 
-    return propsElements
+    return buttonsElement
   };
 
   const renderOutput = () => {
-    const contentsElement = document.querySelector(".js-outputContainer");
+    const outputElement = document.querySelector(".js-outputContainer");
 
-    const childrenChange = () => {
-      let contents = "";
+    const changeChildren = () => {
+      let element = "";
+
       for (let k = 1; k <= children; k++) {
-        contents += `
-          <div class="outputChild js-child_all ${(k === childSelected) ? "childSelected js-child" : ""}">${k}${((lorem.childSelected) & (k === childSelected)) ? ". " + lorem.text : ""}
+        element += `
+          <div class="outputChild js-child_all ${(k === childSelected) ? "childSelected js-child" : ""}">
+            ${k}
+            ${((lorem.loremActive) & (k === childSelected)) ? ". " + lorem.text : ""}
           </div>
         `;
       };
 
-      return contents
+      return element
     };
 
-    contentsElement.innerHTML = "";
-    contentsElement.innerHTML += `
+    const styleAdd = (container) => {
+      const parentStyles = document.querySelectorAll(".js-outputParent");
+      const childAllStyles = document.querySelectorAll(".js-child_all");
+      const childStyles = document.querySelectorAll(".js-child");
+
+      buttonsArray.forEach((buttons) => {
+        const activeProperties = (buttons.properties[0].active ? buttons.properties[0] : undefined);
+        const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active));
+        let element;
+
+        switch (container) {
+          case "parent":
+            element = parentStyles;
+            break;
+          case "child_all":
+            element = childAllStyles;
+            break;
+          case "child":
+            element = childStyles;
+            break;
+        };
+
+        if (buttons.destiny === container) {
+          element.forEach((elem) => {
+            elem.style[((activeProperties) ? activeProperties.name : "")] =
+              ((activeValuesProperties) ? activeValuesProperties.name : "");
+          });
+        };
+      });
+    };
+
+    outputElement.innerHTML = "";
+    outputElement.innerHTML += `
          <div class="outputContents outputContents--flex">
             <div class="outputLabel">OUTPUT :</div>
             <div class="outputLabelTop">TOP</div>
@@ -255,7 +244,7 @@ export const flex = () => {
             <div class="outputLabelBottom">BOTTOM</div>
             <div class="outputLabelCenter">parent</div>
             <div class="outputParent js-outputParent">
-               ${childrenChange()}
+               ${changeChildren()}
             </div>
          </div>
          `;
@@ -263,74 +252,6 @@ export const flex = () => {
     styleAdd("parent");
     styleAdd("child_all");
     styleAdd("child");
-  };
-
-  const styleAdd = (container) => {
-    const parentStyles = document.querySelectorAll(".js-outputParent");
-    const childAllStyles = document.querySelectorAll(".js-child_all");
-    const childStyles = document.querySelectorAll(".js-child");
-
-    buttonsObjects.forEach((buttons) => {
-      const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
-      const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
-      let element;
-
-      switch (container) {
-        case "parent":
-          element = parentStyles
-          break;
-        case "child_all":
-          element = childAllStyles
-          break;
-        case "child":
-          element = childStyles
-          break;
-      }
-
-      if (buttons.destiny === container) {
-
-        element.forEach((elem) => {
-          elem.style[
-            ((!activeProperties) ? "" : activeProperties.name)] = ((!activeValuesProperties) ? "" : activeValuesProperties.name);
-        })
-      }
-    })
-  };
-
-  const bindSettingsChildButtons = () => {
-    const minusButtonSelectedElements = document.querySelector(".js-minusButtonSelected");
-    const plusButtonSelectedElements = document.querySelector(".js-plusButtonSelected");
-    const minusButtonChildrenElements = document.querySelector(".js-minusButtonChildren");
-    const plusButtonChildrenElements = document.querySelector(".js-plusButtonChildren");
-    const loremButtonElements = document.querySelector(".js-loremButton");
-
-
-    minusButtonSelectedElements.addEventListener("click", () => {
-      if (childSelected > 1) { childSelected-- }
-      render();
-    });
-
-    plusButtonSelectedElements.addEventListener("click", () => {
-      if (childSelected < children) { childSelected++ }
-      render();
-    });
-
-    minusButtonChildrenElements.addEventListener("click", () => {
-      if (children > 1) { children-- }
-      if (childSelected > children) { childSelected = children }
-      render();
-    });
-
-    plusButtonChildrenElements.addEventListener("click", () => {
-      if (children < childrenMax) { children++ }
-      render();
-    });
-
-    loremButtonElements.addEventListener("click", () => {
-      lorem.childSelected = !lorem.childSelected
-      render();
-    });
-
   };
 
   const bindPropertyButtons = () => {
@@ -342,22 +263,21 @@ export const flex = () => {
         render();
       });
     });
-  };
 
-  const buttonPropertyToggle = (button) => {
-    buttonsObjects.forEach(({ properties }) => {
-      properties.forEach(prop => {
-        if (prop.key === button.id) {
-          prop.active = !prop.active;
+    const buttonPropertyToggle = (buttonEvent) => {
+      buttonsArray.forEach((button) => {
+        const buttonObject = button.properties[0];
+
+        if (buttonObject.key === buttonEvent.id) {
+          buttonObject.active = !buttonObject.active;
         }
       });
-    })
+    };
   };
 
   const bindValueButtons = () => {
-    const buttonElements = buttonsObjects.map((buttons, index) => {
-
-      let name = ".js-" + buttons.properties[0].key + "ValueButton";
+    const buttonElements = buttonsArray.map((buttons, index) => {
+      let name = ".js-" + buttons.properties[0].name + "groupValueButtons";
 
       return { selector: name, value: index }
     });
@@ -371,25 +291,58 @@ export const flex = () => {
           render();
         });
       });
-
     });
 
+    const buttonValueToggle = (button, index) => {
+      buttonsArray[index].propertiesValues.forEach(prop => {
+        if (prop.key === button.id) {
+          prop.active = true;
+        } else { prop.active = false }
+      });
+    };
   };
 
-  const buttonValueToggle = (button, index) => {
-    buttonsObjects[index].propertiesValues.forEach(prop => {
-      if (prop.key === button.id) {
-        prop.active = true;
-      } else { prop.active = false }
+  const bindChildSettingButtons = () => {
+    const minusButtonSelectedElement = document.querySelector(".js-minusButtonSelected");
+    const plusButtonSelectedElement = document.querySelector(".js-plusButtonSelected");
+    const minusButtonChildrenElement = document.querySelector(".js-minusButtonChildren");
+    const plusButtonChildrenElement = document.querySelector(".js-plusButtonChildren");
+    const loremButtonElement = document.querySelector(".js-loremButton");
+
+
+    minusButtonSelectedElement.addEventListener("click", () => {
+      if (childSelected > 1) { childSelected-- }
+      render();
+    });
+
+    plusButtonSelectedElement.addEventListener("click", () => {
+      if (childSelected < children) { childSelected++ }
+      render();
+    });
+
+    minusButtonChildrenElement.addEventListener("click", () => {
+      if (children > 1) { children-- }
+      if (childSelected > children) { childSelected = children }
+      render();
+    });
+
+    plusButtonChildrenElement.addEventListener("click", () => {
+      if (children < childrenMax) { children++ }
+      render();
+    });
+
+    loremButtonElement.addEventListener("click", () => {
+      lorem.loremActive = !lorem.loremActive
+      render();
     });
   };
 
   const render = () => {
     renderSettings();
     renderOutput();
-    bindSettingsChildButtons();
     bindPropertyButtons();
     bindValueButtons();
+    bindChildSettingButtons();
   };
 
   render();

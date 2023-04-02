@@ -115,7 +115,13 @@ body {
    font-weight: 700;
    font-size: 15px;
    text-shadow: 0.5px 0.5px rgb(70, 70, 70);
-   line-height: 1;
+   line-height: 2;
+}
+
+@media (max-width: 768px) {
+   .strong {
+      line-height: 1;
+   }
 }
 
 .settingsButtons {
