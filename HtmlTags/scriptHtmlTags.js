@@ -81,7 +81,7 @@ export const htmlTags = () => {
       contentsElement.innerHTML = "";
       let contentsExample = "";
       contentsExample += `
-         <div class="outputContents outputContents--HtmlTags">
+         <div class="outputContents">
             <div class="outputLabel">HTML :</div>
       `;
 
@@ -103,7 +103,7 @@ export const htmlTags = () => {
 
       let contentsOutput = "";
       contentsOutput += `
-         <div class="outputContents outputContents--HtmlTags">
+         <div class="outputContents">
             <div class="outputLabel">OUTPUT :</div>
       `;
 

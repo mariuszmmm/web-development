@@ -169,17 +169,19 @@ export const flex = () => {
     };
 
     buttonsElement += `
-      <div class="settingsButtons">
-        ${buttonsSettings("parent")}
-        <div class="sectionBorder">&nbsp</div>
-        <div class="sectionBorder">&nbsp</div>
-        ${buttonsNumbers("Children", children)}
-        ${buttonsSettings("child_all")}
-        <div class="sectionBorder">&nbsp</div>
-        <div class="sectionBorder">&nbsp</div>
-        ${buttonsNumbers("Selected", childSelected)}
-        ${buttonsSettings("child")}
-      </div>
+  
+        <div class="settingsButtons">
+          ${buttonsSettings("parent")}
+        </div>
+        <div class="settingsButtons">
+          ${buttonsNumbers("Children", children)}
+          ${buttonsSettings("child_all")}
+        </div>
+        <div class="settingsButtons">
+          ${buttonsNumbers("Selected", childSelected)}
+          ${buttonsSettings("child")}
+        </div>
+
     `;
 
     return buttonsElement
