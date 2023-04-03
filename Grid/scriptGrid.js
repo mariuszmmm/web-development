@@ -7,7 +7,7 @@ export const grid = () => {
   buttonsArrayRaw.forEach((buttons) => {
     for (const value of buttons.destiny) {
       buttonsArray = [...buttonsArray, {
-        properties: [{ name: buttons.properties[0], active: value === "parent", key: `${index}` }],
+        properties: [{ name: buttons.properties[0], active: false , key: `${index}` }],
         propertiesValues: buttons.propertiesValues.map((val, i) => {
           index++;
 
@@ -20,7 +20,7 @@ export const grid = () => {
     }
   })
 
-  let children = 3;
+  let children = 9;
   let childSelected = 1;
   const childrenMax = 20;
   const lorem =
