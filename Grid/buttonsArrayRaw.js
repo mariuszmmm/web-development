@@ -2,22 +2,22 @@ export const buttonsArrayRaw = [
   {
     properties: ["display"],
     propertiesValues: ["grid"],
-    destiny: ["parent", "child"],
+    destiny: ["parent", "child_all"],
    },
   {
     properties: ["grid-template-columns"],
-    propertiesValues: ["50px 160px 70px", "1fr 2fr 1fr .5fr", "50% 25% 25%", "50px auto 100px", "1fr 1fr", "repeat(3, 50px)", "1fr", "1fr 2fr", "1fr auto", "200px 1fr 200px", "minmax(50px, 1fr)", "auto 1fr auto"],
-    destiny: ["parent", "child"],
+    propertiesValues: ["50px 160px 70px", "1fr 2fr 1fr .5fr", "50% 25% 25%", "50px auto 100px", "1fr 1fr", "repeat(3, 50px)", "repeat(3, 1fr)", "1fr", "1fr 2fr", "1fr 3fr", "1fr auto", "200px 1fr 200px", "minmax(50px, 1fr)", "auto 1fr auto", "100px 200px 300px", "100px 1fr 2fr"],
+    destiny: ["parent"],
    },
   {
     properties: ["grid-column-gap"],
-    propertiesValues: ["20px", "30px", "10vw"],
-    destiny: ["parent", "child"],
+    propertiesValues: ["none", "20px", "30px", "10vw"],
+    destiny: ["parent", "child", "child_all"],
    },
   {
     properties: ["grid-row-gap"],
-    propertiesValues: ["20px", "30px", "10vw"],
-    destiny: ["parent", "child"],
+    propertiesValues: ["none", "20px", "30px", "10vw"],
+    destiny: ["parent", "child", "child_all"],
    },
   {
     properties: ["grid-template-rows"],
@@ -32,7 +32,7 @@ export const buttonsArrayRaw = [
    {
       properties: ["align-items"],
       propertiesValues: ["stretch", "start", "end", "center"],
-       destiny: ["parent"],
+       destiny: ["parent", "child_all"],
    },
    {
       properties: ["justify-items"],
@@ -52,7 +52,7 @@ export const buttonsArrayRaw = [
   {
    properties: ["justify-content"],
    propertiesValues: ["stretch", "start", "end", "center", "space-between", "space-around", "space-evenly"],
-    destiny: ["parent"],
+    destiny: ["parent", "child_all"],
    },
    {
      properties: ["align-content"],

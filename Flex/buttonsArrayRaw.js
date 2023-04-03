@@ -21,7 +21,7 @@ export const buttonsArrayRaw = [
    },
    {
      properties: ["align-items"],
-     propertiesValues: ["stretch", "flex-start", "flex-end", "center"],
+     propertiesValues: ["stretch", "flex-start", "flex-end", "center", "baseline"],
      destiny: ["parent"],
    },
    {

@@ -4,6 +4,12 @@
    flex-grow: 0;
 }
 
+@media (min-width: 768px) {
+   .settingsContents--flex  {
+      min-width: 310px;
+   }
+}
+
 .settingsParagraph--flex {
    margin-top: 5px;
    margin-bottom: 5px;

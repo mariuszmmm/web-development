@@ -7,7 +7,7 @@ export const flex = () => {
   buttonsArrayRaw.forEach((buttons) => {
     for (const value of buttons.destiny) {
       buttonsArray = [...buttonsArray, {
-        properties: [{ name: buttons.properties[0], active: value === "parent", key: `${index}` }],
+        properties: [{ name: buttons.properties[0], active: index === 0, key: `${index}` }],
         propertiesValues: buttons.propertiesValues.map((val, i) => {
           index++;
 
@@ -169,20 +169,19 @@ export const flex = () => {
     };
 
     buttonsElement += `
-      
+      <div class="buttonsContainer">
         <div class="settingsButtons">
           ${buttonsSettings("parent")}
         </div>
-        <div class="sectionDivision"></div>
         <div class="settingsButtons">
           ${buttonsNumbers("Children", children)}
           ${buttonsSettings("child_all")}
         </div>
-       <div class="sectionDivision"></div>
         <div class="settingsButtons">
           ${buttonsNumbers("Selected", childSelected)}
           ${buttonsSettings("child")}
         </div>
+      </div>  
 
     `;
 
