@@ -120,7 +120,7 @@ export const flex = () => {
             element += `
               <button id="${button.key}" 
                 ${(property.active) ? "" : "disabled"} 
-                class="button ${(button.active && property.active) ? "button--active" : ""} js-${property.name}groupValueButtons">
+                class="button ${(button.active && property.active) ? "button--active" : ""} js-${property.key}groupValueButtons">
                 &nbsp${button.name}&nbsp
               </button>
             `;
@@ -277,7 +277,7 @@ export const flex = () => {
 
   const bindValueButtons = () => {
     const buttonElements = buttonsArray.map((buttons, index) => {
-      let name = ".js-" + buttons.properties[0].name + "groupValueButtons";
+      let name = ".js-" + buttons.properties[0].key + "groupValueButtons";
 
       return { selector: name, value: index }
     });
