@@ -173,10 +173,12 @@ export const grid = () => {
         <div class="settingsButtons">
           ${buttonsSettings("parent")}
         </div>
+        <div class="sectionDivision"></div>
         <div class="settingsButtons">
           ${buttonsNumbers("Children", children)}
           ${buttonsSettings("child_all")}
         </div>
+        <div class="sectionDivision"></div>
         <div class="settingsButtons">
           ${buttonsNumbers("Selected", childSelected)}
           ${buttonsSettings("child")}

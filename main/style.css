@@ -21,7 +21,7 @@ body {
    margin: 10px auto;
    min-width: 320px;
   /* width: 100%;  */
-  width: 1650px; 
+  width: 1700px; 
    height: content;
    min-height: 675px;
 }
@@ -115,7 +115,7 @@ body {
    font-weight: 700;
    font-size: 15px;
    text-shadow: 0.5px 0.5px rgb(70, 70, 70);
-   line-height: 2;
+   line-height: 1;
 }
 
 @media (max-width: 768px) {
@@ -165,7 +165,7 @@ body {
 
 .propertyButtons {
    text-align: right;
-   width: 160px;
+   width: 250px;
 }
 
 .valueButtons {
@@ -314,4 +314,9 @@ body {
 .sectionBorder {
    border-bottom: 1px solid black;
    width: 100%;
+}
+
+.sectionDivision {
+  width: 1px;
+  background: black;
 }

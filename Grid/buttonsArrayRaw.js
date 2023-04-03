@@ -6,7 +6,7 @@ export const buttonsArrayRaw = [
    },
   {
     properties: ["grid-template-columns"],
-    propertiesValues: ["100px 200px 300px", "100px 1fr 2fr", "repeat(3,1fr)", "100px repeat(2, 1fr 2fr)", "repeat(auto-fill, 200px)", "repeat(auto-fill, minnax(200px, 1fr)"],
+    propertiesValues: ["30px 60px 90px", "50px 1fr 2fr", "repeat(3,1fr)", "50px repeat(2, 1fr 2fr)", "repeat(auto-fill, 50px)", "repeat(auto-fill, minnax(90px, 1fr)"],
     destiny: ["parent", "child"],
    },
   {
@@ -16,12 +16,12 @@ export const buttonsArrayRaw = [
    },
   {
     properties: ["grid-template-rows"],
-    propertiesValues: ["50px", "100px", "200px"],
+    propertiesValues: ["30px", "60px", "90px"],
     destiny: ["parent", "child"],
    },
   {
     properties: ["grid-auto-rows"],
-    propertiesValues: ["50px 100px", "100px 200px", "50px 200px"],
+    propertiesValues: ["20px 30px", "40px 80px", "30px 90px"],
     destiny: ["parent"],
    },
    {
