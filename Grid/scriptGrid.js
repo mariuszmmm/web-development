@@ -26,7 +26,7 @@ export const grid = () => {
   const lorem =
   {
     loremActive: false,
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa molestiae laboriosam, error suscipit excepturi quos maxime quidem odit repellendus, odio dolorem natus fuga dolorum autem, alias laborum id. Possimus, ullam?"
+    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
   };
 
   const renderSettings = () => {
@@ -105,7 +105,7 @@ export const grid = () => {
           let key = buttons.properties[0].key;
 
           element += `
-            <div class="propertyButtons">
+            <div class="propertyButtons propertyButtons--grid">
               <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                 &nbsp${property.name}&nbsp
               </button>
@@ -138,7 +138,7 @@ export const grid = () => {
       let element = "";
 
       element += `
-        <div class="propertyButtons">
+        <div class="propertyButtons propertyButtons--grid">
           <span class="settingsChild">
             ${name}
           </span>
@@ -169,21 +169,19 @@ export const grid = () => {
     };
 
     buttonsElement += `
-      
+      <div class="buttonsContainer">
         <div class="settingsButtons">
           ${buttonsSettings("parent")}
         </div>
-        <div class="sectionDivision"></div>
         <div class="settingsButtons">
           ${buttonsNumbers("Children", children)}
           ${buttonsSettings("child_all")}
         </div>
-        <div class="sectionDivision"></div>
         <div class="settingsButtons">
           ${buttonsNumbers("Selected", childSelected)}
           ${buttonsSettings("child")}
         </div>
-
+      </div>
     `;
 
     return buttonsElement

@@ -105,7 +105,7 @@ export const flex = () => {
           let key = buttons.properties[0].key;
 
           element += `
-            <div class="propertyButtons">
+            <div class="propertyButtons propertyButtons--flex">
               <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                 &nbsp${property.name}&nbsp
               </button>
@@ -138,7 +138,7 @@ export const flex = () => {
       let element = "";
 
       element += `
-        <div class="propertyButtons">
+        <div class="propertyButtons propertyButtons--flex">
           <span class="settingsChild">
             ${name}
           </span>

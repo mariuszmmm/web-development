@@ -4,6 +4,12 @@
    flex-grow: 0;
 }
 
+@media (min-width: 768px) {
+   .settingsContents--grid  {
+      min-width: 410px;
+   }
+}
+
 .settingsParagraph--grid {
    margin-top: 5px;
    margin-bottom: 5px;
@@ -13,3 +19,12 @@
    aspect-ratio: 16/9;
 }
 
+.propertyButtons--grid {
+  width: 235px;
+}
+
+@media (max-width: 768px) {
+  .propertyButtons--grid {
+    width: 180px;
+  }
+}

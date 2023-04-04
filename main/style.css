@@ -168,11 +168,11 @@ body {
    }
 }
 
-/* .button:active {
+.button:active {
    transform: translate(1px, 1px);
    box-shadow: 1px 1px 0 0;
    background-color: #32fa64;
-} */
+} 
 
 .button--active {
    transform: translate(1px, 1px);
@@ -185,13 +185,6 @@ body {
    flex-wrap: nowrap;
    justify-content: flex-end;
    align-items: baseline;
-   width: 160px;
-}
-
-@media (max-width: 768px) {
-   .propertyButtons {
-      width: 120px;
-   }
 }
 
 .valueButtons {

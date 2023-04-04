@@ -24,3 +24,13 @@
       min-height: 500px;
    }
 }
+
+.propertyButtons--flex {
+  width: 160px;
+}
+
+@media (max-width: 768px) {
+   .propertyButtons--flex {
+      width: 120px;
+   }
+}
