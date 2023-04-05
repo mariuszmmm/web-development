@@ -34,54 +34,54 @@ export const buttonsArrayRaw = [
     propertiesValues: ["100px", "100px 150px", "25% 50%", "minmax(100px, auto)"],
     destiny: ["parent"],
    },
+  {
+    properties: ["justify-content"],
+    propertiesValues: ["stretch", "start", "end", "center", "space-between", "space-around", "space-evenly"],
+    destiny: ["parent"],
+  },
+  {
+    properties: ["align-content"],
+    propertiesValues: ["stretch", "start", "end", "center", "space-between", "space-around", "space-evenly"],
+    destiny: ["parent"],
+  },   
+   {
+     properties: ["justify-items"],
+     propertiesValues: ["stretch", "start", "end", "center"],
+     destiny: ["parent", "child_all"],
+   },   
    {
       properties: ["align-items"],
       propertiesValues: ["stretch", "start", "end", "center"],
-       destiny: ["parent"],
-   },
-   {
-      properties: ["justify-items"],
-      propertiesValues: ["stretch", "start", "end", "center"],
-      destiny: ["parent"],
-   },
-  {
-    properties: ["align-self"],
-    propertiesValues: ["stretch", "start", "end", "center"],
-    destiny: ["child"],
+       destiny: ["parent", "child_all"],
    },
    {
     properties: ["justify-self"],
     propertiesValues: ["stretch", "start", "end", "center"],
     destiny: ["child"],
-   },
+   },   
   {
-   properties: ["justify-content"],
-   propertiesValues: ["stretch", "start", "end", "center", "space-between", "space-around", "space-evenly"],
-    destiny: ["parent", "child_all"],
-   },
-   {
-     properties: ["align-content"],
-     propertiesValues: ["stretch", "start", "end", "center", "space-between", "space-around", "space-evenly"],
-     destiny: ["parent", "child_all"],
+    properties: ["align-self"],
+    propertiesValues: ["stretch", "start", "end", "center"],
+    destiny: ["child"],
    },
   {
     properties: ["grid-column-start"],
-    propertiesValues: ["1", "2", "3", "4", "-1", "-2", "-3"],
+    propertiesValues: ["1", "2", "3", "-1", "-2", "-3"],
     destiny: ["child"],
    },
   {
     properties: ["grid-column-end"],
-    propertiesValues: ["1", "2", "3", "4", "-1", "-2", "-3", "span 2", "span 3"],
+    propertiesValues: ["1", "2", "3", "-1", "-2", "-3", "span 2", "span 3"],
     destiny: ["child"],
   },
   {
     properties: ["grid-row-start"],
-    propertiesValues: ["1", "2", "3", "4", "-1", "-2", "-3"],
+    propertiesValues: ["1", "2", "3", "-1", "-2", "-3"],
     destiny: ["child"],
   },  
   {
     properties: ["grid-row-end"],
-    propertiesValues: ["1", "2", "3", "4", "-1", "-2", "-3", "span 2", "span 3"],
+    propertiesValues: ["1", "2", "3", "-1", "-2", "-3", "span 2", "span 3"],
     destiny: ["child"],
   },
  ];
