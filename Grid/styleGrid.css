@@ -1,12 +1,11 @@
 .settingsContents--grid {
-   min-width: 265px;
-   min-height: 170px;
+   min-width: 400px;
    flex-grow: 0;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
    .settingsContents--grid  {
-      min-width: 410px;
+      min-width: 265px;
    }
 }
 
@@ -19,12 +18,18 @@
    aspect-ratio: 16/9;
 }
 
+@media (min-width: 1500px) {
+   .outputContents--grid  {
+      min-height: 500px;
+   }
+}
+
 .propertyButtons--grid {
-  width: 235px;
+  width: 210px;
 }
 
 @media (max-width: 768px) {
   .propertyButtons--grid {
-    width: 175px;
+    width: 150px;
   }
 }

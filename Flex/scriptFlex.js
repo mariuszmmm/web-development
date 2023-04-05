@@ -53,16 +53,14 @@ export const flex = () => {
             if (prop.active) {
               element += `
                 <p class="settingsParagraph settingsParagraph--flex">
-                ${prop.active ? prop.name : ""}
-              `;
+                  ${prop.active ? prop.name : ""}`;
             };
           });
 
           if (active) {
             buttons.propertiesValues.forEach((prop) => {
               if (prop.active) {
-                element += `
-                  : ${prop.active ? prop.name : ""} 
+                element += `: ${prop.active ? prop.name : ""};  
                   </p>
                 `;
               };
@@ -182,7 +180,6 @@ export const flex = () => {
           ${buttonsSettings("child")}
         </div>
       </div>  
-
     `;
 
     return buttonsElement

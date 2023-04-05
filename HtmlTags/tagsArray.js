@@ -1,5 +1,4 @@
 export const tagsArray = [
-
    {
       name: "!DOCTYPE html",
       description: "specifies the document type and version of HTML",

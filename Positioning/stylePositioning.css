@@ -1,7 +1,12 @@
 .settingsContents--positioning {
-   min-width: 265px;
-   min-height: 290px;
+   min-width: 400px;
    flex-grow: 0;
+}
+
+@media (max-width: 768px) {
+   .settingsContents--positioning {
+      min-width: 265px;
+   }
 }
 
 .settingsParagraph--positioning {
@@ -13,8 +18,8 @@
    aspect-ratio: 16/9;
 }
 
-@media (min-width: 1499px) {
-   .outputContents--positioning  {
+@media (min-width: 1500px) {
+   .outputContents--positioning {
       min-height: 500px;
    }
 }

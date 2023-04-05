@@ -7,7 +7,7 @@ export const grid = () => {
   buttonsArrayRaw.forEach((buttons) => {
     for (const value of buttons.destiny) {
       buttonsArray = [...buttonsArray, {
-        properties: [{ name: buttons.properties[0], active: index === 0 , key: `${index}` }],
+        properties: [{ name: buttons.properties[0], active: index === 0, key: `${index}` }],
         propertiesValues: buttons.propertiesValues.map((val, i) => {
           index++;
 
@@ -20,13 +20,21 @@ export const grid = () => {
     }
   })
 
-  let children = 6;
+  let children = 7;
   let childSelected = 1;
   const childrenMax = 20;
   const lorem =
   {
     loremActive: false,
     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+  };
+
+  const formatTextArea = (text) => {
+    const regex = /"[^"]+"/g;
+    const stringWithRegex = text.match(regex);
+    const textArea = stringWithRegex ? stringWithRegex.join('<br>') : text;
+
+    return [stringWithRegex, textArea];
   };
 
   const renderSettings = () => {
@@ -44,7 +52,7 @@ export const grid = () => {
 
     const settingsLabel = (name) => {
       let element = "";
-      
+
       buttonsArray.forEach((buttons) => {
         if (buttons.destiny === name) {
           const active = !!buttons.properties[0].active;
@@ -53,7 +61,9 @@ export const grid = () => {
             if (prop.active) {
               element += `
                 <p class="settingsParagraph settingsParagraph--grid">
-                ${prop.active ? prop.name : ""}
+                ${prop.active ? prop.name + ":" +
+                  ((prop.name === "grid-template-areas") ? "<br>" : "")
+                  : ""}
               `;
             };
           });
@@ -61,8 +71,31 @@ export const grid = () => {
           if (active) {
             buttons.propertiesValues.forEach((prop) => {
               if (prop.active) {
+
+                const areaContent = (prop) => {
+                  let textArray = formatTextArea(prop)[0];
+                  let element = "";
+
+                  if (!!textArray) {
+                    textArray.forEach((text) => {
+                      element += `
+                        <p class="settingsParagraph--areaText settingsParagraph--grid">
+                          ${text}
+                        </p>
+                      `;
+                    })
+                    element += `  
+                      <p class="settingsParagraph settingsParagraph--grid">
+                        ;
+                      </p>
+                    `;
+                  } else element = prop + ";";
+
+                  return element
+                }
+
                 element += `
-                  : ${prop.active ? prop.name : ""} 
+                  ${areaContent(prop.name)}
                   </p>
                 `;
               };
@@ -107,7 +140,7 @@ export const grid = () => {
           element += `
             <div class="propertyButtons propertyButtons--grid">
               <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
-                &nbsp${property.name}&nbsp
+                ${property.name}
               </button>
               <span class="strong">
                 :
@@ -121,7 +154,7 @@ export const grid = () => {
               <button id="${button.key}" 
                 ${(property.active) ? "" : "disabled"} 
                 class="button ${(button.active && property.active) ? "button--active" : ""} js-${property.key}groupValueButtons">
-                &nbsp${button.name}&nbsp
+                ${formatTextArea(button.name)[1]}
               </button>
             `;
           })
