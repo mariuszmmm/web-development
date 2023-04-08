@@ -7,7 +7,7 @@ export const flex = () => {
   buttonsArrayRaw.forEach((buttons) => {
     for (const value of buttons.destiny) {
       buttonsArray = [...buttonsArray, {
-        properties: [{ name: buttons.properties[0], active: value === "parent", key: `${index}` }],
+        properties: [{ name: buttons.properties[0], active: index === 0, key: `${index}` }],
         propertiesValues: buttons.propertiesValues.map((val, i) => {
           index++;
 
@@ -53,16 +53,14 @@ export const flex = () => {
             if (prop.active) {
               element += `
                 <p class="settingsParagraph settingsParagraph--flex">
-                ${prop.active ? prop.name : ""}
-              `;
+                  ${prop.active ? prop.name : ""}`;
             };
           });
 
           if (active) {
             buttons.propertiesValues.forEach((prop) => {
               if (prop.active) {
-                element += `
-                  : ${prop.active ? prop.name : ""} 
+                element += `: ${prop.active ? prop.name : ""};  
                   </p>
                 `;
               };
@@ -105,7 +103,7 @@ export const flex = () => {
           let key = buttons.properties[0].key;
 
           element += `
-            <div class="propertyButtons">
+            <div class="propertyButtons propertyButtons--flex">
               <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                 &nbsp${property.name}&nbsp
               </button>
@@ -138,7 +136,7 @@ export const flex = () => {
       let element = "";
 
       element += `
-        <div class="propertyButtons">
+        <div class="propertyButtons propertyButtons--flex">
           <span class="settingsChild">
             ${name}
           </span>
@@ -162,24 +160,26 @@ export const flex = () => {
               &nbsp Lorem ipsum &nbsp
             </button>
           ` : ""
-        };  
+        }  
         </div>`;
 
       return element
     };
 
     buttonsElement += `
-      <div class="settingsButtons">
-        ${buttonsSettings("parent")}
-        <div class="sectionBorder">&nbsp</div>
-        <div class="sectionBorder">&nbsp</div>
-        ${buttonsNumbers("Children", children)}
-        ${buttonsSettings("child_all")}
-        <div class="sectionBorder">&nbsp</div>
-        <div class="sectionBorder">&nbsp</div>
-        ${buttonsNumbers("Selected", childSelected)}
-        ${buttonsSettings("child")}
-      </div>
+      <div class="buttonsContainer">
+        <div class="settingsButtons">
+          ${buttonsSettings("parent")}
+        </div>
+        <div class="settingsButtons">
+          ${buttonsNumbers("Children", children)}
+          ${buttonsSettings("child_all")}
+        </div>
+        <div class="settingsButtons">
+          ${buttonsNumbers("Selected", childSelected)}
+          ${buttonsSettings("child")}
+        </div>
+      </div>  
     `;
 
     return buttonsElement

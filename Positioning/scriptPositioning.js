@@ -4,28 +4,28 @@ export const positioning = () => {
     {
       properties: ["position"],
       propertiesValues: ["static", "relative", "absolute", "fixed", "sticky"]
-      },
+    },
     {
       properties: ["top"],
       propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
-      },
+    },
     {
       properties: ["right"],
       propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
-      },
+    },
     {
       properties: ["bottom"],
       propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
-      },
+    },
     {
       properties: ["left"],
       propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
-      },
+    },
     {
       properties: ["transform"],
       propertiesValues: ["none", "translate(-50px, -50px)", "scale(2, 2)", "rotate(45deg)"]
-      },
-   ];
+    },
+  ];
 
   let buttonsObjects = buttonsObjectsRaw.map((obj) => {
     return {
@@ -75,16 +75,12 @@ export const positioning = () => {
     contentsElement += `
          <div class="settingsContents settingsContents--positioning">
             <p class="settingsParagraph--positioning strong">.parent {</p>
-            
-               <p class="settingsParagraph settingsParagraph--positioning">  position: relative; </p>
-               <p class="settingsParagraph settingsParagraph--positioning">  border: 3px dashed white; </p>
-               <p class="settingsParagraph settingsParagraph--positioning">  background: purple; </p>
-            
+              <p class="settingsParagraph settingsParagraph--positioning">  position: relative; </p>
+              <p class="settingsParagraph settingsParagraph--positioning">  border: 3px dashed white; </p>
+              <p class="settingsParagraph settingsParagraph--positioning">  background: purple; </p>
             <p class="settingsParagraph--positioning strong">}</p>
             <p class="settingsParagraph--positioning strong">.child_1 {</p>
-            
-               ${settingsLabel()}
-            
+              ${settingsLabel()}
             <p class="settingsParagraph--positioning strong">}</p>
          </div>
          `;
@@ -100,13 +96,13 @@ export const positioning = () => {
       let property = object.properties[0];
       propsElements += `
             <div class="propertyButtons">
-               <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
-                  ${property.name}
-               </button>
-               <span class="strong">:</span>
+              <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
+                ${property.name}
+              </button>
+              <span class="strong">:</span>
             </div>
             <div class="valueButtons">
-         `
+         `;
       object.propertiesValues.forEach((obj) => {
         propsElements += `
                <button ${(property.active) ? "" : " disabled"} class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.name}ValueButton">
@@ -114,9 +110,9 @@ export const positioning = () => {
                </button>
             `;
       })
-      propsElements += `</div>`
+      propsElements += `</div>`;
     });
-    propsElements += `</div>`
+    propsElements += `</div>`;
 
     return propsElements
   };
@@ -126,7 +122,7 @@ export const positioning = () => {
 
     contentsElement.innerHTML = "";
     contentsElement.innerHTML += `
-         <div class="outputContents outputContents--positioning">
+          <div class="outputContents outputContents--positioning">
             <div class="outputLabel">OUTPUT :</div>
             <div class="outputLabelTop">TOP</div>
             <div class="outputLabelLeft">LEFT</div>
@@ -134,11 +130,11 @@ export const positioning = () => {
             <div class="outputLabelBottom">BOTTOM</div>
             <div class="outputLabelCenter">parent</div>
             <div class="outputParent">
-               <div class="outputChild--withSize js-child">child_1</div>
-               <div class="outputChild--withSize">child_2</div>
+              <div class="outputChild--withSize js-child">child_1</div>
+              <div class="outputChild--withSize">child_2</div>
             </div>
-         </div>
-         `;
+          </div>
+          `;
 
     styles();
   };
@@ -183,7 +179,7 @@ export const positioning = () => {
       { selector: ".js-bottomValueButton", value: 3 },
       { selector: ".js-leftValueButton", value: 4 },
       { selector: ".js-transformValueButton", value: 5 },
-      ];
+    ];
 
     buttonElements.forEach((button) => {
       const buttonValueElements = document.querySelectorAll(button.selector);
