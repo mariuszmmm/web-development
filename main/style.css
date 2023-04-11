@@ -199,28 +199,32 @@ body {
 }
 
 .input {
-   /* text-align: start; */
+   text-align: start;
    border: 1px solid black;
    border-radius: 5px;
    box-shadow: 2px 2px;
-   width: 12em;
+   min-width: max-content;
    padding: 4px 10px;
    margin: 4px;
    font-weight: 700;
    cursor: pointer;
 }
 
+
 .range {
-   /* text-align: start; */
+  color: black;
+   text-align: start;
    border: 1px solid black;
+   outline: 1px solid black;
    border-radius: 5px;
    box-shadow: 2px 2px;
-   width: 12em;
-   padding: 4px 0;
+   min-width: max-content;
+   padding: 4px 10px;
    margin: 4px;
    font-weight: 700;
    cursor: pointer;
 }
+
 
 .propertyButtons {
    display: flex;
@@ -230,11 +234,12 @@ body {
 }
 
 .valueButtons {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: flex-start;
+
    min-width: 50px;
-   align-items: flex-start;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
 }
 
 .outputLabelTop {
