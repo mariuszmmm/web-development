@@ -12,6 +12,7 @@
    background-color: black;
 
    word-spacing: 5px;
+   line-break: 2;
 
    /* align-self: stretch; */
    display: block;
