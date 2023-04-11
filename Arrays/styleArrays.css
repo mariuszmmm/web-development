@@ -12,7 +12,7 @@
    background-color: black;
 
    word-spacing: 5px;
-   line-break: 2;
+   line-height: 2;
 
    /* align-self: stretch; */
    display: block;
@@ -23,5 +23,5 @@
    flex-grow: 1;
    font-size: 18px;
    /* font-weight: 400; */
-   min-height: content;
+ /*  min-height: content; */
 }
