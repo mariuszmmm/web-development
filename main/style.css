@@ -198,6 +198,30 @@ body {
    background-color: #32fa64;
 }
 
+.input {
+   /* text-align: start; */
+   border: 1px solid black;
+   border-radius: 5px;
+   box-shadow: 2px 2px;
+   width: 12em;
+   padding: 4px 10px;
+   margin: 4px;
+   font-weight: 700;
+   cursor: pointer;
+}
+
+.range {
+   /* text-align: start; */
+   border: 1px solid black;
+   border-radius: 5px;
+   box-shadow: 2px 2px;
+   width: 12em;
+   padding: 4px 0;
+   margin: 4px;
+   font-weight: 700;
+   cursor: pointer;
+}
+
 .propertyButtons {
    display: flex;
    flex-wrap: nowrap;
@@ -206,8 +230,11 @@ body {
 }
 
 .valueButtons {
-   text-align: left;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: flex-start;
    min-width: 50px;
+   align-items: flex-start;
 }
 
 .outputLabelTop {

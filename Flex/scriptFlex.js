@@ -94,7 +94,7 @@ export const flex = () => {
   const settingsButtons = () => {
     let buttonsElement = "";
 
-    const buttonsSettings = (container) => {
+    const buttonsContainer = (container) => {
       let element = "";
 
       buttonsArray.forEach((buttons) => {
@@ -169,15 +169,15 @@ export const flex = () => {
     buttonsElement += `
       <div class="buttonsContainer">
         <div class="settingsButtons">
-          ${buttonsSettings("parent")}
+          ${buttonsContainer("parent")}
         </div>
         <div class="settingsButtons">
           ${buttonsNumbers("Children", children)}
-          ${buttonsSettings("child_all")}
+          ${buttonsContainer("child_all")}
         </div>
         <div class="settingsButtons">
           ${buttonsNumbers("Selected", childSelected)}
-          ${buttonsSettings("child")}
+          ${buttonsContainer("child")}
         </div>
       </div>  
     `;

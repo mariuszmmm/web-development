@@ -1,33 +1,8 @@
+import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
+
 export const positioning = () => {
 
-  let buttonsObjectsRaw = [
-    {
-      properties: ["position"],
-      propertiesValues: ["static", "relative", "absolute", "fixed", "sticky"]
-    },
-    {
-      properties: ["top"],
-      propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
-    },
-    {
-      properties: ["right"],
-      propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
-    },
-    {
-      properties: ["bottom"],
-      propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
-    },
-    {
-      properties: ["left"],
-      propertiesValues: ["auto", "30px", "-30px", "50%", "-50%", "100%", "-100%", "0"]
-    },
-    {
-      properties: ["transform"],
-      propertiesValues: ["none", "translate(-50px, -50px)", "scale(2, 2)", "rotate(45deg)"]
-    },
-  ];
-
-  let buttonsObjects = buttonsObjectsRaw.map((obj) => {
+  let buttonsObjects = buttonsArrayRaw.map((obj) => {
     return {
       properties: [{ name: obj.properties[0], active: true }],
       propertiesValues: obj.propertiesValues.map((val, index) => {
