@@ -234,7 +234,7 @@ export const arrays = () => {
 
       outputElement.innerHTML = "";
       outputElement.innerHTML += `
-         <div class="outputContents--arrays">
+         <div class="outputContents outputContents--arrays">
             <div class="outputLabel">OUTPUT :</div>
 
 
