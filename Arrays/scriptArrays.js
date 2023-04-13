@@ -171,17 +171,18 @@ export const arrays = () => {
          let element = "";
          element += `
             <div class="propertyButtons propertyButtons--grid">
+                <span class="settingsMethod">
+                                array.${name}</span>
+
+
+            </div>
+            <div class="valueButtons">
+           <span class="settingsMethod">
+(<input type="${type}" class="inputMethod js-${name}input" />)
+               </span>
                <button class="button js-${name}Button">
                   ${name}
                </button>
-               <span class="strong">
-                 :
-               </span>
-            </div>
-            <div class="valueButtons">
-               <span class="settingsMethod">
-                 array.${name}(<input type="${type}" class="inputMethod js-${name}input" />)
-               </span>
             </div>
          `;
          return element

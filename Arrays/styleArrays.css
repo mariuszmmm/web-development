@@ -40,8 +40,8 @@
 }
 
 .settingsMethod {
-   display: flex;
-   align-items: center;
+   
+align-self: center;
    /* text-align: center; */
    min-height: content;
    min-width: min-content;
