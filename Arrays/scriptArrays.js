@@ -1,128 +1,90 @@
-import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
+import { methodsArrayRaw } from "./methodsArrayRaw.js"
 
 export const arrays = () => {
-   let buttonsArray = [];
-   let index = 0;
+  // let methodsArray = [];
+  let index = 0;
 
-   let exampleArray1 = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
-   let exampleArray2 = [1, 2, 22, 54, 0, 2, 4, 8, 1, 8, 1];
-   let exampleArray3 = ["aaa", "ccc", "uuu", "ooo"];
-   let exampleArray4 = [];
+  let exampleArray1 = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
+  let exampleArray2 = [1, 2, 22, 54, 0, 2, 4, 8, 1, 8, 1];
+  let exampleArray3 = ["aaa", "ccc", "uuu", "ooo"];
+  let exampleArray4 = [];
 
-   let array = [];
-   let defaultArray = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
-   let savedDefaultArray = [];
-   let output;
+  let array = [];
+  let defaultArray = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
+  let savedDefaultArray = [];
+  let output;
+  const arrayNaN = [null, false, true, NaN, undefined];
 
-   // buttonsArrayRaw.forEach((buttons) => {
-   //    for (const value of buttons.destiny) {
-   //       buttonsArray = [...buttonsArray, {
-   //          properties: [{ name: buttons.properties[0], active: index === 0, key: `${index}` }],
-   //          propertiesValues: buttons.propertiesValues.map((val, i) => {
-   //             index++;
+  const methodsArray = methodsArrayRaw.map((method) => {
+    return {
+      method: method.method,
+      type: method.type.map((val, i) => {
 
-   //             return { name: val, active: i === 0, key: `${index}` }
-   //          }),
-   //          destiny: value
-   //       },
-   //       ];
-   //       index++;
-   //    }
-   // })
+        return {
+          name: val, active: i === 0,
+          Comparison: `
+            ${(val === "=") ? "element => element === ( )" : ""}
+            ${(val === "<") ? "element => element < ( )" : ""}
+            ${(val === "<") ? "element => element > ( )" : ""}
+          `
+        }
+      }),
+      withInput: method.withInput
+    }
+  })
 
-   const renderSettings = () => {
-      const settingsElement = document.querySelector(".js-settingsContainer");
+  console.log(methodsArray)
 
-      settingsElement.innerHTML = "";
-      settingsElement.innerHTML += `
-      ${settingsContents()}
-      ${settingsForm()}      
+  const viewArray = (exampleArray) => {
+    let element = "";
+
+    exampleArray.forEach((arrayElement, index) => {
+      element += `<span class="settingsParagraph--grid">
+          ${(((typeof (arrayElement) === "number") || (arrayNaN.some(elementNaN => elementNaN === arrayElement))) ?
+          (arrayElement)
+          :
+          (`"` + arrayElement + `"`)) + ((exampleArray.length === index + 1) ? "" : ", ")}
+          </span>
+        `;
+    });
+    return element
+  }
+
+  const renderSettings = () => {
+    const settingsElement = document.querySelector(".js-settingsContainer");
+
+    settingsElement.innerHTML = "";
+    settingsElement.innerHTML += `
+      ${leabelContents()}
+      ${methodsSettings()}      
       `;
-   };
+  };
 
-   const settingsContents = () => {
-      let contentsElement = "";
+  const leabelContents = () => {
+    let contentsElement = "";
 
-      const settingsLabel = (name) => {
-         let element = "";
-
-         if (name === "array") {
-
-            array.forEach((elementArray, index) => {
-               element += `<span class="settingsParagraph--grid">${((!isNaN(elementArray) || Number.isNaN(elementArray) || (elementArray === undefined)) ? elementArray : (`"` + elementArray + `"`)) + ((array.length === index + 1) ? "" : ", ")}</span>`;
-            });
-         }
-
-         if (name === "defaultArray") {
-            defaultArray.forEach((elementArray, index) => {
-               element += `<span class="settingsParagraph--grid">${((!isNaN(elementArray) || Number.isNaN(elementArray) || (elementArray === undefined)) ? elementArray : (`"` + elementArray + `"`)) + ((defaultArray.length === index + 1) ? "" : ", ")}</span>`;
-            });
-         }
-
-         return element;
-      };
-
-      contentsElement += `
+    contentsElement += `
         <div class="settingsContents">
           <span class="settingsParagraph--grid">const array = [</span>
-          ${settingsLabel("array")}
+          ${viewArray(array)}
           <span class="settingsParagraph--grid">];</span>
           <p></p>
           <span class="settingsParagraph--grid">const defaultArray = [</span>
-          ${settingsLabel("defaultArray")}
+          ${viewArray(defaultArray)}
           <span class="settingsParagraph--grid">];</span>
           <p></p>
         </div>
       `;
 
-      return contentsElement;
-   };
+    return contentsElement;
+  };
 
-   const settingsForm = () => {
-      let formElement = "";
+  const methodsSettings = () => {
+    let methodsSetingsElement = "";
 
-      const formContainer = (container) => {
-         let element = "";
-
-         buttonsArray.forEach((buttons) => {
-            if (buttons.destiny !== container) {
-               let property = null;
-               let key = null;
-
-               element += `
-              <div class="propertyButtons propertyButtons--grid">
-                <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
-                  ${property.name}
-                </button>
-                <span class="strong">
-                  :
-                </span>
-              </div>
-              <div class="valueButtons">
-            `;
-
-               buttons.propertiesValues.forEach((button) => {
-                  element += `
-                <button id="${button.key}" 
-                  ${(property.active) ? "" : "disabled"} 
-                  class="button ${(button.active && property.active) ? "button--active" : ""} js-${property.key}groupValueButtons">
-                  ${formatTextArea(button.name)[1]}
-                </button>
-              `;
-               })
-               element += `
-              </div>
-            `;
-            };
-         });
-
-         return element
-      };
-
-      const inputArray = (name, value) => {
-         let element = "";
-
-         element += `
+    const inputArraySettings = (name, value) => {
+      let element = "";
+      element += `
             <div class="propertyButtons propertyButtons--grid">
                <span class="settingsChild">
                  array
@@ -164,67 +126,79 @@ export const arrays = () => {
             </div>            
          `;
 
-         return element
-      };
+      return element
+    };
 
-      const methodArray = (name, type) => {
-         let element = "";
-         element += `
+    const methodsArraySettings = (name, input, type) => {
+
+      let element = "";
+      element += `
             <div class="propertyButtons propertyButtons--grid">
                <span class="settingsMethod">
                  array.${name}</span>
             </div>
             <div class="valueButtons">
                <span class="settingsMethod">
-                  (<input id="${name}" type="${type}" class="methodInput js-methodInput" />)
+                  (${(input) ? `<input name="${name}" class="methodInput js-methodInput" />` : " "})
                </span>
                <button id="${name}" class="button js-runButton">
                   ${name}
-               </button>
-            </div>
-         `;
-         return element
-      };
+               </button>`
 
-      formElement += `
-         <div class="buttonsContainer">
-            <div class="settingsButtons">
-               ${inputArray("array")}
-            </div>
-            <div class="settingsButtons">
-               ${methodArray("push")}
-               ${methodArray("unshift", "text")}
-               ${methodArray("filter", "text")}
-               ${methodArray("indexOf", "number")}
-               ${methodArray("lastIndexOf", "number")}
-            </div>            
-         </div>
+      type.forEach((elem) => {
+
+
+        element += `  
+ <button id="" class="button ${elem.active ? "button--active" : ""} js-typeButton">
+ ${elem.name}
+</button>
+
+  `;
+      })
+      element += `</div>
+         `;
+
+      return element
+    };
+
+    methodsSetingsElement += `
+        <div class="buttonsContainer">
+          <div class="settingsButtons">
+            ${inputArraySettings("array")}
+          </div>
+          <div class="settingsButtons">`
+    methodsArray.forEach((object) =>
+      methodsSetingsElement += `
+      ${methodsArraySettings(object.method, object.withInput, object.type)}
+    `)
+    methodsSetingsElement += `</div>            
+        </div>
       `;
 
-      return formElement
-   };
+    return methodsSetingsElement
+  };
 
+  const renderOutput = () => {
+    const outputElement = document.querySelector(".js-outputContainer");
 
-   const renderOutput = () => {
-      const outputElement = document.querySelector(".js-outputContainer");
+    const outputArray = () => {
+      let element = "";
 
-      const outputArray = () => {
-         let element = "";
+      output.forEach((arrayElement, index) => {
+        element += `<span class="settingsParagraph--grid">
+          ${(((typeof (arrayElement) === "number") || (arrayNaN.some(elementNaN => elementNaN === arrayElement))) ?
+            (arrayElement)
+            :
+            (`"` + arrayElement + `"`)) + ((output.length === index + 1) ? "" : ", ")}
+          </span>
+        `;
+      });
 
-         output.forEach((elementArray, index) => {
-            element += `<span class="settingsParagraph--grid">${((!isNaN(elementArray) || Number.isNaN(elementArray) || (elementArray === undefined)) ? elementArray : (`"` + elementArray + `"`)) + ((output.length === index + 1) ? "" : ", ")}</span>`;
+      return element;
+    }
 
-            // console.log(elementArray.charAt(elementArray.length - 1) === `"`)
-
-            // string.charAt(string.length - 1)
-         });
-
-         return element;
-      }
-
-
-      outputElement.innerHTML = "";
-      outputElement.innerHTML += `
+    outputElement.innerHTML = "";
+    outputElement.innerHTML += `
          <div class="outputContents outputContents--arrays">
             <div class="outputLabel">OUTPUT :</div>
 
@@ -232,101 +206,99 @@ export const arrays = () => {
             <span class="settingsParagraph--grid">const outputArray = [</span>
             ${outputArray()}
             <span class="settingsParagraph--grid">];</span>
-            <p></p> ` : "nie tablica"
-         }  
-
-
-         
+            <p></p> ` : `${output ? output : ""}`
+      }  
             </div>
          </div>
          `;
-   }
+  }
 
-   const createNumbersArray = () => {
+  const bindMethodButtons = () => {
+    const randomNumberArrayElement = document.querySelector(".js-randomNumberArray");
+    const randomStringArrayElement = document.querySelector(".js-randomStringArray");
+    const randomMixArrayElement = document.querySelector(".js-randomMixArray");
+    const rangeArrayElement = document.querySelector(".js-rangeArray");
+    const loadDefaultArrayElement = document.querySelector(".js-loadDefaultArray");
+    const saveDefaultArrayElement = document.querySelector(".js-saveDefaultArray");
+    const resetDefaultArrayElement = document.querySelector(".js-resetDefaultArray");
+    const loadOutputArrayElement = document.querySelector(".js-loadOutputArrayArray");
 
-   };
+    const methodInputElements = document.querySelectorAll(".js-methodInput")
+    const runButtonElements = document.querySelectorAll(".js-runButton")
+    let inputValue;
 
-   const bindSettingButtons = () => {
-      const randomNumberArrayElement = document.querySelector(".js-randomNumberArray");
-      const randomStringArrayElement = document.querySelector(".js-randomStringArray");
-      const randomMixArrayElement = document.querySelector(".js-randomMixArray");
-      const rangeArrayElement = document.querySelector(".js-rangeArray");
-      const loadDefaultArrayElement = document.querySelector(".js-loadDefaultArray");
-      const saveDefaultArrayElement = document.querySelector(".js-saveDefaultArray");
-      const resetDefaultArrayElement = document.querySelector(".js-resetDefaultArray");
-      const loadOutputArrayElement = document.querySelector(".js-loadOutputArrayArray");
+    runButtonElements.forEach((button) => {
+      button.addEventListener("click", () => {
+        methodInputElements.forEach((input) => {
+          if (input.name === button.id) {
+            inputValue = input.value
+          }
+        });
 
-      const methodInputElements = document.querySelectorAll(".js-methodInput")
-      const runButtonElements = document.querySelectorAll(".js-runButton")
-
-
-      runButtonElements.forEach((button, index) => {
-         button.addEventListener("click", () => {
-            // console.log(methodInputElements[index])
-            // console.log(button)
-            // console.log(button.innerText)
-            // console.log(event.target)
-            // console.log(index)
-            // console.log(methodInputElements[index].value);
-            // console.log(Number(methodInputElements[index]));
-            // console.log(Number(methodInputElements[index].value));
-            const test = () => {
-
-               const inputValue = methodInputElements[index].value;
-console.log(   ["null", "true", "false"].forEach((element) => element === inputValue));
-               return (
-               
-               
-
-                  ((inputValue.charAt(0) === `"`) && (inputValue.charAt(inputValue.length - 1) === `"`)) || ["null", "true", "false"].forEach((element) => element === inputValue)
-                  ?       
-                  // inputValue.slice(1, -1)
-                  Number(inputValue)
+        const enterNumberOrString = () => {
+          return (
+            !!Number(inputValue) ?
+              Number(inputValue)
+              :
+              inputValue.charAt(0) === `"` && inputValue.charAt(inputValue.length - 1) === `"` ?
+                (inputValue.slice(1, -1)).toString()
+                :
+                (arrayNaN.some((elementNaN) => String(elementNaN) === inputValue)) ?
+                  (arrayNaN.find((elementNaN) => String(elementNaN) === inputValue))
                   :
-                  ((!isNaN(Number(inputValue))) ? Number(inputValue) : (inputValue))
-               
-                  
-               
+                  inputValue
+          )
+        };
 
+        switch (button.innerText) {
+          case "pop":
+            output = array.pop();
+            break;
+          case "shift":
+            output = array.shift();
+            break;
+          case "reverse":
+            output = array.reverse();
+            break;
+          case "push":
+            array.push(enterNumberOrString());
+            output = array;
+            break;
+          case "unshift":
+            array.unshift(enterNumberOrString());
+            output = array;
+            break;
+          case "map":
+            output = array.map(element => element === enterNumberOrString());
+            break;
+          case "filter":
+            output = array.filter(element => element === enterNumberOrString());
+            break;
+          case "at":
+            output = array.at(enterNumberOrString());
+            break;
+          case "slice":
+            output = array.slice(enterNumberOrString());
+            break;
+          case "indexOf":
+            output = array.indexOf(enterNumberOrString());
+            break;
+          case "lastIndexOf":
+            output = array.lastIndexOf(enterNumberOrString());
+            break;
+        }
 
+        render();
+      })
+    });
+  };
 
+  const render = () => {
+    renderSettings();
+    renderOutput();
+    bindMethodButtons();
+  };
 
-               
-               )
-            };
-
-            switch (button.innerText) {
-               case "push":
-console.log(test());
-
-                  array.push(test());
-                  output = array;
-                  break;
-
-
-
-
-            }
-            //             console.log(array);         
-            // console.log("output", output);
-            render();
-         })
-
-      });
-
-      randomNumberArrayElement.addEventListener("click", () => {
-         // createNumbersArray(); 
-         render();
-      });
-   };
-
-   const render = () => {
-      renderSettings();
-      renderOutput();
-      bindSettingButtons();
-      // bindValueButtons();
-   };
-
-   render();
+  render();
 };
 
