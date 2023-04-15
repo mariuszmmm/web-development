@@ -261,12 +261,10 @@ export const arrays = () => {
             output = array.reverse();
             break;
           case "push":
-            array.push(enterNumberOrString());
-            output = array;
+            output = array.push(enterNumberOrString());
             break;
           case "unshift":
-            array.unshift(enterNumberOrString());
-            output = array;
+            output = array.unshift(enterNumberOrString());
             break;
           case "map":
             output = array.map(element => element === enterNumberOrString());
