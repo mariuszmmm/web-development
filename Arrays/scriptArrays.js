@@ -15,21 +15,28 @@ export const arrays = () => {
   let output;
   const arrayNaN = [null, false, true, NaN, undefined];
 
-  const methodsArray = methodsArrayRaw.map((method) => {
+  const methodsArray = methodsArrayRaw.map((object) => {
     return {
-      method: method.method,
-      type: method.type.map((val, i) => {
+      method: object.method,
+      methodButtons: object.methodButtons.map((button, index) => {
 
         return {
-          name: val, active: i === 0,
-          Comparison: `
-            ${(val === "=") ? "element => element === ( )" : ""}
-            ${(val === "<") ? "element => element < ( )" : ""}
-            ${(val === "<") ? "element => element > ( )" : ""}
-          `
+          name: button, active: index === 0,
+          methodContent:
+
+            `${(button === "a*?") ? " a => a * " : ""}` +
+            `${(button === "a**?") ? " a => a ** " : ""}` +
+            `${(button === "a+?") ? " a => a + " : ""}` +
+            `${(button === "a=?") ? " a => a = " : ""}` +
+            `${(button === "a===?") ? " a => a === " : ""}` +
+            `${(button === "a!==?") ? " a => a !== " : ""}` +
+            `${(button === "a>?") ? " a => a > " : ""}` +
+            `${(button === "a.lenght>?") ? " a => a.lenght > " : ""}`
+
         }
       }),
-      withInput: method.withInput
+      inputType: object.inputType,
+      inputValue: "",
     }
   })
 
@@ -129,34 +136,38 @@ export const arrays = () => {
       return element
     };
 
-    const methodsArraySettings = (name, input, type) => {
-
+    const methodsArraySettings = (name, buttons, inputType, inputValue) => {
       let element = "";
       element += `
-            <div class="propertyButtons propertyButtons--grid">
-               <span class="settingsMethod">
-                 array.${name}</span>
-            </div>
-            <div class="valueButtons">
-               <span class="settingsMethod">
-                  (${(input) ? `<input name="${name}" class="methodInput js-methodInput" />` : " "})
-               </span>
-               <button id="${name}" class="button js-runButton">
-                  ${name}
-               </button>`
+        <div class="propertyButtons propertyButtons--grid">
+          <span class="settingsMethod">
+            array.${name}</span>
+        </div>
+        <div class="valueButtons">
+          <span class="settingsMethod">(
+      `;
 
-      type.forEach((elem) => {
+      buttons.forEach((button) => {
+        element += `${button.active ? button.methodContent : ""}`
+      });
 
+      element += `
+      ${inputType ? `<input type="${inputType}" name="${name}" value="${inputValue}" class="methodInput js-methodInput" />` : ""} ) 
+        </span>
+          <button id="${name}" class="button js-runButton">
+            run
+          </button>
+      `;
 
+      buttons.forEach((button) => {
         element += `  
- <button id="" class="button ${elem.active ? "button--active" : ""} js-typeButton">
- ${elem.name}
-</button>
-
-  `;
+          <button name="${name}" class="button ${button.active ? "button--active" : ""} js-typeButton">
+            ${button.name}
+          </button>
+        `;
       })
       element += `</div>
-         `;
+      `;
 
       return element
     };
@@ -169,7 +180,7 @@ export const arrays = () => {
           <div class="settingsButtons">`
     methodsArray.forEach((object) =>
       methodsSetingsElement += `
-      ${methodsArraySettings(object.method, object.withInput, object.type)}
+      ${methodsArraySettings(object.method, object.methodButtons, object.inputType, object.inputValue)}
     `)
     methodsSetingsElement += `</div>            
         </div>
@@ -225,15 +236,50 @@ export const arrays = () => {
 
     const methodInputElements = document.querySelectorAll(".js-methodInput")
     const runButtonElements = document.querySelectorAll(".js-runButton")
+    const typeButtonElements = document.querySelectorAll(".js-typeButton")
     let inputValue;
 
-    runButtonElements.forEach((button) => {
+    typeButtonElements.forEach((button) => {
       button.addEventListener("click", () => {
+        methodsArray.forEach((object) => {
+          object.methodButtons.forEach((obj) => {
+            if (object.method === button.name) {
+              if (obj.name === button.innerText) {
+                obj.active = !obj.active;
+              } else obj.active = false
+            }
+
+          });
+        });
+        render();
+      });
+    });
+
+    methodInputElements.forEach((input) => {
+      input.addEventListener("click", (event) => {
+        methodsArray.forEach((method) => {
+          if (method.method === input.name) {
+            event.target.value = "";
+          }
+        })
+      })
+    })
+
+    runButtonElements.forEach((button) => {
+      button.addEventListener("click", (event) => {
         methodInputElements.forEach((input) => {
           if (input.name === button.id) {
             inputValue = input.value
           }
         });
+
+        const inputSave = () => {
+          methodsArray.forEach((method) => {
+            if (method.method === button.id) {
+              method.inputValue = inputValue
+            }
+          })
+        }
 
         const enterNumberOrString = () => {
           return (
@@ -250,7 +296,22 @@ export const arrays = () => {
           )
         };
 
-        switch (button.innerText) {
+        const enterMethodContent = () => {
+          let content
+          methodsArray.forEach((method) => {
+            if (method.method === button.id) {
+              method.inputValue = inputValue
+              method.methodButtons.forEach((element) => {
+                if (element.active)
+                  content = element.methodContent + enterNumberOrString();
+              })
+            }
+          })
+
+          return Function(`return (${content})`)();
+        }
+
+        switch (button.id) {
           case "pop":
             output = array.pop();
             break;
@@ -267,10 +328,10 @@ export const arrays = () => {
             output = array.unshift(enterNumberOrString());
             break;
           case "map":
-            output = array.map(element => element === enterNumberOrString());
+            output = array.map(enterMethodContent());
             break;
           case "filter":
-            output = array.filter(element => element === enterNumberOrString());
+            output = array.filter(enterMethodContent());
             break;
           case "at":
             output = array.at(enterNumberOrString());
@@ -286,6 +347,7 @@ export const arrays = () => {
             break;
         }
 
+        inputSave();
         render();
       })
     });

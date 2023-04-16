@@ -1,57 +1,52 @@
 export const methodsArrayRaw = [
    {
       method: "pop",
-      type: [],
-      withInput: false,
+      methodButtons: [],
+      inputType: null
    },
    {
       method: "shift",
-      type: [],
-      withInput: false,
+      methodButtons: [],
+      inputType: null
    },
    {
       method: "reverse",
-      type: [],
-      withInput: false,
+      methodButtons: [],
+      inputType: null
    },
    {
       method: "push",
-      type: [],
-      withInput: true,
+      methodButtons: [],
+      inputType: "text"
    },
    {
       method: "unshift",
-      type: [],
-      withInput: true,
+      methodButtons: [],
+      inputType: "text"
    },
    {
       method: "map",
-      type: ["=", "<", ">"],
-      withInput: true,
+      methodButtons: ["a*?","a**?", "a+?", "a=?", "a===?"],
+      inputType: "text"
    },
    {
       method: "filter",
-      type: ["=", "<", ">"],
-      withInput: true,
-   },
-   {
-      method: "at",
-      type: ["=", "<", ">"],
-      withInput: true,
+      methodButtons: ["a.lenght>?", "a>?", "a=?", "a===?", "a!==?"],
+      inputType: "text"
    },
    {
       method: "slice",
-      type: ["=", "<", ">"],
-      withInput: true,
+      methodButtons: [],
+      inputType: "number"
    },
    {
       method: "indexOf",
-      type: ["=", "<", ">"],
-      withInput: true,
+      methodButtons: [],
+      inputType: "text"
    },
    {
       method: "lastIndexOf",
-      type: ["=", "<", ">"],
-      withInput: true,
+      methodButtons: [],
+      inputType: "number"
    },
 ];
