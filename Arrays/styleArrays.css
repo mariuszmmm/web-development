@@ -1,3 +1,19 @@
+.settingsParagraph--arrays {
+   margin-top: 5px;
+   margin-bottom: 5px;
+}
+
+.propertyButtons--arrays {
+   width: 230px;
+ }
+ 
+ @media (max-width: 768px) {
+   .propertyButtons--arrays {
+     width: 150px;
+   }
+ }
+
+
 .outputContents--arrays {
    /* aspect-ratio: 16/9; */
 

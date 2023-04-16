@@ -1,20 +1,10 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js"
 
 export const arrays = () => {
-  // let methodsArray = [];
-  let index = 0;
-
-  let exampleArray1 = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
-  let exampleArray2 = [1, 2, 22, 54, 0, 2, 4, 8, 1, 8, 1];
-  let exampleArray3 = ["aaa", "ccc", "uuu", "ooo"];
-  let exampleArray4 = [];
-
-  let array = [];
-  let defaultArray = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
-  let savedDefaultArray = [];
+  const array = [];
+  const defaultArray = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
   let output;
   const arrayNaN = [null, false, true, NaN, undefined];
-
   const methodsArray = methodsArrayRaw.map((object) => {
     return {
       method: object.method,
@@ -23,16 +13,14 @@ export const arrays = () => {
         return {
           name: button, active: index === 0,
           methodContent:
-
-            `${(button === "a*?") ? " a => a * " : ""}` +
-            `${(button === "a**?") ? " a => a ** " : ""}` +
-            `${(button === "a+?") ? " a => a + " : ""}` +
-            `${(button === "a=?") ? " a => a = " : ""}` +
-            `${(button === "a===?") ? " a => a === " : ""}` +
-            `${(button === "a!==?") ? " a => a !== " : ""}` +
-            `${(button === "a>?") ? " a => a > " : ""}` +
-            `${(button === "a.lenght>?") ? " a => a.lenght > " : ""}`
-
+            (button === "a*?") ? " a => a * " :
+              (button === "a**?") ? " a => a ** " :
+                (button === "a+?") ? " a => a + " :
+                  (button === "a=?") ? " a => a = " :
+                    (button === "a===?") ? " a => a === " :
+                      (button === "a!==?") ? " a => a !== " :
+                        (button === "a>?") ? " a => a > " :
+                          (button === "a.lenght>?") ? " a => a.lenght > " : ""
         }
       }),
       inputType: object.inputType,
@@ -40,191 +28,181 @@ export const arrays = () => {
     }
   })
 
-  console.log(methodsArray)
-
   const viewArray = (exampleArray) => {
     let element = "";
 
     exampleArray.forEach((arrayElement, index) => {
-      element += `<span class="settingsParagraph--grid">
+      element += `
+        <span class="settingsParagraph--arrays">
           ${(((typeof (arrayElement) === "number") || (arrayNaN.some(elementNaN => elementNaN === arrayElement))) ?
           (arrayElement)
           :
           (`"` + arrayElement + `"`)) + ((exampleArray.length === index + 1) ? "" : ", ")}
-          </span>
-        `;
+        </span>
+      `;
     });
+
     return element
   }
 
   const renderSettings = () => {
     const settingsElement = document.querySelector(".js-settingsContainer");
 
+    const leabelContents = () => {
+      let contentsElement = "";
+
+      contentsElement += `
+        <div class="settingsContents">
+          <span class="settingsParagraph--arrays">const array = [</span>
+            ${viewArray(array)}
+          <span class="settingsParagraph--arrays">];</span>
+          <p></p>
+          <span class="settingsParagraph--arrays">const defaultArray = [</span>
+            ${viewArray(defaultArray)}
+          <span class="settingsParagraph--arrays">];</span>
+          <p></p>
+        </div>
+      `;
+
+      return contentsElement;
+    };
+
+    const methodsSettings = () => {
+      let methodsSetingsElement = "";
+
+      const arraySettings = () => {
+        let element = "";
+        element += `
+          <div class="propertyButtons propertyButtons--arrays">
+            <span class="settingsChild">
+              array
+            </span>
+            <span class="strong">
+              :
+            </span>
+          </div>
+          <div class="valueButtons">               
+            <button class="button js-randomNumberArray">
+              random numbers
+            </button>
+            <button class="button js-randomStringArray">
+              random strings
+            </button>
+            <button class="button js-randomMixArray">
+              random mixed
+            </button>
+            <span class="settingsMethod">
+              array size
+              <input id="inputRange" type="range" class="range js-rangeArray" />
+            </span>   
+          </div>            
+          <div class="propertyButtons propertyButtons--arrays">
+          </div>
+          <div class="valueButtons">
+            <button class="button js-loadDefaultArray">
+              load from default
+            </button>
+            <button class="button js-saveDefaultArray">
+              save to default
+            </button>
+            <button class="button js-resetDefaultArray">
+              reset default
+            </button>
+            <button class="button js-loadOutputArray">
+              load from output
+            </button>
+          </div>            
+        `;
+
+        return element
+      };
+
+      const methodsArraySettings = (name, buttons, inputType, inputValue) => {
+        let element = "";
+        element += `
+          <div class="propertyButtons propertyButtons--arrays">
+            <span class="settingsMethod">
+              array.${name}</span>
+          </div>
+          <div class="valueButtons">
+            <span class="settingsMethod"> 
+              (
+        `;
+
+        buttons.forEach((button) => {
+          element += `
+            ${button.active ? button.methodContent : ""}`
+        });
+
+        element += `
+          ${inputType ? `<input type="${inputType}" name="${name}" value="${inputValue}" class="methodInput js-methodInput" />` : ""} 
+              ) 
+            </span>
+            <button id="${name}" class="button js-runButton">
+              run
+            </button>
+        `;
+
+        buttons.forEach((button) => {
+          element += `  
+            <button name="${name}" class="button ${button.active ? "button--active" : ""} js-typeButton">
+              ${button.name}
+            </button>
+          `;
+        })
+
+        element += `
+          </div>
+        `;
+
+        return element
+      };
+
+      methodsSetingsElement += `
+        <div class="buttonsContainer">
+          <div class="settingsButtons">
+            ${arraySettings("array")}
+          </div>
+          <div class="settingsButtons">
+      `;
+
+      methodsArray.forEach((object) =>
+        methodsSetingsElement += `
+        ${methodsArraySettings(object.method, object.methodButtons, object.inputType, object.inputValue)}
+      `);
+
+      methodsSetingsElement += `
+          </div>            
+        </div>
+      `;
+
+      return methodsSetingsElement;
+    };
+
     settingsElement.innerHTML = "";
     settingsElement.innerHTML += `
       ${leabelContents()}
       ${methodsSettings()}      
-      `;
-  };
-
-  const leabelContents = () => {
-    let contentsElement = "";
-
-    contentsElement += `
-        <div class="settingsContents">
-          <span class="settingsParagraph--grid">const array = [</span>
-          ${viewArray(array)}
-          <span class="settingsParagraph--grid">];</span>
-          <p></p>
-          <span class="settingsParagraph--grid">const defaultArray = [</span>
-          ${viewArray(defaultArray)}
-          <span class="settingsParagraph--grid">];</span>
-          <p></p>
-        </div>
-      `;
-
-    return contentsElement;
-  };
-
-  const methodsSettings = () => {
-    let methodsSetingsElement = "";
-
-    const inputArraySettings = (name, value) => {
-      let element = "";
-      element += `
-            <div class="propertyButtons propertyButtons--grid">
-               <span class="settingsChild">
-                 array
-               </span>
-               <span class="strong">
-                 :
-               </span>
-            </div>
-            <div class="valueButtons">               
-               <button class="button js-randomNumberArray">
-                  random numbers
-               </button>
-               <button class="button js-randomStringArray">
-                  random strings
-               </button>
-               <button class="button js-randomMixArray">
-                  random mixed
-               </button>
-               <span class="settingsMethod">
-                  array size
-                  <input id="inputRange" type="range" class="range js-rangeArray" />
-               </span>   
-            </div>            
-            <div class="propertyButtons propertyButtons--grid">
-            </div>
-            <div class="valueButtons">
-               <button class="button js-loadDefaultArray">
-                  load from default
-               </button>
-               <button class="button js-saveDefaultArray">
-                  save to default
-               </button>
-               <button class="button js-resetDefaultArray">
-                  reset default
-               </button>
-               <button class="button js-loadOutputArray">
-                  load from output
-               </button>
-            </div>            
-         `;
-
-      return element
-    };
-
-    const methodsArraySettings = (name, buttons, inputType, inputValue) => {
-      let element = "";
-      element += `
-        <div class="propertyButtons propertyButtons--grid">
-          <span class="settingsMethod">
-            array.${name}</span>
-        </div>
-        <div class="valueButtons">
-          <span class="settingsMethod">(
-      `;
-
-      buttons.forEach((button) => {
-        element += `${button.active ? button.methodContent : ""}`
-      });
-
-      element += `
-      ${inputType ? `<input type="${inputType}" name="${name}" value="${inputValue}" class="methodInput js-methodInput" />` : ""} ) 
-        </span>
-          <button id="${name}" class="button js-runButton">
-            run
-          </button>
-      `;
-
-      buttons.forEach((button) => {
-        element += `  
-          <button name="${name}" class="button ${button.active ? "button--active" : ""} js-typeButton">
-            ${button.name}
-          </button>
-        `;
-      })
-      element += `</div>
-      `;
-
-      return element
-    };
-
-    methodsSetingsElement += `
-        <div class="buttonsContainer">
-          <div class="settingsButtons">
-            ${inputArraySettings("array")}
-          </div>
-          <div class="settingsButtons">`
-    methodsArray.forEach((object) =>
-      methodsSetingsElement += `
-      ${methodsArraySettings(object.method, object.methodButtons, object.inputType, object.inputValue)}
-    `)
-    methodsSetingsElement += `</div>            
-        </div>
-      `;
-
-    return methodsSetingsElement
+    `;
   };
 
   const renderOutput = () => {
     const outputElement = document.querySelector(".js-outputContainer");
 
-    const outputArray = () => {
-      let element = "";
-
-      output.forEach((arrayElement, index) => {
-        element += `<span class="settingsParagraph--grid">
-          ${(((typeof (arrayElement) === "number") || (arrayNaN.some(elementNaN => elementNaN === arrayElement))) ?
-            (arrayElement)
-            :
-            (`"` + arrayElement + `"`)) + ((output.length === index + 1) ? "" : ", ")}
-          </span>
-        `;
-      });
-
-      return element;
-    }
-
     outputElement.innerHTML = "";
     outputElement.innerHTML += `
-         <div class="outputContents outputContents--arrays">
-            <div class="outputLabel">OUTPUT :</div>
-
-            ${Array.isArray(output) ? `
-            <span class="settingsParagraph--grid">const outputArray = [</span>
-            ${outputArray()}
-            <span class="settingsParagraph--grid">];</span>
-            <p></p> ` : `${output ? output : ""}`
-      }  
-            </div>
-         </div>
-         `;
+      <div class="outputContents outputContents--arrays">
+        <div class="outputLabel">OUTPUT :</div>
+          ${Array.isArray(output) ? `
+            <span class="settingsParagraph--arrays">const outputArray = [</span>
+              ${viewArray(output)}
+            <span class="settingsParagraph--arrays">];</span>` : (output || "")}  
+        </div>
+      </div>
+    `;
   }
 
-  const bindMethodButtons = () => {
+  const bindInputsAndButtons = () => {
     const randomNumberArrayElement = document.querySelector(".js-randomNumberArray");
     const randomStringArrayElement = document.querySelector(".js-randomStringArray");
     const randomMixArrayElement = document.querySelector(".js-randomMixArray");
@@ -353,10 +331,12 @@ export const arrays = () => {
     });
   };
 
+
+
   const render = () => {
     renderSettings();
     renderOutput();
-    bindMethodButtons();
+    bindInputsAndButtons();
   };
 
   render();
