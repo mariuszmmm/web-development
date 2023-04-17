@@ -4,6 +4,7 @@ export const arrays = () => {
   const array = [];
   const defaultArray = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
   let output;
+  let inputValue;
   const arrayNaN = [null, false, true, NaN, undefined];
   const methodsArray = methodsArrayRaw.map((object) => {
     return {
@@ -26,7 +27,7 @@ export const arrays = () => {
       inputType: object.inputType,
       inputValue: "",
     }
-  })
+  });
 
   const viewArray = (exampleArray) => {
     let element = "";
@@ -42,8 +43,8 @@ export const arrays = () => {
       `;
     });
 
-    return element
-  }
+    return element;
+  };
 
   const renderSettings = () => {
     const settingsElement = document.querySelector(".js-settingsContainer");
@@ -114,7 +115,7 @@ export const arrays = () => {
           </div>            
         `;
 
-        return element
+        return element;
       };
 
       const methodsArraySettings = (name, buttons, inputType, inputValue) => {
@@ -149,13 +150,13 @@ export const arrays = () => {
               ${button.name}
             </button>
           `;
-        })
+        });
 
         element += `
           </div>
         `;
 
-        return element
+        return element;
       };
 
       methodsSetingsElement += `
@@ -200,7 +201,7 @@ export const arrays = () => {
         </div>
       </div>
     `;
-  }
+  };
 
   const bindInputsAndButtons = () => {
     const randomNumberArrayElement = document.querySelector(".js-randomNumberArray");
@@ -212,126 +213,119 @@ export const arrays = () => {
     const resetDefaultArrayElement = document.querySelector(".js-resetDefaultArray");
     const loadOutputArrayElement = document.querySelector(".js-loadOutputArrayArray");
 
-    const methodInputElements = document.querySelectorAll(".js-methodInput")
+    const inputElements = document.querySelectorAll(".js-methodInput")
     const runButtonElements = document.querySelectorAll(".js-runButton")
     const typeButtonElements = document.querySelectorAll(".js-typeButton")
-    let inputValue;
+
+    inputElements.forEach((input) => {
+      input.addEventListener("click", ({ target }) => {
+        methodsArray.forEach(({ method }) => {
+          if (method === input.name) target.value = "";
+        });
+      });
+    });
 
     typeButtonElements.forEach((button) => {
       button.addEventListener("click", () => {
         methodsArray.forEach((object) => {
-          object.methodButtons.forEach((obj) => {
-            if (object.method === button.name) {
-              if (obj.name === button.innerText) {
-                obj.active = !obj.active;
-              } else obj.active = false
-            }
-
-          });
+          if (object.method === button.name) {
+            object.methodButtons.forEach((obj) => {
+              (obj.name === button.innerText) ?
+                obj.active = true :
+                obj.active = false;
+            });
+            render();
+          };
         });
+      });
+    });
+    // poprawić 
+    runButtonElements.forEach((button) => {
+      button.addEventListener("click", () => {
+        inputElements.forEach((input) => {
+          if (input.name === button.id) {
+            inputValue = input.value
+          };
+        });
+        methodsArray.forEach((method) => {
+          if ((method.method === button.id) && method.inputType) {
+            console.log(inputValue);
+            method.inputValue = enterNumberOrString(inputValue);
+          };
+        });
+        runMethod(button.id, inputValue);
         render();
       });
     });
-
-    methodInputElements.forEach((input) => {
-      input.addEventListener("click", (event) => {
-        methodsArray.forEach((method) => {
-          if (method.method === input.name) {
-            event.target.value = "";
-          }
-        })
-      })
-    })
-
-    runButtonElements.forEach((button) => {
-      button.addEventListener("click", (event) => {
-        methodInputElements.forEach((input) => {
-          if (input.name === button.id) {
-            inputValue = input.value
-          }
-        });
-
-        const inputSave = () => {
-          methodsArray.forEach((method) => {
-            if (method.method === button.id) {
-              method.inputValue = inputValue
-            }
-          })
-        }
-
-        const enterNumberOrString = () => {
-          return (
-            !!Number(inputValue) ?
-              Number(inputValue)
-              :
-              inputValue.charAt(0) === `"` && inputValue.charAt(inputValue.length - 1) === `"` ?
-                (inputValue.slice(1, -1)).toString()
-                :
-                (arrayNaN.some((elementNaN) => String(elementNaN) === inputValue)) ?
-                  (arrayNaN.find((elementNaN) => String(elementNaN) === inputValue))
-                  :
-                  inputValue
-          )
-        };
-
-        const enterMethodContent = () => {
-          let content
-          methodsArray.forEach((method) => {
-            if (method.method === button.id) {
-              method.inputValue = inputValue
-              method.methodButtons.forEach((element) => {
-                if (element.active)
-                  content = element.methodContent + enterNumberOrString();
-              })
-            }
-          })
-
-          return Function(`return (${content})`)();
-        }
-
-        switch (button.id) {
-          case "pop":
-            output = array.pop();
-            break;
-          case "shift":
-            output = array.shift();
-            break;
-          case "reverse":
-            output = array.reverse();
-            break;
-          case "push":
-            output = array.push(enterNumberOrString());
-            break;
-          case "unshift":
-            output = array.unshift(enterNumberOrString());
-            break;
-          case "map":
-            output = array.map(enterMethodContent());
-            break;
-          case "filter":
-            output = array.filter(enterMethodContent());
-            break;
-          case "at":
-            output = array.at(enterNumberOrString());
-            break;
-          case "slice":
-            output = array.slice(enterNumberOrString());
-            break;
-          case "indexOf":
-            output = array.indexOf(enterNumberOrString());
-            break;
-          case "lastIndexOf":
-            output = array.lastIndexOf(enterNumberOrString());
-            break;
-        }
-
-        inputSave();
-        render();
-      })
-    });
   };
 
+  const runMethod = (button, inputValue) => {
+    switch (button) {
+      case "pop":
+        output = array.pop();
+        break;
+      case "shift":
+        output = array.shift();
+        break;
+      case "reverse":
+        output = array.reverse();
+        break;
+      case "push":
+        output = array.push(enterNumberOrString(inputValue));
+        break;
+      case "unshift":
+        output = array.unshift(enterNumberOrString(inputValue));
+        break;
+      case "map":
+        output = array.map(enterMethodContent(button, inputValue));
+        break;
+      case "filter":
+        output = array.filter(enterMethodContent(button, inputValue));
+        break;
+      case "at":
+        output = array.at(enterNumberOrString(inputValue));
+        break;
+      case "slice":
+        output = array.slice(enterNumberOrString(inputValue));
+        break;
+      case "indexOf":
+        output = array.indexOf(enterNumberOrString(inputValue));
+        break;
+      case "lastIndexOf":
+        output = array.lastIndexOf(enterNumberOrString(inputValue));
+        break;
+    };
+  };
 
+  const enterNumberOrString = (inputValue) => {
+    return (
+      !!Number(inputValue) ?
+        Number(inputValue)
+        :
+        inputValue.charAt(0) === `"` && inputValue.charAt(inputValue.length - 1) === `"` ?
+          (inputValue.slice(1, -1)).toString()
+          :
+          (arrayNaN.some((elementNaN) => String(elementNaN) === inputValue)) ?
+            (arrayNaN.find((elementNaN) => String(elementNaN) === inputValue))
+            :
+            inputValue
+    );
+  };
+
+  const enterMethodContent = (button, inputValue) => {
+    let content;
+    methodsArray.forEach((method) => {
+      if (method.method === button) {
+        method.inputValue = inputValue
+        method.methodButtons.forEach((element) => {
+          if (element.active)
+            content = element.methodContent + enterNumberOrString(inputValue);
+        });
+      };
+    });
+
+    return Function(`return (${content})`)();
+  };
 
   const render = () => {
     renderSettings();
