@@ -31,7 +31,7 @@ export const methodsArrayRaw = [
    },
    {
       method: "filter",
-      methodButtons: ["a.lenght>?", "a>?", "a=?", "a===?", "a!==?"],
+      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?"],
       inputType: "text"
    },
    {
@@ -47,6 +47,6 @@ export const methodsArrayRaw = [
    {
       method: "lastIndexOf",
       methodButtons: [],
-      inputType: "number"
+      inputType: "text"
    },
 ];

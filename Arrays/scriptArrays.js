@@ -20,7 +20,7 @@ export const arrays = () => {
                     (button === "a===?") ? " a => a === " :
                       (button === "a!==?") ? " a => a !== " :
                         (button === "a>?") ? " a => a > " :
-                          (button === "a.lenght>?") ? " a => a.lenght > " : ""
+                          (button === "a.length>?") ? " a => a.length > " : ""
         }
       }),
       inputType: object.inputType,
@@ -196,7 +196,7 @@ export const arrays = () => {
           ${Array.isArray(output) ? `
             <span class="settingsParagraph--arrays">const outputArray = [</span>
               ${viewArray(output)}
-            <span class="settingsParagraph--arrays">];</span>` : (output || "")}  
+            <span class="settingsParagraph--arrays">];</span>` : (output)}  
         </div>
       </div>
     `;
@@ -304,6 +304,7 @@ export const arrays = () => {
         output = array.slice(enterNumberOrString(inputValue));
         break;
       case "indexOf":
+        console.log(enterNumberOrString(inputValue))
         output = array.indexOf(enterNumberOrString(inputValue));
         break;
       case "lastIndexOf":
