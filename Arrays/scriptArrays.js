@@ -4,7 +4,6 @@ export const arrays = () => {
   const array = [];
   const defaultArray = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
   let output;
-  let inputValue;
   const arrayNaN = [null, false, true, NaN, undefined];
   const methodsArray = methodsArrayRaw.map((object) => {
     return {
@@ -239,22 +238,38 @@ export const arrays = () => {
         });
       });
     });
-    // poprawić 
+
     runButtonElements.forEach((button) => {
       button.addEventListener("click", () => {
         inputElements.forEach((input) => {
           if (input.name === button.id) {
-            inputValue = input.value
+            methodsArray.forEach((method) => {
+              if (method.method === button.id) {
+                method.inputValue = input.value;
+                if (method.methodButtons.length > 0) {
+                  if (method.inputValue !== "") {
+                    runMethod(button.id, method.inputValue);
+                    render();
+                  } else {
+                    input.value = "";
+                    input.focus();
+                    return
+                  };
+                } else {
+                  runMethod(button.id, method.inputValue);
+                  render();
+                };
+              };
+            });
           };
         });
+
         methodsArray.forEach((method) => {
-          if ((method.method === button.id) && method.inputType) {
-            console.log(inputValue);
-            method.inputValue = enterNumberOrString(inputValue);
+          if ((method.method === button.id) && !method.inputType) {
+            runMethod(button.id)
+            render();
           };
         });
-        runMethod(button.id, inputValue);
-        render();
       });
     });
   };
@@ -302,7 +317,7 @@ export const arrays = () => {
       !!Number(inputValue) ?
         Number(inputValue)
         :
-        inputValue.charAt(0) === `"` && inputValue.charAt(inputValue.length - 1) === `"` ?
+        inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"` ?
           (inputValue.slice(1, -1)).toString()
           :
           (arrayNaN.some((elementNaN) => String(elementNaN) === inputValue)) ?
@@ -335,4 +350,3 @@ export const arrays = () => {
 
   render();
 };
-

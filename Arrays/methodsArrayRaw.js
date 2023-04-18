@@ -27,7 +27,7 @@ export const methodsArrayRaw = [
    {
       method: "map",
       methodButtons: ["a*?","a**?", "a+?", "a=?", "a===?"],
-      inputType: "text"
+      inputType: "number"
    },
    {
       method: "filter",
