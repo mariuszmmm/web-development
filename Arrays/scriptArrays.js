@@ -33,7 +33,6 @@ export const arrays = () => {
   const viewArray = (exampleArray) => {
     let element = "";
     exampleArray.forEach((arrayElement, index) => {
-      console.log(array)
       element += `
         <span class="settingsParagraph--arrays strong">
           ${(arrayNaN.some(elementNaN => elementNaN === String(arrayElement)) ?
@@ -52,7 +51,6 @@ export const arrays = () => {
 
   const vievMethodContent = (methodContent) => {
     let element = "";
-    console.log(methodContent[1])
     element += `
       <span class="settingsParagraph--arrays strong">
         array.${methodContent[0]}(${methodContent[1] ?
@@ -347,7 +345,6 @@ export const arrays = () => {
   };
 
   const enterNumberOrString = (inputValue) => {
-    console.log(notNumber(inputValue))
 
     return (
       inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"` ?
