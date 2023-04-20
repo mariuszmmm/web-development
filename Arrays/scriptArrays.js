@@ -343,7 +343,7 @@ export const arrays = () => {
       default: return String(inputValue)
     };
   };
-
+// dodać ","
   const enterNumberOrString = (inputValue) => {
 
     return (
