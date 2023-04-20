@@ -343,6 +343,12 @@ export const arrays = () => {
       default: return String(inputValue)
     };
   };
+  
+  
+  // input dla map
+ // <input type="text" id="input" pattern="^-?\d+(\.\d+)?|null$" placeholder="null">
+
+
 // dodać ","
   const enterNumberOrString = (inputValue) => {
 
