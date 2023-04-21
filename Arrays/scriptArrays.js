@@ -27,6 +27,7 @@ export const arrays = () => {
       }),
       inputType: object.inputType,
       inputValue: "",
+      inputPattern: object.inputPattern
     }
   });
 
@@ -53,8 +54,8 @@ export const arrays = () => {
     let element = "";
     element += `
       <span class="settingsParagraph--arrays strong">
-        array.${methodContent[0]}(${methodContent[1] ?
-        (typeof (methodContent[1]) === "number" ? Number(methodContent[1]) : `"` + methodContent[1] + `"`)
+        array.${methodContent[0]}(&nbsp${methodContent[1] ?
+        (((typeof (methodContent[1]) === "number") || methodContent[2]) ? methodContent[1] : `"` + methodContent[1] + `"`)
         :
         ""}&nbsp)
       </span>
@@ -131,7 +132,7 @@ export const arrays = () => {
         return element;
       };
 
-      const methodsArraySettings = (name, buttons, inputType) => {
+      const methodsArraySettings = (name, buttons, inputType, inputPattern) => {
         let element = "";
         element += `
           <div class="propertyButtons propertyButtons--arrays">
@@ -149,7 +150,7 @@ export const arrays = () => {
         });
 
         element += `
-          ${inputType ? `<input type="${inputType}" name="${name}" class="methodInput js-methodInput" />` : ""} 
+          ${inputType ? `<input type="text" name="${name}" pattern="^[123]+$" class="methodInput js-methodInput" required/>` : ""} 
               ) 
             </span>
             <button id="${name}" class="button js-runButton">
@@ -182,7 +183,7 @@ export const arrays = () => {
 
       methodsArray.forEach((object) =>
         methodsSetingsElement += `
-        ${methodsArraySettings(object.method, object.methodButtons, object.inputType, object.inputValue)}
+        ${methodsArraySettings(object.method, object.methodButtons, object.inputType, object.inputValue, object.inputPattern)}
       `);
 
       methodsSetingsElement += `
@@ -312,11 +313,11 @@ export const arrays = () => {
         break;
       case "map":
         output = array.map(enterMethodContent(button, inputValue));
-        methodContent = [method, enterMethodContent(button, inputValue)];
+        methodContent = [method, enterMethodContent(button, inputValue), "arrowFunction"];
         break;
       case "filter":
         output = array.filter(enterMethodContent(button, inputValue));
-        methodContent = [method, enterMethodContent(button, inputValue)];
+        methodContent = [method, enterMethodContent(button, inputValue),  "arrowFunction"];
         break;
       case "slice":
         output = array.slice(enterNumberOrString(inputValue));

@@ -2,7 +2,7 @@ export const methodsArrayRaw = [
    {
       method: "pop",
       methodButtons: [],
-      inputType: null
+      inputType: null,
    },
    {
       method: "shift",
@@ -17,36 +17,43 @@ export const methodsArrayRaw = [
    {
       method: "push",
       methodButtons: [],
-      inputType: "text"
+      inputType: "text",
+      inputPattern: ".*"
    },
    {
       method: "unshift",
       methodButtons: [],
-      inputType: "text"
+      inputType: "text",
+      inputPattern: ".*"
    },
    {
       method: "map",
       methodButtons: ["a*?","a**?", "a+?", "a=?", "a===?"],
-      inputType: "number"
+      inputType: "text",
+      inputPattern: ".*"
    },
    {
       method: "filter",
       methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?"],
-      inputType: "text"
+      inputType: "text",
+      inputPattern: ".*"
    },
    {
       method: "slice",
       methodButtons: [],
-      inputType: "number"
+      inputType: "text",
+      inputPattern: "^-?\\d+(\\.\\d+)?|null$"
    },
    {
       method: "indexOf",
       methodButtons: [],
-      inputType: "text"
+      inputType: "text",
+      inputPattern: ".*"
    },
    {
       method: "lastIndexOf",
       methodButtons: [],
-      inputType: "text"
+      inputType: "text",
+      inputPattern: ".*"
    },
 ];
