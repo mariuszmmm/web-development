@@ -40,7 +40,7 @@ export const arrays = () => {
           notNumber(arrayElement) + ((exampleArray.length === index + 1) ? "" : ", ")
           :
           (typeof (arrayElement) === "number" ?
-            arrayElement + ((exampleArray.length === index + 1) ? "" : ", ")
+            arrayElement
             :
             (`"` + arrayElement + `"`)) + ((exampleArray.length === index + 1) ? "" : ", "))}
         </span>
@@ -150,7 +150,7 @@ export const arrays = () => {
         });
 
         element += `
-          ${inputType ? `<input type="text" name="${name}" pattern="^[123]+$" class="methodInput js-methodInput" required/>` : ""} 
+          ${inputType ? `<input type="text" name="${name}" class="methodInput js-methodInput" />` : ""} 
               ) 
             </span>
             <button id="${name}" class="button js-runButton">
@@ -261,18 +261,14 @@ export const arrays = () => {
             methodsArray.forEach((method) => {
               if (method.method === button.id) {
                 method.inputValue = enterNumberOrString(input.value);
-                if (method.methodButtons.length > 0) {
-                  if (method.inputValue !== "") {
-                    runMethod(button.id, method.inputValue, method.method);
-                    render();
-                  } else {
-                    input.value = "";
-                    input.focus();
-                    return
-                  };
-                } else {
+                const pattern = RegExp(method.inputPattern);
+                if (pattern.test(method.inputValue)) {
                   runMethod(button.id, method.inputValue, method.method);
                   render();
+                } else {
+                  input.value = "";
+                  input.focus();
+                  return
                 };
               };
             });
@@ -317,7 +313,7 @@ export const arrays = () => {
         break;
       case "filter":
         output = array.filter(enterMethodContent(button, inputValue));
-        methodContent = [method, enterMethodContent(button, inputValue),  "arrowFunction"];
+        methodContent = [method, enterMethodContent(button, inputValue), "arrowFunction"];
         break;
       case "slice":
         output = array.slice(enterNumberOrString(inputValue));
@@ -344,13 +340,7 @@ export const arrays = () => {
       default: return String(inputValue)
     };
   };
-  
-  
-  // input dla map
- // <input type="text" id="input" pattern="^-?\d+(\.\d+)?|null$" placeholder="null">
 
-
-// dodać ","
   const enterNumberOrString = (inputValue) => {
 
     return (

@@ -7,53 +7,53 @@ export const methodsArrayRaw = [
    {
       method: "shift",
       methodButtons: [],
-      inputType: null
+      inputType: null,
    },
    {
       method: "reverse",
       methodButtons: [],
-      inputType: null
+      inputType: null,
    },
    {
       method: "push",
       methodButtons: [],
       inputType: "text",
-      inputPattern: ".*"
+      inputPattern: "^[^\"]*$",
    },
    {
       method: "unshift",
       methodButtons: [],
       inputType: "text",
-      inputPattern: ".*"
+      inputPattern: "^[^\"]*$",
    },
    {
       method: "map",
-      methodButtons: ["a*?","a**?", "a+?", "a=?", "a===?"],
+      methodButtons: ["a*?", "a**?", "a+?", "a=?", "a===?"],
       inputType: "text",
-      inputPattern: ".*"
+      inputPattern: "^[^\"]*$",
    },
    {
       method: "filter",
       methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?"],
       inputType: "text",
-      inputPattern: ".*"
+      inputPattern: "^[^\"]*$",
    },
    {
       method: "slice",
       methodButtons: [],
       inputType: "text",
-      inputPattern: "^-?\\d+(\\.\\d+)?|null$"
+      inputPattern: "^\\s*-?\\d+\\s*(,\\s*-?\\d+)?\\s*$",
    },
    {
       method: "indexOf",
       methodButtons: [],
       inputType: "text",
-      inputPattern: ".*"
+      inputPattern: "^[^\"]*$",
    },
    {
       method: "lastIndexOf",
       methodButtons: [],
       inputType: "text",
-      inputPattern: ".*"
+      inputPattern: "^[^\"]*$",
    },
 ];
