@@ -88,14 +88,11 @@ export const arrays = () => {
       const arraySettings = () => {
         let element = "";
         element += `
-          <div class="propertyButtons propertyButtons--arrays">
-            <span class="settingsChild">
-              array
+
+            <span class="arrayMethods--label">
+            array settings :
             </span>
-            <span class="strong">
-              :
-            </span>
-          </div>
+
           <div class="valueButtons">               
             <button class="button js-randomNumberArray">
               random numbers
@@ -106,13 +103,18 @@ export const arrays = () => {
             <button class="button js-randomMixArray">
               random mixed
             </button>
-            <span class="settingsMethod">
-              array size
+            <span class="rangeContiner">
+            <label class="arrayMethods--label">
+              array size :
+            </label> 
               <input id="inputRange" type="range" class="range js-rangeArray" />
-            </span>   
+            </span>
           </div>            
-          <div class="propertyButtons propertyButtons--arrays">
-          </div>
+
+          <span class="arrayMethods--label">
+          default array :
+          </span>
+
           <div class="valueButtons">
             <button class="button js-loadDefaultArray">
               load from default
@@ -136,12 +138,10 @@ export const arrays = () => {
         let element = "";
         element += `
           <div class="propertyButtons propertyButtons--arrays">
-            <span class="settingsMethod">
+            <span class="methodName">
               array.${name}</span>
-          </div>
-          <div class="valueButtons">
-            <span class="settingsMethod"> 
-              (
+
+            <div class="methodName methodName--parameters">(
         `;
 
         buttons.forEach((button) => {
@@ -152,15 +152,19 @@ export const arrays = () => {
         element += `
           ${inputType ? `<input type="text" name="${name}" class="methodInput js-methodInput" />` : ""} 
               ) 
-            </span>
-            <button id="${name}" class="button js-runButton">
+            </div>
+
+            </div>
+            <div class="valueButtons valueButtons--arrays">
+
+            <button id="${name}" class="button button--array js-runButton">
               run
             </button>
         `;
 
         buttons.forEach((button) => {
           element += `  
-            <button name="${name}" class="button ${button.active ? "button--active" : ""} js-typeButton">
+            <button name="${name}" class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
               ${button.name}
             </button>
           `;
@@ -174,10 +178,13 @@ export const arrays = () => {
       };
 
       methodsSetingsElement += `
-        <div class="buttonsContainer">
-          <div class="settingsButtons">
+        <div>
+          <div class="arraySettings">
             ${arraySettings("array")}
           </div>
+          <span class="arrayMethods--label">
+          array methods :
+          </span>
           <div class="settingsButtons">
       `;
 

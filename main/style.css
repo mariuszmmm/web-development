@@ -31,23 +31,21 @@ body {
    max-width: 2100px;
    height: content;
    min-height: 675px;
-   grid-template-areas: 
-     "nav set set"
-     "nav out out"
-     "nav out out"
+   grid-template-areas:
+      "nav set set"
+      "nav out out"
+      "nav out out"
    ;
 }
 
 @media (max-width: 1499px) {
    .container {
-     /* display: grid; */
       grid-template-columns: 1fr 1fr 1fr;
-    /*  grid-template-rows: auto auto 1fr; */
-     grid-template-areas: 
-      "nav nav nav"
-      "set set set"
-      "out out out"
-    ;
+      grid-template-areas:
+         "nav nav nav"
+         "set set set"
+         "out out out"
+      ;
    }
 }
 
@@ -55,7 +53,6 @@ body {
    grid-area: nav;
    display: flex;
    flex-direction: column;
-  /* grid-row: 1 / 3;  */
    border-right: 1px solid black;
    width: max-content;
    padding: 5px;
@@ -63,11 +60,9 @@ body {
 
 @media (max-width: 1499px) {
    .navContainer {
-  /*    display: flex; */
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: start;
-    /*  grid-row: 1 / 2;  */
       border: none;
       border-bottom: 1px solid black;
       width: 100%;
@@ -75,7 +70,7 @@ body {
 }
 
 .settingsContainer {
-  grid-area: set;
+   grid-area: set;
    display: flex;
    flex-direction: row;
    justify-content: start;
@@ -83,13 +78,11 @@ body {
    width: 100%;
    height: 100%;
    padding: 10px;
- /*  grid-column: 2 / 4; */
    gap: 5px;
 }
 
 @media (max-width: 1499px) {
    .settingsContainer {
-    /*  grid-column: 1 / 3; */
       flex-direction: column-reverse;
       align-items: flex-start;
       padding: 1%;
@@ -210,9 +203,8 @@ body {
    cursor: pointer;
 }
 
-
 .range {
-  color: black;
+   color: black;
    text-align: start;
    border: 1px solid black;
    outline: 1px solid black;
@@ -225,7 +217,6 @@ body {
    cursor: pointer;
 }
 
-
 .propertyButtons {
    display: flex;
    flex-wrap: nowrap;
@@ -234,12 +225,11 @@ body {
 }
 
 .valueButtons {
-
    min-width: 50px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: baseline;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: flex-start;
+   align-items: baseline;
 }
 
 .outputLabelTop {
@@ -287,22 +277,19 @@ body {
    padding: 0;
 }
 
-
 .outputContainer {
-  grid-area: out;
+   grid-area: out;
    width: 100%;
    height: 100%;
    padding: 0 10px 10px;
    display: flex;
    flex-direction: row;
- /*  grid-column: 2 / 4;  */
    gap: 10px;
    font-size: 19px;
 }
 
 @media (max-width: 1499px) {
    .outputContainer {
-   /*   grid-column: 1 / 3;  */
       font-size: 1.5vw;
       padding: 0 1% 1%;
    }
