@@ -266,6 +266,8 @@ export const arrays = () => {
                   runMethod(button.id, method.inputValue, method.method);
                   render();
                 } else {
+                  output = "Invalid  input";
+                  renderOutput();
                   input.value = "";
                   input.focus();
                   return
