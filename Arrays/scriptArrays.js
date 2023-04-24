@@ -5,7 +5,6 @@ export const arrays = () => {
   let methodContent = [];
   let output = "";
   const defaultArray = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
-  const arrayNaN = ["null", "false", "true", "NaN", "undefined"];
   const methodsArray = methodsArrayRaw.map((object) => {
 
     return {
@@ -36,13 +35,10 @@ export const arrays = () => {
     exampleArray.forEach((arrayElement, index) => {
       element += `
         <span class="settingsParagraph--arrays strong">
-          ${(arrayNaN.some(elementNaN => elementNaN === String(arrayElement)) ?
-          notNumber(arrayElement) + ((exampleArray.length === index + 1) ? "" : ", ")
-          :
-          (typeof (arrayElement) === "number" ?
-            arrayElement
-            :
-            (`"` + arrayElement + `"`)) + ((exampleArray.length === index + 1) ? "" : ", "))}
+          ${typeof (arrayElement) === "string" ?
+          (`"` + arrayElement + `"`) + ((exampleArray.length === index + 1) ? "" : ", ") :
+          arrayElement + ((exampleArray.length === index + 1) ? "" : ", ")
+        }
         </span>
       `;
     });
@@ -51,13 +47,14 @@ export const arrays = () => {
   };
 
   const vievMethodContent = (methodContent) => {
+    console.log("methodContent", methodContent)
     let element = "";
     element += `
       <span class="settingsParagraph--arrays strong">
-        array.${methodContent[0]}(&nbsp${methodContent[1] ?
-        (((typeof (methodContent[1]) === "number") || methodContent[2]) ? methodContent[1] : `"` + methodContent[1] + `"`)
+        array.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
+        ((typeof (methodContent[1]) === "string") ? `"` + methodContent[1] + `"` : methodContent[1])
         :
-        ""}&nbsp)
+        ""} );
       </span>
     `;
 
@@ -88,10 +85,9 @@ export const arrays = () => {
       const arraySettings = () => {
         let element = "";
         element += `
-
-            <span class="arrayMethods--label">
+          <span class="arrayMethods--label">
             array settings :
-            </span>
+          </span>
 
           <div class="valueButtons">               
             <button class="button js-randomNumberArray">
@@ -139,8 +135,8 @@ export const arrays = () => {
         element += `
           <div class="propertyButtons propertyButtons--arrays">
             <span class="methodName">
-              array.${name}</span>
-
+              array.${name}
+            </span>
             <div class="methodName methodName--parameters">(
         `;
 
@@ -153,10 +149,8 @@ export const arrays = () => {
           ${inputType ? `<input type="text" name="${name}" class="methodInput js-methodInput" />` : ""} 
               ) 
             </div>
-
-            </div>
-            <div class="valueButtons valueButtons--arrays">
-
+          </div>
+          <div class="valueButtons valueButtons--arrays">
             <button id="${name}" class="button button--array js-runButton">
               run
             </button>
@@ -216,13 +210,13 @@ export const arrays = () => {
       <div class="outputContents outputContents--arrays">
         <div class="outputLabel">OUTPUT :</div>
           ${Array.isArray(output) ? `
-            <span class="settingsParagraph--arrays">const outputArray = [</span>
-              ${viewArray(output)}
-            <span class="settingsParagraph--arrays">];</span>` : (output)}  
+            <span class="settingsParagraph--arrays">const outputArray = [ ${viewArray(output)}    
+            ];</span>` : (output)}  
         </div>
       </div>
     `;
   };
+
 
   const bindInputsAndButtons = () => {
     const randomNumberArrayElement = document.querySelector(".js-randomNumberArray");
@@ -233,7 +227,6 @@ export const arrays = () => {
     const saveDefaultArrayElement = document.querySelector(".js-saveDefaultArray");
     const resetDefaultArrayElement = document.querySelector(".js-resetDefaultArray");
     const loadOutputArrayElement = document.querySelector(".js-loadOutputArrayArray");
-
     const inputElements = document.querySelectorAll(".js-methodInput")
     const runButtonElements = document.querySelectorAll(".js-runButton")
     const typeButtonElements = document.querySelectorAll(".js-typeButton")
@@ -269,11 +262,14 @@ export const arrays = () => {
               if (method.method === button.id) {
                 method.inputValue = enterNumberOrString(input.value);
                 const pattern = RegExp(method.inputPattern);
-                if (pattern.test(method.inputValue)) {
+                console.log(String(method.inputValue))
+                if (pattern.test(method.inputValue) &&
+                  method.inputValue !== undefined &&
+                  method.inputValue !== null) {
                   runMethod(button.id, method.inputValue, method.method);
                   render();
                 } else {
-                  output = "Invalid  input";
+                  output = "Input value not allowed, use: \" \"";
                   renderOutput();
                   input.value = "";
                   input.focus();
@@ -295,6 +291,7 @@ export const arrays = () => {
   };
 
   const runMethod = (button, inputValue, method) => {
+    console.log("inputValue =", inputValue)
     switch (button) {
       case "pop":
         output = array.pop();
@@ -337,31 +334,17 @@ export const arrays = () => {
         methodContent = [method, enterNumberOrString(inputValue)];
         break;
     };
-  };
-
-  const notNumber = (inputValue) => {
-    switch (inputValue) {
-      case "null": return null
-      case "true": return true
-      case "false": return false
-      case "NaN": return NaN
-      case "undefined": return undefined
-      default: return String(inputValue)
-    };
+    console.log("array", array);
+    console.log("methodContent", methodContent);
   };
 
   const enterNumberOrString = (inputValue) => {
-
+    console.log(String(inputValue))
     return (
       inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"` ?
-        String(inputValue.slice(1, -1))
+        inputValue.slice(1, -1)
         :
-        (!!Number(inputValue) ? Number(inputValue) :
-
-          (arrayNaN.some(elementNaN => elementNaN === inputValue) ?
-            notNumber(inputValue) : String(inputValue)
-          )
-        )
+        (!isNaN(inputValue) ? (inputValue !== "" ? Number(inputValue) : null) : inputValue)
     );
   };
 
