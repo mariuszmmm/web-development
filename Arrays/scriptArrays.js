@@ -47,12 +47,11 @@ export const arrays = () => {
   };
 
   const vievMethodContent = (methodContent) => {
-    console.log("methodContent", methodContent)
     let element = "";
     element += `
       <span class="settingsParagraph--arrays strong">
         array.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
-        ((typeof (methodContent[1]) === "string") ? `"` + methodContent[1] + `"` : methodContent[1])
+        ((typeof (methodContent[1]) !== "string" || methodContent[2] === "twoArguments") ? methodContent[1] : `"` + methodContent[1] + `"`)
         :
         ""} );
       </span>
@@ -217,7 +216,6 @@ export const arrays = () => {
     `;
   };
 
-
   const bindInputsAndButtons = () => {
     const randomNumberArrayElement = document.querySelector(".js-randomNumberArray");
     const randomStringArrayElement = document.querySelector(".js-randomStringArray");
@@ -262,7 +260,6 @@ export const arrays = () => {
               if (method.method === button.id) {
                 method.inputValue = enterNumberOrString(input.value);
                 const pattern = RegExp(method.inputPattern);
-                console.log(String(method.inputValue))
                 if (pattern.test(method.inputValue) &&
                   method.inputValue !== undefined &&
                   method.inputValue !== null) {
@@ -323,7 +320,7 @@ export const arrays = () => {
         break;
       case "slice":
         output = array.slice(...enterContentForTwoArguments(inputValue));
-        methodContent = [method, enterContentForTwoArguments(inputValue)];
+        methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
         break;
       case "indexOf":
         output = array.indexOf(enterNumberOrString(inputValue));
@@ -339,7 +336,7 @@ export const arrays = () => {
   };
 
   const enterNumberOrString = (inputValue) => {
-    console.log(String(inputValue))
+
     return (
       inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"` ?
         inputValue.slice(1, -1)
@@ -369,23 +366,18 @@ export const arrays = () => {
 
     return Function(`return (${content})`)();
   };
-  
+
   const enterContentForTwoArguments = (inputValue) => {
-  let content;
-  let arr = [];
-  // const [a, b] = inputValue.slice(",");
-  console.log(Number(inputValue))
-  
-  if (!!inputValue.includes(",")){
- arr = (enterNumberOrString(inputValue).split(",")).map(Number);
- 
-   return arr
-  }
-  //else 
- // arr = enterNumberOrString(inputValue).map(Number);
-//  return arr
-  }
-  
+    let content = [];
+
+    if (!isNaN(enterNumberOrString(inputValue))) {
+
+      return [...content, (enterNumberOrString(inputValue))]
+    }
+    else {
+      return (enterNumberOrString(inputValue).split(",")).map(number => number);
+    };
+  };
 
   const render = () => {
     renderSettings();
