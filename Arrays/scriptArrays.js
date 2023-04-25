@@ -1,7 +1,7 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js"
 
 export const arrays = () => {
-  const array = [];
+  const array = [1, 2, 3, 4, 5, 7, 77, 8, 9];
   let methodContent = [];
   let output = "";
   const defaultArray = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
@@ -314,16 +314,16 @@ export const arrays = () => {
         methodContent = [method, inputValue];
         break;
       case "map":
-        output = array.map(enterMethodContent(button, inputValue));
-        methodContent = [method, enterMethodContent(button, inputValue), "arrowFunction"];
+        output = array.map(enterContentForArrowFunction(button, inputValue));
+        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "filter":
-        output = array.filter(enterMethodContent(button, inputValue));
-        methodContent = [method, enterMethodContent(button, inputValue), "arrowFunction"];
+        output = array.filter(enterContentForArrowFunction(button, inputValue));
+        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "slice":
-        output = array.slice(enterNumberOrString(inputValue));
-        methodContent = [method, enterNumberOrString(inputValue)];
+        output = array.slice(...enterContentForTwoArguments(inputValue));
+        methodContent = [method, enterContentForTwoArguments(inputValue)];
         break;
       case "indexOf":
         output = array.indexOf(enterNumberOrString(inputValue));
@@ -355,7 +355,7 @@ export const arrays = () => {
     );
   };
 
-  const enterMethodContent = (button, inputValue) => {
+  const enterContentForArrowFunction = (button, inputValue) => {
     let content;
     methodsArray.forEach((method) => {
       if (method.method === button) {
@@ -369,6 +369,23 @@ export const arrays = () => {
 
     return Function(`return (${content})`)();
   };
+  
+  const enterContentForTwoArguments = (inputValue) => {
+  let content;
+  let arr = [];
+  // const [a, b] = inputValue.slice(",");
+  console.log(Number(inputValue))
+  
+  if (!!inputValue.includes(",")){
+ arr = (enterNumberOrString(inputValue).split(",")).map(Number);
+ 
+   return arr
+  }
+  //else 
+ // arr = enterNumberOrString(inputValue).map(Number);
+//  return arr
+  }
+  
 
   const render = () => {
     renderSettings();
