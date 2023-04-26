@@ -4,9 +4,10 @@
 }
 
 .arrayMethods--label {
-   display: block;
+   display: inline-block;
+   min-width: max-content;
    text-align: start;
-   margin: 20px 0 0 20px;
+   margin: 20px 0 0 5px;
    font-weight: 900;
    padding: 2px;
    font-size: 20px;

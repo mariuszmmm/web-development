@@ -1,11 +1,13 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js"
-import { arrayWords } from "./arrayWords.js"
+import { defaultArray, letters, arrayWords, } from "./arrays.js"
 
 export const arrays = () => {
   let array = [1, 2, 3, 4, 5, 7, 77, 8, 9];
   let methodContent = [];
   let output = "";
-  const defaultArray = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
+  let rangeValue;
+  let defaultArraySaved;
+
   const methodsArray = methodsArrayRaw.map((object) => {
 
     return {
@@ -104,14 +106,16 @@ export const arrays = () => {
             </button>                
             <button id="randomMixed" class="button js-random">
               random mixed
-            </button>                   
-            
+            </button>  
 
             <span class="rangeContiner">
-            <label class="arrayMethods--label">
+              <label for="inputRange" class="arrayMethods--label">
               array size :
-            </label> 
-              <input id="inputRange" type="range" class="range js-rangeArray" />
+              </label> 
+              <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="50" step="1" class="range js-range" />
+              <span class="arrayMethods--label js-rangeValue">
+              ${rangeValue ? rangeValue : "10"}
+              </span> 
             </span>
           </div>            
 
@@ -120,16 +124,16 @@ export const arrays = () => {
           </span>
 
           <div class="valueButtons">
-            <button class="button js-loadDefaultArray">
+            <button id="loadFormDefault" class="button js-default">
               load from default
             </button>
-            <button class="button js-saveDefaultArray">
+            <button id="saveToDefault" class="button js-default">
               save to default
             </button>
-            <button class="button js-resetDefaultArray">
+            <button id="resetDefault" class="button js-default">
               reset default
             </button>
-            <button class="button js-loadOutputArray">
+            <button id="loadFromOutput" class="button js-default">
               load from output
             </button>
           </div>            
@@ -227,89 +231,126 @@ export const arrays = () => {
 
   const bindInputsAndButtons = () => {
     const randomElements = document.querySelectorAll(".js-random");
-   
-    const randomStringArrayElement = document.querySelector(".js-randomStringArray");
-    const randomMixArrayElement = document.querySelector(".js-randomMixArray");
-    const rangeArrayElement = document.querySelector(".js-rangeArray");
-    const loadDefaultArrayElement = document.querySelector(".js-loadDefaultArray");
-    const saveDefaultArrayElement = document.querySelector(".js-saveDefaultArray");
-    const resetDefaultArrayElement = document.querySelector(".js-resetDefaultArray");
-    const loadOutputArrayElement = document.querySelector(".js-loadOutputArrayArray");
-    const inputElements = document.querySelectorAll(".js-methodInput")
-    const runButtonElements = document.querySelectorAll(".js-runButton")
-    const typeButtonElements = document.querySelectorAll(".js-typeButton")
-    
-    randomElements.forEach(element => element.addEventListener("click", ({target}) => {
-      console.log(event.target.id)
-      console.log("randomNaturalNumbers")      
+    const defaultElements = document.querySelectorAll(".js-default");
+
+    const rangeElement = document.querySelector(".js-range");
+    const rangeValueElement = document.querySelector(".js-rangeValue");
+
+
+    const inputElements = document.querySelectorAll(".js-methodInput");
+    const runButtonElements = document.querySelectorAll(".js-runButton");
+    const typeButtonElements = document.querySelectorAll(".js-typeButton");
+
+    randomElements.forEach(element => element.addEventListener("click", ({ target }) => {
       switch (target.id) {
         case "randomNaturalNumbers":
-          console.log("jest")
-         useRandomNaturalNumbers();
-        break;
+          useRandomNaturalNumbers();
+          break;
         case "randomIntegers":
-        useRandomIntegers();
-        break;
+          useRandomIntegers();
+          break;
         case "randomLetters":
-        useRandomLetters();
-        break;
+          useRandomLetters();
+          break;
         case "randomWords":
-        useRandomWords();
-        break;
+          useRandomWords();
+          break;
         case "randomMixed":
-        useRandomMixed();
-        break;
-               
-      }
-    }))
-    
-  const useRandomNaturalNumbers = () => {
-      let arr = [];
-      
-       while (arr.length < 20) {
-          arr.push(Math.floor(Math.random() *100));
-            }
-          array = arr;
-          render();
-    };
-    
-  const useRandomIntegers = () => {
-      let arr = [];
-  
-      while (arr.length<20){
-    arr.push(Math.floor(Math.random() * 200 -100));
-      }
-      array = arr;
+          useRandomMixed();
+          break;
+      };
+    }));
+
+    const useRandomNaturalNumbers = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(Math.floor(Math.random() * 100));
+      };
       render();
     };
-    
+
+    const useRandomIntegers = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(Math.floor(Math.random() * 200 - 100));
+      };
+      render();
+    };
+
     const useRandomLetters = () => {
-      let arr = [];
-    arr.pushletters = "abcdefghijklmnopqrstuvwxyz"
-      while (arr.length<20){
-    arr.push(letters.charAt(Math.floor(Math.random() * letters.length)));
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(letters.charAt(Math.floor(Math.random() * letters.length)));
       }
-      array = arr;
       render();
     }
- 
+
     const useRandomWords = () => {
-      let arr = [];
-      const number = arrayWords.length
-      while (arr.length<20){
-    arr.push(arrayWords[Math.floor(Math.random() * number)]);
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
       }
-      array = arr;
       render();
-    }   
-    
-  const useRandomMixed = () => {
-    const letters = "abcdefghijklmnopqrstuvwxyz";
-    
-    const arrayLetters = letters.slice(",").map(letter => letter)
-    const 
-      
     }
+
+    const useRandomMixed = () => {
+      const arrayLetters = [];
+      for (let a = 0; a < letters.length; a++) {
+        arrayLetters.push(letters.charAt(a))
+      }
+
+      const arrayIntegers = [];
+      for (let a = -100; a < 101; a++) {
+        arrayIntegers.push(a)
+      };
+
+      const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords]
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
+      }
+      render();
+    };
+
+    defaultElements.forEach((element) => {
+      element.addEventListener("click", ({ target }) => {
+        switch (target.id) {
+          case "loadFormDefault":
+            loadFormDefault();
+            break;
+          case "saveToDefault":
+            saveToDefault();
+            break;
+          case "resetDefault":
+            resetDefault();
+            break;
+          case "loadFromOutput":
+            loadFromOutput();
+            break;
+        };
+      });
+    });
+
+    const loadFormDefault = () => {
+      array = (defaultArraySaved ? defaultArraySaved : defaultArray);
+      render();
+    }
+
+    const saveToDefault = () => {
+      defaultArraySaved = array;
+      render();
+    }
+    //      do sprawdzenia !!! nie działa
+    const resetDefault = () => {
+      defaultArraySaved = "";
+      array = defaultArray;
+      render();
+    }
+
+    rangeElement.addEventListener("input", ({ target }) => {
+      rangeValueElement.textContent = target.value;
+      rangeValue = rangeValueElement.textContent;
+    })
 
     inputElements.forEach((input) => {
       input.addEventListener("click", ({ target }) => {
