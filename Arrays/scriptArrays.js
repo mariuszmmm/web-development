@@ -1,7 +1,8 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js"
+import { arrayWords } from "./arrayWords.js"
 
 export const arrays = () => {
-  const array = [1, 2, 3, 4, 5, 7, 77, 8, 9];
+  let array = [1, 2, 3, 4, 5, 7, 77, 8, 9];
   let methodContent = [];
   let output = "";
   const defaultArray = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
@@ -34,7 +35,7 @@ export const arrays = () => {
     let element = "";
     exampleArray.forEach((arrayElement, index) => {
       element += `
-        <span class="settingsParagraph--arrays strong">
+        <span class="settingsParagraph--arrays">
           ${typeof (arrayElement) === "string" ?
           (`"` + arrayElement + `"`) + ((exampleArray.length === index + 1) ? "" : ", ") :
           arrayElement + ((exampleArray.length === index + 1) ? "" : ", ")
@@ -89,15 +90,23 @@ export const arrays = () => {
           </span>
 
           <div class="valueButtons">               
-            <button class="button js-randomNumberArray">
-              random numbers
+            <button id="randomNaturalNumbers" class="button js-random">
+              random natural numbers
             </button>
-            <button class="button js-randomStringArray">
-              random strings
+            <button id="randomIntegers" class="button js-random">
+              random integers
+            </button>     
+             <button id="randomLetters" class="button js-random">
+              random letters
             </button>
-            <button class="button js-randomMixArray">
+             <button id="randomWords" class="button js-random">
+              random words
+            </button>                
+            <button id="randomMixed" class="button js-random">
               random mixed
-            </button>
+            </button>                   
+            
+
             <span class="rangeContiner">
             <label class="arrayMethods--label">
               array size :
@@ -217,7 +226,8 @@ export const arrays = () => {
   };
 
   const bindInputsAndButtons = () => {
-    const randomNumberArrayElement = document.querySelector(".js-randomNumberArray");
+    const randomElements = document.querySelectorAll(".js-random");
+   
     const randomStringArrayElement = document.querySelector(".js-randomStringArray");
     const randomMixArrayElement = document.querySelector(".js-randomMixArray");
     const rangeArrayElement = document.querySelector(".js-rangeArray");
@@ -228,6 +238,78 @@ export const arrays = () => {
     const inputElements = document.querySelectorAll(".js-methodInput")
     const runButtonElements = document.querySelectorAll(".js-runButton")
     const typeButtonElements = document.querySelectorAll(".js-typeButton")
+    
+    randomElements.forEach(element => element.addEventListener("click", ({target}) => {
+      console.log(event.target.id)
+      console.log("randomNaturalNumbers")      
+      switch (target.id) {
+        case "randomNaturalNumbers":
+          console.log("jest")
+         useRandomNaturalNumbers();
+        break;
+        case "randomIntegers":
+        useRandomIntegers();
+        break;
+        case "randomLetters":
+        useRandomLetters();
+        break;
+        case "randomWords":
+        useRandomWords();
+        break;
+        case "randomMixed":
+        useRandomMixed();
+        break;
+               
+      }
+    }))
+    
+  const useRandomNaturalNumbers = () => {
+      let arr = [];
+      
+       while (arr.length < 20) {
+          arr.push(Math.floor(Math.random() *100));
+            }
+          array = arr;
+          render();
+    };
+    
+  const useRandomIntegers = () => {
+      let arr = [];
+  
+      while (arr.length<20){
+    arr.push(Math.floor(Math.random() * 200 -100));
+      }
+      array = arr;
+      render();
+    };
+    
+    const useRandomLetters = () => {
+      let arr = [];
+    arr.pushletters = "abcdefghijklmnopqrstuvwxyz"
+      while (arr.length<20){
+    arr.push(letters.charAt(Math.floor(Math.random() * letters.length)));
+      }
+      array = arr;
+      render();
+    }
+ 
+    const useRandomWords = () => {
+      let arr = [];
+      const number = arrayWords.length
+      while (arr.length<20){
+    arr.push(arrayWords[Math.floor(Math.random() * number)]);
+      }
+      array = arr;
+      render();
+    }   
+    
+  const useRandomMixed = () => {
+    const letters = "abcdefghijklmnopqrstuvwxyz";
+    
+    const arrayLetters = letters.slice(",").map(letter => letter)
+    const 
+      
+    }
 
     inputElements.forEach((input) => {
       input.addEventListener("click", ({ target }) => {
