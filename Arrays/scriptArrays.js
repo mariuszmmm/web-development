@@ -1,12 +1,13 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js"
-import { defaultArray, letters, arrayWords, } from "./arrays.js"
+import { arrayDefault, letters, arrayWords, arrayEmoticons } from "./arrays.js"
 
 export const arrays = () => {
-  let array = [1, 2, 3, 4, 5, 7, 77, 8, 9];
+  let array = [];
   let methodContent = [];
   let output = "";
   let rangeValue;
-  let defaultArraySaved;
+  let arrayDefaultSaved = [];
+  let showDefaultActive = false;
 
   const methodsArray = methodsArrayRaw.map((object) => {
 
@@ -15,16 +16,9 @@ export const arrays = () => {
       methodButtons: object.methodButtons.map((button, index) => {
 
         return {
-          name: button, active: index === 0,
-          methodContent:
-            (button === "a*?") ? " a => a * " :
-              (button === "a**?") ? " a => a ** " :
-                (button === "a+?") ? " a => a + " :
-                  (button === "a=?") ? " a => a = " :
-                    (button === "a===?") ? " a => a === " :
-                      (button === "a!==?") ? " a => a !== " :
-                        (button === "a>?") ? " a => a > " :
-                          (button === "a.length>?") ? " a => a.length > " : ""
+          name: button,
+          active: index === 0,
+          methodContent: (button === "a*?") ? " a => a * " : (button === "a**?") ? " a => a ** " : (button === "a+?") ? " a => a + " : (button === "a=?") ? " a => a = " : (button === "a===?") ? " a => a === " : (button === "a!==?") ? " a => a !== " : (button === "a>?") ? " a => a > " : (button === "a.length>?") ? " a => a.length > " : ""
         }
       }),
       inputType: object.inputType,
@@ -74,6 +68,10 @@ export const arrays = () => {
             ${viewArray(array)}
           <span class="settingsParagraph--arrays strong">];</span>
           <p></p>
+         ${showDefaultActive? `<span class="settingsParagraph--arrays strong">const defaultArray = [</span>
+            ${viewArray(arrayDefaultSaved.length > 0? arrayDefaultSaved :arrayDefault)}
+          <span class="settingsParagraph--arrays strong">];</span>
+          <p></p>` : ""}          
           ${methodContent[0] ? vievMethodContent(methodContent) : ""}
         </div>
       `;
@@ -103,28 +101,36 @@ export const arrays = () => {
             </button>
              <button id="randomWords" class="button js-random">
               random words
-            </button>                
+            </button>  
+            <button id="randomEmoticons" class="button js-random">
+              random emoticons
+            </button>                  
             <button id="randomMixed" class="button js-random">
               random mixed
             </button>  
-
-            <span class="rangeContiner">
-              <label for="inputRange" class="arrayMethods--label">
-              array size :
-              </label> 
-              <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="50" step="1" class="range js-range" />
-              <span class="arrayMethods--label js-rangeValue">
-              ${rangeValue ? rangeValue : "10"}
-              </span> 
-            </span>
           </div>            
 
+            
+              <label for="inputRange" class="arrayMethods--label">
+                 size :               <span class="js-rangeValue">
+                            ${rangeValue ? rangeValue : "10"}
+                            </span>
+              </label>          
+            
+            <div class="valueButtons">              
+              <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="50" step="1" class="range js-range" />
+           </div>
+
+
           <span class="arrayMethods--label">
-          default array :
+          default :
           </span>
 
           <div class="valueButtons">
-            <button id="loadFormDefault" class="button js-default">
+            <button id="showDefault" class="button ${showDefaultActive ? "button--active" : ""} js-default">
+             show array default
+            </button>          
+            <button id="loadFromDefault" class="button js-default">
               load from default
             </button>
             <button id="saveToDefault" class="button js-default">
@@ -133,7 +139,7 @@ export const arrays = () => {
             <button id="resetDefault" class="button js-default">
               reset default
             </button>
-            <button id="loadFromOutput" class="button js-default">
+            <button id="loadFromOutput" ${Array.isArray(output)? "" : "disabled"} class="button js-default">
               load from output
             </button>
           </div>            
@@ -142,7 +148,7 @@ export const arrays = () => {
         return element;
       };
 
-      const methodsArraySettings = (name, buttons, inputType, inputPattern) => {
+      const methodsArraySettings = (name, buttons, inputType, inputValue, inputPattern) => {
         let element = "";
         element += `
           <div class="propertyButtons propertyButtons--arrays">
@@ -158,7 +164,7 @@ export const arrays = () => {
         });
 
         element += `
-          ${inputType ? `<input type="text" name="${name}" class="methodInput js-methodInput" />` : ""} 
+          ${inputType ? `<input type="text" name="${name}" value="${inputValue}" class="methodInput js-methodInput" />` : ""} 
               ) 
             </div>
           </div>
@@ -189,7 +195,7 @@ export const arrays = () => {
             ${arraySettings("array")}
           </div>
           <span class="arrayMethods--label">
-          array methods :
+            methods :
           </span>
           <div class="settingsButtons">
       `;
@@ -222,7 +228,7 @@ export const arrays = () => {
       <div class="outputContents outputContents--arrays">
         <div class="outputLabel">OUTPUT :</div>
           ${Array.isArray(output) ? `
-            <span class="settingsParagraph--arrays">const outputArray = [ ${viewArray(output)}    
+            <span class="settingsParagrap--arrays">const outputArray = [ ${viewArray(output)}    
             ];</span>` : (output)}  
         </div>
       </div>
@@ -254,6 +260,9 @@ export const arrays = () => {
           break;
         case "randomWords":
           useRandomWords();
+          break;
+        case "randomEmoticons":
+          useRandomEmoticons();
           break;
         case "randomMixed":
           useRandomMixed();
@@ -292,6 +301,14 @@ export const arrays = () => {
       }
       render();
     }
+    
+    const useRandomEmoticons = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(arrayEmoticons[Math.floor(Math.random() * arrayEmoticons.length)]);
+      }
+      render();      
+    }
 
     const useRandomMixed = () => {
       const arrayLetters = [];
@@ -304,7 +321,7 @@ export const arrays = () => {
         arrayIntegers.push(a)
       };
 
-      const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords]
+      const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords, ...arrayEmoticons]
       array = [];
       while (array.length < rangeValueElement.textContent) {
         array.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
@@ -315,8 +332,11 @@ export const arrays = () => {
     defaultElements.forEach((element) => {
       element.addEventListener("click", ({ target }) => {
         switch (target.id) {
-          case "loadFormDefault":
-            loadFormDefault();
+          case "showDefault":
+            showDefault();
+            break;          
+          case "loadFromDefault":
+            loadFromDefault();
             break;
           case "saveToDefault":
             saveToDefault();
@@ -331,20 +351,33 @@ export const arrays = () => {
       });
     });
 
-    const loadFormDefault = () => {
-      array = (defaultArraySaved ? defaultArraySaved : defaultArray);
+    const showDefault = () => {
+      showDefaultActive = !showDefaultActive
+      render();
+    }
+
+    const loadFromDefault = () => {
+      if (arrayDefaultSaved.length > 0) {
+      array = [...arrayDefaultSaved] }
+      else {array = [...arrayDefault]};
       render();
     }
 
     const saveToDefault = () => {
-      defaultArraySaved = array;
+      arrayDefaultSaved = [...array];
       render();
     }
-    //      do sprawdzenia !!! nie działa
+    
     const resetDefault = () => {
-      defaultArraySaved = "";
-      array = defaultArray;
+      arrayDefaultSaved = [];
       render();
+    }
+    
+    const loadFromOutput = () => {
+     if (Array.isArray(output)) {
+       array = [...output];
+       render();
+     } 
     }
 
     rangeElement.addEventListener("input", ({ target }) => {
@@ -366,7 +399,7 @@ export const arrays = () => {
           if (object.method === button.name) {
             object.methodButtons.forEach((obj) => {
               (obj.name === button.innerText) ?
-                obj.active = true :
+              obj.active = true:
                 obj.active = false;
             });
             render();
@@ -389,7 +422,10 @@ export const arrays = () => {
                   runMethod(button.id, method.inputValue, method.method);
                   render();
                 } else {
-                  output = "Input value not allowed, use: \" \"";
+                  if (method.method === "slice") {
+                  output = "The entered value is not allowed. Please enter a number or two numbers separated by a comma.";             
+                  } else {
+                  output = "Input value not allowed, use: \" \""};
                   renderOutput();
                   input.value = "";
                   input.focus();
@@ -462,16 +498,15 @@ export const arrays = () => {
 
     return (
       inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"` ?
-        inputValue.slice(1, -1)
-        :
-        (!isNaN(inputValue) ? (inputValue !== "" ? Number(inputValue) : null) : inputValue)
+      inputValue.slice(1, -1) :
+      (!isNaN(inputValue) ? (inputValue !== "" ? Number(inputValue) : null) : inputValue)
     );
   };
 
   const readNumberOrString = (inputValue) => {
     return (
-      (typeof (inputValue) === "number") ? inputValue :
-        `"` + inputValue + `"`
+      (typeof(inputValue) === "number") ? inputValue :
+      `"` + inputValue + `"`
     );
   };
 

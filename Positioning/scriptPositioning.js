@@ -4,7 +4,7 @@ export const positioning = () => {
 
   let buttonsObjects = buttonsArrayRaw.map((obj) => {
     return {
-      properties: [{ name: obj.properties[0], active: true }],
+      properties: [{ name: obj.properties[0], active: false }],
       propertiesValues: obj.propertiesValues.map((val, index) => {
         return { name: val, active: index === 0 }
       }),

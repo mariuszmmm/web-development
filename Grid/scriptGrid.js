@@ -7,7 +7,7 @@ export const grid = () => {
   buttonsArrayRaw.forEach((buttons) => {
     for (const value of buttons.destiny) {
       buttonsArray = [...buttonsArray, {
-        properties: [{ name: buttons.properties[0], active: index === 0, key: `${index}` }],
+        properties: [{ name: buttons.properties[0], active: false, key: `${index}` }],
         propertiesValues: buttons.propertiesValues.map((val, i) => {
           index++;
 

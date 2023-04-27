@@ -7,10 +7,10 @@
    display: inline-block;
    min-width: max-content;
    text-align: start;
-   margin: 20px 0 0 5px;
+   margin: 25px 0 0 30px;
    font-weight: 900;
    padding: 2px;
-   font-size: 20px;
+   font-size: 25px;
 }
 
 .rangeContiner {
@@ -21,7 +21,7 @@
 
 .range {
    height: 22px;
-   margin-top: 25px;
+   width: 30vw;
 }
 
 .arraySettings {
@@ -51,6 +51,7 @@
    padding: 50px 5%;
    flex-grow: 1;
    font-size: 18px;
+  justify-content: flex-start;
 }
 
 .methodInput {
