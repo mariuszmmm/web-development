@@ -2,12 +2,13 @@ import { methodsArrayRaw } from "./methodsArrayRaw.js"
 import { arrayExample, letters, arrayWords, arrayEmoticons } from "./arrays.js"
 
 export const arrays = () => {
-  let array = [];
+  let array = [5, "w", "9", NaN, undefined, false, true, null];
   let methodContent = [];
   let output;
   let rangeValue;
   let arrayExampleSaved = [];
   let showExampleActive = false;
+  let objectNotString;
 
   const methodsArray = methodsArrayRaw.map((object) => {
 
@@ -48,7 +49,10 @@ export const arrays = () => {
     element += `
       <span class="settingsParagraph--arrays strong">
         array.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
-        ((typeof (methodContent[1]) !== "string" || methodContent[2] === "twoArguments") ? methodContent[1] : `"` + methodContent[1] + `"`)
+      //  ((typeof (methodContent[1]) !== "string" || methodContent[2] === "twoArguments") ? methodContent[1] : `"` + methodContent[1] + `"`)
+     
+    
+     (typeof (methodContent[1]) === "string"?  (`"` + methodContent[1] + `"`) : methodContent[1])
         :
         ""} );
       </span>
@@ -421,9 +425,15 @@ export const arrays = () => {
               if (method.method === button.id) {
                 method.inputValue = enterNumberOrString(input.value);
                 const pattern = RegExp(method.inputPattern);
-                if (pattern.test(method.inputValue) &&
-                  method.inputValue !== undefined &&
-                  method.inputValue !== null) {
+                if (pattern.test(method.inputValue) 
+                
+             // &&
+             //   method.inputValue !== undefined
+                // &&
+               //   method.inputValue !== null
+               ) 
+                  
+                  {
                   runMethod(button.id, method.inputValue, method.method);
                   render();
                 } else {
@@ -504,14 +514,35 @@ export const arrays = () => {
     return (
       inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"` ?
       inputValue.slice(1, -1) :
-      (!isNaN(inputValue) ? (inputValue !== "" ? Number(inputValue) : null) : inputValue)
+     // (!isNaN(inputValue) ? (inputValue !== "" ? Number(inputValue) : null) : inputValue)
+     
+     
+       notString(inputValue)
+     
+     
     );
   };
+  
+  const notString = (inputValue) => {
+    switch (inputValue) {
+      case "null":
+        objectNotString = {name : null}
+      case "undefined":
+        return objectNotString = {name : undefined}
+      case "NaN":
+        return objectNotString = {name : NaN}
+      case "true":
+        return objectNotString = {name : true}
+      case "false":
+        return objectNotString = {name : false}
+         }
+  }
 
   const readNumberOrString = (inputValue) => {
+    console.log(inputValue)
     return (
-      (typeof(inputValue) === "number") ? inputValue :
-      `"` + inputValue + `"`
+      (typeof(inputValue) === "string") ? 
+      (`"` + inputValue + `"`) : inputValue
     );
   };
 
@@ -521,7 +552,12 @@ export const arrays = () => {
       if (method.method === button) {
         method.methodButtons.forEach((element) => {
           if (element.active) {
-            content = element.methodContent + readNumberOrString(inputValue)
+           content = element.methodContent + readNumberOrString(inputValue)
+         
+   //     const aaa = true
+      //   content = element.methodContent + readNumberOrString(aaa)
+         
+         
           };
         });
       };
