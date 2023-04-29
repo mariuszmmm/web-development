@@ -1,13 +1,13 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js"
-import { arrayDefault, letters, arrayWords, arrayEmoticons } from "./arrays.js"
+import { arrayExample, letters, arrayWords, arrayEmoticons } from "./arrays.js"
 
 export const arrays = () => {
   let array = [];
   let methodContent = [];
-  let output = "";
+  let output;
   let rangeValue;
-  let arrayDefaultSaved = [];
-  let showDefaultActive = false;
+  let arrayExampleSaved = [];
+  let showExampleActive = false;
 
   const methodsArray = methodsArrayRaw.map((object) => {
 
@@ -68,8 +68,8 @@ export const arrays = () => {
             ${viewArray(array)}
           <span class="settingsParagraph--arrays strong">];</span>
           <p></p>
-         ${showDefaultActive? `<span class="settingsParagraph--arrays strong">const defaultArray = [</span>
-            ${viewArray(arrayDefaultSaved.length > 0? arrayDefaultSaved :arrayDefault)}
+         ${showExampleActive? `<span class="settingsParagraph--arrays strong">const exampleArray = [</span>
+            ${viewArray(arrayExampleSaved.length > 0? arrayExampleSaved :arrayExample)}
           <span class="settingsParagraph--arrays strong">];</span>
           <p></p>` : ""}          
           ${methodContent[0] ? vievMethodContent(methodContent) : ""}
@@ -86,10 +86,10 @@ export const arrays = () => {
         let element = "";
         element += `
           <span class="arrayMethods--label">
-            array settings :
+            load array :
           </span>
 
-          <div class="valueButtons">               
+          <div class="valueButtons">   
             <button id="randomNaturalNumbers" class="button js-random">
               random natural numbers
             </button>
@@ -107,12 +107,18 @@ export const arrays = () => {
             </button>                  
             <button id="randomMixed" class="button js-random">
               random mixed
-            </button>  
+            </button>
+            <button id="loadFromExample" class="button js-example">
+              from example array
+            </button>          
+            <button id="loadFromOutput" ${Array.isArray(output)? "" : "disabled"} class="button js-example">
+              from output
+            </button>            
           </div>            
 
             
               <label for="inputRange" class="arrayMethods--label">
-                 size :               <span class="js-rangeValue">
+                 array size :               <span class="js-rangeValue">
                             ${rangeValue ? rangeValue : "10"}
                             </span>
               </label>          
@@ -123,24 +129,18 @@ export const arrays = () => {
 
 
           <span class="arrayMethods--label">
-          default :
+          example array :
           </span>
 
           <div class="valueButtons">
-            <button id="showDefault" class="button ${showDefaultActive ? "button--active" : ""} js-default">
-             show array default
+            <button id="showExample" class="button ${showExampleActive ? "button--active" : ""} js-example">
+             show example array
             </button>          
-            <button id="loadFromDefault" class="button js-default">
-              load from default
+            <button id="saveToExample" class="button js-example">
+              save array to example array
             </button>
-            <button id="saveToDefault" class="button js-default">
-              save to default
-            </button>
-            <button id="resetDefault" class="button js-default">
-              reset default
-            </button>
-            <button id="loadFromOutput" ${Array.isArray(output)? "" : "disabled"} class="button js-default">
-              load from output
+            <button id="resetExample" class="button js-example">
+              reset example array
             </button>
           </div>            
         `;
@@ -237,7 +237,7 @@ export const arrays = () => {
 
   const bindInputsAndButtons = () => {
     const randomElements = document.querySelectorAll(".js-random");
-    const defaultElements = document.querySelectorAll(".js-default");
+    const exampleElements = document.querySelectorAll(".js-example");
 
     const rangeElement = document.querySelector(".js-range");
     const rangeValueElement = document.querySelector(".js-rangeValue");
@@ -329,20 +329,20 @@ export const arrays = () => {
       render();
     };
 
-    defaultElements.forEach((element) => {
+    exampleElements.forEach((element) => {
       element.addEventListener("click", ({ target }) => {
         switch (target.id) {
-          case "showDefault":
-            showDefault();
+          case "showExample":
+            showExample();
             break;          
-          case "loadFromDefault":
-            loadFromDefault();
+          case "loadFromExample":
+            loadFromExample();
             break;
-          case "saveToDefault":
-            saveToDefault();
+          case "saveToExample":
+            saveToExample();
             break;
-          case "resetDefault":
-            resetDefault();
+          case "resetExample":
+            resetExample();
             break;
           case "loadFromOutput":
             loadFromOutput();
@@ -351,25 +351,30 @@ export const arrays = () => {
       });
     });
 
-    const showDefault = () => {
-      showDefaultActive = !showDefaultActive
+    const showExample = () => {
+      showExampleActive = !showExampleActive
       render();
     }
 
-    const loadFromDefault = () => {
-      if (arrayDefaultSaved.length > 0) {
-      array = [...arrayDefaultSaved] }
-      else {array = [...arrayDefault]};
+    const loadFromExample = () => {
+      if (arrayExampleSaved.length > 0) {
+      array = [...arrayExampleSaved] }
+      else {array = [...arrayExample]};
       render();
     }
 
-    const saveToDefault = () => {
-      arrayDefaultSaved = [...array];
+    const saveToExample = () => {
+      if (array.length > 0) {
+      arrayExampleSaved = [...array];
       render();
+    } else {
+      output = "Not saved, array is empty.";
+      renderOutput();
+    }
     }
     
-    const resetDefault = () => {
-      arrayDefaultSaved = [];
+    const resetExample = () => {
+      arrayExampleSaved = [];
       render();
     }
     
@@ -536,8 +541,15 @@ export const arrays = () => {
       return (enterNumberOrString(inputValue).split(",")).map(number => number);
     };
   };
+  
+  const clearOutput = () => {
+    if(!Array.isArray(output)) {
+      output = "";
+    }
+  }
 
   const render = () => {
+    clearOutput();
     renderSettings();
     renderOutput();
     bindInputsAndButtons();

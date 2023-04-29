@@ -1,4 +1,4 @@
-export const arrayDefault = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
+export const arrayExample = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
 
 export const letters = "abcdefghijklmnopqrstuvwxyz";
 
