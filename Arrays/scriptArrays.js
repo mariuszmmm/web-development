@@ -2,7 +2,7 @@ import { methodsArrayRaw } from "./methodsArrayRaw.js"
 import { arrayExample, letters, arrayWords, arrayEmoticons } from "./arrays.js"
 
 export const arrays = () => {
-  let array = [5, "w", "9", NaN, undefined, false, true, null];
+  let array = [5, "1", "w2", "ww3", "www4", "wwww5", "wwwww6", "9", NaN, true, false, null, undefined];
   let methodContent = [];
   let output;
   let rangeValue;
@@ -27,14 +27,19 @@ export const arrays = () => {
       inputPattern: object.inputPattern
     }
   });
-
+  console.log(methodsArray);
   const viewArray = (exampleArray) => {
     let element = "";
     exampleArray.forEach((arrayElement, index) => {
       element += `
         <span class="settingsParagraph--arrays">
           ${typeof (arrayElement) === "string" ?
-          (`"` + arrayElement + `"`) + ((exampleArray.length === index + 1) ? "" : ", ") :
+          (
+            arrayElement[0] === `"` && arrayElement[arrayElement.length - 1] === `"` ?
+              arrayElement : `"` + arrayElement + `"`
+
+
+          ) + ((exampleArray.length === index + 1) ? "" : ", ") :
           arrayElement + ((exampleArray.length === index + 1) ? "" : ", ")
         }
         </span>
@@ -49,10 +54,11 @@ export const arrays = () => {
     element += `
       <span class="settingsParagraph--arrays strong">
         array.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
-      //  ((typeof (methodContent[1]) !== "string" || methodContent[2] === "twoArguments") ? methodContent[1] : `"` + methodContent[1] + `"`)
-     
-    
-     (typeof (methodContent[1]) === "string"?  (`"` + methodContent[1] + `"`) : methodContent[1])
+        //  ((typeof (methodContent[1]) !== "string" || methodContent[2] === "twoArguments") ? methodContent[1] : `"` + methodContent[1] + `"`)
+
+
+        // (typeof (methodContent[1]) === "string" ? (`"` + methodContent[1] + `"`) : methodContent[1])
+        methodContent[1]
         :
         ""} );
       </span>
@@ -72,8 +78,8 @@ export const arrays = () => {
             ${viewArray(array)}
           <span class="settingsParagraph--arrays strong">];</span>
           <p></p>
-         ${showExampleActive? `<span class="settingsParagraph--arrays strong">const exampleArray = [</span>
-            ${viewArray(arrayExampleSaved.length > 0? arrayExampleSaved :arrayExample)}
+         ${showExampleActive ? `<span class="settingsParagraph--arrays strong">const exampleArray = [</span>
+            ${viewArray(arrayExampleSaved.length > 0 ? arrayExampleSaved : arrayExample)}
           <span class="settingsParagraph--arrays strong">];</span>
           <p></p>` : ""}          
           ${methodContent[0] ? vievMethodContent(methodContent) : ""}
@@ -115,7 +121,7 @@ export const arrays = () => {
             <button id="loadFromExample" class="button js-example">
               from example array
             </button>          
-            <button id="loadFromOutput" ${Array.isArray(output)? "" : "disabled"} class="button js-example">
+            <button id="loadFromOutput" ${Array.isArray(output) ? "" : "disabled"} class="button js-example">
               from output
             </button>            
           </div>            
@@ -167,8 +173,10 @@ export const arrays = () => {
             ${button.active ? button.methodContent : ""}`
         });
 
+        // console.log(inputValue)
+        // console.log(typeof (inputValue))
         element += `
-          ${inputType ? `<input type="text" name="${name}" value="${inputValue}" class="methodInput js-methodInput" />` : ""} 
+          ${inputType ? `<input type="text" name="${name}" value="" class="methodInput js-methodInput" />` : ""} 
               ) 
             </div>
           </div>
@@ -305,13 +313,13 @@ export const arrays = () => {
       }
       render();
     }
-    
+
     const useRandomEmoticons = () => {
       array = [];
       while (array.length < rangeValueElement.textContent) {
         array.push(arrayEmoticons[Math.floor(Math.random() * arrayEmoticons.length)]);
       }
-      render();      
+      render();
     }
 
     const useRandomMixed = () => {
@@ -338,7 +346,7 @@ export const arrays = () => {
         switch (target.id) {
           case "showExample":
             showExample();
-            break;          
+            break;
           case "loadFromExample":
             loadFromExample();
             break;
@@ -362,31 +370,32 @@ export const arrays = () => {
 
     const loadFromExample = () => {
       if (arrayExampleSaved.length > 0) {
-      array = [...arrayExampleSaved] }
-      else {array = [...arrayExample]};
+        array = [...arrayExampleSaved]
+      }
+      else { array = [...arrayExample] };
       render();
     }
 
     const saveToExample = () => {
       if (array.length > 0) {
-      arrayExampleSaved = [...array];
-      render();
-    } else {
-      output = "Not saved, array is empty.";
-      renderOutput();
+        arrayExampleSaved = [...array];
+        render();
+      } else {
+        output = "Not saved, array is empty.";
+        renderOutput();
+      }
     }
-    }
-    
+
     const resetExample = () => {
       arrayExampleSaved = [];
       render();
     }
-    
+
     const loadFromOutput = () => {
-     if (Array.isArray(output)) {
-       array = [...output];
-       render();
-     } 
+      if (Array.isArray(output)) {
+        array = [...output];
+        render();
+      }
     }
 
     rangeElement.addEventListener("input", ({ target }) => {
@@ -408,7 +417,7 @@ export const arrays = () => {
           if (object.method === button.name) {
             object.methodButtons.forEach((obj) => {
               (obj.name === button.innerText) ?
-              obj.active = true:
+                obj.active = true :
                 obj.active = false;
             });
             render();
@@ -425,27 +434,50 @@ export const arrays = () => {
               if (method.method === button.id) {
                 method.inputValue = enterNumberOrString(input.value);
                 const pattern = RegExp(method.inputPattern);
-                if (pattern.test(method.inputValue) 
-                
-             // &&
-             //   method.inputValue !== undefined
-                // &&
-               //   method.inputValue !== null
-               ) 
-                  
-                  {
-                  runMethod(button.id, method.inputValue, method.method);
-                  render();
+                console.log(enterNumberOrString(input.value))
+                console.log(typeof (enterNumberOrString(input.value)))
+                if (pattern.test(method.inputValue)
+
+                  &&
+                  method.inputValue !== undefined
+                  &&
+                  method.inputValue !== null
+                ) {
+                  console.log("przesło patern")
+                  if (method.method === "filter" && !!method.methodButtons[0].active && (array.includes(null) || array.includes(undefined))) {
+                    render();
+                    if (array.includes(null)) {
+                    output = "Error: Cannot read properties of null (reading 'length')"; }
+                    if (array.includes(undefined)) {
+                      output = "Error: Cannot read properties of undefined (reading 'length')"; }
+    
+                    renderOutput();
+                    return
+                  } else {
+
+                    if (typeof (method.inputValue) === "object") {
+                      runMethod(button.id, method.inputValue.name, method.method);
+                      render();
+                    } else {
+                      console.log("else runMethod")
+                      runMethod(button.id, method.inputValue, method.method);
+
+                      render();
+                    }
+                  }
                 } else {
                   if (method.method === "slice") {
-                  output = "The entered value is not allowed. Please enter a number or two numbers separated by a comma.";             
+                    output = "The entered value is not allowed. Please enter a number or two numbers separated by a comma.";
                   } else {
-                  output = "Input value not allowed, use: \" \""};
+                    output = "Input value not allowed, use: \" \""
+                  };
                   renderOutput();
                   input.value = "";
                   input.focus();
                   return
                 };
+
+
               };
             });
           };
@@ -453,6 +485,7 @@ export const arrays = () => {
 
         methodsArray.forEach((method) => {
           if ((method.method === button.id) && !method.inputType) {
+            console.log("!method.inputType")
             runMethod(button.id, null, method.method)
             render();
           };
@@ -497,6 +530,7 @@ export const arrays = () => {
         methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
         break;
       case "indexOf":
+        console.log(enterNumberOrString(inputValue))
         output = array.indexOf(enterNumberOrString(inputValue));
         methodContent = [method, enterNumberOrString(inputValue)];
         break;
@@ -507,42 +541,64 @@ export const arrays = () => {
     };
     console.log("array", array);
     console.log("methodContent", methodContent);
+    console.log("output", output);
   };
 
   const enterNumberOrString = (inputValue) => {
 
     return (
       inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"` ?
-      inputValue.slice(1, -1) :
-     // (!isNaN(inputValue) ? (inputValue !== "" ? Number(inputValue) : null) : inputValue)
-     
-     
-       notString(inputValue)
-     
-     
+        inputValue.slice(1, -1) 
+        :
+(typeof(inputValue) === "string" ? inputValue :  
+
+        (!isNaN(inputValue) ?
+        (inputValue !== "" ? (Number(inputValue)) : null) 
+        : notString(inputValue)
+        )
+)
     );
   };
-  
+
   const notString = (inputValue) => {
+    console.log(inputValue)
+    console.log(typeof (inputValue))
     switch (inputValue) {
       case "null":
-        objectNotString = {name : null}
+        objectNotString = { name: null };
+        return objectNotString
+        break;
       case "undefined":
-        return objectNotString = {name : undefined}
+        objectNotString = { name: undefined };
+        return objectNotString
+        break;
       case "NaN":
-        return objectNotString = {name : NaN}
+        objectNotString = { name: NaN };
+        return objectNotString
+        break;
       case "true":
-        return objectNotString = {name : true}
+        objectNotString = { name: true };
+        return objectNotString
+        break;
       case "false":
-        return objectNotString = {name : false}
-         }
+        objectNotString = { name: false };
+        return objectNotString
+        break;
+      default:
+        return inputValue.includes(",")? inputValue : undefined;
+
+        break;
+    }
   }
 
   const readNumberOrString = (inputValue) => {
     console.log(inputValue)
     return (
-      (typeof(inputValue) === "string") ? 
-      (`"` + inputValue + `"`) : inputValue
+      (typeof (inputValue) === "string") ?
+        // (`"` + inputValue + `"`) 
+        inputValue
+        :
+        inputValue
     );
   };
 
@@ -552,12 +608,14 @@ export const arrays = () => {
       if (method.method === button) {
         method.methodButtons.forEach((element) => {
           if (element.active) {
-           content = element.methodContent + readNumberOrString(inputValue)
-         
-   //     const aaa = true
-      //   content = element.methodContent + readNumberOrString(aaa)
-         
-         
+            content = element.methodContent + readNumberOrString(inputValue)
+
+            // readNumberOrString(inputValue)
+
+            //     const aaa = true
+            //   content = element.methodContent + readNumberOrString(aaa)
+            console.log("content", content)
+
           };
         });
       };
@@ -577,15 +635,15 @@ export const arrays = () => {
       return (enterNumberOrString(inputValue).split(",")).map(number => number);
     };
   };
-  
+
   const clearOutput = () => {
-    if(!Array.isArray(output)) {
+    if (!Array.isArray(output)) {
       output = "";
     }
   }
 
   const render = () => {
-    clearOutput();
+    // clearOutput();
     renderSettings();
     renderOutput();
     bindInputsAndButtons();
