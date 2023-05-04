@@ -4,7 +4,7 @@ import { arrayExample, letters, arrayWords, arrayEmoticons } from "./arrays.js"
 export const arrays = () => {
   let array = [5, "1", "w2", "ww3", "www4", "wwww5", "wwwww6", "9", NaN, true, false, null, undefined];
   let methodContent = [];
-  let output;
+  let output = "";
   let rangeValue;
   let arrayExampleSaved = [];
   let showExampleActive = false;
@@ -57,8 +57,8 @@ export const arrays = () => {
         //  ((typeof (methodContent[1]) !== "string" || methodContent[2] === "twoArguments") ? methodContent[1] : `"` + methodContent[1] + `"`)
 
 
-        // (typeof (methodContent[1]) === "string" ? (`"` + methodContent[1] + `"`) : methodContent[1])
-        methodContent[1]
+        (typeof (methodContent[1]) === "string" ? (`"` + methodContent[1] + `"`) : methodContent[1])
+
         :
         ""} );
       </span>
@@ -241,7 +241,12 @@ export const arrays = () => {
         <div class="outputLabel">OUTPUT :</div>
           ${Array.isArray(output) ? `
             <span class="settingsParagrap--arrays">const outputArray = [ ${viewArray(output)}    
-            ];</span>` : (output)}  
+            ];</span>` :
+        ((typeof (output) === "string" && methodContent.length > 0) ?
+          (output !== "" ? `"` + output + `"` : output)
+          :
+          output)
+      }  
         </div>
       </div>
     `;
@@ -417,7 +422,7 @@ export const arrays = () => {
           if (object.method === button.name) {
             object.methodButtons.forEach((obj) => {
               (obj.name === button.innerText) ?
-              obj.active = true:
+                obj.active = true :
                 obj.active = false;
             });
             render();
@@ -432,17 +437,17 @@ export const arrays = () => {
           if (input.name === button.id) {
             methodsArray.forEach((method) => {
               if (method.method === button.id) {
-           //    method.inputValue = enterNumberOrString(input.value);
-              let valueTemp = enterNumberOrString(input.value);
+                //    method.inputValue = enterNumberOrString(input.value);
+                let valueTemp = enterNumberOrString(input.value);
                 const pattern = method.inputPattern;
                 console.log(input.value)
-                console.log(typeof(input.value))
+                console.log(typeof (input.value))
                 if (pattern.test(input.value)
 
-                //  &&
-                 // enterNumberOrString(input.value) !== undefined 
-                //  &&
-               //   enterNumberOrString(input.value) !== null
+                  //  &&
+                  // enterNumberOrString(input.value) !== undefined 
+                  //  &&
+                  //   enterNumberOrString(input.value) !== null
                 ) {
                   console.log("przesło patern")
                   if (method.method === "filter" && !!method.methodButtons[0].active && (array.includes(null) || array.includes(undefined))) {
@@ -458,7 +463,7 @@ export const arrays = () => {
                     return
                   } else {
 
-                    if (typeof(enterNumberOrString(input.value)) === "object") {
+                    if (typeof (enterNumberOrString(input.value)) === "object") {
                       runMethod(button.id, enterNumberOrString(input.value), method.method);
                       render();
                     } else {
@@ -469,13 +474,15 @@ export const arrays = () => {
                     }
                   }
                 } else {
+                  methodContent = []
+                  render();
                   if (method.method === "slice") {
                     output = "The entered value is not allowed. Please enter a number or two numbers separated by a comma.";
                   } else {
                     output = "Input value not allowed, use: \" \""
                   };
                   renderOutput();
-                //  input.value = "";
+                  //  input.value = "";
                   input.focus();
                   return
                 };
@@ -551,23 +558,23 @@ export const arrays = () => {
 
     return (
       inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"` ?
-      inputValue.slice(1, -1)
-      
-      :
-      (
-      //  typeof(inputValue) === "string" ? inputValue :
+        inputValue.slice(1, -1)
 
-        (!isNaN(inputValue) ?
-          (inputValue !== "" ? (Number(inputValue)) : null) :
-          notString(inputValue)
+        :
+        (
+          //  typeof(inputValue) === "string" ? inputValue :
+
+          (!isNaN(inputValue) ?
+            (inputValue !== "" ? (Number(inputValue)) : null) :
+            notString(inputValue)
+          )
         )
-      )
     );
   };
 
   const notString = (inputValue) => {
     console.log(inputValue)
-    console.log(typeof(inputValue))
+    console.log(typeof (inputValue))
     switch (inputValue) {
       case "null":
         objectNotString = { name: null };
@@ -599,10 +606,10 @@ export const arrays = () => {
   const readNumberOrString = (inputValue) => {
     console.log(inputValue)
     return (
-      (typeof(inputValue) === "string") ?
-      // (`"` + inputValue + `"`) 
-      inputValue :
-      inputValue
+      (typeof (inputValue) === "string") ?
+        // (`"` + inputValue + `"`) 
+        inputValue :
+        inputValue
     );
   };
 
