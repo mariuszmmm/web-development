@@ -417,7 +417,7 @@ export const arrays = () => {
           if (object.method === button.name) {
             object.methodButtons.forEach((obj) => {
               (obj.name === button.innerText) ?
-                obj.active = true :
+              obj.active = true:
                 obj.active = false;
             });
             render();
@@ -432,35 +432,38 @@ export const arrays = () => {
           if (input.name === button.id) {
             methodsArray.forEach((method) => {
               if (method.method === button.id) {
-                method.inputValue = enterNumberOrString(input.value);
-                const pattern = RegExp(method.inputPattern);
-                console.log(enterNumberOrString(input.value))
-                console.log(typeof (enterNumberOrString(input.value)))
-                if (pattern.test(method.inputValue)
+           //    method.inputValue = enterNumberOrString(input.value);
+              let valueTemp = enterNumberOrString(input.value);
+                const pattern = method.inputPattern;
+                console.log(input.value)
+                console.log(typeof(input.value))
+                if (pattern.test(input.value)
 
-                  &&
-                  method.inputValue !== undefined
-                  &&
-                  method.inputValue !== null
+                //  &&
+                 // enterNumberOrString(input.value) !== undefined 
+                //  &&
+               //   enterNumberOrString(input.value) !== null
                 ) {
                   console.log("przesło patern")
                   if (method.method === "filter" && !!method.methodButtons[0].active && (array.includes(null) || array.includes(undefined))) {
                     render();
                     if (array.includes(null)) {
-                    output = "Error: Cannot read properties of null (reading 'length')"; }
+                      output = "Error: Cannot read properties of null (reading 'length')";
+                    }
                     if (array.includes(undefined)) {
-                      output = "Error: Cannot read properties of undefined (reading 'length')"; }
-    
+                      output = "Error: Cannot read properties of undefined (reading 'length')";
+                    }
+
                     renderOutput();
                     return
                   } else {
 
-                    if (typeof (method.inputValue) === "object") {
-                      runMethod(button.id, method.inputValue.name, method.method);
+                    if (typeof(enterNumberOrString(input.value)) === "object") {
+                      runMethod(button.id, enterNumberOrString(input.value), method.method);
                       render();
                     } else {
                       console.log("else runMethod")
-                      runMethod(button.id, method.inputValue, method.method);
+                      runMethod(button.id, enterNumberOrString(input.value), method.method);
 
                       render();
                     }
@@ -472,7 +475,7 @@ export const arrays = () => {
                     output = "Input value not allowed, use: \" \""
                   };
                   renderOutput();
-                  input.value = "";
+                //  input.value = "";
                   input.focus();
                   return
                 };
@@ -548,21 +551,23 @@ export const arrays = () => {
 
     return (
       inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"` ?
-        inputValue.slice(1, -1) 
-        :
-(typeof(inputValue) === "string" ? inputValue :  
+      inputValue.slice(1, -1)
+      
+      :
+      (
+      //  typeof(inputValue) === "string" ? inputValue :
 
         (!isNaN(inputValue) ?
-        (inputValue !== "" ? (Number(inputValue)) : null) 
-        : notString(inputValue)
+          (inputValue !== "" ? (Number(inputValue)) : null) :
+          notString(inputValue)
         )
-)
+      )
     );
   };
 
   const notString = (inputValue) => {
     console.log(inputValue)
-    console.log(typeof (inputValue))
+    console.log(typeof(inputValue))
     switch (inputValue) {
       case "null":
         objectNotString = { name: null };
@@ -585,7 +590,7 @@ export const arrays = () => {
         return objectNotString
         break;
       default:
-        return inputValue.includes(",")? inputValue : undefined;
+        return inputValue.includes(",") ? inputValue : undefined;
 
         break;
     }
@@ -594,11 +599,10 @@ export const arrays = () => {
   const readNumberOrString = (inputValue) => {
     console.log(inputValue)
     return (
-      (typeof (inputValue) === "string") ?
-        // (`"` + inputValue + `"`) 
-        inputValue
-        :
-        inputValue
+      (typeof(inputValue) === "string") ?
+      // (`"` + inputValue + `"`) 
+      inputValue :
+      inputValue
     );
   };
 
