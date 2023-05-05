@@ -41,6 +41,10 @@ export const arrays = () => {
 
           ) + ((exampleArray.length === index + 1) ? "" : ", ") :
           arrayElement + ((exampleArray.length === index + 1) ? "" : ", ")
+
+
+          
+
         }
         </span>
       `;
@@ -57,7 +61,12 @@ export const arrays = () => {
         //  ((typeof (methodContent[1]) !== "string" || methodContent[2] === "twoArguments") ? methodContent[1] : `"` + methodContent[1] + `"`)
 
 
-        (typeof (methodContent[1]) === "string" ? (`"` + methodContent[1] + `"`) : methodContent[1])
+        (typeof (methodContent[1]) === "string" ? 
+        // (`"` + methodContent[1] + `"`) 
+        ( methodContent[1]) 
+        : 
+        ((typeof (methodContent[1]) === "object") ? methodContent[1].name : methodContent[1]))
+
 
         :
         ""} );
@@ -464,6 +473,7 @@ export const arrays = () => {
                   } else {
 
                     if (typeof (enterNumberOrString(input.value)) === "object") {
+                      console.log("jest runMethod")
                       runMethod(button.id, enterNumberOrString(input.value), method.method);
                       render();
                     } else {
@@ -475,15 +485,16 @@ export const arrays = () => {
                   }
                 } else {
                   methodContent = []
-                  render();
+                  // render();
                   if (method.method === "slice") {
                     output = "The entered value is not allowed. Please enter a number or two numbers separated by a comma.";
                   } else {
                     output = "Input value not allowed, use: \" \""
                   };
-                  renderOutput();
+                  
                   //  input.value = "";
                   input.focus();
+                  renderOutput()
                   return
                 };
 
@@ -520,11 +531,11 @@ export const arrays = () => {
         methodContent = [method];
         break;
       case "push":
-        output = array.push(inputValue);
+        output = array.push(readNumberOrString(inputValue));
         methodContent = [method, inputValue];
         break;
       case "unshift":
-        output = array.unshift(inputValue);
+        output = array.unshift(readNumberOrString(inputValue));
         methodContent = [method, inputValue];
         break;
       case "map":
@@ -557,8 +568,14 @@ export const arrays = () => {
   const enterNumberOrString = (inputValue) => {
 
     return (
-      inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"` ?
-        inputValue.slice(1, -1)
+      // (inputValue.charAt(0) === `"` && inputValue.charAt(inputValue.length - 1) === `"`)
+      
+      typeof(inputValue) === "string" && inputValue !== "null" && inputValue !== "true" && inputValue !== "false" && inputValue !== "undefined" && inputValue !== "NaN"
+      ?
+        //  inputValue.slice(1, -1)
+
+         ((inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ? inputValue + "" : Number(inputValue)) 
+        // inputValue
 
         :
         (
@@ -606,10 +623,12 @@ export const arrays = () => {
   const readNumberOrString = (inputValue) => {
     console.log(inputValue)
     return (
+
+
       (typeof (inputValue) === "string") ?
         // (`"` + inputValue + `"`) 
-        inputValue :
-        inputValue
+        ((inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ? inputValue + "" : Number(inputValue)) :
+        ((typeof (inputValue) === "object") ? inputValue.name : inputValue)
     );
   };
 
