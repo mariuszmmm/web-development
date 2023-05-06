@@ -15,6 +15,11 @@ export const methodsArrayRaw = [
       inputType: null,
    },
    {
+      method: "sort",
+      methodButtons: ["( )", "(a,b)=>a-b", "(a,b)=>b-a"],
+      inputType: null,
+   },
+   {
       method: "push",
       methodButtons: [],
       inputType: "text",
@@ -33,8 +38,38 @@ export const methodsArrayRaw = [
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
+      method: "find",
+      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?", "a%2===?"],
+      inputType: "text",
+      inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+   },
+   {
+      method: "findIndex",
+      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?", "a%2===?"],
+      inputType: "text",
+      inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+   },
+   {
       method: "filter",
-      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?"],
+      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?", "a%2===?"],
+      inputType: "text",
+      inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+   },
+   {
+      method: "some",
+      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?", "a%2===?"],
+      inputType: "text",
+      inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+   },
+   {
+      method: "every",
+      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?", "a%2===?"],
+      inputType: "text",
+      inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+   },
+   {
+      method: "includes",
+      methodButtons: [],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
@@ -42,7 +77,7 @@ export const methodsArrayRaw = [
       method: "slice",
       methodButtons: [],
       inputType: "text",
-      inputPattern: /^-?\d+(,-?\d+){0,2}$/,
+      inputPattern: /^-?\d+(,-?\d+){0,1}$/,
    },
    {
       method: "indexOf",
