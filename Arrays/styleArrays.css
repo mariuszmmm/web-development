@@ -1,6 +1,20 @@
+.settingsContents--array {
+   width: 600px;
+   flex-grow: 0;
+   line-height: 2;
+   word-break: break-word;
+}
+
+@media (max-width: 1499px) {
+   .settingsContents--array {
+      width: 100%;
+   }
+}
+
 .settingsParagraph--arrays {
    margin-top: 5px;
    margin-bottom: 5px;
+   font-size: 18px;
 }
 
 .arrayMethods--label {
@@ -31,13 +45,13 @@
 }
 
 .propertyButtons--arrays {
-   width: 400px;
+   width: 430px;
    justify-self: flex-end;
 }
 
 @media (max-width: 768px) {
    .propertyButtons--arrays {
-      width: 218px;
+      width: 270px;
    }
 }
 
@@ -51,7 +65,8 @@
    padding: 50px 5%;
    flex-grow: 1;
    font-size: 18px;
-  justify-content: flex-start;
+   justify-content: flex-start;
+   line-height: 2;
 }
 
 .methodInput {
@@ -59,7 +74,7 @@
    border: 1px solid black;
    border-radius: 5px;
    box-shadow: 2px 2px;
-   width: 80px;
+   width: 100px;
    padding: 2px 5px;
    margin: 4px;
    font-weight: 700;
@@ -69,7 +84,7 @@
 
 @media (max-width: 768px) {
    .methodInput {
-      width: 32px;
+      width: 50px;
       padding: 2px 3px;
       font-size: 12px;
    }

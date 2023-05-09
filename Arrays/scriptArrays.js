@@ -2,7 +2,7 @@ import { methodsArrayRaw } from "./methodsArrayRaw.js"
 import { arrayExample, letters, arrayWords, arrayEmoticons } from "./arrays.js"
 
 export const arrays = () => {
-  let array = [5, "1", "9", NaN, true, false, null, undefined];
+  let array = [];
   let methodContent = [];
   let output = "";
   let rangeValue;
@@ -19,18 +19,18 @@ export const arrays = () => {
         return {
           name: button,
           active: index === 0,
-          methodContent: (button === "a*?") ? " a => a * " :
-            (button === "a**?") ? " a => a ** " :
-              (button === "a+?") ? " a => a + " :
-                (button === "a=?") ? " a => a = " :
-                  (button === "a===?") ? " a => a === " :
-                    (button === "a!==?") ? " a => a !== " :
-                      (button === "a>?") ? " a => a > " :
-                        (button === "a.length>?") ? " a => a.length > " :
-                          (button === "a%2===?") ? " a => a % 2 === " :
+          methodContent: (button === "(a*?)") ? " a => a * " :
+            (button === "(a**?)") ? " a => a ** " :
+              (button === "(a+?)") ? " a => a + " :
+                (button === "(a=?)") ? " a => a = " :
+                  (button === "(a===?)") ? " a => a === " :
+                    (button === "(a!==?)") ? " a => a !== " :
+                      (button === "(a>?)") ? " a => a > " :
+                        (button === "(a.length>?)") ? " a => a.length > " :
+                          (button === "(a%2===?)") ? " a => a % 2 === " :
                             (button === "( )") ? "" :
-                              (button === "(a,b)=>a-b") ? " (a,b) => a-b " :
-                                (button === "(a,b)=>b-a") ? " (a,b) => b-a " : ""
+                              (button === "((a,b)=>a-b)") ? " (a,b) => a-b " :
+                                (button === "((a,b)=>b-a)") ? " (a,b) => b-a " : ""
         }
       }),
       inputType: object.inputType,
@@ -43,7 +43,7 @@ export const arrays = () => {
     let element = "";
     exampleArray.forEach((arrayElement, index) => {
       element += `
-        <span class="settingsParagraph--arrays strong">
+        <span class="settingsParagraph--arrays">
           ${typeof (arrayElement) === "string" ?
           ((arrayElement[0] === `"` && arrayElement[arrayElement.length - 1] === `"`) ? arrayElement : (`"` + arrayElement + `"`))
           + ((exampleArray.length === index + 1) ? "" : ", ")
@@ -80,7 +80,7 @@ export const arrays = () => {
     const leabelContents = () => {
       let contentsElement = "";
       contentsElement += `
-        <div class="settingsContents">
+        <div class="settingsContents settingsContents--array">
           <span class="settingsParagraph--arrays strong">const array = [</span>
             ${viewArray(array)}
           <span class="settingsParagraph--arrays strong">];</span>

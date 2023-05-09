@@ -16,7 +16,7 @@ export const methodsArrayRaw = [
    },
    {
       method: "sort",
-      methodButtons: ["( )", "(a,b)=>a-b", "(a,b)=>b-a"],
+      methodButtons: ["( )", "((a,b)=>a-b)", "((a,b)=>b-a)"],
       inputType: null,
    },
    {
@@ -33,37 +33,37 @@ export const methodsArrayRaw = [
    },
    {
       method: "map",
-      methodButtons: ["a*?", "a**?", "a+?", "a=?", "a===?"],
+      methodButtons: ["(a*?)", "(a**?)", "(a+?)", "(a=?)", "(a===?)"],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "find",
-      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?", "a%2===?"],
+      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)"],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "findIndex",
-      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?", "a%2===?"],
+      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)"],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "filter",
-      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?", "a%2===?"],
+      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)"],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "some",
-      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?", "a%2===?"],
+      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)"],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "every",
-      methodButtons: ["a.length>?", "a>?", "a=?", "a===?", "a!==?", "a%2===?"],
+      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)"],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
