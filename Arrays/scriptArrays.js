@@ -630,7 +630,7 @@ export const arrays = () => {
       if (method.method === button) {
         method.methodButtons.forEach((element) => {
           if (element.active) {
-            content = element.methodContent
+            content = element.methodContent + (inputValue ? inputValue : "")
             console.log("content", content)
           };
         });
