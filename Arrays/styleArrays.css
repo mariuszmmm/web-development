@@ -67,6 +67,7 @@
    font-size: 18px;
    justify-content: flex-start;
    line-height: 2;
+   min-height: 150px;
 }
 
 .methodInput {
