@@ -1,8 +1,9 @@
 .settingsContents--array {
    width: 600px;
    flex-grow: 0;
-   line-height: 2;
+   line-height: 1.5;
    word-break: break-word;
+   font-family: monospace;
 }
 
 @media (max-width: 1499px) {
@@ -68,6 +69,8 @@
    justify-content: flex-start;
    line-height: 2;
    min-height: 150px;
+   font-family: monospace;
+   display: inline
 }
 
 .methodInput {

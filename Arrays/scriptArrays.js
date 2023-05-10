@@ -81,9 +81,11 @@ export const arrays = () => {
       let contentsElement = "";
       contentsElement += `
         <div class="settingsContents settingsContents--array">
-          <span class="settingsParagraph--arrays strong">const array = [</span>
+          <p class="settingsParagraph--arrays strong">const array = [</p>
+          <p class="settingsParagraph">
             ${viewArray(array)}
-          <span class="settingsParagraph--arrays strong">];</span>
+          </p>
+          <p class="settingsParagraph--arrays strong">];</p>
           <p></p>
          ${showExampleActive ? `<span class="settingsParagraph--arrays strong">const exampleArray = [</span>
             ${viewArray(arrayExampleSaved.length > 0 ? arrayExampleSaved : arrayExample)}
@@ -243,8 +245,12 @@ export const arrays = () => {
       <div class="outputContents outputContents--arrays">
         <div class="outputLabel">OUTPUT :</div>
           ${Array.isArray(output) ? `
-            <span class="settingsParagrap--arrays">const outputArray = [ ${viewArray(output)}    
-            ];</span>` :
+            <p class="settingsParagrap--arrays strong">const outputArray = [
+            </p>
+            <p class="settingsParagraph--areaText">      ${viewArray(output)}  
+            </p>
+            <p class="settingsParagrap--arrays strong">
+            ];</p>` :
         ((typeof (output) === "string" && methodContent.length > 0) ?
           (output !== "" ? `"` + output + `"` : output)
           :
