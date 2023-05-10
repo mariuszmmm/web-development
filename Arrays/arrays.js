@@ -1,4 +1,8 @@
-export const arrayExample = ["one", "two", 1, 2, null, undefined, NaN, false, true, "sto", "🎬", "😎", "👍", "📋"];
+export const arrayExample = [
+  
+  // "", 0, 8, -13, "text", "654", null, undefined, NaN, false, true, "sto", "😎", [],
+
+["", 0, 8, -13, "text", "654", null, undefined, NaN, false, true, "sto", "😎"], {name: "Jackson", age: 30, city: "Warsaw"}, 3, "e"];
 
 export const letters = "abcdefghijklmnopqrstuvwxyz";
 

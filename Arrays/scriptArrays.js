@@ -48,13 +48,22 @@ export const arrays = () => {
           ((arrayElement[0] === `"` && arrayElement[arrayElement.length - 1] === `"`) ? arrayElement : (`"` + arrayElement + `"`))
           + ((exampleArray.length === index + 1) ? "" : ", ")
           :
-          (arrayElement + ((exampleArray.length === index + 1) ? "" : ", "))
+          ((Array.isArray(arrayElement) ? `[` + viewArray(arrayElement) + `]` : ((typeof (arrayElement) === "object") ? viewObject(arrayElement) : arrayElement)) + ((exampleArray.length === index + 1) ? "" : ", "))
         }
         </span>
       `;
     });
 
     return element;
+  };
+
+  const viewObject = (object) => {
+    let content = "";
+
+    for (let property in object) {
+      content += property + ": " + (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) + ", "
+    }
+    return `{` + content + `}`;
   };
 
   const vievMethodContent = (methodContent) => {
@@ -87,11 +96,22 @@ export const arrays = () => {
           </p>
           <p class="settingsParagraph--arrays strong">];</p>
           <p></p>
-         ${showExampleActive ? `<span class="settingsParagraph--arrays strong">const exampleArray = [</span>
+         ${showExampleActive ? `<p class="settingsParagraph--arrays strong">const exampleArray = [</p>
+          <p class="settingsParagraph">
             ${viewArray(arrayExampleSaved.length > 0 ? arrayExampleSaved : arrayExample)}
-          <span class="settingsParagraph--arrays strong">];</span>
+          </p>
+          <p class="settingsParagraph--arrays strong">];</p>
           <p></p>` : ""}          
           ${methodContent[0] ? vievMethodContent(methodContent) : ""}
+
+          ${Array.isArray(output) ? `
+          <p class="settingsParagraph--arrays strong">const outputArray = [
+          </p>
+          <p class="settingsParagraph">
+            ${viewArray(output)}  
+          </p>
+          <p class="settingsParagrap--arrays strong">
+          ];</p>` : ""}
         </div>
       `;
 
@@ -245,12 +265,9 @@ export const arrays = () => {
       <div class="outputContents outputContents--arrays">
         <div class="outputLabel">OUTPUT :</div>
           ${Array.isArray(output) ? `
-            <p class="settingsParagrap--arrays strong">const outputArray = [
-            </p>
-            <p class="settingsParagraph--areaText">      ${viewArray(output)}  
-            </p>
-            <p class="settingsParagrap--arrays strong">
-            ];</p>` :
+            <p class="settingsParagraph--arrays strong">[
+              ${viewArray(output)}  
+            ]</p>` :
         ((typeof (output) === "string" && methodContent.length > 0) ?
           (output !== "" ? `"` + output + `"` : output)
           :

@@ -29,8 +29,9 @@ body {
    min-width: 490px;
    width: 100%;
    max-width: 2100px;
-   height: content;
-   min-height: 675px;
+   /* height: content; */
+   /* min-height: 675px; */
+   min-height: calc(100vh - 20px);
    grid-template-areas:
       "nav set set"
       "nav out out"
