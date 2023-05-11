@@ -48,7 +48,7 @@ export const arrays = () => {
           ((arrayElement[0] === `"` && arrayElement[arrayElement.length - 1] === `"`) ? arrayElement : (`"` + arrayElement + `"`))
           + ((exampleArray.length === index + 1) ? "" : ", ")
           :
-          ((Array.isArray(arrayElement) ? `[` + viewArray(arrayElement) + `]` : ((typeof (arrayElement) === "object") ? viewObject(arrayElement) : arrayElement)) + ((exampleArray.length === index + 1) ? "" : ", "))
+          ((Array.isArray(arrayElement) ? `[` + viewArray(arrayElement) + `]` : ((typeof (arrayElement) === "object" && arrayElement !== null) ? viewObject(arrayElement) : arrayElement)) + ((exampleArray.length === index + 1) ? "" : ", "))
         }
         </span>
       `;
@@ -61,7 +61,7 @@ export const arrays = () => {
     let content = "";
 
     for (let property in object) {
-      content += property + ": " + (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) + ", "
+      content += property + ":&nbsp" + (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) + ", "
     }
     return `{` + content + `}`;
   };
@@ -109,20 +109,6 @@ export const arrays = () => {
           <p class="settingsParagraph--arrays strong">];</p>
           <p></p>` : ""}          
           ${methodContent[0] ? vievMethodContent(methodContent) : ""}
-
-          ${Array.isArray(output) ? `
-          <p class="settingsParagraph--arrays strong">const outputArray = [
-          
-          ${(output.length > 0) ? `
-          </p>
-          <p class="settingsParagraph">
-            ${viewArray(output)}  
-          </p>
-          <p class="settingsParagrap--arrays strong">
-          ` : ""}
-          
-          
-          ];</p>` : ""}
         </div>
       `;
 
