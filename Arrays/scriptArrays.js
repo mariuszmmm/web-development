@@ -90,11 +90,17 @@ export const arrays = () => {
       let contentsElement = "";
       contentsElement += `
         <div class="settingsContents settingsContents--array">
-          <p class="settingsParagraph--arrays strong">const array = [</p>
+          <p class="settingsParagraph--arrays strong">const array = [
+          
+          ${(array.length > 0) ? `
+          </p>
           <p class="settingsParagraph">
             ${viewArray(array)}
           </p>
-          <p class="settingsParagraph--arrays strong">];</p>
+          <p class="settingsParagraph--arrays strong">
+          ` : ""}
+          
+          ];</p>
           <p></p>
          ${showExampleActive ? `<p class="settingsParagraph--arrays strong">const exampleArray = [</p>
           <p class="settingsParagraph">
@@ -106,11 +112,16 @@ export const arrays = () => {
 
           ${Array.isArray(output) ? `
           <p class="settingsParagraph--arrays strong">const outputArray = [
+          
+          ${(output.length > 0) ? `
           </p>
           <p class="settingsParagraph">
             ${viewArray(output)}  
           </p>
           <p class="settingsParagrap--arrays strong">
+          ` : ""}
+          
+          
           ];</p>` : ""}
         </div>
       `;
