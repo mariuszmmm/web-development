@@ -82,7 +82,10 @@ export const htmlTags = () => {
       let contentsExample = "";
       contentsExample += `
          <div class="outputContents">
+         
+         ${example ? `
             <div class="outputLabel">HTML :</div>
+            ` : ""}
       `;
 
       if (event) {
@@ -104,7 +107,10 @@ export const htmlTags = () => {
       let contentsOutput = "";
       contentsOutput += `
          <div class="outputContents">
+            
+            ${example_output  ? `
             <div class="outputLabel">OUTPUT :</div>
+            ` : ""}
       `;
 
       if (event) {
