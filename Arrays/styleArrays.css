@@ -1,13 +1,13 @@
 .settingsContents--array {
-   max-width: 560px;
-   min-width: 560px;
+   max-width: 500px;
+   min-width: 500px;
    flex-grow: 0;
    line-height: 1.8;
    word-break: break-word;
    font-family: monospace;
 }
 
-@media (max-width: 1499px) {
+@media (max-width: 1599px) {
    .settingsContents--array {
       /* width: 100%; */
       min-width: 100%;
@@ -52,7 +52,7 @@
    justify-self: flex-end;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 910px) {
    .propertyButtons--arrays {
       width: 270px;
    }
@@ -88,7 +88,7 @@
    font-size: 18px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 910px) {
    .methodInput {
       width: 50px;
       padding: 2px 3px;
@@ -102,7 +102,7 @@
    font-size: 18px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 910px) {
    .methodName {
       font-size: 12px;
    }
@@ -120,7 +120,7 @@
    align-items: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 910px) {
    .methodName--parameters {
       font-size: 12px;
       height: 32px;
