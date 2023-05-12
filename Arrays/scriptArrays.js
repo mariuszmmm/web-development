@@ -233,8 +233,9 @@ export const arrays = () => {
 
         buttons.forEach((button) => {
           console.log(button)
+          const conditionalValues = ["((a,b)=>a-b)", "((a,b)=>b-a)", "((a,b)=>a.localeCompare(b))", "((a,b)=>b.localeCompare(a))", "((a,b)=>a.name.localeCompare(b.name))", "((a,b)=>b.name.localeCompare(a.name))", "((a,b)=>a[0].localeCompare(b[0]))", "((a,b)=>b[0].localeCompare(a[0]))"];
           if (
-            (button.name === "( )")
+            (!conditionalValues.includes(button.name))
             ||
             (array.every(item => typeof (item) === "number") && (button.name === "((a,b)=>a-b)" || button.name === "((a,b)=>b-a)"))
             ||
