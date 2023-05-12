@@ -31,8 +31,8 @@ export const arrays = () => {
                             (button === "( )") ? "" :
                               (button === "((a,b)=>a-b)") ? " (a,b) => a-b " :
                                 (button === "((a,b)=>b-a)") ? " (a,b) => b-a " :
-                                
-                   (button === "((a,b)=>a.localeCompare(b))" )? " ( (a,b) => a.localeCompare(b) ) " : (button === "((a,b)=>b.localeCompare(a))" ) ? " ( (a,b) => b.localeCompare(a) ) " : ""
+
+                                  (button === "((a,b)=>a.localeCompare(b))") ? " ( (a,b) => a.localeCompare(b) ) " : (button === "((a,b)=>b.localeCompare(a))") ? " ( (a,b) => b.localeCompare(a) ) " : (button === "((a,b)=>a.name.localeCompare(b.name))") ? " ( (a,b) => a.name.localeCompare(b.name) ) " : (button === "((a,b)=>b.name.localeCompare(a.name))") ? " ( (a,b) => b.name.localeCompare(a.name) ) " : (button === "((a,b)=>a[0].localeCompare(b[0]))") ? " ( (a,b) => a[0].localeCompare(b[0]) ) " : (button === "((a,b)=>b[0].localeCompare(a[0]))") ? " ( (a,b) => b[0].localeCompare(a[0]) ) " : ""
         }
       }),
       inputType: object.inputType,
@@ -42,18 +42,17 @@ export const arrays = () => {
   });
   console.log(methodsArray);
   const viewArray = (exampleArray) => {
+
     let element = "";
     exampleArray.forEach((arrayElement, index) => {
+
       element += `
-        <span class="settingsParagraph--arrays">
+        <span class="settingsParagraph--arrays nowrap">
           ${typeof (arrayElement) === "string" ?
           ((arrayElement[0] === `"` && arrayElement[arrayElement.length - 1] === `"`) ? arrayElement : (`"` + arrayElement + `"`))
-          + ((exampleArray.length === index + 1) ? "" : ", ")
+          + ((exampleArray.length === index + 1) ? "" : ",")
           :
-          ((Array.isArray(arrayElement) ? `[` + viewArray(arrayElement) + `]` : ((typeof (arrayElement) === "object" && arrayElement !== null) ? viewObject(arrayElement) : arrayElement)) + ((exampleArray.length === index + 1) ? "" : ", "))
-        }
-        </span>
-      `;
+          ((Array.isArray(arrayElement) ? viewSubarray(arrayElement) : ((typeof (arrayElement) === "object" && arrayElement !== null) ? viewObject(arrayElement) : arrayElement)) + ((exampleArray.length === index + 1) ? "" : ","))}</span>`;
     });
 
     return element;
@@ -61,12 +60,28 @@ export const arrays = () => {
 
   const viewObject = (object) => {
     let content = "";
-
+    let index = -1;
     for (let property in object) {
-      content += property + ":&nbsp" + (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) + ",&nbsp"
+      index++
+      content += property + ":" + (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) + ((Object.keys(object).length === index + 1) ? "" : ",")
     }
     return `{` + content + `}`;
   };
+
+  const viewSubarray = (subarray) => {
+    console.log(subarray.length)
+    let content = "";
+    subarray.forEach((subarrayElement, index) => {
+      content += `
+      ${typeof (subarrayElement) === "string" ?
+          (((`"` + subarrayElement + `"`))
+            + ((subarray.length === index + 1) ? "" : ",")) :
+          subarrayElement + ((subarray.length === index + 1) ? "" : ",")}
+        `
+    });
+
+    return `[` + content + `]`;
+  }
 
   const vievMethodContent = (methodContent) => {
     let element = "";
@@ -167,8 +182,8 @@ export const arrays = () => {
               </label>          
             
             <div class="valueButtons">              
-              <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="50" step="1" class="range js-range" />
-           </div>
+              <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
+            </div>
 
           <span class="arrayMethods--label">
           example array :
@@ -217,17 +232,29 @@ export const arrays = () => {
         `;
 
         buttons.forEach((button) => {
-          if (array.some(item => Array.isArray(item) || typeof (item) === "object") && (button.name === "((a,b)=>a.localeCompare(b))" || button.name === "((a,b)=>b.localeCompare(a))")) {
-          element += `  
-            <button name="${name}" disabled class="button button--array js-typeButton">
-              ${button.name}
+          console.log(button)
+          if (
+            (button.name === "( )")
+            ||
+            (array.every(item => typeof (item) === "number") && (button.name === "((a,b)=>a-b)" || button.name === "((a,b)=>b-a)"))
+            ||
+            (array.every(item => typeof (item) === "string") && (button.name === "((a,b)=>a.localeCompare(b))" || button.name === "((a,b)=>b.localeCompare(a))"))
+            ||
+            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && (button.name === "((a,b)=>a.name.localeCompare(b.name))" || button.name === "((a,b)=>b.name.localeCompare(a.name))"))
+            ||
+            (array.every(item => Array.isArray(item)) && (button.name === "((a,b)=>a[0].localeCompare(b[0]))" || button.name === "((a,b)=>b[0].localeCompare(a[0]))"))
+          ) {
+            element += `  
+            <button name="${name}" class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
+            ${button.name}
             </button>
-          `; } else {
-               element += `  
-                        <button name="${name}" class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
-                          ${button.name}
-                        </button>
-                      `;
+          `;
+          } else {
+            element += `  
+              <button name="${name}" disabled class="button button--array js-typeButton">
+                ${button.name}
+              </button>
+            `;
           }
         });
 
@@ -328,18 +355,17 @@ export const arrays = () => {
       };
     }));
 
-      const arrayLetters = [];
-      for (let a = 0; a < letters.length; a++) {
-        arrayLetters.push(letters.charAt(a))
-      }
+    const arrayLetters = [];
+    for (let a = 0; a < letters.length; a++) {
+      arrayLetters.push(letters.charAt(a))
+    }
 
-      const arrayIntegers = [];
-      for (let a = -100; a < 101; a++) {
-        arrayIntegers.push(a)
-      };
+    const arrayIntegers = [];
+    for (let a = -100; a < 101; a++) {
+      arrayIntegers.push(a)
+    };
 
-      const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords, ...arrayEmoticons,
-      ...arrayObjects]
+    const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords, ...arrayEmoticons]
 
     const useRandomNaturalNumbers = () => {
       array = [];
@@ -372,22 +398,26 @@ export const arrays = () => {
       }
       render();
     }
-    
+
     const useRandomArrays = () => {
       array = [];
+      console.log(mixArray)
 
- while (array.length < rangeValueElement.textContent) {
-   
-     const arrayItem = () => {
-      let subarray = [];
-        while (subarray.length < 3) {
-        subarray.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
-      };
-      return `[` + subarray + `]`
-     };
-  
-   // array.push(arrayItem())
-      
+      while (array.length < rangeValueElement.textContent) {
+
+        const arrayItem = () => {
+          let subarray = [];
+          while (subarray.length < 3) {
+            subarray.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
+          };
+          return subarray
+        };
+
+        array.push(arrayItem())
+
+
+      }
+      console.log(array)
       render();
     }
 

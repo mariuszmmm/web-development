@@ -1,5 +1,6 @@
 .settingsContents--array {
-   width: 600px;
+   max-width: 560px;
+   min-width: 560px;
    flex-grow: 0;
    line-height: 1.8;
    word-break: break-word;
@@ -8,7 +9,8 @@
 
 @media (max-width: 1499px) {
    .settingsContents--array {
-      width: 100%;
+      /* width: 100%; */
+      min-width: 100%;
    }
 }
 
@@ -36,7 +38,7 @@
 
 .range {
    height: 26px;
-   width: 30vw;
+   width: 100vw;
 }
 
 .arraySettings {
@@ -46,7 +48,7 @@
 }
 
 .propertyButtons--arrays {
-   width: 455px;
+   width: 535px;
    justify-self: flex-end;
 }
 
@@ -127,4 +129,8 @@
 
 .button--array {
    padding: 4px 6px;
+}
+
+.nowrap {
+   white-space: nowrap;
 }

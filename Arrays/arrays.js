@@ -1,6 +1,6 @@
 export const arrayExample = [
 
-  321, 8, null, -13, "text", true, "654", false, "sto", "😎", NaN, 8, "", 123, undefined, 3, "e", -13];
+  321, 8, null, -13, "text", true, "654", [ 543, "12", "word"], false, "sto", "😎", NaN, 8, "", {name: "Emily", age: 25}, 123, undefined, 3, "e", -13];
 
 export const letters = "abcdefghijklmnopqrstuvwxyz";
 
