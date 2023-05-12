@@ -10,14 +10,14 @@ export const methodsArrayRaw = [
       inputType: null,
    },
    {
-      method: "reverse",
-      methodButtons: [],
+      method: "sort",
+      methodButtons: ["( )", "((a,b)=>a-b)", "((a,b)=>b-a)", "((a,b)=>a.localeCompare(b))", "((a,b)=>b.localeCompare(a))"],
       inputType: null,
    },
    {
-      method: "sort",
-      methodButtons: ["( )", "((a,b)=>a-b)", "((a,b)=>b-a)"],
-      inputType: null,
+     method: "reverse",
+     methodButtons: [],
+     inputType: null,
    },
    {
       method: "push",

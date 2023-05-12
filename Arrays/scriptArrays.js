@@ -1,5 +1,5 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js"
-import { arrayExample, letters, arrayWords, arrayEmoticons } from "./arrays.js"
+import { arrayExample, letters, arrayWords, arrayEmoticons, arrayObjects } from "./arrays.js"
 
 export const arrays = () => {
   let array = [];
@@ -30,7 +30,9 @@ export const arrays = () => {
                           (button === "(a%2===?)") ? " a => a % 2 === " :
                             (button === "( )") ? "" :
                               (button === "((a,b)=>a-b)") ? " (a,b) => a-b " :
-                                (button === "((a,b)=>b-a)") ? " (a,b) => b-a " : ""
+                                (button === "((a,b)=>b-a)") ? " (a,b) => b-a " :
+                                
+                   (button === "((a,b)=>a.localeCompare(b))" )? " ( (a,b) => a.localeCompare(b) ) " : (button === "((a,b)=>b.localeCompare(a))" ) ? " ( (a,b) => b.localeCompare(a) ) " : ""
         }
       }),
       inputType: object.inputType,
@@ -61,7 +63,7 @@ export const arrays = () => {
     let content = "";
 
     for (let property in object) {
-      content += property + ":&nbsp" + (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) + ", "
+      content += property + ":&nbsp" + (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) + ",&nbsp"
     }
     return `{` + content + `}`;
   };
@@ -137,7 +139,13 @@ export const arrays = () => {
             </button>
              <button id="randomWords" class="button js-random">
               random words
-            </button>  
+            </button> 
+            <button id="randomObjects" class="button js-random">
+              random objects
+            </button>
+            <button id="randomArrays" class="button js-random">
+              random arrays
+            </button>
             <button id="randomEmoticons" class="button js-random">
               random emoticons
             </button>                  
@@ -209,11 +217,18 @@ export const arrays = () => {
         `;
 
         buttons.forEach((button) => {
+          if (array.some(item => Array.isArray(item) || typeof (item) === "object") && (button.name === "((a,b)=>a.localeCompare(b))" || button.name === "((a,b)=>b.localeCompare(a))")) {
           element += `  
-            <button name="${name}" class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
+            <button name="${name}" disabled class="button button--array js-typeButton">
               ${button.name}
             </button>
-          `;
+          `; } else {
+               element += `  
+                        <button name="${name}" class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
+                          ${button.name}
+                        </button>
+                      `;
+          }
         });
 
         element += `
@@ -298,6 +313,12 @@ export const arrays = () => {
         case "randomWords":
           useRandomWords();
           break;
+        case "randomObjects":
+          useRandomObjects();
+          break;
+        case "randomArrays":
+          useRandomArrays();
+          break;
         case "randomEmoticons":
           useRandomEmoticons();
           break;
@@ -306,6 +327,19 @@ export const arrays = () => {
           break;
       };
     }));
+
+      const arrayLetters = [];
+      for (let a = 0; a < letters.length; a++) {
+        arrayLetters.push(letters.charAt(a))
+      }
+
+      const arrayIntegers = [];
+      for (let a = -100; a < 101; a++) {
+        arrayIntegers.push(a)
+      };
+
+      const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords, ...arrayEmoticons,
+      ...arrayObjects]
 
     const useRandomNaturalNumbers = () => {
       array = [];
@@ -338,6 +372,32 @@ export const arrays = () => {
       }
       render();
     }
+    
+    const useRandomArrays = () => {
+      array = [];
+
+ while (array.length < rangeValueElement.textContent) {
+   
+     const arrayItem = () => {
+      let subarray = [];
+        while (subarray.length < 3) {
+        subarray.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
+      };
+      return `[` + subarray + `]`
+     };
+  
+   // array.push(arrayItem())
+      
+      render();
+    }
+
+    const useRandomObjects = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(arrayObjects[Math.floor(Math.random() * arrayObjects.length)]);
+      }
+      render();
+    }
 
     const useRandomEmoticons = () => {
       array = [];
@@ -348,17 +408,6 @@ export const arrays = () => {
     }
 
     const useRandomMixed = () => {
-      const arrayLetters = [];
-      for (let a = 0; a < letters.length; a++) {
-        arrayLetters.push(letters.charAt(a))
-      }
-
-      const arrayIntegers = [];
-      for (let a = -100; a < 101; a++) {
-        arrayIntegers.push(a)
-      };
-
-      const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords, ...arrayEmoticons]
       array = [];
       while (array.length < rangeValueElement.textContent) {
         array.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
