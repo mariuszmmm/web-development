@@ -32,7 +32,15 @@ export const arrays = () => {
                               (button === "((a,b)=>a-b)") ? " (a,b) => a-b " :
                                 (button === "((a,b)=>b-a)") ? " (a,b) => b-a " :
 
-                                  (button === "((a,b)=>a.localeCompare(b))") ? " ( (a,b) => a.localeCompare(b) ) " : (button === "((a,b)=>b.localeCompare(a))") ? " ( (a,b) => b.localeCompare(a) ) " : (button === "((a,b)=>a.name.localeCompare(b.name))") ? " ( (a,b) => a.name.localeCompare(b.name) ) " : (button === "((a,b)=>b.name.localeCompare(a.name))") ? " ( (a,b) => b.name.localeCompare(a.name) ) " : (button === "((a,b)=>a[0].localeCompare(b[0]))") ? " ( (a,b) => a[0].localeCompare(b[0]) ) " : (button === "((a,b)=>b[0].localeCompare(a[0]))") ? " ( (a,b) => b[0].localeCompare(a[0]) ) " : ""
+                                  (button === "((a,b)=>a.localeCompare(b))") ? " ( (a,b) => a.localeCompare(b) ) " : (button === "((a,b)=>b.localeCompare(a))") ? " ( (a,b) => b.localeCompare(a) ) " : (button === "((a,b)=>a.name.localeCompare(b.name))") ? " ( (a,b) => a.name.localeCompare(b.name) ) " : (button === "((a,b)=>b.name.localeCompare(:a.name))") ? " ( (a,b) => b.name.localeCompare(a.name) ) " : (button === "((a,b)=>a.age-b.age)") ?  "( (a,b) => a.age-b.age )" : (button === "((a,b)=>b.age-a.age)") ?  "( (a,b) => b.age-a.age )"                    
+                           
+                           
+                          
+                           
+                                  
+                                  
+                                  
+                                  : (button === "((a,b)=>a[0].localeCompare(b[0]))") ? " ( (a,b) => a[0].localeCompare(b[0]) ) " : (button === "((a,b)=>b[0].localeCompare(a[0]))") ? " ( (a,b) => b[0].localeCompare(a[0]) ) " : ""
         }
       }),
       inputType: object.inputType,
@@ -232,8 +240,8 @@ export const arrays = () => {
         `;
 
         buttons.forEach((button) => {
-          console.log(button)
-          const conditionalValues = ["((a,b)=>a-b)", "((a,b)=>b-a)", "((a,b)=>a.localeCompare(b))", "((a,b)=>b.localeCompare(a))", "((a,b)=>a.name.localeCompare(b.name))", "((a,b)=>b.name.localeCompare(a.name))", "((a,b)=>a[0].localeCompare(b[0]))", "((a,b)=>b[0].localeCompare(a[0]))"];
+
+          const conditionalValues = ["((a,b)=>a-b)", "((a,b)=>b-a)", "((a,b)=>a.localeCompare(b))", "((a,b)=>b.localeCompare(a))", "((a,b)=>a.name.localeCompare(b.name))", "((a,b)=>b.name.localeCompare(a.name))", "((a,b)=>a[0].localeCompare(b[0]))", "((a,b)=>b[0].localeCompare(a[0]))", "((a,b)=>a.age-b.age)", "((a,b)=>b.age-a.age)"];
           if (
             (!conditionalValues.includes(button.name))
             ||
@@ -241,7 +249,12 @@ export const arrays = () => {
             ||
             (array.every(item => typeof (item) === "string") && (button.name === "((a,b)=>a.localeCompare(b))" || button.name === "((a,b)=>b.localeCompare(a))"))
             ||
-            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && (button.name === "((a,b)=>a.name.localeCompare(b.name))" || button.name === "((a,b)=>b.name.localeCompare(a.name))"))
+            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && (button.name === "((a,b)=>a.name.localeCompare(b.name))" || button.name === "((a,b)=>b.name.localeCompare(a.name))"||
+            button.name === "((a,b)=>a.age-b.age)" ||
+            button.name === "((a,b)=>b.age-a.age)"
+            
+            
+            ))
             ||
             (array.every(item => Array.isArray(item)) && (button.name === "((a,b)=>a[0].localeCompare(b[0]))" || button.name === "((a,b)=>b[0].localeCompare(a[0]))"))
           ) {
@@ -594,6 +607,20 @@ export const arrays = () => {
       });
     });
   };
+  
+  
+    // output = array.length
+    // output = array.concat(arrayExample)
+    // output = [...array, ...array Example]
+    // output = array.toReversed()
+      // output = array.toSorted()
+      // output = array.toSpliced()
+  // output = array.join("_")
+  // output = array.reduce(  )
+  //  output = array.find(a => a.name === "Leon")
+  
+  
+  
 
   const runMethod = (button, inputValue, method) => {
     console.log("inputValue =", inputValue)
