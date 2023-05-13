@@ -20,6 +20,12 @@ export const methodsArrayRaw = [
      inputType: null,
    },
    {
+      method: "join",
+      methodButtons: [],
+      inputType: "text",
+      inputPattern: /^$|^("[^"]*"|\-?\d+)$/,
+   },  
+   {
       method: "push",
       methodButtons: [],
       inputType: "text",
@@ -39,7 +45,7 @@ export const methodsArrayRaw = [
    },
    {
       method: "find",
-      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)"],
+      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)", "(a=>a.name===?)", "(a=>a[0]===?)"],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
