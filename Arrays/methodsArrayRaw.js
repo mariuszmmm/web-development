@@ -58,7 +58,7 @@ export const methodsArrayRaw = [
    },
    {
       method: "map",
-      methodButtons: ["(a*?)", "(a**?)", "(a+?)", "(a=?)", "(a===?)"],
+      methodButtons: ["(a*?)", "(a**?)", "(a+?)", "(a=?)", "(a===?)", "(a=>({...a,country:?}))"],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
