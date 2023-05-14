@@ -26,7 +26,7 @@ body {
    grid-template-rows: auto auto 1fr;
    border: 1px solid black;
    margin: 10px auto;
-   min-width: 570px;
+   min-width: 610px;
    width: 100%;
    max-width: 2100px;
    /* height: content; */
@@ -190,6 +190,18 @@ body {
    transform: translate(1px, 1px);
    box-shadow: 1px 1px 0 0;
    background-color: #32fa64;
+}
+
+.button--run {
+   background-color:hsl(0, 100%, 60%);
+}
+
+.button--run:hover {
+   background-color:hsl(0, 100%, 55%);
+}
+
+.button--run:active {
+   background-color:#32fa64;
 }
 
 .input {

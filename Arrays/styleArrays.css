@@ -14,6 +14,10 @@
    }
 }
 
+.settingsButtons--array {
+   grid-template-columns: auto auto auto;
+}
+
 .settingsParagraph--arrays {
    margin-top: 5px;
    margin-bottom: 5px;
@@ -39,6 +43,7 @@
 .range {
    height: 26px;
    width: 100vw;
+   min-width: 250px;
 }
 
 .arraySettings {
@@ -52,7 +57,7 @@
    justify-self: flex-end;
 }
 
-@media (max-width: 910px) {
+@media (max-width: 960px) {
    .propertyButtons--arrays {
       width: 270px;
    }
@@ -88,7 +93,7 @@
    font-size: 18px;
 }
 
-@media (max-width: 910px) {
+@media (max-width: 960px) {
    .methodInput {
       width: 50px;
       padding: 2px 3px;
@@ -102,7 +107,7 @@
    font-size: 18px;
 }
 
-@media (max-width: 910px) {
+@media (max-width: 960px) {
    .methodName {
       font-size: 12px;
    }
@@ -120,7 +125,7 @@
    align-items: center;
 }
 
-@media (max-width: 910px) {
+@media (max-width: 960px) {
    .methodName--parameters {
       font-size: 12px;
       height: 32px;

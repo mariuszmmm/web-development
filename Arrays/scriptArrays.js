@@ -225,10 +225,15 @@ export const arrays = () => {
               ) 
             </div>
           </div>
+          
           <div class="valueButtons valueButtons--arrays">
-            <button id="${name}" class="button button--array js-runButton">
+            <button id="${name}" class="button button--array button--run js-runButton">
               run
             </button>
+          </div>
+            
+          <div class="valueButtons valueButtons--arrays">
+            
         `;
 
         buttons.forEach((button) => {
@@ -277,7 +282,7 @@ export const arrays = () => {
           <span class="arrayMethods--label">
             methods :
           </span>
-          <div class="settingsButtons">
+          <div class="settingsButtons settingsButtons--array">
       `;
 
       methodsArray.forEach((object) =>
