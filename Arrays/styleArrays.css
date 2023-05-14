@@ -7,9 +7,8 @@
    font-family: monospace;
 }
 
-@media (max-width: 1599px) {
+@media (max-width: 1649px) {
    .settingsContents--array {
-      /* width: 100%; */
       min-width: 100%;
    }
 }
@@ -53,13 +52,13 @@
 }
 
 .propertyButtons--arrays {
-   width: 535px;
+   width: 515px;
    justify-self: flex-end;
 }
 
 @media (max-width: 960px) {
    .propertyButtons--arrays {
-      width: 270px;
+      width: 345px;
    }
 }
 

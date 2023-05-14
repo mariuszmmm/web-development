@@ -1,6 +1,10 @@
 .outputImage--sectionsHtml {
-   min-width: 60%;
-   height: 95%;
-   margin: 10px;
+   width: 100%;
+   max-height: 100%;
+   padding: 20px;
    object-fit: contain;
-}
+ }
+ 
+ .outputContents--sectionsHtml {
+   align-items: flex-start;
+ }

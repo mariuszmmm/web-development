@@ -26,11 +26,9 @@ body {
    grid-template-rows: auto auto 1fr;
    border: 1px solid black;
    margin: 10px auto;
-   min-width: 610px;
+   min-width: 699px;
    width: 100%;
    max-width: 2100px;
-   /* height: content; */
-   /* min-height: 675px; */
    min-height: calc(100vh - 20px);
    grid-template-areas:
       "nav set set"
@@ -39,7 +37,7 @@ body {
    ;
 }
 
-@media (max-width: 1599px) {
+@media (max-width: 1649px) {
    .container {
       grid-template-columns: 1fr 1fr 1fr;
       grid-template-areas:
@@ -59,7 +57,7 @@ body {
    padding: 5px;
 }
 
-@media (max-width: 1599px) {
+@media (max-width: 1649px) {
    .navContainer {
       flex-direction: row;
       flex-wrap: wrap;
@@ -82,7 +80,7 @@ body {
    gap: 5px;
 }
 
-@media (max-width: 1599px) {
+@media (max-width: 1649px) {
    .settingsContainer {
       flex-direction: column-reverse;
       align-items: flex-start;
@@ -174,7 +172,7 @@ body {
    font-weight: 900;
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1650px) {
    .button--nav {
       width: 93%;
    }
@@ -301,7 +299,7 @@ body {
    font-size: 19px;
 }
 
-@media (max-width: 1599px) {
+@media (max-width: 1649px) {
    .outputContainer {
       font-size: 1.5vw;
       padding: 0 1% 1%;
