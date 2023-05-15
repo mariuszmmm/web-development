@@ -289,7 +289,8 @@ export const arrays = () => {
               ${!!button.active ? changeArrowFunctionIfObject(name) : ""}`
 
         });
-
+        
+  
         element += `
               ) 
             </div>
@@ -324,13 +325,13 @@ export const arrays = () => {
           ) {
             element += `  
             <button name="${name}" class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
-            ${button.name}
+             ${searchX(button.name,null)}
             </button>
           `;
           } else {
             element += `  
               <button name="${name}" disabled class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
-                ${button.name}
+             ${searchX(button.name,"disabled")}
               </button>
             `;
           }
