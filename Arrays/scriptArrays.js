@@ -9,14 +9,17 @@ export const arrays = () => {
   let arrayExampleSaved = [];
   let showExampleActive = true;
   let objectNotString;
+  let indexButton = 0;
 
   const methodsArray = methodsArrayRaw.map((object) => {
 
     return {
       method: object.method,
       methodButtons: object.methodButtons.map((button, index) => {
+        indexButton++
 
         return {
+          id: indexButton,
           name: button,
           active: index === 0,
           methodContent: (button === "(a*?)") ? "a => a * " :
@@ -41,69 +44,31 @@ export const arrays = () => {
     }
   });
 
-  const searchActiveButtons = (button) => {
-    let content = "";
-    methodsArray.forEach((object) => {
-      if (object.name === button) {
-        object.methodButtons.forEach((button) => {
-          if (button.active === true) {
-            content = button.name
-          };
-        });
-      };
-    });
-    console.log(content)
-    return content;
-  }
-
   const changeArrowFunctionIfObject = (name) => {
-
     let content = "";
     const arrowFunctionForObjects = ["(a=>({...a,country:?}))"];
+
     if (!!name) {
+      methodsArray.forEach((obj) => {
+        if (obj.method === name) {
+          obj.methodButtons.forEach((button) => {
+            if (button.active === true) {
+              if (arrowFunctionForObjects.includes(button.name)) {
+                content = "})";
+              }
+            };
+          });
+        };
+      });
 
-    methodsArray.forEach((obj) => {
-      if (obj.method === name) {
-        console.log(name)
-        obj.methodButtons.forEach((button) => {
-          if (button.active === true) {
-          
-
-            if (arrowFunctionForObjects.includes(button.name)) {
-              content = "})";
-            }  
-          };
-        });
-      };
-    });
-    console.log(content)
-    return content;
-  }
-
-
-
-    // methodsArray.forEach((object) => {
-    //   if (object.method === "map") {
-    //     object.methodButtons.forEach((button) => {
-    //       if (button.name === "(a=>({...a,country:?}))" && button.active === true)
-    //         content = "})"
-    //     });
-    //   };
-    // });
-
+      return content;
+    }
   };
 
-  console.log(changeArrowFunctionIfObject())
-
-
-
-
-  console.log(methodsArray);
   const viewArray = (exampleArray) => {
-
     let element = "";
-    exampleArray.forEach((arrayElement, index) => {
 
+    exampleArray.forEach((arrayElement, index) => {
       element += `
         <span class="settingsParagraph--arrays nowrap">
           ${typeof (arrayElement) === "string" ?
@@ -123,12 +88,13 @@ export const arrays = () => {
       index++
       content += property + ":" + (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) + ((Object.keys(object).length === index + 1) ? "" : ",")
     }
+
     return `{` + content + `}`;
   };
 
   const viewSubArray = (subArray) => {
-    console.log(subArray.length)
     let content = "";
+
     subArray.forEach((subArrayElement, index) => {
       content += `
       ${typeof (subArrayElement) === "string" ?
@@ -199,7 +165,6 @@ export const arrays = () => {
           <span class="arrayMethods--label">
             load array :
           </span>
-
           <div class="valueButtons">   
             <button id="randomNaturalNumbers" class="button js-random">
               random natural numbers
@@ -232,21 +197,18 @@ export const arrays = () => {
               from output
             </button>            
           </div>            
-            
-              <label for="inputRange" class="arrayMethods--label">
-                 array size :               <span class="js-rangeValue">
-                            ${rangeValue ? rangeValue : "10"}
-                            </span>
-              </label>          
-            
-            <div class="valueButtons">              
-              <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
-            </div>
-
+          <label for="inputRange" class="arrayMethods--label">
+            array size : 
+            <span class="js-rangeValue">
+              ${rangeValue ? rangeValue : "10"}
+            </span>
+          </label>          
+          <div class="valueButtons">              
+            <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
+          </div>
           <span class="arrayMethods--label">
-          example array :
+            example array :
           </span>
-
           <div class="valueButtons">
             <button id="showExample" class="button ${showExampleActive ? "button--active" : ""} js-example">
              show example array
@@ -284,26 +246,22 @@ export const arrays = () => {
           `;
 
         buttons.forEach((button) => {
-
           element += `
-              ${!!button.active ? changeArrowFunctionIfObject(name) : ""}`
+            ${!!button.active ? changeArrowFunctionIfObject(name) : ""}`
 
         });
-        
-        const searchX = (text, param) => {
-          let a;
-          if(text.includes("?")) {
+
+        const searchUnknown = (text, param) => {
+          if (text.includes("?")) {
             if (param !== "disabled") {
-             a = text + "n"
-            //   a = text.replace("?", `<span class="unknown"> ? </span>`)
+              text = text.replace("?", `<span class="unknown"> ? </span>`)
             } else {
-              a = text + "d"
-              //a = text.replace("?", `<span> ? </span>`)
-            }
-          } else { a = text}
-          console.log(methodsArray)
-           return a
-          }
+              text = text.replace("?", `<span> ? </span>`)
+            };
+          };
+
+          return text
+        }
 
         element += `
               ) 
@@ -315,14 +273,12 @@ export const arrays = () => {
               run
             </button>
           </div>
-            
           <div class="valueButtons valueButtons--arrays">
-            
-        `;
+       `;
 
         buttons.forEach((button) => {
 
-          const conditionalValues = ["((a,b)=>a-b)", "((a,b)=>b-a)", "((a,b)=>a.localeCompare(b))", "((a,b)=>b.localeCompare(a))", "((a,b)=>a.name.localeCompare(b.name))", "((a,b)=>b.name.localeCompare(a.name))", "((a,b)=>a[0].localeCompare(b[0]))", "((a,b)=>b[0].localeCompare(a[0]))", "((a,b)=>a.age-b.age)", "((a,b)=>b.age-a.age)", "(a=>a.name===?)", "(a=>a[0]===?)"];
+          const conditionalValues = ["((a,b)=>a-b)", "((a,b)=>b-a)", "((a,b)=>a.localeCompare(b))", "((a,b)=>b.localeCompare(a))", "((a,b)=>a.name.localeCompare(b.name))", "((a,b)=>b.name.localeCompare(a.name))", "((a,b)=>a[0].localeCompare(b[0]))", "((a,b)=>b[0].localeCompare(a[0]))", "((a,b)=>a.age-b.age)", "((a,b)=>b.age-a.age)", "(a=>a.name===?)", "(a=>a[0]===?)", "(a=>({...a,country:?}))"];
           if (
             (!conditionalValues.includes(button.name))
             ||
@@ -332,20 +288,20 @@ export const arrays = () => {
             ||
             (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && (button.name === "((a,b)=>a.name.localeCompare(b.name))" || button.name === "((a,b)=>b.name.localeCompare(a.name))" ||
               button.name === "((a,b)=>a.age-b.age)" ||
-              button.name === "((a,b)=>b.age-a.age)" || button.name === "(a=>a.name===?)"
+              button.name === "((a,b)=>b.age-a.age)" || button.name === "(a=>a.name===?)" || button.name === "(a=>({...a,country:?}))"
             ))
             ||
             (array.every(item => Array.isArray(item)) && (button.name === "((a,b)=>a[0].localeCompare(b[0]))" || button.name === "((a,b)=>b[0].localeCompare(a[0]))" || button.name === "(a=>a[0]===?)"))
           ) {
             element += `  
-            <button name="${name}" class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
-             ${searchX(button.name,null)}
+            <button name="${name}" id="${button.id}" class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
+             ${searchUnknown(button.name)}
             </button>
           `;
           } else {
             element += `  
-              <button name="${name}" disabled class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
-             ${searchX(button.name,"disabled")}
+              <button name="${name}" id="${button.id}" disabled class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
+             ${searchUnknown(button.name, "disabled")}
               </button>
             `;
           }
@@ -518,10 +474,8 @@ export const arrays = () => {
 
     const useRandomArrays = () => {
       array = [];
-      console.log(mixArray)
 
       while (array.length < rangeValueElement.textContent) {
-
         const arrayItem = () => {
           let subArray = [];
           while (subArray.length < 3) {
@@ -529,12 +483,8 @@ export const arrays = () => {
           };
           return subArray
         };
-
         array.push(arrayItem())
-
-
       }
-      console.log(array)
       resetTypeButton();
       render();
     }
@@ -637,12 +587,14 @@ export const arrays = () => {
     });
 
     typeButtonElements.forEach((button) => {
+
       button.addEventListener("click", () => {
         methodsArray.forEach((object) => {
           if (object.method === button.name) {
             object.methodButtons.forEach((obj) => {
-              (obj.name === button.innerText) ?
-                obj.active = true :
+              (obj.id === +button.id) ?
+                obj.active = true
+                :
                 obj.active = false;
             });
             render();
@@ -658,10 +610,7 @@ export const arrays = () => {
             methodsArray.forEach((method) => {
               if (method.method === button.id) {
                 const pattern = method.inputPattern;
-                console.log(input.value)
-                console.log(typeof (input.value))
                 if (pattern.test(input.value)) {
-                  console.log("przesło patern")
                   if ((method.method === "filter" || method.method === "find" || method.method === "findIndex" || method.method === "some")
                     && !!method.methodButtons[0].active
                     && (array.includes(null) || array.includes(undefined))) {
@@ -676,14 +625,10 @@ export const arrays = () => {
 
                     return
                   } else {
-                    console.log(enterNumberOrString(input.value))
                     if (typeof (enterNumberOrString(input.value)) === "object") {
-                      console.log("jest runMethod")
                       runMethod(button.id, enterNumberOrString(input.value), method.method);
                       render();
                     } else {
-                      console.log("else runMethod")
-                      console.log(button.id, enterNumberOrString(input.value), method.method)
                       runMethod(button.id, enterNumberOrString(input.value), method.method);
                       render();
                     }
@@ -707,7 +652,6 @@ export const arrays = () => {
 
         methodsArray.forEach((method) => {
           if ((method.method === button.id) && !method.inputType) {
-            console.log("!method.inputType")
             runMethod(button.id, null, method.method)
             render();
           };
@@ -716,22 +660,7 @@ export const arrays = () => {
     });
   };
 
-
-  // output = array.length
-  // output = array.concat(arrayExample)
-  // output = [...array, ...array Example]
-  // output = array.toReversed()
-  // output = array.toSorted()
-  // output = array.toSpliced()
-  // output = array.join("_")
-  // output = array.reduce(  )
-  //  output = array.find(a => a.name === "Leon")
-
-
-
-
   const runMethod = (button, inputValue, method) => {
-    console.log("inputValue =", inputValue)
     switch (button) {
       case "pop":
         output = array.pop();
@@ -750,7 +679,6 @@ export const arrays = () => {
         output = array.sort(enterContentForArrowFunction(button, null));
         break;
       case "join":
-        console.log(enterNumberOrString(inputValue))
         output = array.join(
           (enterNumberOrString(inputValue) === "") ? "," : (enterNumberOrString(inputValue) === `""`) ? "" : readNumberOrString(inputValue));
         methodContent = [method, inputValue];
@@ -796,7 +724,6 @@ export const arrays = () => {
         methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
         break;
       case "indexOf":
-        console.log(enterNumberOrString(inputValue))
         output = array.indexOf(readNumberOrString(inputValue));
         methodContent = [method, enterNumberOrString(inputValue)];
         break;
@@ -805,13 +732,10 @@ export const arrays = () => {
         methodContent = [method, enterNumberOrString(inputValue)];
         break;
     };
-    console.log("array", array);
-    console.log("methodContent", methodContent);
-    console.log("output", output);
   };
 
   const enterNumberOrString = (inputValue) => {
-    console.log(inputValue)
+
     return (
       (inputValue !== "null" && inputValue !== "true" && inputValue !== "false" && inputValue !== "undefined" && inputValue !== "NaN") ?
         (typeof (inputValue) === "string" ? (inputValue) : "")
@@ -824,8 +748,6 @@ export const arrays = () => {
   };
 
   const notString = (inputValue) => {
-    console.log(inputValue)
-    console.log(typeof (inputValue))
     switch (inputValue) {
       case "null":
         objectNotString = { name: null };
@@ -854,7 +776,6 @@ export const arrays = () => {
   }
 
   const readNumberOrString = (inputValue, content) => {
-    console.log(inputValue)
 
     return (
       (typeof (inputValue) === "string") ?
@@ -865,17 +786,15 @@ export const arrays = () => {
     );
   };
 
-
   const enterContentForArrowFunction = (button, inputValue) => {
     let content;
-    console.log(button)
+
     methodsArray.forEach((method) => {
       if (method.method === button) {
         method.methodButtons.forEach((element) => {
           if (element.active) {
 
             content = element.methodContent + (inputValue ? (inputValue + (changeArrowFunctionIfObject(button))) : "")
-            // console.log("content", content)
           };
         });
       };
@@ -910,4 +829,5 @@ export const arrays = () => {
   };
 
   render();
+  console.log(methodsArray)
 };
