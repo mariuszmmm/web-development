@@ -76,7 +76,8 @@
    line-height: 2;
    min-height: 150px;
    font-family: monospace;
-   display: inline
+   display: inline;
+   word-break: break-word;
 }
 
 .methodInput {

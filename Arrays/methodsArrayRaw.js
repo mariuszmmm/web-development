@@ -1,100 +1,299 @@
 export const methodsArrayRaw = [
    {
       method: "pop",
-      methodButtons: [],
+      methodContents: [],
       inputType: null,
    },
    {
       method: "shift",
-      methodButtons: [],
+      methodContents: [],
       inputType: null,
    },
    {
       method: "reverse",
-      methodButtons: [],
+      methodContents: [],
       inputType: null,
     },
    {
       method: "includes",
-      methodButtons: [],
+      methodContents: [],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "slice",
-      methodButtons: [],
+      methodContents: [],
       inputType: "text",
       inputPattern: /^-?\d+(,-?\d+){0,1}$/,
    },
    {
       method: "indexOf",
-      methodButtons: [],
+      methodContents: [],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "lastIndexOf",
-      methodButtons: [],
+      methodContents: [],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },   
    {
       method: "join",
-      methodButtons: [],
+      methodContents: [],
       inputType: "text",
       inputPattern: /^$|^("[^"]*"|\-?\d+)$/,
    },  
    {
       method: "push",
-      methodButtons: [],
+      methodContents: [],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "unshift",
-      methodButtons: [],
+      methodContents: [],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "map",
-      methodButtons: ["(a*?)", "(a**?)", "(a+?)", "(a=?)", "(a===?)", "(a=>({...a,country:?}))"],
+      methodContents: [
+        {
+          button: "(a=>a*?)", 
+          content: "a => a * ",
+        },
+        {
+          button: "(a=>a**?)",
+          content: "a => a ** ",
+        },
+        {
+          button: "(a=>a+?)",
+          content: "a => a + ",
+        },
+        {
+          button: "(a=>a=?)",
+          content: "a => a = ",
+        },
+        {
+          button: "(a=>a===?)",
+          content: "a => a === ",
+        },
+        {
+          button: "(a=>({...a,country:?}))",
+          content: "a => ({ ...a, country: ",
+        },
+      ],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "find",
-      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)", "(a=>a.name===?)", "(a=>a[0]===?)"],
+      methodContents: [
+        {
+          button: "(a=>a.length>?)", 
+          content: "a => a.length > ",
+        },
+        {
+          button: "(a=>a>?)",
+          content: "a => a > ",
+        },
+        {
+          button: "(a=?)",
+          content: "a => a = ",
+        },
+        {
+          button: "(a=>a===?)",
+          content: "a => a === ",
+        },
+        {
+          button: "(a%2===?)",
+          content: "a % 2 === ",
+        },
+        {
+          button: "(a=>a.name===?)",
+          content: "a => a.name === ",
+        },
+        {
+          button: "(a=>a[0]===?)",
+          content: "a => a[0] === ",
+        },        
+      ],      
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "findIndex",
-      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)"],
+      methodContents: [
+        {
+          button: "(a=>a.length>?)",
+          content: "a => a.length > ",
+        },
+        {
+          button: "(a=>a>?)",
+          content: "a => a > ",
+        },
+        {
+          button: "(a=?)",
+          content: "a => a = ",
+        },
+        {
+          button: "(a=>a===?)",
+          content: "a => a === ",
+        },
+        {
+          button: "(a=>a!==?)",
+          content: "a => a !== ",
+        },
+        {
+          button: "(a%2===?)",
+          content: "a % 2 === ",
+        },
+      ],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "filter",
-      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)"],
+      methodContents: [
+        {
+          button: "(a=>a.length>?)",
+          content: "a => a.length > ",
+        },
+        {
+          button: "(a=>a>?)",
+          content: "a => a > ",
+        },
+        {
+          button: "(a=?)",
+          content: "a => a = ",
+        },
+        {
+          button: "(a=>a===?)",
+          content: "a => a === ",
+        },
+        {
+          button: "(a=>a!==?)",
+          content: "a => a !== ",
+        },
+        {
+          button: "(a%2===?)",
+          content: "a % 2 === ",
+        },
+      ],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "some",
-      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)"],
+      methodContents: [
+        {
+          button: "(a=>a.length>?)",
+          content: "a => a.length > ",
+        },
+        {
+          button: "(a=>a>?)",
+          content: "a => a > ",
+        },
+        {
+          button: "(a=?)",
+          content: "a => a = ",
+        },
+        {
+          button: "(a=>a===?)",
+          content: "a => a === ",
+        },
+        {
+          button: "(a=>a!==?)",
+          content: "a => a !== ",
+        },
+        {
+          button: "(a%2===?)",
+          content: "a % 2 === ",
+        },
+      ],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "every",
-      methodButtons: ["(a.length>?)", "(a>?)", "(a=?)", "(a===?)", "(a!==?)", "(a%2===?)"],
+      methodContents: [
+        {
+          button: "(a=>a.length>?)",
+          content: "a => a.length > ",
+        },
+        {
+          button: "(a=>a>?)",
+          content: "a => a > ",
+        },
+        {
+          button: "(a=?)",
+          content: "a => a = ",
+        },
+        {
+          button: "(a=>a===?)",
+          content: "a => a === ",
+        },
+        {
+          button: "(a=>a!==?)",
+          content: "a => a !== ",
+        },
+        {
+          button: "(a%2===?)",
+          content: "a % 2 === ",
+        },
+      ],
       inputType: "text",
       inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
    },
    {
       method: "sort",
-      methodButtons: ["( )", "((a,b)=>a-b)", "((a,b)=>b-a)", "((a,b)=>a.localeCompare(b))", "((a,b)=>b.localeCompare(a))", "((a,b)=>a.name.localeCompare(b.name))", "((a,b)=>b.name.localeCompare(a.name))", "((a,b)=>a.age-b.age)", "((a,b)=>b.age-a.age)", "((a,b)=>a[0].localeCompare(b[0]))", "((a,b)=>b[0].localeCompare(a[0]))"],
+        methodContents: [
+          {
+            button: "( )",
+            content: "",
+          },
+          {
+            button: "((a,b)=>a-b)",
+            content: "(a,b) => a - b ",
+          },
+          {
+            button: "((a,b)=>b-a)",
+            content: "(a,b) => b - a "
+          },
+          {
+            button: "((a,b)=>a.localeCompare(b))",
+            content: "(a,b) => a.localeCompare(b) ",
+          },
+          {
+            button: "((a,b)=>b.localeCompare(a))",
+            content: "(a,b) => b.localeCompare(a) ",
+          },
+          {
+            button: "((a,b)=>a.name.localeCompare(b.name))",
+            content:"(a,b) => a.name.localeCompare(b.name)",
+          },
+          {
+            button: "((a,b)=>b.name.localeCompare(a.name))",
+            content: "(a,b) => b.name.localeCompare(a.name) ",
+          },
+          {
+            button:  "((a,b)=>a.age-b.age)",
+            content:  "(a,b) => a.age - b.age ",
+          },
+          {
+            button: "((a,b)=>b.age-a.age)",
+            content: "(a,b) => b.age - a.age ",
+          },
+          {
+            button:  "((a,b)=>a[0].localeCompare(b[0]))",
+            content: "(a,b) => a[0].localeCompare(b[0]) ",
+          },
+          {
+            button: "((a,b)=>b[0].localeCompare(a[0]))",
+            content: "(a,b) => b[0].localeCompare(a[0]) ",
+          },
+        ],
       inputType: null,
    },
 ];

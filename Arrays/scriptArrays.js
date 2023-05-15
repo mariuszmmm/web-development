@@ -15,34 +15,24 @@ export const arrays = () => {
 
     return {
       method: object.method,
-      methodButtons: object.methodButtons.map((button, index) => {
+      methodContents: object.methodContents.map((obj, index) => {
         indexButton++
 
         return {
           id: indexButton,
-          name: button,
+          name: obj.button,
+          methodContent: obj.content,
           active: index === 0,
-          methodContent: (button === "(a*?)") ? "a => a * " :
-            (button === "(a**?)") ? "a => a ** " :
-              (button === "(a+?)") ? "a => a + " :
-                (button === "(a=?)") ? "a => a = " :
-                  (button === "(a===?)") ? "a => a === " :
-                    (button === "(a!==?)") ? "a => a !== " :
-                      (button === "(a>?)") ? "a => a > " :
-                        (button === "(a.length>?)") ? "a => a.length > " :
-                          (button === "(a%2===?)") ? "a => a % 2 === " :
-                            (button === "( )") ? "" :
-                              (button === "((a,b)=>a-b)") ? "(a,b) => a-b" :
-                                (button === "((a,b)=>b-a)") ? "(a,b) => b-a" :
-
-                                  (button === "((a,b)=>a.localeCompare(b))") ? "(a,b) => a.localeCompare(b)" : (button === "((a,b)=>b.localeCompare(a))") ? "(a,b) => b.localeCompare(a)" : (button === "((a,b)=>a.name.localeCompare(b.name))") ? "(a,b) => a.name.localeCompare(b.name)" : (button === "((a,b)=>b.name.localeCompare(a.name))") ? "(a,b) => b.name.localeCompare(a.name)" : (button === "((a,b)=>a.age-b.age)") ? "(a,b) => a.age-b.age" : (button === "((a,b)=>b.age-a.age)") ? "(a,b) => b.age-a.age" : (button === "((a,b)=>a[0].localeCompare(b[0]))") ? "(a,b) => a[0].localeCompare(b[0])" : (button === "((a,b)=>b[0].localeCompare(a[0]))") ? "(a,b) => b[0].localeCompare(a[0])" : (button === "(a=>a.name===?)") ? "a => a.name === " : (button === "(a=>a[0]===?)") ? "a => a[0] === " : (button === "(a=>({...a,country:?}))") ? "a => ({ ...a, country: " : ""
         }
       }),
       inputType: object.inputType,
       inputValue: "",
       inputPattern: object.inputPattern
     }
+          console.log("jest")
   });
+
+console.log(methodsArray)
 
   const changeArrowFunctionIfObject = (name) => {
     let content = "";
@@ -51,7 +41,7 @@ export const arrays = () => {
     if (!!name) {
       methodsArray.forEach((obj) => {
         if (obj.method === name) {
-          obj.methodButtons.forEach((button) => {
+          obj.methodContents.forEach((button) => {
             if (button.active === true) {
               if (arrowFunctionForObjects.includes(button.name)) {
                 content = "})";
@@ -327,7 +317,7 @@ export const arrays = () => {
 
       methodsArray.forEach((object) =>
         methodsSetingsElement += `
-        ${methodsArraySettings(object.method, object.methodButtons, object.inputType, object.inputValue, object.inputPattern)}
+        ${methodsArraySettings(object.method, object.methodContents, object.inputType, object.inputValue, object.inputPattern)}
       `);
 
       methodsSetingsElement += `
@@ -360,6 +350,7 @@ export const arrays = () => {
             <p class="settingsParagraph--arrays strong">
               ${viewObject(output)}  
             </p>` :
+            
           ((typeof (output) === "string" && methodContent.length > 0) ?
             (output !== "" ? `"` + output + `"` : output)
             :
@@ -424,12 +415,12 @@ export const arrays = () => {
       methodsArray.forEach(element => {
 
         if (element.method === "sort") {
-          element.methodButtons.forEach(button => {
+          element.methodContents.forEach(button => {
             button.name === "( )" ? button.active = true : button.active = false
           })
         }
         if (element.method === "find") {
-          element.methodButtons.forEach(button => {
+          element.methodContents.forEach(button => {
             button.name === "(a.length>?)" ? button.active = true : button.active = false
           })
         }
@@ -591,7 +582,7 @@ export const arrays = () => {
       button.addEventListener("click", () => {
         methodsArray.forEach((object) => {
           if (object.method === button.name) {
-            object.methodButtons.forEach((obj) => {
+            object.methodContents.forEach((obj) => {
               (obj.id === +button.id) ?
                 obj.active = true
                 :
@@ -612,7 +603,7 @@ export const arrays = () => {
                 const pattern = method.inputPattern;
                 if (pattern.test(input.value)) {
                   if ((method.method === "filter" || method.method === "find" || method.method === "findIndex" || method.method === "some")
-                    && !!method.methodButtons[0].active
+                    && !!method.methodContents[0].active
                     && (array.includes(null) || array.includes(undefined))) {
                     render();
                     if (array.includes(null)) {
@@ -791,7 +782,7 @@ export const arrays = () => {
 
     methodsArray.forEach((method) => {
       if (method.method === button) {
-        method.methodButtons.forEach((element) => {
+        method.methodContents.forEach((element) => {
           if (element.active) {
 
             content = element.methodContent + (inputValue ? (inputValue + (changeArrowFunctionIfObject(button))) : "")
