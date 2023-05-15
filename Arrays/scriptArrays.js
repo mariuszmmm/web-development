@@ -290,7 +290,21 @@ export const arrays = () => {
 
         });
         
-  
+        const searchX = (text, param) => {
+          let a;
+          if(text.includes("?")) {
+            if (param !== "disabled") {
+             a = text + "n"
+            //   a = text.replace("?", `<span class="unknown"> ? </span>`)
+            } else {
+              a = text + "d"
+              //a = text.replace("?", `<span> ? </span>`)
+            }
+          } else { a = text}
+          console.log(methodsArray)
+           return a
+          }
+
         element += `
               ) 
             </div>
