@@ -23,6 +23,7 @@ export const arrays = () => {
           name: obj.button,
           methodContent: obj.content,
           active: index === 0,
+          destiny: obj.destiny,
         }
       }),
       inputType: object.inputType,
@@ -36,14 +37,14 @@ console.log(methodsArray)
 
   const changeArrowFunctionIfObject = (name) => {
     let content = "";
-    const arrowFunctionForObjects = ["(a=>({...a,country:?}))"];
+    const arrowFunctionForObjects = ["(a=>({...a,type:?}))"];
 
     if (!!name) {
       methodsArray.forEach((obj) => {
         if (obj.method === name) {
           obj.methodContents.forEach((button) => {
             if (button.active === true) {
-              if (arrowFunctionForObjects.includes(button.name)) {
+              if (button.methodContent.includes("({")) {
                 content = "})";
               }
             };
@@ -268,20 +269,16 @@ console.log(methodsArray)
 
         buttons.forEach((button) => {
 
-          const conditionalValues = ["((a,b)=>a-b)", "((a,b)=>b-a)", "((a,b)=>a.localeCompare(b))", "((a,b)=>b.localeCompare(a))", "((a,b)=>a.name.localeCompare(b.name))", "((a,b)=>b.name.localeCompare(a.name))", "((a,b)=>a[0].localeCompare(b[0]))", "((a,b)=>b[0].localeCompare(a[0]))", "((a,b)=>a.age-b.age)", "((a,b)=>b.age-a.age)", "(a=>a.name===?)", "(a=>a[0]===?)", "(a=>({...a,country:?}))"];
           if (
-            (!conditionalValues.includes(button.name))
+            (button.destiny === "forAll")
             ||
-            (array.every(item => typeof (item) === "number") && (button.name === "((a,b)=>a-b)" || button.name === "((a,b)=>b-a)"))
+            (array.every(item => typeof (item) === "number") && button.destiny === "forNumbers")
             ||
-            (array.every(item => typeof (item) === "string") && (button.name === "((a,b)=>a.localeCompare(b))" || button.name === "((a,b)=>b.localeCompare(a))"))
+            (array.every(item => typeof (item) === "string") && button.destiny === "forStrings")
             ||
-            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && (button.name === "((a,b)=>a.name.localeCompare(b.name))" || button.name === "((a,b)=>b.name.localeCompare(a.name))" ||
-              button.name === "((a,b)=>a.age-b.age)" ||
-              button.name === "((a,b)=>b.age-a.age)" || button.name === "(a=>a.name===?)" || button.name === "(a=>({...a,country:?}))"
-            ))
+            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && button.destiny === "forObjects")
             ||
-            (array.every(item => Array.isArray(item)) && (button.name === "((a,b)=>a[0].localeCompare(b[0]))" || button.name === "((a,b)=>b[0].localeCompare(a[0]))" || button.name === "(a=>a[0]===?)"))
+            (array.every(item => Array.isArray(item)) && button.destiny === "forArrays")
           ) {
             element += `  
             <button name="${name}" id="${button.id}" class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
@@ -411,19 +408,19 @@ console.log(methodsArray)
 
     const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords, ...arrayEmoticons]
 
-    const resetTypeButton = () => {
-      methodsArray.forEach(element => {
-
-        if (element.method === "sort") {
-          element.methodContents.forEach(button => {
-            button.name === "( )" ? button.active = true : button.active = false
+    const resetTypeButton = (prop) => {
+      methodsArray.forEach(object=> {
+       
+        object.methodContents.forEach(obj=>
+        {
+          if (obj.active && ![prop, "forAll"].includes(obj.destiny)) {
+         
+         object.methodContents.forEach((obj, i) => {
+             !i ? obj.active = true : obj.active = false
           })
         }
-        if (element.method === "find") {
-          element.methodContents.forEach(button => {
-            button.name === "(a.length>?)" ? button.active = true : button.active = false
-          })
-        }
+        }  
+        )
       })
     }
 
@@ -432,7 +429,7 @@ console.log(methodsArray)
       while (array.length < rangeValueElement.textContent) {
         array.push(Math.floor(Math.random() * 100));
       };
-      resetTypeButton();
+      resetTypeButton("forNumbers");
       render();
     };
 
@@ -441,7 +438,7 @@ console.log(methodsArray)
       while (array.length < rangeValueElement.textContent) {
         array.push(Math.floor(Math.random() * 200 - 100));
       };
-      resetTypeButton();
+      resetTypeButton("forNumbers");
       render();
     };
 
@@ -450,7 +447,7 @@ console.log(methodsArray)
       while (array.length < rangeValueElement.textContent) {
         array.push(letters.charAt(Math.floor(Math.random() * letters.length)));
       }
-      resetTypeButton();
+      resetTypeButton("forStrings");
       render();
     }
 
@@ -459,7 +456,7 @@ console.log(methodsArray)
       while (array.length < rangeValueElement.textContent) {
         array.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
       }
-      resetTypeButton();
+      resetTypeButton("forStrings");
       render();
     }
 
@@ -476,7 +473,7 @@ console.log(methodsArray)
         };
         array.push(arrayItem())
       }
-      resetTypeButton();
+      resetTypeButton("forArrays");
       render();
     }
 
@@ -485,7 +482,7 @@ console.log(methodsArray)
       while (array.length < rangeValueElement.textContent) {
         array.push(arrayObjects[Math.floor(Math.random() * arrayObjects.length)]);
       };
-      resetTypeButton();
+      resetTypeButton("forObjects");
       render();
     }
 
@@ -728,7 +725,7 @@ console.log(methodsArray)
   const enterNumberOrString = (inputValue) => {
 
     return (
-      (inputValue !== "null" && inputValue !== "true" && inputValue !== "false" && inputValue !== "undefined" && inputValue !== "NaN") ?
+      !["null", "true", "false", "undefined", "NaN"].includes( inputValue)?
         (typeof (inputValue) === "string" ? (inputValue) : "")
         :
         (!isNaN(inputValue) ?
