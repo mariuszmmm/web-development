@@ -7,11 +7,11 @@ export const arrays = () => {
   let output = "";
   let rangeValue;
   let arrayExampleSaved = [];
-  let showExampleActive = true;
+  let showExampleArray = true;
   let objectNotString;
   let indexButton = 0;
 
-  const methodsArray = methodsArrayRaw.map((object) => {
+  const methodsArray = methodsArrayRaw.map(object => {
 
     return {
       method: object.method,
@@ -30,14 +30,54 @@ export const arrays = () => {
       inputValue: "",
       inputPattern: object.inputPattern
     }
-          console.log("jest")
   });
+  
+  const viewArray = (exampleArray) => {
+    let element = "";
 
-console.log(methodsArray)
+    exampleArray.forEach((arrayElement, index) => {
+      element += `
+        <span class="settingsParagraph--arrays">
+          ${(typeof (arrayElement) === "string" ?
+      //    ((arrayElement[0] === `"` && arrayElement[arrayElement.length - 1] === `"`) ?
+          
+        //  arrayElement : 
+          (`"` + arrayElement + `"`)
+          
+     //     )
+      //    + ((exampleArray.length === index + 1) ? "" : ",")
+          :
+          ((Array.isArray(arrayElement) ? viewSubArray(arrayElement) : ((typeof (arrayElement) === "object" && arrayElement !== null) ? viewObject(arrayElement) : arrayElement)) 
+          ))
+          + ((exampleArray.length === index + 1) ? "" : ",")
+          
+          }
+          
+          </span>`;
+    });
 
+    return element;
+  };
+
+  const vievMethodContent = (methodContent) => {
+    let element = "";
+    element += `
+      <span class="settingsParagraph--arrays strong">
+        array.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
+        (typeof (methodContent[1]) === "string" ?
+          (methodContent[1])
+          :
+          ((typeof (methodContent[1]) === "object") ? methodContent[1].name : methodContent[1]))
+        :
+        ""} );
+      </span>
+    `;
+
+    return element;
+  };
+  
   const changeArrowFunctionIfObject = (name) => {
     let content = "";
-    const arrowFunctionForObjects = ["(a=>({...a,type:?}))"];
 
     if (!!name) {
       methodsArray.forEach((obj) => {
@@ -56,22 +96,6 @@ console.log(methodsArray)
     }
   };
 
-  const viewArray = (exampleArray) => {
-    let element = "";
-
-    exampleArray.forEach((arrayElement, index) => {
-      element += `
-        <span class="settingsParagraph--arrays nowrap">
-          ${typeof (arrayElement) === "string" ?
-          ((arrayElement[0] === `"` && arrayElement[arrayElement.length - 1] === `"`) ? arrayElement : (`"` + arrayElement + `"`))
-          + ((exampleArray.length === index + 1) ? "" : ",")
-          :
-          ((Array.isArray(arrayElement) ? viewSubArray(arrayElement) : ((typeof (arrayElement) === "object" && arrayElement !== null) ? viewObject(arrayElement) : arrayElement)) + ((exampleArray.length === index + 1) ? "" : ","))}</span>`;
-    });
-
-    return element;
-  };
-
   const viewObject = (object) => {
     let content = "";
     let index = -1;
@@ -80,7 +104,7 @@ console.log(methodsArray)
       content += property + ":" + (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) + ((Object.keys(object).length === index + 1) ? "" : ",")
     }
 
-    return `{` + content + `}`;
+    return "{" + content + "}";
   };
 
   const viewSubArray = (subArray) => {
@@ -95,38 +119,21 @@ console.log(methodsArray)
         `
     });
 
-    return `[` + content + `]`;
+    return `<span class="nowrap">[` + content + `]</span>`;
   }
-
-  const vievMethodContent = (methodContent) => {
-    let element = "";
-    element += `
-      <span class="settingsParagraph--arrays strong">
-        array.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
-        (typeof (methodContent[1]) === "string" ?
-          (methodContent[1])
-          :
-          ((typeof (methodContent[1]) === "object") ? methodContent[1].name : methodContent[1]))
-        :
-        ""} );
-      </span>
-    `;
-
-    return element;
-  };
 
   const renderSettings = () => {
     const settingsElement = document.querySelector(".js-settingsContainer");
 
     const leabelContents = () => {
-      let contentsElement = "";
-      contentsElement += `
+      let element = "";
+      element += `
         <div class="settingsContents settingsContents--array">
           <p class="settingsParagraph--arrays strong">const array = [
           
           ${(array.length > 0) ? `
           </p>
-          <p class="settingsParagraph">
+          <p class="settingsParagraph settingsParagraph--arrays">
             ${viewArray(array)}
           </p>
           <p class="settingsParagraph--arrays strong">
@@ -134,17 +141,17 @@ console.log(methodsArray)
           
           ];</p>
           <p></p>
-         ${showExampleActive ? `<p class="settingsParagraph--arrays strong">const exampleArray = [</p>
-          <p class="settingsParagraph">
+         ${showExampleArray ? `<p class="settingsParagraph--arrays strong">const exampleArray = [</p>
+          <p class="settingsParagraph settingsParagraph--arrays">
             ${viewArray(arrayExampleSaved.length > 0 ? arrayExampleSaved : arrayExample)}
           </p>
           <p class="settingsParagraph--arrays strong">];</p>
           <p></p>` : ""}          
-          ${methodContent[0] ? vievMethodContent(methodContent) : ""}
+          ${!!methodContent[0] ? vievMethodContent(methodContent) : ""}
         </div>
       `;
 
-      return contentsElement;
+      return element;
     };
 
     const methodsSettings = () => {
@@ -201,7 +208,7 @@ console.log(methodsArray)
             example array :
           </span>
           <div class="valueButtons">
-            <button id="showExample" class="button ${showExampleActive ? "button--active" : ""} js-example">
+            <button id="showExample" class="button ${showExampleArray ? "button--active" : ""} js-example">
              show example array
             </button>          
             <button id="saveToExample" class="button js-example">
@@ -508,7 +515,7 @@ console.log(methodsArray)
       element.addEventListener("click", ({ target }) => {
         switch (target.id) {
           case "showExample":
-            showExample();
+            changeShowExampleArray();
             break;
           case "loadFromExample":
             loadFromExample();
@@ -526,8 +533,8 @@ console.log(methodsArray)
       });
     });
 
-    const showExample = () => {
-      showExampleActive = !showExampleActive
+    const changeShowExampleArray = () => {
+      showExampleArray = !showExampleArray
       render();
     }
 

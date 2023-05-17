@@ -2,8 +2,8 @@
    max-width: 36%;
    min-width: 36%;
    flex-grow: 0;
-   line-height: 1.8;
-   word-break: break-word;
+   line-height: 1.5;
+  /* word-break: break-word; */
    font-family: monospace;
 }
 
@@ -21,6 +21,7 @@
    margin-top: 5px;
    margin-bottom: 5px;
    font-size: 18px;
+   word-break: break-word;
 }
 
 .arrayMethods--label {
@@ -77,7 +78,7 @@
    min-height: 150px;
    font-family: monospace;
    display: inline;
-   word-break: break-word;
+  /* word-break: break-word; */
 }
 
 .methodInput {
@@ -137,7 +138,7 @@
 }
 
 .nowrap {
-   white-space: nowrap;
+ white-space: nowrap;
 }
 
 .unknown {

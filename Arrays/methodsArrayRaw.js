@@ -15,6 +15,18 @@ export const methodsArrayRaw = [
       inputType: null,
     },
    {
+     method: "push",
+     methodContents: [],
+     inputType: "text",
+     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+   },
+   {
+     method: "unshift",
+     methodContents: [],
+     inputType: "text",
+     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+   },
+   {
       method: "includes",
       methodContents: [],
       inputType: "text",
@@ -44,18 +56,6 @@ export const methodsArrayRaw = [
       inputType: "text",
       inputPattern: /^$|^("[^"]*"|\-?\d+)$/,
    },  
-   {
-      method: "push",
-      methodContents: [],
-      inputType: "text",
-      inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
-   },
-   {
-      method: "unshift",
-      methodContents: [],
-      inputType: "text",
-      inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
-   },
    {
       method: "map",
       methodContents: [
