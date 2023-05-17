@@ -31,7 +31,7 @@ export const arrays = () => {
       inputPattern: object.inputPattern
     }
   });
-  
+
   const viewArray = (exampleArray) => {
     let element = "";
 
@@ -39,21 +39,16 @@ export const arrays = () => {
       element += `
         <span class="settingsParagraph--arrays">
           ${(typeof (arrayElement) === "string" ?
-      //    ((arrayElement[0] === `"` && arrayElement[arrayElement.length - 1] === `"`) ?
-          
-        //  arrayElement : 
           (`"` + arrayElement + `"`)
-          
-     //     )
-      //    + ((exampleArray.length === index + 1) ? "" : ",")
           :
-          ((Array.isArray(arrayElement) ? viewSubArray(arrayElement) : ((typeof (arrayElement) === "object" && arrayElement !== null) ? viewObject(arrayElement) : arrayElement)) 
-          ))
-          + ((exampleArray.length === index + 1) ? "" : ",")
-          
-          }
-          
-          </span>`;
+          (Array.isArray(arrayElement) ?
+            viewSubArray(arrayElement)
+            :
+            ((typeof (arrayElement) === "object" && arrayElement !== null) ?
+              viewObject(arrayElement)
+              :
+              arrayElement))) + ((exampleArray.length === index + 1) ? "" : ",")}
+        </span>`;
     });
 
     return element;
@@ -67,7 +62,10 @@ export const arrays = () => {
         (typeof (methodContent[1]) === "string" ?
           (methodContent[1])
           :
-          ((typeof (methodContent[1]) === "object") ? methodContent[1].name : methodContent[1]))
+          ((typeof (methodContent[1]) === "object") ?
+            methodContent[1].name
+            :
+            methodContent[1]))
         :
         ""} );
       </span>
@@ -75,16 +73,16 @@ export const arrays = () => {
 
     return element;
   };
-  
+
   const changeArrowFunctionIfObject = (name) => {
     let content = "";
 
     if (!!name) {
-      methodsArray.forEach((obj) => {
-        if (obj.method === name) {
-          obj.methodContents.forEach((button) => {
-            if (button.active === true) {
-              if (button.methodContent.includes("({")) {
+      methodsArray.forEach((object) => {
+        if (object.method === name) {
+          object.methodContents.forEach((obj) => {
+            if (obj.active === true) {
+              if (obj.methodContent.includes("({")) {
                 content = "})";
               }
             };
@@ -93,18 +91,23 @@ export const arrays = () => {
       });
 
       return content;
-    }
+    };
   };
 
   const viewObject = (object) => {
     let content = "";
     let index = -1;
+
     for (let property in object) {
       index++
-      content += property + ":" + (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) + ((Object.keys(object).length === index + 1) ? "" : ",")
-    }
+      content += (property + ":")
+        +
+        (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property])
+        +
+        ((Object.keys(object).length === index + 1) ? "" : ",")
+    };
 
-    return "{" + content + "}";
+    return `<span class="nowrap">{` + content + `}</span>`;
   };
 
   const viewSubArray = (subArray) => {
@@ -113,10 +116,10 @@ export const arrays = () => {
     subArray.forEach((subArrayElement, index) => {
       content += `
       ${typeof (subArrayElement) === "string" ?
-          (((`"` + subArrayElement + `"`))
-            + ((subArray.length === index + 1) ? "" : ",")) :
-          subArrayElement + ((subArray.length === index + 1) ? "" : ",")}
-        `
+          ((`"` + subArrayElement + `"`) + ((subArray.length === index + 1) ? "" : ","))
+          :
+          (subArrayElement + ((subArray.length === index + 1) ? "" : ","))}
+      `;
     });
 
     return `<span class="nowrap">[` + content + `]</span>`;
@@ -127,21 +130,20 @@ export const arrays = () => {
 
     const leabelContents = () => {
       let element = "";
+
       element += `
         <div class="settingsContents settingsContents--array">
           <p class="settingsParagraph--arrays strong">const array = [
-          
-          ${(array.length > 0) ? `
+          ${array.length > 0 ? `
           </p>
           <p class="settingsParagraph settingsParagraph--arrays">
             ${viewArray(array)}
           </p>
           <p class="settingsParagraph--arrays strong">
           ` : ""}
-          
           ];</p>
           <p></p>
-         ${showExampleArray ? `<p class="settingsParagraph--arrays strong">const exampleArray = [</p>
+          ${showExampleArray ? `<p class="settingsParagraph--arrays strong">const exampleArray = [</p>
           <p class="settingsParagraph settingsParagraph--arrays">
             ${viewArray(arrayExampleSaved.length > 0 ? arrayExampleSaved : arrayExample)}
           </p>
@@ -157,75 +159,21 @@ export const arrays = () => {
     const methodsSettings = () => {
       let methodsSetingsElement = "";
 
-      const arraySettings = () => {
+      const methodsArraySettings = (name, objects, inputType) => {
         let element = "";
-        element += `
-          <span class="arrayMethods--label">
-            load array :
-          </span>
-          <div class="valueButtons">   
-            <button id="randomNaturalNumbers" class="button js-random">
-              random natural numbers
-            </button>
-            <button id="randomIntegers" class="button js-random">
-              random integers
-            </button>     
-             <button id="randomLetters" class="button js-random">
-              random letters
-            </button>
-             <button id="randomWords" class="button js-random">
-              random words
-            </button> 
-            <button id="randomObjects" class="button js-random">
-              random objects
-            </button>
-            <button id="randomArrays" class="button js-random">
-              random arrays
-            </button>
-            <button id="randomEmoticons" class="button js-random">
-              random emoticons
-            </button>                  
-            <button id="randomMixed" class="button js-random">
-              random mixed
-            </button>
-            <button id="loadFromExample" class="button js-example">
-              from example array
-            </button>          
-            <button id="loadFromOutput" ${Array.isArray(output) ? "" : "disabled"} class="button js-example">
-              from output
-            </button>            
-          </div>            
-          <label for="inputRange" class="arrayMethods--label">
-            array size : 
-            <span class="js-rangeValue">
-              ${rangeValue ? rangeValue : "10"}
-            </span>
-          </label>          
-          <div class="valueButtons">              
-            <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
-          </div>
-          <span class="arrayMethods--label">
-            example array :
-          </span>
-          <div class="valueButtons">
-            <button id="showExample" class="button ${showExampleArray ? "button--active" : ""} js-example">
-             show example array
-            </button>          
-            <button id="saveToExample" class="button js-example">
-              save array to example array
-            </button>
-            <button id="resetExample" class="button js-example">
-              reset example array
-            </button>
-          </div>            
-        `;
 
-        return element;
-      };
+        const searchUnknown = (text, prop) => {
+          if (text.includes("?")) {
+            if (prop !== "disabled") {
+              text = text.replace("?", `<span class="unknown"> ? </span>`)
+            } else {
+              text = text.replace("?", `<span> ? </span>`)
+            };
+          };
 
-      const methodsArraySettings = (name, buttons, inputType, inputValue, inputPattern) => {
+          return text;
+        }
 
-        let element = "";
         element += `
           <div class="propertyButtons propertyButtons--arrays">
             <span class="methodName">
@@ -234,38 +182,27 @@ export const arrays = () => {
             <div class="methodName methodName--parameters">(
         `;
 
-        buttons.forEach((button) => {
+        objects.forEach((obj) => {
           element += `
-            ${button.active ? button.methodContent : ""}`
+            ${!!obj.active ? obj.methodContent : ""}
+          `;
         });
 
         element += `
-          ${inputType ? `<input type="text" name="${name}" value="" class="methodInput js-methodInput" />` : ""} 
-          `;
+          ${inputType ? `
+            <input type="text" name="${name}" class="methodInput js-methodInput" />` : ""} 
+        `;
 
-        buttons.forEach((button) => {
+        objects.forEach((obj) => {
           element += `
-            ${!!button.active ? changeArrowFunctionIfObject(name) : ""}`
-
+            ${!!obj.active ? changeArrowFunctionIfObject(name) : ""}
+          `;
         });
-
-        const searchUnknown = (text, param) => {
-          if (text.includes("?")) {
-            if (param !== "disabled") {
-              text = text.replace("?", `<span class="unknown"> ? </span>`)
-            } else {
-              text = text.replace("?", `<span> ? </span>`)
-            };
-          };
-
-          return text
-        }
 
         element += `
               ) 
             </div>
           </div>
-          
           <div class="valueButtons valueButtons--arrays">
             <button id="${name}" class="button button--array button--run js-runButton">
               run
@@ -274,28 +211,27 @@ export const arrays = () => {
           <div class="valueButtons valueButtons--arrays">
        `;
 
-        buttons.forEach((button) => {
-
+        objects.forEach((obj) => {
           if (
-            (button.destiny === "forAll")
+            (obj.destiny === "forAll")
             ||
-            (array.every(item => typeof (item) === "number") && button.destiny === "forNumbers")
+            (array.every(item => typeof (item) === "number") && obj.destiny === "forNumbers")
             ||
-            (array.every(item => typeof (item) === "string") && button.destiny === "forStrings")
+            (array.every(item => typeof (item) === "string") && obj.destiny === "forStrings")
             ||
-            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && button.destiny === "forObjects")
+            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects")
             ||
-            (array.every(item => Array.isArray(item)) && button.destiny === "forArrays")
+            (array.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
           ) {
             element += `  
-            <button name="${name}" id="${button.id}" class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
-             ${searchUnknown(button.name)}
-            </button>
+              <button name="${name}" id="${obj.id}" class="button button--array ${obj.active ? "button--active" : ""} js-typeButton">
+                ${searchUnknown(obj.name)}
+              </button>
           `;
           } else {
             element += `  
-              <button name="${name}" id="${button.id}" disabled class="button button--array ${button.active ? "button--active" : ""} js-typeButton">
-             ${searchUnknown(button.name, "disabled")}
+              <button name="${name}" id="${obj.id}" disabled class="button button--array ${obj.active ? "button--active" : ""} js-typeButton">
+                ${searchUnknown(obj.name, "disabled")}
               </button>
             `;
           }
@@ -311,7 +247,64 @@ export const arrays = () => {
       methodsSetingsElement += `
         <div>
           <div class="arraySettings">
-            ${arraySettings("array")}
+            <span class="arrayMethods--label">
+              load array :
+            </span>
+            <div class="valueButtons">   
+              <button id="randomNaturalNumbers" class="button js-random">
+                random natural numbers
+              </button>
+              <button id="randomIntegers" class="button js-random">
+                random integers
+              </button>     
+              <button id="randomLetters" class="button js-random">
+                random letters
+              </button>
+              <button id="randomWords" class="button js-random">
+                random words
+              </button> 
+              <button id="randomObjects" class="button js-random">
+                random objects
+              </button>
+              <button id="randomArrays" class="button js-random">
+                random arrays
+              </button>
+              <button id="randomEmoticons" class="button js-random">
+                random emoticons
+              </button>                  
+              <button id="randomMixed" class="button js-random">
+                random mixed
+              </button>
+              <button id="loadFromExample" class="button js-example">
+                from example array
+              </button>          
+              <button id="loadFromOutput" ${Array.isArray(output) ? "" : "disabled"} class="button js-example">
+                from output
+              </button>            
+            </div>            
+            <label for="inputRange" class="arrayMethods--label">
+              array size : 
+              <span class="js-rangeValue">
+                ${rangeValue ? rangeValue : "10"}
+              </span>
+            </label>          
+            <div class="valueButtons">              
+              <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
+            </div>
+            <span class="arrayMethods--label">
+              example array :
+            </span>
+            <div class="valueButtons">
+              <button id="showExample" class="button ${showExampleArray ? "button--active" : ""} js-example">
+              show example array
+              </button>          
+              <button id="saveToExample" class="button js-example">
+                save array to example array
+              </button>
+              <button id="resetExample" class="button js-example">
+                reset example array
+              </button>
+            </div>
           </div>
           <span class="arrayMethods--label">
             methods :
@@ -321,7 +314,7 @@ export const arrays = () => {
 
       methodsArray.forEach((object) =>
         methodsSetingsElement += `
-        ${methodsArraySettings(object.method, object.methodContents, object.inputType, object.inputValue, object.inputPattern)}
+        ${methodsArraySettings(object.method, object.methodContents, object.inputType)}
       `);
 
       methodsSetingsElement += `
@@ -346,20 +339,15 @@ export const arrays = () => {
     outputElement.innerHTML += `
       <div class="outputContents outputContents--arrays">
         <div class="outputLabel">OUTPUT :</div>
-          ${Array.isArray(output) ? `
-            <p class="settingsParagraph--arrays strong">[
-              ${viewArray(output)}  
-            ]</p>` :
-        typeof (output) === "object" ? `
-            <p class="settingsParagraph--arrays strong">
-              ${viewObject(output)}  
-            </p>` :
-            
-          ((typeof (output) === "string" && methodContent.length > 0) ?
-            (output !== "" ? `"` + output + `"` : output)
-            :
-            output)
-      }  
+        ${Array.isArray(output) ? `
+        <p class="settingsParagraph--arrays strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
+        <p class="settingsParagraph--arrays strong"> ${viewObject(output)} </p>`
+        :
+        ((typeof (output) === "string" && methodContent.length > 0) ?
+          (output !== "" ? `"` + output + `"` : output)
+          :
+          output
+        )}  
         </div>
       </div>
     `;
@@ -376,29 +364,21 @@ export const arrays = () => {
 
     randomElements.forEach(element => element.addEventListener("click", ({ target }) => {
       switch (target.id) {
-        case "randomNaturalNumbers":
-          useRandomNaturalNumbers();
+        case "randomNaturalNumbers": useRandomNaturalNumbers();
           break;
-        case "randomIntegers":
-          useRandomIntegers();
+        case "randomIntegers": useRandomIntegers();
           break;
-        case "randomLetters":
-          useRandomLetters();
+        case "randomLetters": useRandomLetters();
           break;
-        case "randomWords":
-          useRandomWords();
+        case "randomWords": useRandomWords();
           break;
-        case "randomObjects":
-          useRandomObjects();
+        case "randomObjects": useRandomObjects();
           break;
-        case "randomArrays":
-          useRandomArrays();
+        case "randomArrays": useRandomArrays();
           break;
-        case "randomEmoticons":
-          useRandomEmoticons();
+        case "randomEmoticons": useRandomEmoticons();
           break;
-        case "randomMixed":
-          useRandomMixed();
+        case "randomMixed": useRandomMixed();
           break;
       };
     }));
@@ -406,7 +386,7 @@ export const arrays = () => {
     const arrayLetters = [];
     for (let a = 0; a < letters.length; a++) {
       arrayLetters.push(letters.charAt(a))
-    }
+    };
 
     const arrayIntegers = [];
     for (let a = -100; a < 101; a++) {
@@ -416,20 +396,16 @@ export const arrays = () => {
     const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords, ...arrayEmoticons]
 
     const resetTypeButton = (prop) => {
-      methodsArray.forEach(object=> {
-       
-        object.methodContents.forEach(obj=>
-        {
-          if (obj.active && ![prop, "forAll"].includes(obj.destiny)) {
-         
-         object.methodContents.forEach((obj, i) => {
-             !i ? obj.active = true : obj.active = false
-          })
-        }
-        }  
-        )
-      })
-    }
+      methodsArray.forEach(object => {
+        object.methodContents.forEach(obj => {
+          if (obj.active && (obj.destiny !== prop)) {
+            object.methodContents.forEach((obj, i) => {
+              !i ? obj.active = true : obj.active = false
+            });
+          };
+        });
+      });
+    };
 
     const useRandomNaturalNumbers = () => {
       array = [];
@@ -453,36 +429,36 @@ export const arrays = () => {
       array = [];
       while (array.length < rangeValueElement.textContent) {
         array.push(letters.charAt(Math.floor(Math.random() * letters.length)));
-      }
+      };
       resetTypeButton("forStrings");
       render();
-    }
+    };
 
     const useRandomWords = () => {
       array = [];
       while (array.length < rangeValueElement.textContent) {
         array.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
-      }
+      };
       resetTypeButton("forStrings");
       render();
-    }
+    };
 
     const useRandomArrays = () => {
       array = [];
-
       while (array.length < rangeValueElement.textContent) {
         const arrayItem = () => {
           let subArray = [];
           while (subArray.length < 3) {
             subArray.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
           };
-          return subArray
+
+          return subArray;
         };
-        array.push(arrayItem())
-      }
+        array.push(arrayItem());
+      };
       resetTypeButton("forArrays");
       render();
-    }
+    };
 
     const useRandomObjects = () => {
       array = [];
@@ -491,23 +467,23 @@ export const arrays = () => {
       };
       resetTypeButton("forObjects");
       render();
-    }
+    };
 
     const useRandomEmoticons = () => {
       array = [];
       while (array.length < rangeValueElement.textContent) {
         array.push(arrayEmoticons[Math.floor(Math.random() * arrayEmoticons.length)]);
       };
-      resetTypeButton();
+      resetTypeButton("forAll");
       render();
-    }
+    };
 
     const useRandomMixed = () => {
       array = [];
       while (array.length < rangeValueElement.textContent) {
         array.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
-      }
-      resetTypeButton();
+      };
+      resetTypeButton("forAll");
       render();
     };
 
@@ -536,7 +512,7 @@ export const arrays = () => {
     const changeShowExampleArray = () => {
       showExampleArray = !showExampleArray
       render();
-    }
+    };
 
     const loadFromExample = () => {
       if (arrayExampleSaved.length > 0) {
@@ -544,7 +520,7 @@ export const arrays = () => {
       }
       else { array = [...arrayExample] };
       render();
-    }
+    };
 
     const saveToExample = () => {
       if (array.length > 0) {
@@ -553,25 +529,25 @@ export const arrays = () => {
       } else {
         output = "Not saved, array is empty.";
         renderOutput();
-      }
-    }
+      };
+    };
 
     const resetExample = () => {
       arrayExampleSaved = [];
       render();
-    }
+    };
 
     const loadFromOutput = () => {
       if (Array.isArray(output)) {
         array = [...output];
         render();
-      }
-    }
+      };
+    };
 
     rangeElement.addEventListener("input", ({ target }) => {
       rangeValueElement.textContent = target.value;
       rangeValue = rangeValueElement.textContent;
-    })
+    });
 
     inputElements.forEach((input) => {
       input.addEventListener("click", ({ target }) => {
@@ -582,7 +558,6 @@ export const arrays = () => {
     });
 
     typeButtonElements.forEach((button) => {
-
       button.addEventListener("click", () => {
         methodsArray.forEach((object) => {
           if (object.method === button.name) {
@@ -732,7 +707,7 @@ export const arrays = () => {
   const enterNumberOrString = (inputValue) => {
 
     return (
-      !["null", "true", "false", "undefined", "NaN"].includes( inputValue)?
+      !["null", "true", "false", "undefined", "NaN"].includes(inputValue) ?
         (typeof (inputValue) === "string" ? (inputValue) : "")
         :
         (!isNaN(inputValue) ?
@@ -781,20 +756,19 @@ export const arrays = () => {
     );
   };
 
-  const enterContentForArrowFunction = (button, inputValue) => {
+  const enterContentForArrowFunction = (method, inputValue) => {
     let content;
 
-    methodsArray.forEach((method) => {
-      if (method.method === button) {
-        method.methodContents.forEach((element) => {
+    methodsArray.forEach((object) => {
+      if (object.method === method) {
+        object.methodContents.forEach((element) => {
           if (element.active) {
 
-            content = element.methodContent + (inputValue ? (inputValue + (changeArrowFunctionIfObject(button))) : "")
+            content = element.methodContent + (inputValue ? (inputValue + (changeArrowFunctionIfObject(method))) : "")
           };
         });
       };
     });
-
     if (content !== "") return Function(`return (${content})`)();
   };
 
