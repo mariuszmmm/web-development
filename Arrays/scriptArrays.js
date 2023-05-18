@@ -85,6 +85,9 @@ export const arrays = () => {
               if (obj.methodContent.includes("({")) {
                 content = "})";
               }
+              if (obj.methodContent.includes("([")) {
+                content = "])";
+              }
             };
           });
         };
@@ -190,6 +193,7 @@ export const arrays = () => {
 
         element += `
           ${inputType ? `
+          <form class="js-form">
             <input type="text" name="${name}" class="methodInput js-methodInput" />` : ""} 
         `;
 
@@ -208,6 +212,7 @@ export const arrays = () => {
               run
             </button>
           </div>
+          </form>
           <div class="valueButtons valueButtons--arrays">
        `;
 
@@ -361,6 +366,12 @@ export const arrays = () => {
     const inputElements = document.querySelectorAll(".js-methodInput");
     const runButtonElements = document.querySelectorAll(".js-runButton");
     const typeButtonElements = document.querySelectorAll(".js-typeButton");
+    const formElements = document.querySelectorAll(".js-form");
+    
+    formElements.forEach(element =>
+    element.addEventListener("submit", () => {
+      event.preventDefault();
+    }))
 
     randomElements.forEach(element => element.addEventListener("click", ({ target }) => {
       switch (target.id) {
@@ -412,6 +423,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(Math.floor(Math.random() * 100));
       };
+      output = "";
       resetTypeButton("forNumbers");
       render();
     };
@@ -421,6 +433,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(Math.floor(Math.random() * 200 - 100));
       };
+      output = "";
       resetTypeButton("forNumbers");
       render();
     };
@@ -430,6 +443,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(letters.charAt(Math.floor(Math.random() * letters.length)));
       };
+      output = "";
       resetTypeButton("forStrings");
       render();
     };
@@ -439,6 +453,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
       };
+      output = "";
       resetTypeButton("forStrings");
       render();
     };
@@ -456,6 +471,7 @@ export const arrays = () => {
         };
         array.push(arrayItem());
       };
+      output = "";
       resetTypeButton("forArrays");
       render();
     };
@@ -465,6 +481,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(arrayObjects[Math.floor(Math.random() * arrayObjects.length)]);
       };
+      output = "";
       resetTypeButton("forObjects");
       render();
     };
@@ -474,6 +491,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(arrayEmoticons[Math.floor(Math.random() * arrayEmoticons.length)]);
       };
+      output = "";
       resetTypeButton("forAll");
       render();
     };
@@ -483,6 +501,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
       };
+      output = "";
       resetTypeButton("forAll");
       render();
     };
@@ -552,7 +571,9 @@ export const arrays = () => {
     inputElements.forEach((input) => {
       input.addEventListener("click", ({ target }) => {
         methodsArray.forEach(({ method }) => {
-          if (method === input.name) target.value = "";
+          if (method === input.name)
+         input.classList.remove("errorInput");
+          target.value = "";
         });
       });
     });
@@ -567,6 +588,7 @@ export const arrays = () => {
                 :
                 obj.active = false;
             });
+            output = "";
             render();
           };
         });
@@ -576,6 +598,7 @@ export const arrays = () => {
     runButtonElements.forEach((button) => {
       button.addEventListener("click", () => {
         inputElements.forEach((input) => {
+          input.classList.remove("errorInput");
           if (input.name === button.id) {
             methodsArray.forEach((method) => {
               if (method.method === button.id) {
@@ -610,6 +633,8 @@ export const arrays = () => {
                   } else {
                     output = "Input value not allowed, use: \" \""
                   };
+                  
+                  input.classList.add("errorInput")
                   input.focus();
                   renderOutput();
 

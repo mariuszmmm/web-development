@@ -144,3 +144,8 @@
 .unknown {
   color: red;
 }
+
+.errorInput {
+  background: pink;
+  ;
+}
