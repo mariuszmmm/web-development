@@ -10,6 +10,7 @@ export const arrays = () => {
   let showExampleArray = true;
   let objectNotString;
   let indexButton = 0;
+  let methodActive = "";
 
   const methodsArray = methodsArrayRaw.map(object => {
 
@@ -193,7 +194,6 @@ export const arrays = () => {
 
         element += `
           ${inputType ? `
-          <form class="js-form">
             <input type="text" name="${name}" class="methodInput js-methodInput" />` : ""} 
         `;
 
@@ -212,7 +212,6 @@ export const arrays = () => {
               run
             </button>
           </div>
-          </form>
           <div class="valueButtons valueButtons--arrays">
        `;
 
@@ -367,11 +366,11 @@ export const arrays = () => {
     const runButtonElements = document.querySelectorAll(".js-runButton");
     const typeButtonElements = document.querySelectorAll(".js-typeButton");
     const formElements = document.querySelectorAll(".js-form");
-    
+
     formElements.forEach(element =>
-    element.addEventListener("submit", () => {
-      event.preventDefault();
-    }))
+      element.addEventListener("submit", () => {
+        event.preventDefault();
+      }))
 
     randomElements.forEach(element => element.addEventListener("click", ({ target }) => {
       switch (target.id) {
@@ -509,20 +508,15 @@ export const arrays = () => {
     exampleElements.forEach((element) => {
       element.addEventListener("click", ({ target }) => {
         switch (target.id) {
-          case "showExample":
-            changeShowExampleArray();
+          case "showExample": changeShowExampleArray();
             break;
-          case "loadFromExample":
-            loadFromExample();
+          case "loadFromExample": loadFromExample();
             break;
-          case "saveToExample":
-            saveToExample();
+          case "saveToExample": saveToExample();
             break;
-          case "resetExample":
-            resetExample();
+          case "resetExample": resetExample();
             break;
-          case "loadFromOutput":
-            loadFromOutput();
+          case "loadFromOutput": loadFromOutput();
             break;
         };
       });
@@ -569,12 +563,25 @@ export const arrays = () => {
     });
 
     inputElements.forEach((input) => {
-      input.addEventListener("click", ({ target }) => {
+
+      const onClickOrKey = (target, input, key) => {
         methodsArray.forEach(({ method }) => {
           if (method === input.name)
-         input.classList.remove("errorInput");
-          target.value = "";
+            input.classList.remove("errorInput");
+          key ? target.value = key : target.value = "";
         });
+      };
+
+      if (methodActive === input.name) { input.focus() };
+
+      input.addEventListener("click", (event) => {
+        onClickOrKey(event.target, input)
+      });
+
+      input.addEventListener("keyup", (event) => {
+        if ((event.key.match(/^[a-zA-Z0-9\W]$/)) && (!input.value || input.classList.contains("errorInput"))) {
+          onClickOrKey(event.target, input, event.key)
+        }
       });
     });
 
@@ -595,62 +602,78 @@ export const arrays = () => {
       });
     });
 
-    runButtonElements.forEach((button) => {
-      button.addEventListener("click", () => {
-        inputElements.forEach((input) => {
-          input.classList.remove("errorInput");
-          if (input.name === button.id) {
-            methodsArray.forEach((method) => {
-              if (method.method === button.id) {
-                const pattern = method.inputPattern;
-                if (pattern.test(input.value)) {
-                  if ((method.method === "filter" || method.method === "find" || method.method === "findIndex" || method.method === "some")
-                    && !!method.methodContents[0].active
-                    && (array.includes(null) || array.includes(undefined))) {
-                    render();
-                    if (array.includes(null)) {
-                      output = "Error: Cannot read properties of null (reading 'length')";
-                    }
-                    if (array.includes(undefined)) {
-                      output = "Error: Cannot read properties of undefined (reading 'length')";
-                    }
-                    renderOutput();
-
-                    return
-                  } else {
-                    if (typeof (enterNumberOrString(input.value)) === "object") {
-                      runMethod(button.id, enterNumberOrString(input.value), method.method);
-                      render();
-                    } else {
-                      runMethod(button.id, enterNumberOrString(input.value), method.method);
-                      render();
-                    }
+    const onClickOrEnter = (methodName) => {
+      inputElements.forEach((input) => {
+        input.classList.remove("errorInput");
+        if (input.name === methodName) {
+          methodsArray.forEach((method) => {
+            if (method.method === methodName) {
+              const pattern = method.inputPattern;
+              if (pattern.test(input.value)) {
+                if ((method.method === "filter" || method.method === "find" || method.method === "findIndex" || method.method === "some")
+                  && !!method.methodContents[0].active
+                  && (array.includes(null) || array.includes(undefined))) {
+                  render();
+                  if (array.includes(null)) {
+                    output = "Error: Cannot read properties of null (reading 'length')";
                   }
-                } else {
-                  methodContent = []
-                  if (method.method === "slice") {
-                    output = "The entered value is not allowed. Please enter a number or two numbers separated by a comma.";
-                  } else {
-                    output = "Input value not allowed, use: \" \""
-                  };
-                  
-                  input.classList.add("errorInput")
-                  input.focus();
+                  if (array.includes(undefined)) {
+                    output = "Error: Cannot read properties of undefined (reading 'length')";
+                  }
                   renderOutput();
 
                   return
+                } else {
+                  if (typeof (enterNumberOrString(input.value)) === "object") {
+                    runMethod(methodName, enterNumberOrString(input.value), method.method);
+                    methodActive = input.name;
+                    render();
+                    methodActive = "";
+                  } else {
+                    runMethod(methodName, enterNumberOrString(input.value), method.method);
+                    methodActive = input.name;
+                    render();
+                    methodActive = "";
+                  }
+                }
+              } else {
+                methodContent = []
+                if (method.method === "slice") {
+                  output = "The entered value is not allowed. Please enter a number or two numbers separated by a comma.";
+                } else {
+                  output = "Input value not allowed, use: \" \""
                 };
-              };
-            });
-          };
-        });
 
-        methodsArray.forEach((method) => {
-          if ((method.method === button.id) && !method.inputType) {
-            runMethod(button.id, null, method.method)
-            render();
-          };
-        });
+                input.classList.add("errorInput")
+                input.focus();
+                renderOutput();
+
+                return
+              };
+            };
+          });
+        };
+      });
+
+      methodsArray.forEach((method) => {
+        if ((method.method === methodName) && !method.inputType) {
+          runMethod(methodName, null, method.method)
+          render();
+        };
+      });
+    };
+
+    runButtonElements.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        onClickOrEnter(event.target.id)
+      });
+    });
+
+    inputElements.forEach((button) => {
+      button.addEventListener("keyup", (event) => {
+        if (event.key === "Enter") {
+          onClickOrEnter(event.target.name)
+        }
       });
     });
   };
