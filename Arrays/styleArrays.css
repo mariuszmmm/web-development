@@ -14,7 +14,9 @@
 }
 
 .settingsButtons--array {
-   grid-template-columns: auto auto auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    align-content: start;
 }
 
 .settingsParagraph--arrays {
