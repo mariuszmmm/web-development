@@ -1,5 +1,5 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js"
-import { arrayExample, letters, arrayWords, arrayEmoticons, arrayObjects } from "./arrays.js"
+import { arrayExample, letters, arrayWords, arrayEmoticons, arrayObjects, mixArray } from "./arrays.js"
 
 export const arrays = () => {
   let array = [];
@@ -7,12 +7,10 @@ export const arrays = () => {
   let output = "";
   let rangeValue;
   let arrayExampleSaved = [];
-  let showExampleArray = true;
-  let objectNotString;
+  let showExampleArray = false;
   let indexButton = 0;
-  let methodActive = "";
 
-  const methodsArray = methodsArrayRaw.map(object => {
+  const methodsArray = methodsArrayRaw.map((object) => {
 
     return {
       method: object.method,
@@ -147,7 +145,7 @@ export const arrays = () => {
           ` : ""}
           ];</p>
           <p></p>
-          ${showExampleArray ? `<p class="settingsParagraph--arrays strong">const exampleArray = [</p>
+          ${!!showExampleArray ? `<p class="settingsParagraph--arrays strong">const exampleArray = [</p>
           <p class="settingsParagraph settingsParagraph--arrays">
             ${viewArray(arrayExampleSaved.length > 0 ? arrayExampleSaved : arrayExample)}
           </p>
@@ -179,11 +177,12 @@ export const arrays = () => {
         }
 
         element += `
-          <div class="propertyButtons propertyButtons--arrays">
-            <span class="methodName">
-              array.${name}
-            </span>
-            <div class="methodName methodName--parameters">(
+          <form class="form js-form">
+            <div class="propertyButtons propertyButtons--arrays">
+              <span class="methodName">
+                array.${name}
+              </span>
+              <div class="methodName methodName--parameters">(
         `;
 
         objects.forEach((obj) => {
@@ -193,7 +192,7 @@ export const arrays = () => {
         });
 
         element += `
-          ${inputType ? `
+          ${!!inputType ? `
             <input type="text" name="${name}" class="methodInput js-methodInput" />` : ""} 
         `;
 
@@ -204,14 +203,15 @@ export const arrays = () => {
         });
 
         element += `
-              ) 
+                ) 
+              </div>
             </div>
-          </div>
-          <div class="valueButtons valueButtons--arrays">
-            <button id="${name}" class="button button--array button--run js-runButton">
-              run
-            </button>
-          </div>
+            <div class="valueButtons valueButtons--arrays">
+              <button id="${name}" class="button button--array button--run">
+                run
+              </button>
+            </div>
+          </form>
           <div class="valueButtons valueButtons--arrays">
        `;
 
@@ -228,13 +228,13 @@ export const arrays = () => {
             (array.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
           ) {
             element += `  
-              <button name="${name}" id="${obj.id}" class="button button--array ${obj.active ? "button--active" : ""} js-typeButton">
+              <button name="${name}" id="${obj.id}" class="button button--array ${!!obj.active ? "button--active" : ""} js-typeButton">
                 ${searchUnknown(obj.name)}
               </button>
           `;
           } else {
             element += `  
-              <button name="${name}" id="${obj.id}" disabled class="button button--array ${obj.active ? "button--active" : ""} js-typeButton">
+              <button name="${name}" id="${obj.id}" disabled class="button button--array ${!!obj.active ? "button--active" : ""} js-typeButton">
                 ${searchUnknown(obj.name, "disabled")}
               </button>
             `;
@@ -289,17 +289,17 @@ export const arrays = () => {
             <label for="inputRange" class="arrayMethods--label">
               array size : 
               <span class="js-rangeValue">
-                ${rangeValue ? rangeValue : "10"}
+                ${!!rangeValue ? rangeValue : "10"}
               </span>
             </label>          
             <div class="valueButtons">              
-              <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
+              <input id="inputRange" type="range" value="${!!rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
             </div>
             <span class="arrayMethods--label">
               example array :
             </span>
             <div class="valueButtons">
-              <button id="showExample" class="button ${showExampleArray ? "button--active" : ""} js-example">
+              <button id="showExample" class="button ${!!showExampleArray ? "button--active" : ""} js-example">
               show example array
               </button>          
               <button id="saveToExample" class="button js-example">
@@ -316,10 +316,11 @@ export const arrays = () => {
           <div class="settingsButtons settingsButtons--array">
       `;
 
-      methodsArray.forEach((object) =>
+      methodsArray.forEach((object) => {
         methodsSetingsElement += `
         ${methodsArraySettings(object.method, object.methodContents, object.inputType)}
-      `);
+      `
+      });
 
       methodsSetingsElement += `
           </div>            
@@ -358,19 +359,200 @@ export const arrays = () => {
   };
 
   const bindInputsAndButtons = () => {
+    const inputElements = document.querySelectorAll(".js-methodInput");
+    const formElements = document.querySelectorAll(".js-form");
     const randomElements = document.querySelectorAll(".js-random");
     const exampleElements = document.querySelectorAll(".js-example");
     const rangeElement = document.querySelector(".js-range");
     const rangeValueElement = document.querySelector(".js-rangeValue");
-    const inputElements = document.querySelectorAll(".js-methodInput");
-    const runButtonElements = document.querySelectorAll(".js-runButton");
     const typeButtonElements = document.querySelectorAll(".js-typeButton");
-    const formElements = document.querySelectorAll(".js-form");
+    let methodActive = "";
 
-    formElements.forEach(element =>
-      element.addEventListener("submit", () => {
+    inputElements.forEach((input) => {
+      if (input.name === methodActive) input.focus();
+
+      input.addEventListener("click", ({ target }) => {
+        methodsArray.forEach(({ method }) => {
+          if (method === input.name) target.value = "";
+        });
+      });
+
+      input.addEventListener("keyup", ({ key, target }) => {
+        if ((key.match(/^[a-zA-Z0-9\W]$/)) && (input.classList.contains("errorInput"))) {
+          methodsArray.forEach(({ method }) => {
+            if (method === input.name) {
+              input.classList.remove("errorInput");
+              !!key ? (target.value = key) : (target.value = "");
+            };
+          });
+        };
+      });
+    });
+
+    const displayWarningAboutArray = () => {
+      if (array.includes(null)) {
+        output = "Error: Cannot read properties of null (reading 'length')";
+      };
+      if (array.includes(undefined)) {
+        output = "Error: Cannot read properties of undefined (reading 'length')";
+      };
+      renderOutput();
+    };
+
+    const displayWarningAboutInputValue = ({ method }, input) => {
+      methodContent = [];
+      if (method === "slice") {
+        output = "The entered value is not allowed. Please enter a number or two numbers separated by a comma.";
+      } else {
+        output = "Input value not allowed, use: \" \""
+      };
+      input.classList.add("errorInput")
+      input.focus();
+      renderOutput();
+    };
+
+    formElements.forEach((formElement) => {
+      formElement.addEventListener("submit", (event) => {
         event.preventDefault();
-      }))
+        const button = event.submitter;
+
+        inputElements.forEach((input) => {
+          if (input.name === button.id) {
+            methodsArray.forEach((method) => {
+              if (method.method === button.id) {
+                const pattern = method.inputPattern;
+                if (pattern.test(input.value)) {
+                  if (
+                    ["filter", "find", "findIndex", "some"].includes(method.method)
+                    && !!method.methodContents[0].active
+                    && (array.includes(null) || array.includes(undefined))
+                  ) {
+                    render();
+                    displayWarningAboutArray();
+                    return
+                  } else {
+                    runMethod(button.id, enterNumberOrString(input.value), method.method);
+                    methodActive = input.name;
+                    render();
+                    methodActive = "";
+                  }
+                } else {
+                  displayWarningAboutInputValue(method, input);
+                  return
+                };
+              };
+            });
+          };
+        });
+
+        methodsArray.forEach((method) => {
+          if ((method.method === button.id) && !method.inputType) {
+            runMethod(button.id, null, method.method)
+            render();
+          };
+        });
+      });
+    });
+
+    const resetTypeButton = (prop) => {
+      methodsArray.forEach((object) => {
+        object.methodContents.forEach((obj) => {
+          if (!!obj.active && (obj.destiny !== prop)) {
+            object.methodContents.forEach((obj, i) => {
+              !i ? obj.active = true : obj.active = false
+            });
+          };
+        });
+      });
+    };
+
+    const useRandomNaturalNumbers = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(Math.floor(Math.random() * 100));
+      };
+      output = `The array has been loaded with ${rangeValueElement.textContent} random natural numbers.`;
+      resetTypeButton("forNumbers");
+      render();
+    };
+
+    const useRandomIntegers = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(Math.floor(Math.random() * 200 - 100));
+      };
+      output = `The array has been loaded with ${rangeValueElement.textContent} random integers.`;
+      resetTypeButton("forNumbers");
+      render();
+    };
+
+    const useRandomLetters = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(letters.charAt(Math.floor(Math.random() * letters.length)));
+      };
+      output = `The array has been loaded with ${rangeValueElement.textContent} random letters.`;
+      resetTypeButton("forStrings");
+      render();
+    };
+
+    const useRandomWords = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
+      };
+      output = `The array has been loaded with ${rangeValueElement.textContent} random words.`;
+      resetTypeButton("forStrings");
+      render();
+    };
+
+    const useRandomArrays = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        const arrayItem = () => {
+          let subArray = [];
+          while (subArray.length < 3) {
+            subArray.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
+          };
+
+          return subArray;
+        };
+        array.push(arrayItem());
+      };
+      output = `The array has been loaded with ${rangeValueElement.textContent} random three-element arrays.`;
+      resetTypeButton("forArrays");
+      render();
+    };
+
+    const useRandomObjects = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(arrayObjects[Math.floor(Math.random() * arrayObjects.length)]);
+      };
+      output = `The array has been loaded with ${rangeValueElement.textContent} random objects, each having two properties.`;
+      resetTypeButton("forObjects");
+      render();
+    };
+
+    const useRandomEmoticons = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(arrayEmoticons[Math.floor(Math.random() * arrayEmoticons.length)]);
+      };
+      output = `The array has been loaded with ${rangeValueElement.textContent} random emoticons.`;
+      resetTypeButton("forAll");
+      render();
+    };
+
+    const useRandomMixed = () => {
+      array = [];
+      while (array.length < rangeValueElement.textContent) {
+        array.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
+      };
+      output = `The array has been loaded with ${rangeValueElement.textContent} random elements.`;
+      resetTypeButton("forAll");
+      render();
+    };
 
     randomElements.forEach(element => element.addEventListener("click", ({ target }) => {
       switch (target.id) {
@@ -393,116 +575,48 @@ export const arrays = () => {
       };
     }));
 
-    const arrayLetters = [];
-    for (let a = 0; a < letters.length; a++) {
-      arrayLetters.push(letters.charAt(a))
-    };
-
-    const arrayIntegers = [];
-    for (let a = -100; a < 101; a++) {
-      arrayIntegers.push(a)
-    };
-
-    const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords, ...arrayEmoticons]
-
-    const resetTypeButton = (prop) => {
-      methodsArray.forEach(object => {
-        object.methodContents.forEach(obj => {
-          if (obj.active && (obj.destiny !== prop)) {
-            object.methodContents.forEach((obj, i) => {
-              !i ? obj.active = true : obj.active = false
-            });
-          };
-        });
-      });
-    };
-
-    const useRandomNaturalNumbers = () => {
-      array = [];
-      while (array.length < rangeValueElement.textContent) {
-        array.push(Math.floor(Math.random() * 100));
-      };
-      output = "";
-      resetTypeButton("forNumbers");
+    const changeShowExampleArray = () => {
+      showExampleArray = !showExampleArray
+      if (!!showExampleArray) {
+        output = "The example array has been displayed.";
+      } else {
+        output = "The example array has been hidden.";
+      }
       render();
     };
 
-    const useRandomIntegers = () => {
-      array = [];
-      while (array.length < rangeValueElement.textContent) {
-        array.push(Math.floor(Math.random() * 200 - 100));
-      };
-      output = "";
-      resetTypeButton("forNumbers");
+    const loadFromExample = () => {
+      if (arrayExampleSaved.length > 0) {
+        array = [...arrayExampleSaved]
+      }
+      else { array = [...arrayExample] };
+      output = "The array is loaded from an example array."
       render();
     };
 
-    const useRandomLetters = () => {
-      array = [];
-      while (array.length < rangeValueElement.textContent) {
-        array.push(letters.charAt(Math.floor(Math.random() * letters.length)));
+    const saveToExample = () => {
+      if (array.length > 0) {
+        arrayExampleSaved = [...array];
+        output = "The array stored as an example array.";
+        render();
+      } else {
+        output = "Not stored. The array is empty.";
+        renderOutput();
       };
-      output = "";
-      resetTypeButton("forStrings");
+    };
+
+    const resetExample = () => {
+      arrayExampleSaved = [];
+      output = "The example array has been reset.";
       render();
     };
 
-    const useRandomWords = () => {
-      array = [];
-      while (array.length < rangeValueElement.textContent) {
-        array.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
+    const loadFromOutput = () => {
+      if (Array.isArray(output)) {
+        array = [...output];
+        output = "The array has been loaded from the output.";
+        render();
       };
-      output = "";
-      resetTypeButton("forStrings");
-      render();
-    };
-
-    const useRandomArrays = () => {
-      array = [];
-      while (array.length < rangeValueElement.textContent) {
-        const arrayItem = () => {
-          let subArray = [];
-          while (subArray.length < 3) {
-            subArray.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
-          };
-
-          return subArray;
-        };
-        array.push(arrayItem());
-      };
-      output = "";
-      resetTypeButton("forArrays");
-      render();
-    };
-
-    const useRandomObjects = () => {
-      array = [];
-      while (array.length < rangeValueElement.textContent) {
-        array.push(arrayObjects[Math.floor(Math.random() * arrayObjects.length)]);
-      };
-      output = "";
-      resetTypeButton("forObjects");
-      render();
-    };
-
-    const useRandomEmoticons = () => {
-      array = [];
-      while (array.length < rangeValueElement.textContent) {
-        array.push(arrayEmoticons[Math.floor(Math.random() * arrayEmoticons.length)]);
-      };
-      output = "";
-      resetTypeButton("forAll");
-      render();
-    };
-
-    const useRandomMixed = () => {
-      array = [];
-      while (array.length < rangeValueElement.textContent) {
-        array.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
-      };
-      output = "";
-      resetTypeButton("forAll");
-      render();
     };
 
     exampleElements.forEach((element) => {
@@ -522,67 +636,14 @@ export const arrays = () => {
       });
     });
 
-    const changeShowExampleArray = () => {
-      showExampleArray = !showExampleArray
-      render();
-    };
 
-    const loadFromExample = () => {
-      if (arrayExampleSaved.length > 0) {
-        array = [...arrayExampleSaved]
-      }
-      else { array = [...arrayExample] };
-      render();
-    };
+    ///////////////////////////
 
-    const saveToExample = () => {
-      if (array.length > 0) {
-        arrayExampleSaved = [...array];
-        render();
-      } else {
-        output = "Not saved, array is empty.";
-        renderOutput();
-      };
-    };
 
-    const resetExample = () => {
-      arrayExampleSaved = [];
-      render();
-    };
-
-    const loadFromOutput = () => {
-      if (Array.isArray(output)) {
-        array = [...output];
-        render();
-      };
-    };
 
     rangeElement.addEventListener("input", ({ target }) => {
       rangeValueElement.textContent = target.value;
       rangeValue = rangeValueElement.textContent;
-    });
-
-    inputElements.forEach((input) => {
-
-      const onClickOrKey = (target, input, key) => {
-        methodsArray.forEach(({ method }) => {
-          if (method === input.name)
-            input.classList.remove("errorInput");
-          key ? target.value = key : target.value = "";
-        });
-      };
-
-      if (methodActive === input.name) { input.focus() };
-
-      input.addEventListener("click", (event) => {
-        onClickOrKey(event.target, input)
-      });
-
-      input.addEventListener("keyup", (event) => {
-        if ((event.key.match(/^[a-zA-Z0-9\W]$/)) && (!input.value || input.classList.contains("errorInput"))) {
-          onClickOrKey(event.target, input, event.key)
-        }
-      });
     });
 
     typeButtonElements.forEach((button) => {
@@ -599,81 +660,6 @@ export const arrays = () => {
             render();
           };
         });
-      });
-    });
-
-    const onClickOrEnter = (methodName) => {
-      inputElements.forEach((input) => {
-        input.classList.remove("errorInput");
-        if (input.name === methodName) {
-          methodsArray.forEach((method) => {
-            if (method.method === methodName) {
-              const pattern = method.inputPattern;
-              if (pattern.test(input.value)) {
-                if ((method.method === "filter" || method.method === "find" || method.method === "findIndex" || method.method === "some")
-                  && !!method.methodContents[0].active
-                  && (array.includes(null) || array.includes(undefined))) {
-                  render();
-                  if (array.includes(null)) {
-                    output = "Error: Cannot read properties of null (reading 'length')";
-                  }
-                  if (array.includes(undefined)) {
-                    output = "Error: Cannot read properties of undefined (reading 'length')";
-                  }
-                  renderOutput();
-
-                  return
-                } else {
-                  if (typeof (enterNumberOrString(input.value)) === "object") {
-                    runMethod(methodName, enterNumberOrString(input.value), method.method);
-                    methodActive = input.name;
-                    render();
-                    methodActive = "";
-                  } else {
-                    runMethod(methodName, enterNumberOrString(input.value), method.method);
-                    methodActive = input.name;
-                    render();
-                    methodActive = "";
-                  }
-                }
-              } else {
-                methodContent = []
-                if (method.method === "slice") {
-                  output = "The entered value is not allowed. Please enter a number or two numbers separated by a comma.";
-                } else {
-                  output = "Input value not allowed, use: \" \""
-                };
-
-                input.classList.add("errorInput")
-                input.focus();
-                renderOutput();
-
-                return
-              };
-            };
-          });
-        };
-      });
-
-      methodsArray.forEach((method) => {
-        if ((method.method === methodName) && !method.inputType) {
-          runMethod(methodName, null, method.method)
-          render();
-        };
-      });
-    };
-
-    runButtonElements.forEach((button) => {
-      button.addEventListener("click", (event) => {
-        onClickOrEnter(event.target.id)
-      });
-    });
-
-    inputElements.forEach((button) => {
-      button.addEventListener("keyup", (event) => {
-        if (event.key === "Enter") {
-          onClickOrEnter(event.target.name)
-        }
       });
     });
   };
@@ -765,6 +751,7 @@ export const arrays = () => {
     );
   };
 
+  let objectNotString;
   const notString = (inputValue) => {
     switch (inputValue) {
       case "null":
@@ -810,9 +797,9 @@ export const arrays = () => {
     methodsArray.forEach((object) => {
       if (object.method === method) {
         object.methodContents.forEach((element) => {
-          if (element.active) {
+          if (!!element.active) {
 
-            content = element.methodContent + (inputValue ? (inputValue + (changeArrowFunctionIfObject(method))) : "")
+            content = element.methodContent + (!!inputValue ? (inputValue + (changeArrowFunctionIfObject(method))) : "")
           };
         });
       };
