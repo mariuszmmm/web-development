@@ -11,6 +11,7 @@ body {
    background-color: grey;
    font-size: 15px;
    padding: 0 10px;
+   overflow-y: scroll;
 }
 
 @media (max-width: 768px) {
@@ -191,15 +192,15 @@ body {
 }
 
 .button--run {
-   background-color:hsl(0, 100%, 63%);
+   background-color: hsl(0, 100%, 63%);
 }
 
 .button--run:hover {
-   background-color:hsl(0, 100%, 55%);
+   background-color: hsl(0, 100%, 55%);
 }
 
 .button--run:active {
-   background-color:#32fa64;
+   background-color: #32fa64;
 }
 
 .input {
