@@ -106,10 +106,8 @@ export const arrays = () => {
 
     for (let property in object) {
       index++
-      content += (property + ":")
-        +
-        (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property])
-        +
+      content += (property + ":") +
+        (typeof(object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) +
         ((Object.keys(object).length === index + 1) ? "" : ",")
     };
 
@@ -221,14 +219,10 @@ export const arrays = () => {
 
         objects.forEach((obj) => {
           if (
-            (obj.destiny === "forAll")
-            ||
-            (array.every(item => typeof (item) === "number") && obj.destiny === "forNumbers")
-            ||
-            (array.every(item => typeof (item) === "string") && obj.destiny === "forStrings")
-            ||
-            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects")
-            ||
+            (obj.destiny === "forAll") ||
+            (array.every(item => typeof(item) === "number") && obj.destiny === "forNumbers") ||
+            (array.every(item => typeof(item) === "string") && obj.destiny === "forStrings") ||
+            (array.every(item => typeof(item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects") ||
             (array.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
           ) {
             element += `  
@@ -375,8 +369,12 @@ export const arrays = () => {
       if (input.name === methodActive) input.focus();
 
       input.addEventListener("click", ({ target }) => {
-        methodsArray.forEach(({ method }) => {
-          if (method === input.name) target.value = "";
+        methodsArray.forEach((method) => {
+          if (method.method === input.name) {
+            target.value = "";
+            output = `Enter a value and then click the "run" button or hit enter.`;
+            renderOutput();
+          };
         });
       });
 
@@ -426,9 +424,9 @@ export const arrays = () => {
                 const pattern = method.inputPattern;
                 if (pattern.test(input.value)) {
                   if (
-                    ["filter", "find", "findIndex", "some"].includes(method.method)
-                    && !!method.methodContents[0].active
-                    && (array.includes(null) || array.includes(undefined))
+                    ["filter", "find", "findIndex", "some"].includes(method.method) &&
+                    !!method.methodContents[0].active &&
+                    (array.includes(null) || array.includes(undefined))
                   ) {
                     render();
                     displayWarningAboutArray();
@@ -559,21 +557,29 @@ export const arrays = () => {
 
     randomElements.forEach(element => element.addEventListener("click", ({ target }) => {
       switch (target.id) {
-        case "randomNaturalNumbers": useRandomNaturalNumbers();
+        case "randomNaturalNumbers":
+          useRandomNaturalNumbers();
           break;
-        case "randomIntegers": useRandomIntegers();
+        case "randomIntegers":
+          useRandomIntegers();
           break;
-        case "randomLetters": useRandomLetters();
+        case "randomLetters":
+          useRandomLetters();
           break;
-        case "randomWords": useRandomWords();
+        case "randomWords":
+          useRandomWords();
           break;
-        case "randomObjects": useRandomObjects();
+        case "randomObjects":
+          useRandomObjects();
           break;
-        case "randomArrays": useRandomArrays();
+        case "randomArrays":
+          useRandomArrays();
           break;
-        case "randomEmoticons": useRandomEmoticons();
+        case "randomEmoticons":
+          useRandomEmoticons();
           break;
-        case "randomElements": useRandomElements();
+        case "randomElements":
+          useRandomElements();
           break;
       };
     }));
@@ -625,15 +631,20 @@ export const arrays = () => {
     exampleElements.forEach((element) => {
       element.addEventListener("click", ({ target }) => {
         switch (target.id) {
-          case "showExample": changeShowExampleArray();
+          case "showExample":
+            changeShowExampleArray();
             break;
-          case "loadFromExample": loadFromExample();
+          case "loadFromExample":
+            loadFromExample();
             break;
-          case "saveToExample": saveToExample();
+          case "saveToExample":
+            saveToExample();
             break;
-          case "resetExample": resetExample();
+          case "resetExample":
+            resetExample();
             break;
-          case "loadFromOutput": loadFromOutput();
+          case "loadFromOutput":
+            loadFromOutput();
             break;
         };
       });
@@ -661,9 +672,7 @@ export const arrays = () => {
                 obj.active = false;
               };
             });
-            output = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.`
-              + `${!!object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}`
-              : "."}`;
+            output = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.` + `${!!object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}` : "."}${!object.inputType ? `<br>Now click the "run" button.` : ""}`;
             render();
           };
         });
@@ -692,23 +701,21 @@ export const arrays = () => {
 
     return (
       !["null", "true", "false", "undefined", "NaN"].includes(inputValue) ?
-        (typeof (inputValue) === "string" ? (inputValue) : "")
-        :
-        (!isNaN(inputValue) ?
-          (inputValue !== "" ? (Number(inputValue)) : null) :
-          notString(inputValue)
-        )
+      (typeof(inputValue) === "string" ? (inputValue) : "") :
+      (!isNaN(inputValue) ?
+        (inputValue !== "" ? (Number(inputValue)) : null) :
+        notString(inputValue)
+      )
     );
   };
 
   const readNumberOrString = (inputValue, content) => {
 
     return (
-      (typeof (inputValue) === "string") ?
-        ((inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ?
-          (content === "forArrowFunction" ? inputValue : inputValue.slice(1, -1)) : Number(inputValue))
-        :
-        ((typeof (inputValue) === "object") ? inputValue.name : Number(inputValue))
+      (typeof(inputValue) === "string") ?
+      ((inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ?
+        (content === "forArrowFunction" ? inputValue : inputValue.slice(1, -1)) : Number(inputValue)) :
+      ((typeof(inputValue) === "object") ? inputValue.name : Number(inputValue))
     );
   };
 
@@ -721,8 +728,8 @@ export const arrays = () => {
           if (!!element.active) {
             content = element.methodContent +
               (!!inputValue ?
-                ((typeof (inputValue) === "object" ? inputValue.name : inputValue) + (changeArrowFunctionIfObject(method)))
-                : ""
+                ((typeof(inputValue) === "object" ? inputValue.name : inputValue) + (changeArrowFunctionIfObject(method))) :
+                ""
               )
           };
         });
