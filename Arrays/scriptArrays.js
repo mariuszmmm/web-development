@@ -276,8 +276,8 @@ export const arrays = () => {
               <button id="randomEmoticons" class="button js-random">
                 random emoticons
               </button>                  
-              <button id="randomMixed" class="button js-random">
-                random mixed
+              <button id="randomElements" class="button js-random">
+                random elements
               </button>
               <button id="loadFromExample" class="button js-example">
                 from example array
@@ -391,10 +391,10 @@ export const arrays = () => {
 
     const displayWarningAboutArray = () => {
       if (array.includes(null)) {
-        output = "Error: Cannot read properties of null (reading 'length')";
+        output = `Error: Cannot read properties of null (reading 'length')`;
       };
       if (array.includes(undefined)) {
-        output = "Error: Cannot read properties of undefined (reading 'length')";
+        output = `Error: Cannot read properties of undefined (reading 'length')`;
       };
       renderOutput();
     };
@@ -402,9 +402,9 @@ export const arrays = () => {
     const displayWarningAboutInputValue = ({ method }, input) => {
       methodContent = [];
       if (method === "slice") {
-        output = "The entered value is not allowed. Please enter a number or two numbers separated by a comma.";
+        output = `The entered value is not allowed. Please enter a number or two numbers separated by a comma.`;
       } else {
-        output = "Input value not allowed, use: \" \""
+        output = `Input value not allowed, use: \" \"`
       };
       input.classList.add("errorInput")
       input.focus();
@@ -544,7 +544,7 @@ export const arrays = () => {
       render();
     };
 
-    const useRandomMixed = () => {
+    const useRandomElements = () => {
       array = [];
       while (array.length < rangeValueElement.textContent) {
         array.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
@@ -570,7 +570,7 @@ export const arrays = () => {
           break;
         case "randomEmoticons": useRandomEmoticons();
           break;
-        case "randomMixed": useRandomMixed();
+        case "randomElements": useRandomElements();
           break;
       };
     }));
@@ -644,24 +644,99 @@ export const arrays = () => {
     rangeElement.addEventListener("input", ({ target }) => {
       rangeValueElement.textContent = target.value;
       rangeValue = rangeValueElement.textContent;
+      output = `The array size has been set to ${rangeValue} elements.<br>Choose a button and load the array.`
+      renderOutput();
     });
 
     typeButtonElements.forEach((button) => {
       button.addEventListener("click", () => {
+        let activeButton = "";
         methodsArray.forEach((object) => {
           if (object.method === button.name) {
             object.methodContents.forEach((obj) => {
-              (obj.id === +button.id) ?
+              if (obj.id === +button.id) {
                 obj.active = true
-                :
-                obj.active = false;
+                activeButton = obj.name
+              } else { obj.active = false;
+                };
             });
-            output = "";
+            output = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.<br>`
+            + `${!!object.inputType ?  "Complete the function by entering a value in the input field." : ""}`
+            : "."}`;
             render();
           };
         });
       });
     });
+  };
+  
+  const notString = (inputValue) => {
+    switch (inputValue) {
+      case "null":
+        return { name: null };
+      case "undefined":
+        return { name: undefined };
+      case "NaN":
+        return { name: NaN };
+      case "true":
+        return { name: true };
+      case "false":
+        return { name: false };
+      default:
+        return inputValue.includes(",") ? inputValue : undefined;
+    };
+  };
+  
+    const enterNumberOrString = (inputValue) => {
+
+    return (
+      !["null", "true", "false", "undefined", "NaN"].includes(inputValue) ?
+        (typeof (inputValue) === "string" ? (inputValue) : "")
+        :
+        (!isNaN(inputValue) ?
+          (inputValue !== "" ? (Number(inputValue)) : null) :
+          notString(inputValue)
+        )
+    );
+  };
+  
+  const readNumberOrString = (inputValue, content) => {
+
+    return (
+      (typeof (inputValue) === "string") ?
+        ((inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ?
+          (content === "forArrowFunction" ? inputValue : inputValue.slice(1, -1)) : Number(inputValue))
+        :
+        ((typeof (inputValue) === "object") ? inputValue.name : Number(inputValue))
+    );
+  };
+
+  const enterContentForArrowFunction = (method, inputValue) => {
+    let content;
+
+    methodsArray.forEach((object) => {
+      if (object.method === method) {
+        object.methodContents.forEach((element) => {
+          if (!!element.active) {
+
+            content = element.methodContent + (!!inputValue ? (inputValue + (changeArrowFunctionIfObject(method))) : "")
+          };
+        });
+      };
+    });
+    if (content !== "") return Function(`return (${content})`)();
+  };
+
+  const enterContentForTwoArguments = (inputValue) => {
+    let content = [];
+
+    if (!isNaN(enterNumberOrString(inputValue))) {
+
+      return [...content, (enterNumberOrString(inputValue))]
+    }
+    else {
+      return (enterNumberOrString(inputValue).split(",")).map(number => number);
+    };
   };
 
   const runMethod = (button, inputValue, method) => {
@@ -738,100 +813,11 @@ export const arrays = () => {
     };
   };
 
-  const enterNumberOrString = (inputValue) => {
-
-    return (
-      !["null", "true", "false", "undefined", "NaN"].includes(inputValue) ?
-        (typeof (inputValue) === "string" ? (inputValue) : "")
-        :
-        (!isNaN(inputValue) ?
-          (inputValue !== "" ? (Number(inputValue)) : null) :
-          notString(inputValue)
-        )
-    );
-  };
-
-  let objectNotString;
-  const notString = (inputValue) => {
-    switch (inputValue) {
-      case "null":
-        objectNotString = { name: null };
-        return objectNotString
-        break;
-      case "undefined":
-        objectNotString = { name: undefined };
-        return objectNotString
-        break;
-      case "NaN":
-        objectNotString = { name: NaN };
-        return objectNotString
-        break;
-      case "true":
-        objectNotString = { name: true };
-        return objectNotString
-        break;
-      case "false":
-        objectNotString = { name: false };
-        return objectNotString
-        break;
-      default:
-        return inputValue.includes(",") ? inputValue : undefined;
-        break;
-    }
-  }
-
-  const readNumberOrString = (inputValue, content) => {
-
-    return (
-      (typeof (inputValue) === "string") ?
-        ((inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ?
-          (content === "forArrowFunction" ? inputValue : inputValue.slice(1, -1)) : Number(inputValue))
-        :
-        ((typeof (inputValue) === "object") ? inputValue.name : Number(inputValue))
-    );
-  };
-
-  const enterContentForArrowFunction = (method, inputValue) => {
-    let content;
-
-    methodsArray.forEach((object) => {
-      if (object.method === method) {
-        object.methodContents.forEach((element) => {
-          if (!!element.active) {
-
-            content = element.methodContent + (!!inputValue ? (inputValue + (changeArrowFunctionIfObject(method))) : "")
-          };
-        });
-      };
-    });
-    if (content !== "") return Function(`return (${content})`)();
-  };
-
-  const enterContentForTwoArguments = (inputValue) => {
-    let content = [];
-
-    if (!isNaN(enterNumberOrString(inputValue))) {
-
-      return [...content, (enterNumberOrString(inputValue))]
-    }
-    else {
-      return (enterNumberOrString(inputValue).split(",")).map(number => number);
-    };
-  };
-
-  const clearOutput = () => {
-    if (!Array.isArray(output)) {
-      output = "";
-    }
-  }
-
   const render = () => {
-    // clearOutput();
     renderSettings();
     renderOutput();
     bindInputsAndButtons();
   };
 
   render();
-  console.log(methodsArray)
 };
