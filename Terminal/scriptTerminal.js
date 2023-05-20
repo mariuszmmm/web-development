@@ -55,7 +55,7 @@ export const terminal = () => {
 
       contentsElement.innerHTML = ""
       contentsElement.innerHTML += `
-         <div class="outputContents">
+         <div class="outputContents outputContents--terminal">
             <div class="outputLabel">TERMINAL :</div>
             <img class="outputImage--terminal" src="Terminal/images/terminal.gif" alt="terminal">
          </div>

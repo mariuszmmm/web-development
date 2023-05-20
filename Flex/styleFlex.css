@@ -4,7 +4,7 @@
 }
 
 @media (max-width: 768px) {
-   .settingsContents--flex  {
+   .settingsContents--flex {
       min-width: 265px;
    }
 }
@@ -18,14 +18,14 @@
    aspect-ratio: 16/9;
 }
 
-@media (min-width: 1500px) {
-   .outputContents--flex  {
+@media (min-width: 1650px) {
+   .outputContents--flex {
       min-height: 500px;
    }
 }
 
 .propertyButtons--flex {
-  width: 165px;
+   width: 165px;
 }
 
 @media (max-width: 768px) {

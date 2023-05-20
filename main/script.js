@@ -5,6 +5,7 @@ import { sectionsHtml } from '../SectionsHtml/scriptSectionsHtml.js';
 import { positioning } from '../Positioning/scriptPositioning.js';
 import { flex } from '../Flex/scriptFlex.js';
 import { grid } from '../Grid/scriptGrid.js';
+import { arrays } from '../Arrays/scriptArrays.js';
 
 const init = () => {
    const buttons = document.querySelectorAll('.js-buttonNav');
@@ -31,6 +32,8 @@ const init = () => {
          case "CSS Flex": flex();
             break;
          case "CSS Grid": grid();
+            break;
+         case "JS Arrays": arrays();
             break;
       };
    };

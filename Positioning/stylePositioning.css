@@ -18,7 +18,7 @@
    aspect-ratio: 16/9;
 }
 
-@media (min-width: 1500px) {
+@media (min-width: 1650px) {
    .outputContents--positioning {
       min-height: 500px;
    }
