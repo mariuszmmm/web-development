@@ -9,6 +9,7 @@ export const arrays = () => {
   let arrayExampleSaved = [];
   let showExampleArray = false;
   let indexButton = 0;
+  let methodActive = "";
 
   const methodsArray = methodsArrayRaw.map((object) => {
 
@@ -87,6 +88,9 @@ export const arrays = () => {
               if (obj.methodContent.includes("([")) {
                 content = "])";
               }
+              if (obj.methodContent.includes("find(")) {
+                content = ")";
+              }
             };
           });
         };
@@ -109,7 +113,7 @@ export const arrays = () => {
         ((Object.keys(object).length === index + 1) ? "" : ",")
     };
 
-    return `<span class="nowrap">{` + content + `}</span>`;
+    return `<span class="${(Object.keys(object).length < 3) ? "nowrap" : ""}">{ ${content} }</span>`;
   };
 
   const viewSubArray = (subArray) => {
@@ -124,7 +128,7 @@ export const arrays = () => {
       `;
     });
 
-    return `<span class="nowrap">[` + content + `]</span>`;
+    return `<span class="${(subArray.length < 4) ? "nowrap" : ""}">[${content}]</span>`;
   }
 
   const renderSettings = () => {
@@ -313,7 +317,7 @@ export const arrays = () => {
           <span class="arrayMethods--label">
             methods :
           </span>
-          <div class="settingsButtons settingsButtons--array">
+          <div class="settingsButtons">
       `;
 
       methodsArray.forEach((object) => {
@@ -346,7 +350,7 @@ export const arrays = () => {
         <div class="outputLabel">OUTPUT :</div>
         ${Array.isArray(output) ? `
         <p class="settingsParagraph--arrays strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
-        <p class="settingsParagraph--arrays strong"> ${viewObject(output)} </p>`
+        <p class="settingsParagraph--arrays strong"> ${output !== null ? viewObject(output) : output} </p>`
         :
         ((typeof (output) === "string" && methodContent.length > 0) ?
           (output !== "" ? `"` + output + `"` : output)
@@ -366,7 +370,6 @@ export const arrays = () => {
     const rangeElement = document.querySelector(".js-range");
     const rangeValueElement = document.querySelector(".js-rangeValue");
     const typeButtonElements = document.querySelectorAll(".js-typeButton");
-    let methodActive = "";
 
     inputElements.forEach((input) => {
       if (input.name === methodActive) input.focus();
@@ -636,15 +639,11 @@ export const arrays = () => {
       });
     });
 
-
-    ///////////////////////////
-
-
-
     rangeElement.addEventListener("input", ({ target }) => {
       rangeValueElement.textContent = target.value;
       rangeValue = rangeValueElement.textContent;
-      output = `The array size has been set to ${rangeValue} elements.<br>Choose a button and load the array.`
+      output = `The array size has been set to ${rangeValue} ${rangeValue === "1" ? "element" : "elements"}.
+      <br>Choose a button and load the array.`
       renderOutput();
     });
 
@@ -653,23 +652,25 @@ export const arrays = () => {
         let activeButton = "";
         methodsArray.forEach((object) => {
           if (object.method === button.name) {
+            methodActive = button.name
             object.methodContents.forEach((obj) => {
               if (obj.id === +button.id) {
                 obj.active = true
                 activeButton = obj.name
-              } else { obj.active = false;
-                };
+              } else {
+                obj.active = false;
+              };
             });
-            output = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.<br>`
-            + `${!!object.inputType ?  "Complete the function by entering a value in the input field." : ""}`
-            : "."}`;
+            output = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.`
+              + `${!!object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}`
+              : "."}`;
             render();
           };
         });
       });
     });
   };
-  
+
   const notString = (inputValue) => {
     switch (inputValue) {
       case "null":
@@ -683,11 +684,11 @@ export const arrays = () => {
       case "false":
         return { name: false };
       default:
-        return inputValue.includes(",") ? inputValue : undefined;
+        return inputValue;
     };
   };
-  
-    const enterNumberOrString = (inputValue) => {
+
+  const enterNumberOrString = (inputValue) => {
 
     return (
       !["null", "true", "false", "undefined", "NaN"].includes(inputValue) ?
@@ -699,7 +700,7 @@ export const arrays = () => {
         )
     );
   };
-  
+
   const readNumberOrString = (inputValue, content) => {
 
     return (
@@ -718,8 +719,11 @@ export const arrays = () => {
       if (object.method === method) {
         object.methodContents.forEach((element) => {
           if (!!element.active) {
-
-            content = element.methodContent + (!!inputValue ? (inputValue + (changeArrowFunctionIfObject(method))) : "")
+            content = element.methodContent +
+              (!!inputValue ?
+                ((typeof (inputValue) === "object" ? inputValue.name : inputValue) + (changeArrowFunctionIfObject(method)))
+                : ""
+              )
           };
         });
       };

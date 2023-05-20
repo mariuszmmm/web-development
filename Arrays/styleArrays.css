@@ -1,9 +1,8 @@
 .settingsContents--array {
-   max-width: 36%;
-   min-width: 36%;
+   max-width: 559px;
+   min-width: 559px;
    flex-grow: 0;
    line-height: 1.5;
-   /* word-break: break-word; */
    font-family: monospace;
 }
 
@@ -11,12 +10,6 @@
    .settingsContents--array {
       min-width: 100%;
    }
-}
-
-.settingsButtons--array {
-   display: grid;
-   grid-template-columns: auto auto;
-   align-content: start;
 }
 
 .settingsParagraph--arrays {
@@ -80,7 +73,7 @@
    min-height: 150px;
    font-family: monospace;
    display: inline;
-   /* word-break: break-word; */
+   min-height: 290px;
 }
 
 .methodInput {

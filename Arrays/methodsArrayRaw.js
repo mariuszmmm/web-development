@@ -36,7 +36,7 @@ export const methodsArrayRaw = [
     method: "slice",
     methodContents: [],
     inputType: "text",
-    inputPattern: /^-?\d+(,-?\d+){0,1}$/,
+    inputPattern: /^\s*-?\d+(\s*,\s*-?\d+\s*)?$/,
   },
   {
     method: "includes",
@@ -147,8 +147,8 @@ export const methodsArrayRaw = [
         destiny: "forAll",
       },
       {
-        button: "(a%2===?)",
-        content: "a % 2 === ",
+        button: "(a=>a%2===?)",
+        content: "a => a % 2 === ",
         destiny: "forAll",
       },
       {
@@ -169,6 +169,11 @@ export const methodsArrayRaw = [
       {
         button: "(a=>a[0]===?)",
         content: "a => a[0] === ",
+        destiny: "forArrays",
+      },
+      {
+        button: "(a=>a.find(e=>e===?))",
+        content: "a => a.find(e=>e=== ",
         destiny: "forArrays",
       },
     ],
@@ -204,8 +209,8 @@ export const methodsArrayRaw = [
         destiny: "forAll",
       },
       {
-        button: "(a%2===?)",
-        content: "a % 2 === ",
+        button: "(a=>a%2===?)",
+        content: "a => a % 2 === ",
         destiny: "forAll",
       },
       {
@@ -261,8 +266,8 @@ export const methodsArrayRaw = [
         destiny: "forAll",
       },
       {
-        button: "(a%2===?)",
-        content: "a % 2 === ",
+        button: "(a=>a%2===?)",
+        content: "a => a % 2 === ",
         destiny: "forAll",
       },
       {
@@ -318,8 +323,8 @@ export const methodsArrayRaw = [
         destiny: "forAll",
       },
       {
-        button: "(a%2===?)",
-        content: "a % 2 === ",
+        button: "(a=>a%2===?)",
+        content: "a => a % 2 === ",
         destiny: "forAll",
       },
       {
@@ -375,8 +380,8 @@ export const methodsArrayRaw = [
         destiny: "forAll",
       },
       {
-        button: "(a%2===?)",
-        content: "a % 2 === ",
+        button: "(a=>a%2===?)",
+        content: "a => a % 2 === ",
         destiny: "forAll",
       },
       {
