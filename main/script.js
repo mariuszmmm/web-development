@@ -6,6 +6,8 @@ import { positioning } from '../Positioning/scriptPositioning.js';
 import { flex } from '../Flex/scriptFlex.js';
 import { grid } from '../Grid/scriptGrid.js';
 import { arrays } from '../Arrays/scriptArrays.js';
+const settingsElement = document.querySelector(".js-settingsContainer");
+const outputElement = document.querySelector(".js-outputContainer");
 
 const init = () => {
    const buttons = document.querySelectorAll('.js-buttonNav');
@@ -19,13 +21,31 @@ const init = () => {
       });
 
       event.target.classList.add('button--active');
+      
+     //  settingsElement.classList.add("transition");
+       settingsElement.classList.add("hidden")
 
       switch (event.target.innerText) {
-         case "Terminal": terminal();
+         case "Terminal":{ 
+            setTimeout(()=>{
+              terminal();
+          settingsElement.classList.remove("hidden")
+          }, 300);
+         };
             break;
-         case "HTML Sections": sectionsHtml();
+         case "HTML Sections":{
+             setTimeout(() => {
+               sectionsHtml();
+               settingsElement.classList.remove("hidden")
+             }, 300);
+           }; 
             break;
-         case "HTML Tags": htmlTags();
+         case "HTML Tags":{
+             setTimeout(() => {
+                htmlTags();
+               settingsElement.classList.remove("hidden")
+             }, 300);
+           };
             break;
          case "CSS Positioning": positioning();
             break;

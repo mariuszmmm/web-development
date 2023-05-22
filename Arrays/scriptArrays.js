@@ -333,6 +333,7 @@ export const arrays = () => {
       ${leabelContents()}
       ${methodsSettings()}      
     `;
+
   };
 
   const renderOutput = () => {
@@ -828,7 +829,7 @@ export const arrays = () => {
     renderSettings();
     renderOutput();
     bindInputsAndButtons();
-  };
-
-  render();
+  }
+    
+render();
 };
