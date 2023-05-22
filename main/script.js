@@ -9,51 +9,44 @@ import { arrays } from '../Arrays/scriptArrays.js';
 const settingsElement = document.querySelector(".js-settingsContainer");
 const outputElement = document.querySelector(".js-outputContainer");
 
+
 const init = () => {
    const buttons = document.querySelectorAll('.js-buttonNav');
 
-   startPage();
+   const setFadeTime = (callback) => {
+      settingsElement.classList.add("hidden")
+      outputElement.classList.add("hidden")
+      setTimeout(() => {
+         callback();
+         settingsElement.classList.remove("hidden")
+         outputElement.classList.remove("hidden")
+      }, 250);
+   };
+
+   setFadeTime(() => startPage());
    const intervalClock = setInterval(startPage, 1000);
+
    const changeActiveButton = (event) => {
-      clearInterval(intervalClock)
+      clearInterval(intervalClock);
       buttons.forEach(button => {
          button.classList.remove('button--active');
       });
-
       event.target.classList.add('button--active');
-      
-     //  settingsElement.classList.add("transition");
-       settingsElement.classList.add("hidden")
 
       switch (event.target.innerText) {
-         case "Terminal":{ 
-            setTimeout(()=>{
-              terminal();
-          settingsElement.classList.remove("hidden")
-          }, 300);
-         };
+         case "Terminal": setFadeTime(() => terminal());
             break;
-         case "HTML Sections":{
-             setTimeout(() => {
-               sectionsHtml();
-               settingsElement.classList.remove("hidden")
-             }, 300);
-           }; 
+         case "HTML Sections": setFadeTime(() => sectionsHtml());
             break;
-         case "HTML Tags":{
-             setTimeout(() => {
-                htmlTags();
-               settingsElement.classList.remove("hidden")
-             }, 300);
-           };
+         case "HTML Tags": setFadeTime(() => htmlTags());
             break;
-         case "CSS Positioning": positioning();
+         case "CSS Positioning": setFadeTime(() => positioning());
             break;
-         case "CSS Flex": flex();
+         case "CSS Flex": setFadeTime(() => flex());
             break;
-         case "CSS Grid": grid();
+         case "CSS Grid": setFadeTime(() => grid());
             break;
-         case "JS Arrays": arrays();
+         case "JS Arrays": setFadeTime(() => arrays());
             break;
       };
    };

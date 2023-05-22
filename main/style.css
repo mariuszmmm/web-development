@@ -12,6 +12,7 @@ body {
    font-size: 15px;
    padding: 0 10px;
    overflow-y: scroll;
+   user-select: none;
 }
 
 @media (max-width: 768px) {
@@ -79,17 +80,8 @@ body {
    height: 100%;
    padding: 10px;
    gap: 5px;
-   transition: opacity 0.3s ease;
+   transition: opacity 0.5s ease;
 }
-
-.hidden {
-  opacity: 0;
-  
-}
- .transition {
-   transition: opacity 0.3s ease;
- } 
-  
 
 @media (max-width: 1649px) {
    .settingsContainer {
@@ -307,7 +299,7 @@ body {
    flex-direction: row;
    gap: 10px;
    font-size: 19px;
-   transition: opacity 0.3s ease;
+   transition: opacity 0.5s ease;
 }
 
 @media (max-width: 1649px) {
@@ -343,7 +335,6 @@ body {
    left: 1%;
    top: 1%;
 }
-
 
 .settingsChild {
    display: inline-block;
@@ -397,15 +388,7 @@ body {
    width: 1px;
    background: black;
 }
-/*
-.transitionNone{
-    transition: ;
-}
 
-.displayNone{
- opacity: 0; 
+.hidden {
+   opacity: 0;
 }
-
-.display {
-  opacity: 1;
-}*/
