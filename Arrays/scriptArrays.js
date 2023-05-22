@@ -107,7 +107,7 @@ export const arrays = () => {
     for (let property in object) {
       index++
       content += (property + ":") +
-        (typeof(object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) +
+        (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) +
         ((Object.keys(object).length === index + 1) ? "" : ",")
     };
 
@@ -220,9 +220,9 @@ export const arrays = () => {
         objects.forEach((obj) => {
           if (
             (obj.destiny === "forAll") ||
-            (array.every(item => typeof(item) === "number") && obj.destiny === "forNumbers") ||
-            (array.every(item => typeof(item) === "string") && obj.destiny === "forStrings") ||
-            (array.every(item => typeof(item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects") ||
+            (array.every(item => typeof (item) === "number") && obj.destiny === "forNumbers") ||
+            (array.every(item => typeof (item) === "string") && obj.destiny === "forStrings") ||
+            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects") ||
             (array.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
           ) {
             element += `  
@@ -702,21 +702,21 @@ export const arrays = () => {
 
     return (
       !["null", "true", "false", "undefined", "NaN"].includes(inputValue) ?
-      (typeof(inputValue) === "string" ? (inputValue) : "") :
-      (!isNaN(inputValue) ?
-        (inputValue !== "" ? (Number(inputValue)) : null) :
-        notString(inputValue)
-      )
+        (typeof (inputValue) === "string" ? (inputValue) : "") :
+        (!isNaN(inputValue) ?
+          (inputValue !== "" ? (Number(inputValue)) : null) :
+          notString(inputValue)
+        )
     );
   };
 
   const readNumberOrString = (inputValue, content) => {
 
     return (
-      (typeof(inputValue) === "string") ?
-      ((inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ?
-        (content === "forArrowFunction" ? inputValue : inputValue.slice(1, -1)) : Number(inputValue)) :
-      ((typeof(inputValue) === "object") ? inputValue.name : Number(inputValue))
+      (typeof (inputValue) === "string") ?
+        ((inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ?
+          (content === "forArrowFunction" ? inputValue : inputValue.slice(1, -1)) : Number(inputValue)) :
+        ((typeof (inputValue) === "object") ? inputValue.name : Number(inputValue))
     );
   };
 
@@ -729,7 +729,7 @@ export const arrays = () => {
           if (!!element.active) {
             content = element.methodContent +
               (!!inputValue ?
-                ((typeof(inputValue) === "object" ? inputValue.name : inputValue) + (changeArrowFunctionIfObject(method))) :
+                ((typeof (inputValue) === "object" ? inputValue.name : inputValue) + (changeArrowFunctionIfObject(method))) :
                 ""
               )
           };
@@ -830,6 +830,6 @@ export const arrays = () => {
     renderOutput();
     bindInputsAndButtons();
   }
-    
-render();
+
+  render();
 };

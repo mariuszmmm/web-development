@@ -1,151 +1,151 @@
 .settingsContents--array {
-   max-width: 559px;
-   min-width: 559px;
-   flex-grow: 0;
-   line-height: 1.5;
-   font-family: monospace;
+  max-width: 559px;
+  min-width: 559px;
+  flex-grow: 0;
+  line-height: 1.5;
+  font-family: monospace;
 }
 
 @media (max-width: 1649px) {
-   .settingsContents--array {
-      min-width: 100%;
-   }
+  .settingsContents--array {
+    min-width: 100%;
+  }
 }
 
 .settingsParagraph--arrays {
-   margin-top: 5px;
-   margin-bottom: 5px;
-   font-size: 18px;
-   word-break: break-word;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 18px;
+  word-break: break-word;
 }
 
 .arrayMethods--label {
-   display: inline-block;
-   min-width: max-content;
-   text-align: start;
-   margin: 25px 0 0 30px;
-   font-weight: 900;
-   padding: 2px;
-   font-size: 25px;
+  display: inline-block;
+  min-width: max-content;
+  text-align: start;
+  margin: 25px 0 0 30px;
+  font-weight: 900;
+  padding: 2px;
+  font-size: 25px;
 }
 
 .rangeContiner {
-   width: 100%;
-   display: flex;
-   align-items: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .range {
-   height: 26px;
-   width: 100vw;
-   min-width: 250px;
+  height: 26px;
+  width: 100vw;
+  min-width: 250px;
 }
 
 .arraySettings {
-   display: grid;
-   grid-template-columns: 1fr;
-   align-content: start;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: start;
 }
 
 .propertyButtons--arrays {
-   width: 515px;
-   justify-self: flex-end;
+  width: 515px;
+  justify-self: flex-end;
 }
 
 @media (max-width: 960px) {
-   .propertyButtons--arrays {
-      width: 345px;
-   }
+  .propertyButtons--arrays {
+    width: 345px;
+  }
 }
 
 .valueButtons--arrays {
-   justify-self: flex-start;
+  justify-self: flex-start;
 }
 
 .outputContents--arrays {
-   word-spacing: 5px;
-   line-height: 2;
-   padding: 50px 5%;
-   flex-grow: 1;
-   font-size: 18px;
-   justify-content: flex-start;
-   line-height: 2;
-   min-height: 150px;
-   font-family: monospace;
-   display: inline;
-   min-height: 290px;
+  word-spacing: 5px;
+  line-height: 2;
+  padding: 50px 5%;
+  flex-grow: 1;
+  font-size: 18px;
+  justify-content: flex-start;
+  line-height: 2;
+  min-height: 150px;
+  font-family: monospace;
+  display: inline;
+  min-height: 290px;
 }
 
 .methodInput {
-   text-align: start;
-   border: 1px solid black;
-   border-radius: 5px;
-   box-shadow: 2px 2px;
-   width: 100px;
-   padding: 2px 5px;
-   margin: 4px;
-   font-weight: 700;
-   cursor: pointer;
-   font-size: 18px;
+  text-align: start;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 2px 2px;
+  width: 100px;
+  padding: 2px 5px;
+  margin: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 18px;
 }
 
 @media (max-width: 960px) {
-   .methodInput {
-      width: 50px;
-      padding: 2px 3px;
-      font-size: 12px;
-   }
+  .methodInput {
+    width: 50px;
+    padding: 2px 3px;
+    font-size: 12px;
+  }
 }
 
 .methodName {
-   margin: 0;
-   font-weight: 900;
-   font-size: 18px;
+  margin: 0;
+  font-weight: 900;
+  font-size: 18px;
 }
 
 @media (max-width: 960px) {
-   .methodName {
-      font-size: 12px;
-   }
+  .methodName {
+    font-size: 12px;
+  }
 }
 
 .methodName--parameters {
-   display: flex;
-   flex-wrap: nowrap;
-   min-height: content;
-   width: max-content;
-   margin: 0;
-   font-weight: 900;
-   font-size: 18px;
-   height: 35px;
-   align-items: center;
+  display: flex;
+  flex-wrap: nowrap;
+  min-height: content;
+  width: max-content;
+  margin: 0;
+  font-weight: 900;
+  font-size: 18px;
+  height: 35px;
+  align-items: center;
 }
 
 @media (max-width: 960px) {
-   .methodName--parameters {
-      font-size: 12px;
-      height: 32px;
-   }
+  .methodName--parameters {
+    font-size: 12px;
+    height: 32px;
+  }
 }
 
 .button--array {
-   padding: 4px 6px;
+  padding: 4px 6px;
 }
 
 .nowrap {
-   white-space: nowrap;
+  white-space: nowrap;
 }
 
 .unknown {
-   color: red;
+  color: red;
 }
 
 .errorInput {
-   background: pink;
-   ;
+  background: pink;
+  ;
 }
 
 .form {
-   display: flex;
-   flex-wrap: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
 }
