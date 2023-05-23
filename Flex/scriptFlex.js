@@ -1,4 +1,5 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
+import { transitionHeightAnimation } from "../Animation/script.js"
 
 export const flex = () => {
   let buttonsArray = [];
@@ -36,6 +37,7 @@ export const flex = () => {
         ${settingsContents()}
         ${settingsButtons()}
       `;
+    transitionHeightAnimation();
   };
 
   const settingsContents = () => {
@@ -72,7 +74,7 @@ export const flex = () => {
     };
 
     contentsElement += `
-      <div class="settingsContents settingsContents--flex">
+      <div class="settingsContents settingsContents--flex js-settingsContents">
         <p class="settingsParagraph--flex strong">.parent {</p>
         ${settingsLabel("parent")}
         <p class="settingsParagraph--flex strong">}</p>

@@ -1,4 +1,5 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
+import { transitionHeightAnimation } from "../Animation/script.js"
 
 export const grid = () => {
   let buttonsArray = [];
@@ -45,6 +46,7 @@ export const grid = () => {
          ${settingsContents()}
          ${settingsButtons()}
       `;
+    transitionHeightAnimation();
   };
 
   const settingsContents = () => {
@@ -108,7 +110,7 @@ export const grid = () => {
     };
 
     contentsElement += `
-      <div class="settingsContents settingsContents--grid">
+      <div class="settingsContents settingsContents--grid js-settingsContents">
         <p class="settingsParagraph--grid strong">.parent {</p>
         ${settingsLabel("parent")}
         <p class="settingsParagraph--grid strong">}</p>

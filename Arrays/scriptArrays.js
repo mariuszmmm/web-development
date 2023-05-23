@@ -1,5 +1,6 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js"
 import { arrayExample, letters, arrayWords, arrayEmoticons, arrayObjects, mixArray } from "./arrays.js"
+import { transitionHeightAnimation } from "../Animation/script.js"
 
 export const arrays = () => {
   let array = [];
@@ -136,7 +137,7 @@ export const arrays = () => {
       let element = "";
 
       element += `
-        <div class="settingsContents settingsContents--array">
+        <div class="settingsContents settingsContents--array js-settingsContents">
           <p class="settingsParagraph--arrays strong">const array = [
           ${array.length > 0 ? `
           </p>
@@ -333,7 +334,7 @@ export const arrays = () => {
       ${leabelContents()}
       ${methodsSettings()}      
     `;
-
+    transitionHeightAnimation();
   };
 
   const renderOutput = () => {

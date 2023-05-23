@@ -1,7 +1,5 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
-
-let heightContent;
-let heightContentNew;
+import { transitionHeightAnimation } from "../Animation/script.js"
 
 export const positioning = () => {
 
@@ -22,43 +20,7 @@ export const positioning = () => {
          ${settingsContents()}
          ${buttonsContainer()}
       `;
-      
-      
- const settingsContentsElement = document.querySelector(".js-settingsContents");
- 
-console.log("--------")
-
-  
-  // settingsContentsElement.style.setProperty("--heightContent", heightContent + "px")
-//settingsContentsElement.classList.add("transition");
-
-settingsContentsElement.style.height = "content"
-heightContentNew = settingsContentsElement.scrollHeight;
-
-settingsContentsElement.style.height = settingsContentsElement.scrollHeight + "px"
-  
-  
-  
- setTimeout(()=>{
- 
-  // settingsContentsElement.style.setProperty("--heightContent", settingsContentsElement.heightContent + "px")
-  
-  
-  settingsContentsElement.style.height = `${(heightContent > heightContentNew) ? heightContent : heightContentNew}` + "px"
-
-
- }, 300);    
-
-heightContent = settingsContentsElement.scrollHeight;
-
-//settingsContentsElement.classList.remove("transition");
-console.log(settingsContentsElement.scrollHeight)
- console.log(settingsContentsElement.offsetHeight)
- console.log(settingsContentsElement.clientHeight)
- 
- 
- 
- 
+    transitionHeightAnimation();
   };
 
   const settingsContents = () => {
@@ -88,7 +50,7 @@ console.log(settingsContentsElement.scrollHeight)
     };
 
     contentsElement += `
-         <div id="settingsContents" class="settingsContents settingsContents--positioning js-settingsContents">
+         <div class="settingsContents settingsContents--positioning js-settingsContents">
          <div id="text">
             <p class="settingsParagraph--positioning strong">.parent {</p>
               <p class="settingsParagraph settingsParagraph--positioning">  position: relative; </p>
