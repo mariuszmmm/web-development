@@ -1,5 +1,8 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
 
+let heightContent;
+let heightContentNew;
+
 export const positioning = () => {
 
   let buttonsObjects = buttonsArrayRaw.map((obj) => {
@@ -19,6 +22,43 @@ export const positioning = () => {
          ${settingsContents()}
          ${buttonsContainer()}
       `;
+      
+      
+ const settingsContentsElement = document.querySelector(".js-settingsContents");
+ 
+console.log("--------")
+
+  
+  // settingsContentsElement.style.setProperty("--heightContent", heightContent + "px")
+//settingsContentsElement.classList.add("transition");
+
+settingsContentsElement.style.height = "content"
+heightContentNew = settingsContentsElement.scrollHeight;
+
+settingsContentsElement.style.height = settingsContentsElement.scrollHeight + "px"
+  
+  
+  
+ setTimeout(()=>{
+ 
+  // settingsContentsElement.style.setProperty("--heightContent", settingsContentsElement.heightContent + "px")
+  
+  
+  settingsContentsElement.style.height = `${(heightContent > heightContentNew) ? heightContent : heightContentNew}` + "px"
+
+
+ }, 300);    
+
+heightContent = settingsContentsElement.scrollHeight;
+
+//settingsContentsElement.classList.remove("transition");
+console.log(settingsContentsElement.scrollHeight)
+ console.log(settingsContentsElement.offsetHeight)
+ console.log(settingsContentsElement.clientHeight)
+ 
+ 
+ 
+ 
   };
 
   const settingsContents = () => {
@@ -48,7 +88,8 @@ export const positioning = () => {
     };
 
     contentsElement += `
-         <div class="settingsContents settingsContents--positioning">
+         <div id="settingsContents" class="settingsContents settingsContents--positioning js-settingsContents">
+         <div id="text">
             <p class="settingsParagraph--positioning strong">.parent {</p>
               <p class="settingsParagraph settingsParagraph--positioning">  position: relative; </p>
               <p class="settingsParagraph settingsParagraph--positioning">  border: 3px dashed white; </p>
@@ -57,6 +98,7 @@ export const positioning = () => {
             <p class="settingsParagraph--positioning strong">.child_1 {</p>
               ${settingsLabel()}
             <p class="settingsParagraph--positioning strong">}</p>
+            </div>
          </div>
          `;
 
@@ -185,3 +227,4 @@ export const positioning = () => {
 
   render();
 };
+
