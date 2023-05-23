@@ -6,24 +6,12 @@ import { positioning } from '../Positioning/scriptPositioning.js';
 import { flex } from '../Flex/scriptFlex.js';
 import { grid } from '../Grid/scriptGrid.js';
 import { arrays } from '../Arrays/scriptArrays.js';
-const settingsElement = document.querySelector(".js-settingsContainer");
-const outputElement = document.querySelector(".js-outputContainer");
-
+import { transitionOpacityAnimation } from '../Animation/script.js';
 
 const init = () => {
   const buttons = document.querySelectorAll('.js-buttonNav');
 
-  const setFadeTime = (callback) => {
-    settingsElement.classList.add("hidden")
-    outputElement.classList.add("hidden")
-    setTimeout(() => {
-      callback();
-      settingsElement.classList.remove("hidden")
-      outputElement.classList.remove("hidden")
-    }, 250);
-  };
-
-  setFadeTime(() => startPage());
+  transitionOpacityAnimation(() => startPage());
   const intervalClock = setInterval(startPage, 1000);
 
   const changeActiveButton = (event) => {
@@ -34,19 +22,19 @@ const init = () => {
     event.target.classList.add('button--active');
 
     switch (event.target.innerText) {
-      case "Terminal": setFadeTime(() => terminal());
+      case "Terminal": transitionOpacityAnimation(() => terminal());
         break;
-      case "HTML Sections": setFadeTime(() => sectionsHtml());
+      case "HTML Sections": transitionOpacityAnimation(() => sectionsHtml());
         break;
-      case "HTML Tags": setFadeTime(() => htmlTags());
+      case "HTML Tags": transitionOpacityAnimation(() => htmlTags());
         break;
-      case "CSS Positioning": setFadeTime(() => positioning());
+      case "CSS Positioning": transitionOpacityAnimation(() => positioning());
         break;
-      case "CSS Flex": setFadeTime(() => flex());
+      case "CSS Flex": transitionOpacityAnimation(() => flex());
         break;
-      case "CSS Grid": setFadeTime(() => grid());
+      case "CSS Grid": transitionOpacityAnimation(() => grid());
         break;
-      case "JS Arrays": setFadeTime(() => arrays());
+      case "JS Arrays": transitionOpacityAnimation(() => arrays());
         break;
     };
   };
