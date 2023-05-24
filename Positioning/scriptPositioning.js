@@ -1,6 +1,12 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
 import { transitionHeightAnimation } from "../Animation/script.js"
 
+let propertyStyle;
+let propertyStyleNew;
+let valueStyle;
+let valueStyleNew;
+
+
 export const positioning = () => {
 
   let buttonsObjects = buttonsArrayRaw.map((obj) => {
@@ -108,14 +114,52 @@ export const positioning = () => {
             <div class="outputLabelRight">RIGHT</div>
             <div class="outputLabelBottom">BOTTOM</div>
             <div class="outputLabelCenter">parent</div>
-            <div class="outputParent">
+            <div class="outputParent js-outputParent">
               <div class="outputChild--withSize js-child">child_1</div>
               <div class="outputChild--withSize">child_2</div>
             </div>
           </div>
           `;
 
-    styles();
+// styles();
+    
+    const outputParentElement = document.querySelector(".js-outputParent");
+    const childElement = document.querySelector(".js-child");
+    
+        buttonsObjects.forEach((buttons) => {
+          const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
+          const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
+          
+      
+            if (!!activeProperties){ propertyStyleNew = activeProperties.name};
+             if (!!activeValuesProperties) {valueStyleNew = activeValuesProperties.name};
+        });
+
+//    childElement.style.propertyStyle = valueStyle;
+    // childElement.style.left = "0px";
+      
+      
+   
+      console.log("propertyStyleNew",propertyStyleNew);
+       console.log("valueStyleNew",valueStyleNew);
+ childElement.style.propertyStyle = valueStyle; 
+      
+      
+    setTimeout (() => {
+         
+         
+    // childElement.style.transform = "translate(100px)";
+    
+   // childElement.style.left = "300px";
+    childElement.style.propertyStyleNew = valueStyleNew;
+      
+    }, 500)
+    
+propertyStyle = propertyStyleNew
+valueStyle = valueStyleNew
+      
+    
+    
   };
 
   const styles = () => {

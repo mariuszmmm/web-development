@@ -285,6 +285,9 @@ body {
 
 .outputParent {
   position: static;
+  
+    position: relative;
+    
   border: 3px dashed white;
   width: 85%;
   height: 75%;
@@ -357,7 +360,6 @@ body {
   font-size: 2em;
   margin: 0;
   padding: 1%;
-  position: relative;
 }
 
 .outputChild--withSize {
@@ -375,6 +377,10 @@ body {
   font-size: 1em;
   margin: 0;
   padding: 1%;
+  
+  
+  position: relative;
+  transition: 1s;
 }
 
 .childSelected {
