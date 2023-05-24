@@ -121,45 +121,43 @@ export const positioning = () => {
           </div>
           `;
 
-// styles();
-    
-    const outputParentElement = document.querySelector(".js-outputParent");
-    const childElement = document.querySelector(".js-child");
-    
-        buttonsObjects.forEach((buttons) => {
-          const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
-          const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
-          
-      
-            if (!!activeProperties){ propertyStyleNew = activeProperties.name};
-             if (!!activeValuesProperties) {valueStyleNew = activeValuesProperties.name};
-        });
+    //styles();
 
-//    childElement.style.propertyStyle = valueStyle;
-    // childElement.style.left = "0px";
-      
-      
-   
-      console.log("propertyStyleNew",propertyStyleNew);
-       console.log("valueStyleNew",valueStyleNew);
- childElement.style.propertyStyle = valueStyle; 
-      
-      
-    setTimeout (() => {
-         
-         
-    // childElement.style.transform = "translate(100px)";
-    
-   // childElement.style.left = "300px";
-    childElement.style.propertyStyleNew = valueStyleNew;
-      
-    }, 500)
-    
-propertyStyle = propertyStyleNew
-valueStyle = valueStyleNew
-      
-    
-    
+
+    const animationPositioning = () => {
+      const outputParentElement = document.querySelector(".js-outputParent");
+      const childElement = document.querySelector(".js-child");
+
+      buttonsObjects.forEach((buttons) => {
+        const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
+        const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
+
+
+        if (!!activeProperties) { propertyStyleNew = activeProperties.name };
+        if (!!activeValuesProperties) { valueStyleNew = activeValuesProperties.name };
+      });
+
+      //    childElement.style.propertyStyle = valueStyle;
+      // childElement.style.left = "0px";
+
+      console.log("propertyStyleNew", propertyStyleNew);
+      console.log("valueStyleNew", valueStyleNew);
+      childElement.style[propertyStyle] = valueStyle;
+
+      setTimeout(() => {
+
+
+        // childElement.style.transform = "translate(100px)";
+        // childElement.style.left = "300px";
+        childElement.style[propertyStyleNew] = valueStyleNew;
+
+      }, 500)
+
+      propertyStyle = propertyStyleNew
+      valueStyle = valueStyleNew
+    };
+    animationPositioning();
+
   };
 
   const styles = () => {
@@ -185,13 +183,34 @@ valueStyle = valueStyleNew
   };
 
   const buttonPropertyToggle = (button) => {
+
+    const turnOff = (text) => {
+      buttonsObjects.forEach(({ properties }) => {
+        properties.forEach(prop => {
+          if (prop.name === text) prop.active = false;
+        });
+      });
+    };
+
     buttonsObjects.forEach(({ properties }) => {
       properties.forEach(prop => {
         if (prop.name === button.innerText) {
-          prop.active = !prop.active;
-        }
+          if (!prop.active) {
+            prop.active = true
+            switch (button.innerText) {
+              case "top": turnOff("bottom");
+                break;
+              case "bottom": turnOff("top");
+                break;
+              case "left": turnOff("right");
+                break;
+              case "right": turnOff("left");
+                break;
+            };
+          } else prop.active = false;
+        };
       });
-    })
+    });
   };
 
   const bindValueButtons = () => {
