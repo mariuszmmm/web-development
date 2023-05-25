@@ -1,10 +1,14 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
 import { transitionHeightAnimation } from "../Animation/script.js"
 
-let propertyStyle;
-let propertyStyleNew;
-let valueStyle;
-let valueStyleNew;
+let propertyStyle = "";
+let propertyStyleNew= "";
+let valueStyle= "0";
+let valueStyleNew = "0";
+let activeButtons = [];
+let activeButtonsLast = [];
+let prop;
+let propValue;
 
 
 export const positioning = () => {
@@ -121,22 +125,29 @@ export const positioning = () => {
           </div>
           `;
 
-    //styles();
+   // styles();
 
 
     const animationPositioning = () => {
       const outputParentElement = document.querySelector(".js-outputParent");
       const childElement = document.querySelector(".js-child");
+activeButtons = [];
+      buttonsObjects.forEach((object) => {
+        object.properties.forEach(obj => {
+      if (obj.active === true) {
+         prop = obj.name
+      }
+    })
 
-      buttonsObjects.forEach((buttons) => {
-        const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
-        const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
-
-
-        if (!!activeProperties) { propertyStyleNew = activeProperties.name };
-        if (!!activeValuesProperties) { valueStyleNew = activeValuesProperties.name };
+   object.propertiesValues.forEach(obj => {
+      if (obj.active === true) {
+        propValue = obj.name
+      }
+   })
+activeButtons = [...activeButtons, {property: prop, propertyValue: propValue}]
       });
-
+console.log(buttonsObjects)
+console.log(activeButtons)
       //    childElement.style.propertyStyle = valueStyle;
       // childElement.style.left = "0px";
 
@@ -249,7 +260,7 @@ export const positioning = () => {
     bindPropertyButtons();
     bindValueButtons();
   };
-
+console.log(buttonsObjects)
   render();
 };
 
