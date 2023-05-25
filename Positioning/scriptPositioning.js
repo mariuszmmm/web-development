@@ -1,18 +1,9 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
 import { transitionHeightAnimation } from "../Animation/script.js"
-
-let propertyStyle = "";
-let propertyStyleNew= "";
-let valueStyle= "0";
-let valueStyleNew = "0";
-let activeButtons = [];
-let activeButtonsLast = [];
-let prop;
-let propValue;
-
+let activeProperties = [];
+let activePropertiesLast = [];
 
 export const positioning = () => {
-
   let buttonsObjects = buttonsArrayRaw.map((obj) => {
     return {
       properties: [{ name: obj.properties[0], active: false }],
@@ -51,7 +42,7 @@ export const positioning = () => {
           buttons.propertiesValues.forEach((prop) => {
             if (prop.active) {
               contentsElement += `:
-                     ${prop.active ? prop.name : ""}; </p>`
+                ${prop.active ? prop.name : ""}; </p>`
             };
           });
         };
@@ -60,19 +51,19 @@ export const positioning = () => {
     };
 
     contentsElement += `
-         <div class="settingsContents settingsContents--positioning js-settingsContents">
-         <div id="text">
-            <p class="settingsParagraph--positioning strong">.parent {</p>
-              <p class="settingsParagraph settingsParagraph--positioning">  position: relative; </p>
-              <p class="settingsParagraph settingsParagraph--positioning">  border: 3px dashed white; </p>
-              <p class="settingsParagraph settingsParagraph--positioning">  background: purple; </p>
-            <p class="settingsParagraph--positioning strong">}</p>
-            <p class="settingsParagraph--positioning strong">.child_1 {</p>
-              ${settingsLabel()}
-            <p class="settingsParagraph--positioning strong">}</p>
-            </div>
-         </div>
-         `;
+      <div class="settingsContents settingsContents--positioning js-settingsContents">
+        <div id="text">
+          <p class="settingsParagraph--positioning strong">.parent {</p>
+          <p class="settingsParagraph settingsParagraph--positioning">  position: relative; </p>
+          <p class="settingsParagraph settingsParagraph--positioning">  border: 3px dashed white; </p>
+          <p class="settingsParagraph settingsParagraph--positioning">  background: purple; </p>
+          <p class="settingsParagraph--positioning strong">}</p>
+          <p class="settingsParagraph--positioning strong">.child_1 {</p>
+            ${settingsLabel()}
+          <p class="settingsParagraph--positioning strong">}</p>
+        </div>
+      </div>
+    `;
 
     return contentsElement;
   };
@@ -84,20 +75,20 @@ export const positioning = () => {
     buttonsObjects.forEach((object) => {
       let property = object.properties[0];
       propsElements += `
-            <div class="propertyButtons">
-              <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
-                ${property.name}
-              </button>
-              <span class="strong">:</span>
-            </div>
-            <div class="valueButtons">
-         `;
+        <div class="propertyButtons">
+          <button class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
+            ${property.name}
+          </button>
+            <span class="strong">:</span>
+          </div>
+        <div class="valueButtons">
+      `;
       object.propertiesValues.forEach((obj) => {
         propsElements += `
-               <button ${(property.active) ? "" : " disabled"} class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.name}ValueButton">
-                  ${obj.name}
-               </button>
-            `;
+          <button ${(property.active) ? "" : " disabled"} class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.name}ValueButton">
+            ${obj.name}
+          </button>
+        `;
       })
       propsElements += `</div>`;
     });
@@ -111,75 +102,21 @@ export const positioning = () => {
 
     contentsElement.innerHTML = "";
     contentsElement.innerHTML += `
-          <div class="outputContents outputContents--positioning">
-            <div class="outputLabel">OUTPUT :</div>
-            <div class="outputLabelTop">TOP</div>
-            <div class="outputLabelLeft">LEFT</div>
-            <div class="outputLabelRight">RIGHT</div>
-            <div class="outputLabelBottom">BOTTOM</div>
-            <div class="outputLabelCenter">parent</div>
-            <div class="outputParent js-outputParent">
-              <div class="outputChild--withSize js-child">child_1</div>
-              <div class="outputChild--withSize">child_2</div>
-            </div>
-          </div>
-          `;
+      <div class="outputContents outputContents--positioning">
+        <div class="outputLabel">OUTPUT :</div>
+        <div class="outputLabelTop">TOP</div>
+        <div class="outputLabelLeft">LEFT</div>
+        <div class="outputLabelRight">RIGHT</div>
+        <div class="outputLabelBottom">BOTTOM</div>
+        <div class="outputLabelCenter">parent</div>
+        <div class="outputParent js-outputParent">
+          <div class="outputChild--withSize js-child">child_1</div>
+          <div class="outputChild--withSize">child_2</div>
+        </div>
+      </div>
+    `;
 
-   // styles();
-
-
-    const animationPositioning = () => {
-      const outputParentElement = document.querySelector(".js-outputParent");
-      const childElement = document.querySelector(".js-child");
-activeButtons = [];
-      buttonsObjects.forEach((object) => {
-        object.properties.forEach(obj => {
-      if (obj.active === true) {
-         prop = obj.name
-      }
-    })
-
-   object.propertiesValues.forEach(obj => {
-      if (obj.active === true) {
-        propValue = obj.name
-      }
-   })
-activeButtons = [...activeButtons, {property: prop, propertyValue: propValue}]
-      });
-console.log(buttonsObjects)
-console.log(activeButtons)
-      //    childElement.style.propertyStyle = valueStyle;
-      // childElement.style.left = "0px";
-
-      console.log("propertyStyleNew", propertyStyleNew);
-      console.log("valueStyleNew", valueStyleNew);
-      childElement.style[propertyStyle] = valueStyle;
-
-      setTimeout(() => {
-
-
-        // childElement.style.transform = "translate(100px)";
-        // childElement.style.left = "300px";
-        childElement.style[propertyStyleNew] = valueStyleNew;
-
-      }, 500)
-
-      propertyStyle = propertyStyleNew
-      valueStyle = valueStyleNew
-    };
     animationPositioning();
-
-  };
-
-  const styles = () => {
-    const childStyles = document.querySelector(".js-child");
-
-    buttonsObjects.forEach((buttons) => {
-      const activeProperties = (buttons.properties.find((buttons) => buttons.active === true));
-      const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active === true));
-      childStyles.style[
-        ((activeProperties === undefined) ? null : activeProperties.name)] = ((activeValuesProperties === undefined) ? null : activeValuesProperties.name);
-    });
   };
 
   const bindPropertyButtons = () => {
@@ -195,12 +132,27 @@ console.log(activeButtons)
 
   const buttonPropertyToggle = (button) => {
 
-    const turnOff = (text) => {
+    const turnOffPropertyButton = (text) => {
       buttonsObjects.forEach(({ properties }) => {
         properties.forEach(prop => {
           if (prop.name === text) prop.active = false;
         });
       });
+    };
+
+    const turnResetValueButton = (text) => {
+      let indexPropertyOff;
+      buttonsObjects.forEach((object, index) => {
+        object.properties.forEach(property => {
+          if (property.name === text) {
+            indexPropertyOff = index;
+          };
+        });
+      });
+
+      buttonsObjects[indexPropertyOff].propertiesValues.forEach((prop, index) => {
+        index === 0 ? prop.active = true : prop.active = false
+      })
     };
 
     buttonsObjects.forEach(({ properties }) => {
@@ -209,16 +161,27 @@ console.log(activeButtons)
           if (!prop.active) {
             prop.active = true
             switch (button.innerText) {
-              case "top": turnOff("bottom");
+              case "top":
+                turnOffPropertyButton("bottom");
+                turnResetValueButton("bottom");
                 break;
-              case "bottom": turnOff("top");
+              case "bottom":
+                turnOffPropertyButton("top");
+                turnResetValueButton("top");
                 break;
-              case "left": turnOff("right");
+              case "left":
+                turnOffPropertyButton("right");
+                turnResetValueButton("right");
                 break;
-              case "right": turnOff("left");
+              case "right":
+                turnOffPropertyButton("left");
+                turnResetValueButton("left");
                 break;
             };
-          } else prop.active = false;
+          } else {
+            prop.active = false;
+            turnResetValueButton(prop.name);
+          }
         };
       });
     });
@@ -254,13 +217,57 @@ console.log(activeButtons)
     });
   };
 
+  const animationPositioning = () => {
+    const childElement = document.querySelector(".js-child");
+    activeProperties = [];
+
+    buttonsObjects.forEach((object) => {
+      let prop = "";
+      let propValue = "";
+      let positionValue;
+
+      object.properties.forEach(obj => {
+        obj.active ? prop = obj.name : "";
+        obj.name === "position" ? positionValue = true : positionValue = false;
+      });
+
+      object.propertiesValues.forEach(obj => {
+        obj.active ? propValue = obj.name : "";
+      });
+
+      if (prop && propValue) {
+        activeProperties = [...activeProperties, { property: prop, propertyValue: propValue }];
+      };
+    });
+
+    activePropertiesLast.forEach((property) => {
+      childElement.style[property.property] = property.propertyValue;
+    });
+
+    setTimeout(() => {
+      buttonsObjects.forEach((object) => {
+        object.properties.forEach(obj => {
+          obj.name === "position" ? childElement.style[obj.name] = "static" : "";
+          obj.name === "transform" ? childElement.style[obj.name] = "none" : "";
+          ["top", "bottom", "left", "right"].includes(obj.name) ? childElement.style[obj.name] = "auto" : "";
+        });
+      });
+
+      activeProperties.forEach((property) => {
+        childElement.style[property.property] = property.propertyValue;
+      });
+    }, 100)
+
+    activePropertiesLast = activeProperties
+  };
+
   const render = () => {
     renderSettings();
     renderOutput();
     bindPropertyButtons();
     bindValueButtons();
   };
-console.log(buttonsObjects)
+
   render();
 };
 

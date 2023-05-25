@@ -1,26 +1,26 @@
 export const buttonsArrayRaw = [
   {
-   properties: ["position"],
-   propertiesValues: ["static", "relative", "absolute", "fixed", "sticky"]
+    properties: ["position"],
+    propertiesValues: ["static", "relative", "absolute", "fixed", "sticky"]
   },
   {
     properties: ["top"],
-    propertiesValues: ["auto", "50px", "-50px", "50%", "-50%", "100%", "-100%", "0"]
+    propertiesValues: ["0", "50px", "100px", "30%", "50%", "100%", "-50px", "-100px", "-30%", "-50%", "-100%"]
   },
   {
     properties: ["right"],
-    propertiesValues: ["auto", "50px", "-50px", "50%", "-50%", "100%", "-100%", "0"]
+    propertiesValues: ["0", "50px", "100px", "30%", "50%", "100%", "-50px", "-100px", "-30%", "-50%", "-100%"]
   },
   {
     properties: ["bottom"],
-    propertiesValues: ["auto", "50px", "-50px", "50%", "-50%", "100%", "-100%", "0"]
+    propertiesValues: ["0", "50px", "100px", "30%", "50%", "100%", "-50px", "-100px", "-30%", "-50%", "-100%"]
   },
   {
     properties: ["left"],
-    propertiesValues: ["auto", "50px", "-50px", "50%", "-50%", "100%", "-100%", "0"]
+    propertiesValues: ["0", "50px", "100px", "30%", "50%", "100%", "-50px", "-100px", "-30%", "-50%", "-100%"]
   },
-//  {
-  //  properties: ["transform"],
-  //  propertiesValues: ["none", "translate(-50px, -50px)", "scale(2, 2)", "rotate(45deg)"]
-//  },
+   {
+   properties: ["transform"],
+   propertiesValues: ["none", "translate(-50px, -50px)", "scale(2, 2)", "rotate(45deg)"]
+   },
 ];
