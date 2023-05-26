@@ -1,5 +1,7 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
 import { transitionHeightAnimation } from "../Animation/script.js"
+let activePropertiesNew = [];
+let activePropertiesLast = [];
 
 export const grid = () => {
   let buttonsArray = [];
@@ -240,37 +242,6 @@ export const grid = () => {
       return element
     };
 
-    const styleAdd = (container) => {
-      const parentStyles = document.querySelectorAll(".js-outputParent");
-      const childAllStyles = document.querySelectorAll(".js-child_all");
-      const childStyles = document.querySelectorAll(".js-child");
-
-      buttonsArray.forEach((buttons) => {
-        const activeProperties = (buttons.properties[0].active ? buttons.properties[0] : undefined);
-        const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active));
-        let element;
-
-        switch (container) {
-          case "parent":
-            element = parentStyles;
-            break;
-          case "child_all":
-            element = childAllStyles;
-            break;
-          case "child":
-            element = childStyles;
-            break;
-        };
-
-        if (buttons.destiny === container) {
-          element.forEach((elem) => {
-            elem.style[((activeProperties) ? activeProperties.name : "")] =
-              ((activeValuesProperties) ? activeValuesProperties.name : "");
-          });
-        };
-      });
-    };
-
     outputElement.innerHTML = "";
     outputElement.innerHTML += `
          <div class="outputContents outputContents--grid">
@@ -286,9 +257,81 @@ export const grid = () => {
          </div>
          `;
 
-    styleAdd("parent");
-    styleAdd("child_all");
-    styleAdd("child");
+    const changeGridStyles = (buttonsObjects) => {
+      const parentStyles = document.querySelectorAll(".js-outputParent");
+      const childAllStyles = document.querySelectorAll(".js-child_all");
+      const childStyles = document.querySelectorAll(".js-child");
+      activePropertiesNew = [];
+
+      buttonsObjects.forEach((object) => {
+        let prop = "";
+        let propValue = "";
+        let destiny;
+
+        object.properties.forEach(obj => {
+          obj.active ? prop = obj.name : "";
+          obj.active ? destiny = object.destiny : "";
+        });
+
+        object.propertiesValues.forEach(obj => {
+          obj.active ? propValue = obj.name : "";
+        });
+
+        if (prop && propValue) {
+          activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }];
+        };
+      });
+
+      parentStyles.forEach((parent) => {
+        activePropertiesLast.forEach((property) => {
+          if (property.destiny === "parent") {
+            parent.style[property.property] = property.propertyValue;
+          }
+        });
+      });
+      childAllStyles.forEach((childAll) => {
+        activePropertiesLast.forEach((property) => {
+          if (property.destiny === "child_all") {
+            childAll.style[property.property] = property.propertyValue;
+          }
+        });
+      });
+      childStyles.forEach((child) => {
+        activePropertiesLast.forEach((property) => {
+          if (property.destiny === "child") {
+            child.style[property.property] = property.propertyValue;
+          };
+        });
+      });
+
+      setTimeout(() => {
+        parentStyles.forEach((parent) => {
+          activePropertiesNew.forEach((property) => {
+            if (property.destiny === "parent") {
+              parent.style[property.property] = property.propertyValue;
+            }
+          });
+        });
+        childAllStyles.forEach((childAll) => {
+          activePropertiesNew.forEach((property) => {
+            if (property.destiny === "child_all") {
+              childAll.style[property.property] = property.propertyValue;
+            }
+          });
+        });
+        childStyles.forEach((child) => {
+          activePropertiesNew.forEach((property) => {
+            if (property.destiny === "child") {
+              child.style[property.property] = property.propertyValue;
+            };
+          });
+        });
+      }, 200);
+
+      activePropertiesLast = activePropertiesNew
+    };
+
+    changeGridStyles(buttonsArray);
   };
 
   const bindPropertyButtons = () => {
