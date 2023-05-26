@@ -1,6 +1,11 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
 import { transitionHeightAnimation } from "../Animation/script.js"
 
+
+let activePropertiesNew = [];
+let activePropertiesLast = [];
+
+
 export const flex = () => {
   let buttonsArray = [];
   let index = 0;
@@ -250,9 +255,109 @@ export const flex = () => {
       </div>
     `;
 
-    styleAdd("parent");
-    styleAdd("child_all");
-    styleAdd("child");
+    // styleAdd("parent");
+    // styleAdd("child_all");
+    // styleAdd("child");
+
+
+    const animationPositioning = (buttonsObjects) => {
+      console.log(buttonsArray);
+
+
+      const parentStyles = document.querySelectorAll(".js-outputParent");
+      const childAllStyles = document.querySelectorAll(".js-child_all");
+      const childStyles = document.querySelectorAll(".js-child");
+
+      activePropertiesNew = [];
+
+      buttonsObjects.forEach((object) => {
+        let prop = "";
+        let propValue = "";
+        let propKey = "";
+        let propValueKey = "";
+        let destiny;
+
+        object.properties.forEach(obj => {
+          obj.active ? prop = obj.name : "";
+          obj.active ? destiny = object.destiny : "";
+        });
+
+
+        object.propertiesValues.forEach(obj => {
+          obj.active ? propValue = obj.name : "";
+          obj.active ? propValueKey = obj.key : "";
+        });
+
+        if (prop && propValue) {
+          activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }];
+        };
+      });
+      console.log(activePropertiesNew)
+
+      parentStyles.forEach((parent) => {
+        activePropertiesLast.forEach((property) => {
+          if (property.destiny === "parent") {
+            parent.style[property.property] = property.propertyValue;
+          }
+        });
+      });
+      childAllStyles.forEach((childAll) => {
+        activePropertiesLast.forEach((property) => {
+          if (property.destiny === "child_all") {
+            childAll.style[property.property] = property.propertyValue;
+          }
+        });
+      });
+      childStyles.forEach((child) => {
+        activePropertiesLast.forEach((property) => {
+          if (property.destiny === "child") {
+            child.style[property.property] = property.propertyValue;
+          };
+        });
+      });
+
+      setTimeout(() => {
+
+        parentStyles.forEach((parent) => {
+          activePropertiesNew.forEach((property) => {
+            if (property.destiny === "parent") {
+              parent.style[property.property] = property.propertyValue;
+            }
+          });
+        });
+        childAllStyles.forEach((childAll) => {
+          activePropertiesNew.forEach((property) => {
+            if (property.destiny === "child_all") {
+              childAll.style[property.property] = property.propertyValue;
+            }
+          });
+        });
+        childStyles.forEach((child) => {
+          activePropertiesNew.forEach((property) => {
+            if (property.destiny === "child") {
+              child.style[property.property] = property.propertyValue;
+            };
+          });
+        });
+
+
+      }, 100)
+      console.log("activePropertiesLast")
+      activePropertiesLast.forEach((property) => {
+        console.log(property.property, property.propertyValue)
+      });
+      console.log("activePropertiesNew")
+      activePropertiesNew.forEach((property) => {
+        console.log(property.property, property.propertyValue)
+      });
+      activePropertiesLast = activePropertiesNew
+    };
+
+    animationPositioning(buttonsArray);
+
+
+
+
   };
 
   const bindPropertyButtons = () => {
