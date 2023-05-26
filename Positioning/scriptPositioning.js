@@ -1,7 +1,6 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
 import { transitionHeightAnimation } from "../Animation/script.js"
-let activeProperties = [];
-let activePropertiesLast = [];
+import { animationPositioning } from "../Animation/script.js"
 
 export const positioning = () => {
   let buttonsObjects = buttonsArrayRaw.map((obj) => {
@@ -116,7 +115,7 @@ export const positioning = () => {
       </div>
     `;
 
-    animationPositioning();
+    animationPositioning(buttonsObjects);
   };
 
   const bindPropertyButtons = () => {
@@ -215,50 +214,6 @@ export const positioning = () => {
         prop.active = true;
       } else { prop.active = false }
     });
-  };
-
-  const animationPositioning = () => {
-    const childElement = document.querySelector(".js-child");
-    activeProperties = [];
-
-    buttonsObjects.forEach((object) => {
-      let prop = "";
-      let propValue = "";
-      let positionValue;
-
-      object.properties.forEach(obj => {
-        obj.active ? prop = obj.name : "";
-        obj.name === "position" ? positionValue = true : positionValue = false;
-      });
-
-      object.propertiesValues.forEach(obj => {
-        obj.active ? propValue = obj.name : "";
-      });
-
-      if (prop && propValue) {
-        activeProperties = [...activeProperties, { property: prop, propertyValue: propValue }];
-      };
-    });
-
-    activePropertiesLast.forEach((property) => {
-      childElement.style[property.property] = property.propertyValue;
-    });
-
-    setTimeout(() => {
-      buttonsObjects.forEach((object) => {
-        object.properties.forEach(obj => {
-          obj.name === "position" ? childElement.style[obj.name] = "static" : "";
-          obj.name === "transform" ? childElement.style[obj.name] = "none" : "";
-          ["top", "bottom", "left", "right"].includes(obj.name) ? childElement.style[obj.name] = "auto" : "";
-        });
-      });
-
-      activeProperties.forEach((property) => {
-        childElement.style[property.property] = property.propertyValue;
-      });
-    }, 100)
-
-    activePropertiesLast = activeProperties
   };
 
   const render = () => {
