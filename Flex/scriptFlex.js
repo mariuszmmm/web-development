@@ -1,10 +1,7 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
 import { transitionHeightAnimation } from "../Animation/script.js"
-
-
 let activePropertiesNew = [];
 let activePropertiesLast = [];
-
 
 export const flex = () => {
   let buttonsArray = [];
@@ -209,37 +206,6 @@ export const flex = () => {
       return element
     };
 
-    const styleAdd = (container) => {
-      const parentStyles = document.querySelectorAll(".js-outputParent");
-      const childAllStyles = document.querySelectorAll(".js-child_all");
-      const childStyles = document.querySelectorAll(".js-child");
-
-      buttonsArray.forEach((buttons) => {
-        const activeProperties = (buttons.properties[0].active ? buttons.properties[0] : undefined);
-        const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active));
-        let element;
-
-        switch (container) {
-          case "parent":
-            element = parentStyles;
-            break;
-          case "child_all":
-            element = childAllStyles;
-            break;
-          case "child":
-            element = childStyles;
-            break;
-        };
-
-        if (buttons.destiny === container) {
-          element.forEach((elem) => {
-            elem.style[((activeProperties) ? activeProperties.name : "")] =
-              ((activeValuesProperties) ? activeValuesProperties.name : "");
-          });
-        };
-      });
-    };
-
     outputElement.innerHTML = "";
     outputElement.innerHTML += `
       <div class="outputContents outputContents--flex">
@@ -255,15 +221,7 @@ export const flex = () => {
       </div>
     `;
 
-    // styleAdd("parent");
-    // styleAdd("child_all");
-    // styleAdd("child");
-
-
-    const animationPositioning = (buttonsObjects) => {
-      console.log(buttonsArray);
-
-
+    const changeFlexStyles = (buttonsObjects) => {
       const parentStyles = document.querySelectorAll(".js-outputParent");
       const childAllStyles = document.querySelectorAll(".js-child_all");
       const childStyles = document.querySelectorAll(".js-child");
@@ -273,8 +231,6 @@ export const flex = () => {
       buttonsObjects.forEach((object) => {
         let prop = "";
         let propValue = "";
-        let propKey = "";
-        let propValueKey = "";
         let destiny;
 
         object.properties.forEach(obj => {
@@ -282,17 +238,14 @@ export const flex = () => {
           obj.active ? destiny = object.destiny : "";
         });
 
-
         object.propertiesValues.forEach(obj => {
           obj.active ? propValue = obj.name : "";
-          obj.active ? propValueKey = obj.key : "";
         });
 
         if (prop && propValue) {
           activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }];
         };
-      });
-      console.log(activePropertiesNew)
+      });     
 
       parentStyles.forEach((parent) => {
         activePropertiesLast.forEach((property) => {
@@ -317,7 +270,6 @@ export const flex = () => {
       });
 
       setTimeout(() => {
-
         parentStyles.forEach((parent) => {
           activePropertiesNew.forEach((property) => {
             if (property.destiny === "parent") {
@@ -339,25 +291,12 @@ export const flex = () => {
             };
           });
         });
+      }, 200);
 
-
-      }, 100)
-      console.log("activePropertiesLast")
-      activePropertiesLast.forEach((property) => {
-        console.log(property.property, property.propertyValue)
-      });
-      console.log("activePropertiesNew")
-      activePropertiesNew.forEach((property) => {
-        console.log(property.property, property.propertyValue)
-      });
       activePropertiesLast = activePropertiesNew
     };
 
-    animationPositioning(buttonsArray);
-
-
-
-
+    changeFlexStyles(buttonsArray);
   };
 
   const bindPropertyButtons = () => {
