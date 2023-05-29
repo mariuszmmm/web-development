@@ -221,82 +221,74 @@ export const flex = () => {
       </div>
     `;
 
-    const changeFlexStyles = (buttonsObjects) => {
+    const changeFlexStyles = () => {
       const parentStyles = document.querySelectorAll(".js-outputParent");
       const childAllStyles = document.querySelectorAll(".js-child_all");
       const childStyles = document.querySelectorAll(".js-child");
-
       activePropertiesNew = [];
+      let displayBlock = false;
 
-      buttonsObjects.forEach((object) => {
-        let prop = "";
-        let propValue = "";
-        let destiny;
+      buttonsArray.forEach((object) => {
+             let prop = "";
+              let propValue = "";
+              let destiny;
+      
+              object.properties.forEach(obj => {
+      
+                if (!obj.active && obj.name === "display" && object.destiny !== "child") {
+                  prop = "display";
+                  destiny = object.destiny;
+                  propValue = "block"
+                }
+      
+                if (obj.active) {
+                  prop = obj.name;
+                  destiny = object.destiny;
+                }
+              });
+      
+              object.propertiesValues.forEach(obj => {
+                if (propValue !== "block") {
+                  if (obj.active) {
+                    propValue = obj.name;
+                  };
+                }
+              });
+      
+              if (prop && propValue) {
+                activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }]
+                console.log("block false")
+              };
+      
+            });
 
-        object.properties.forEach(obj => {
-          obj.active ? prop = obj.name : "";
-          obj.active ? destiny = object.destiny : "";
-        });
+console.log(activePropertiesNew)
 
-        object.propertiesValues.forEach(obj => {
-          obj.active ? propValue = obj.name : "";
-        });
-
-        if (prop && propValue) {
-          activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }];
-        };
-      });     
-
-      parentStyles.forEach((parent) => {
+       const setStyles = (elements, properties, name) => {
+        elements.forEach((element) => {
         activePropertiesLast.forEach((property) => {
-          if (property.destiny === "parent") {
-            parent.style[property.property] = property.propertyValue;
-          }
-        });
-      });
-      childAllStyles.forEach((childAll) => {
-        activePropertiesLast.forEach((property) => {
-          if (property.destiny === "child_all") {
-            childAll.style[property.property] = property.propertyValue;
-          }
-        });
-      });
-      childStyles.forEach((child) => {
-        activePropertiesLast.forEach((property) => {
-          if (property.destiny === "child") {
-            child.style[property.property] = property.propertyValue;
+          if (property.destiny === name) {
+            element.style[property.property] = property.propertyValue;
           };
         });
       });
+      }
+      
+     setStyles(parentStyles, activePropertiesLast, "parent");
+     setStyles(childAllStyles, activePropertiesLast, "child_all");
+     setStyles(childStyles, activePropertiesLast, "child");
+
 
       setTimeout(() => {
-        parentStyles.forEach((parent) => {
-          activePropertiesNew.forEach((property) => {
-            if (property.destiny === "parent") {
-              parent.style[property.property] = property.propertyValue;
-            }
-          });
-        });
-        childAllStyles.forEach((childAll) => {
-          activePropertiesNew.forEach((property) => {
-            if (property.destiny === "child_all") {
-              childAll.style[property.property] = property.propertyValue;
-            }
-          });
-        });
-        childStyles.forEach((child) => {
-          activePropertiesNew.forEach((property) => {
-            if (property.destiny === "child") {
-              child.style[property.property] = property.propertyValue;
-            };
-          });
-        });
+     setStyles(parentStyles,activePropertiesNew, "parent");
+     setStyles(childAllStyles, activePropertiesNew, "child_all");
+     setStyles(childStyles, activePropertiesNew, "child");
       }, 200);
 
       activePropertiesLast = activePropertiesNew
     };
 
-    changeFlexStyles(buttonsArray);
+    changeFlexStyles();
   };
 
   const bindPropertyButtons = () => {
