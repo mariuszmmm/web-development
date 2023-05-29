@@ -24,7 +24,7 @@ export const grid = () => {
   })
 
 
-console.log(buttonsArray)
+  console.log(buttonsArray)
   let children = 7;
   let childSelected = 1;
   const childrenMax = 20;
@@ -258,80 +258,77 @@ console.log(buttonsArray)
             </div>
          </div>
          `;
-console.log(buttonsArray)
+    console.log(buttonsArray)
     const changeGridStyles = () => {
       const parentStyles = document.querySelectorAll(".js-outputParent");
       const childAllStyles = document.querySelectorAll(".js-child_all");
       const childStyles = document.querySelectorAll(".js-child");
       activePropertiesNew = [];
-  
+
       buttonsArray.forEach(object => {
         let prop = "";
         let propValue = "";
         let destiny;
         let resetValues = false;
-        
-        object.properties.forEach(obj
-         => {
-          
-         if (!obj.active && obj.name === "display" && object.destiny !== "child" ) { 
-           prop = "display";
-           destiny = object.destiny;
-           propValue = "block"
-         }
+
+        object.properties.forEach(obj => {
+
+          if (!obj.active && obj.name === "display" && object.destiny !== "child") {
+            prop = "display";
+            destiny = object.destiny;
+            propValue = "block"
+          }
 
           if (obj.active) {
             prop = obj.name;
             destiny = object.destiny;
           } else {
-             prop = obj.name;
-             destiny = object.destiny;
-             resetValues = true;
+            prop = obj.name;
+            destiny = object.destiny;
+            resetValues = true;
           }
         });
-        
-        
 
         object.propertiesValues.forEach((obj, index) => {
           if (!!resetValues) {
-          (index === 0) ? (obj.active = true) : (obj.active = false)
+            (index === 0) ? (obj.active = true) : (obj.active = false)
           }
-          
-          if (propValue !== "block"){
-           if (obj.active) {
-             propValue = obj.name;
-           } 
+
+          if (propValue !== "block") {
+            if (obj.active) {
+              propValue = obj.name;
+            }
           }
         });
 
         if (prop && propValue) {
           activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }]
           console.log("block false")
-       };
-        
-     });
-console.log(activePropertiesNew)
+        };
+
+      });
+      console.log(activePropertiesNew)
 
 
       const setStyles = (elements, properties, name) => {
         elements.forEach((element) => {
-        activePropertiesLast.forEach((property) => {
-          if (property.destiny === name) {
-            element.style[property.property] = property.propertyValue;
-          };
+          activePropertiesLast.forEach((property) => {
+            if (property.destiny === name) {
+              element.style[property.property] = property.propertyValue;
+            };
+          });
         });
-      });
       }
-      
-     setStyles(parentStyles, activePropertiesLast, "parent");
-     setStyles(childAllStyles, activePropertiesLast, "child_all");
-     setStyles(childStyles, activePropertiesLast, "child");
+
+      setStyles(parentStyles, activePropertiesLast, "parent");
+      setStyles(childAllStyles, activePropertiesLast, "child_all");
+      setStyles(childStyles, activePropertiesLast, "child");
 
 
       setTimeout(() => {
-     setStyles(parentStyles,activePropertiesNew, "parent");
-     setStyles(childAllStyles, activePropertiesNew, "child_all");
-     setStyles(childStyles, activePropertiesNew, "child");
+        setStyles(parentStyles, activePropertiesNew, "parent");
+        setStyles(childAllStyles, activePropertiesNew, "child_all");
+        setStyles(childStyles, activePropertiesNew, "child");
       }, 200);
 
       activePropertiesLast = activePropertiesNew
