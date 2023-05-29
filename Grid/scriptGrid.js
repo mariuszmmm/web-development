@@ -279,26 +279,21 @@ export const grid = () => {
             propValue = "block"
           }
 
-          if (obj.active) {
-            prop = obj.name;
-            destiny = object.destiny;
-          } else {
-            prop = obj.name;
-            destiny = object.destiny;
-            resetValues = true;
-          }
+          !obj.active ? resetValues = true : "";
+          prop = obj.name;
+          destiny = object.destiny;
         });
 
         object.propertiesValues.forEach((obj, index) => {
           if (!!resetValues) {
-            (index === 0) ? (obj.active = true) : (obj.active = false)
-          }
+            index === 0 ? obj.active = true : obj.active = false
+          };
 
           if (propValue !== "block") {
             if (obj.active) {
               propValue = obj.name;
-            }
-          }
+            };
+          };
         });
 
         if (prop && propValue) {
@@ -312,7 +307,7 @@ export const grid = () => {
 
       const setStyles = (elements, properties, name) => {
         elements.forEach((element) => {
-          activePropertiesLast.forEach((property) => {
+          properties.forEach((property) => {
             if (property.destiny === name) {
               element.style[property.property] = property.propertyValue;
             };

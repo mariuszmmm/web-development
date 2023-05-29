@@ -226,63 +226,66 @@ export const flex = () => {
       const childAllStyles = document.querySelectorAll(".js-child_all");
       const childStyles = document.querySelectorAll(".js-child");
       activePropertiesNew = [];
-      let displayBlock = false;
 
       buttonsArray.forEach((object) => {
-             let prop = "";
-              let propValue = "";
-              let destiny;
-      
-              object.properties.forEach(obj => {
-      
-                if (!obj.active && obj.name === "display" && object.destiny !== "child") {
-                  prop = "display";
-                  destiny = object.destiny;
-                  propValue = "block"
-                }
-      
-                if (obj.active) {
-                  prop = obj.name;
-                  destiny = object.destiny;
-                }
-              });
-      
-              object.propertiesValues.forEach(obj => {
-                if (propValue !== "block") {
-                  if (obj.active) {
-                    propValue = obj.name;
-                  };
-                }
-              });
-      
-              if (prop && propValue) {
-                activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }]
-                console.log("block false")
-              };
-      
-            });
+        let prop = "";
+        let propValue = "";
+        let destiny;
+        let resetValues = false;
 
-console.log(activePropertiesNew)
+        object.properties.forEach(obj => {
 
-       const setStyles = (elements, properties, name) => {
-        elements.forEach((element) => {
-        activePropertiesLast.forEach((property) => {
-          if (property.destiny === name) {
-            element.style[property.property] = property.propertyValue;
+          if (!obj.active && obj.name === "display" && object.destiny !== "child") {
+            prop = "display";
+            destiny = object.destiny;
+            propValue = "block"
+          }
+
+          !obj.active ? resetValues = true : "";
+          prop = obj.name;
+          destiny = object.destiny;
+        });
+
+        object.propertiesValues.forEach((obj, index) => {
+          if (!!resetValues) {
+            index === 0 ? obj.active = true : obj.active = false
+          };
+
+          if (propValue !== "block") {
+            if (obj.active) {
+              propValue = obj.name;
+            };
           };
         });
+
+        if (prop && propValue) {
+          activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }]
+          console.log("block false")
+        };
+
       });
+
+      console.log(activePropertiesNew)
+
+      const setStyles = (elements, properties, name) => {
+        elements.forEach((element) => {
+          properties.forEach((property) => {
+            if (property.destiny === name) {
+              element.style[property.property] = property.propertyValue;
+            };
+          });
+        });
       }
-      
-     setStyles(parentStyles, activePropertiesLast, "parent");
-     setStyles(childAllStyles, activePropertiesLast, "child_all");
-     setStyles(childStyles, activePropertiesLast, "child");
+
+      setStyles(parentStyles, activePropertiesLast, "parent");
+      setStyles(childAllStyles, activePropertiesLast, "child_all");
+      setStyles(childStyles, activePropertiesLast, "child");
 
 
       setTimeout(() => {
-     setStyles(parentStyles,activePropertiesNew, "parent");
-     setStyles(childAllStyles, activePropertiesNew, "child_all");
-     setStyles(childStyles, activePropertiesNew, "child");
+        setStyles(parentStyles, activePropertiesNew, "parent");
+        setStyles(childAllStyles, activePropertiesNew, "child_all");
+        setStyles(childStyles, activePropertiesNew, "child");
       }, 200);
 
       activePropertiesLast = activePropertiesNew

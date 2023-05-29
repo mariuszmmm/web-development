@@ -31,7 +31,7 @@ export const buttonsArrayRaw = [
   },
   {
     properties: ["gap"],
-    propertiesValues: ["none", "10px", "50px", "10%", "10vw"],
+    propertiesValues: ["0", "10px", "50px", "10%", "10vw"],
     destiny: ["parent"],
   },
   {
