@@ -131,7 +131,7 @@ export const htmlTags = () => {
 
   const onClick = (event) => {
     const contentsElement = document.querySelector(".js-outputContainer");
-    
+
     tagsCategoryWithActive.map((tag) => {
       if (tag.name === event.target.id) {
         tag.active = true
@@ -186,7 +186,7 @@ export const htmlTags = () => {
         exampleOutput = "exampleOutput_10";
         break;
     }
-    
+
     transitionOpacityAnimation(() => renderExample(event, example), contentsElement, contentsElement);
     transitionOpacityAnimation(() => renderExampleOutput(event, exampleOutput), contentsElement, contentsElement);
   };

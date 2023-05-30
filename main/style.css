@@ -280,6 +280,7 @@ body {
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 2em;
+  z-index: 1;
 }
 
 .outputParent {
@@ -359,6 +360,7 @@ body {
   padding: 1%;
   transition: all 0.5s ease;
   position: relative;
+  z-index: 1;
 }
 
 .outputChild--withSize {
@@ -377,6 +379,7 @@ body {
   margin: 0;
   padding: 1%;
   transition: all 0.5s ease;
+  z-index: 1;
 }
 
 .childSelected {
