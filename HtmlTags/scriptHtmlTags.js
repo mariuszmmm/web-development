@@ -1,4 +1,5 @@
 import { tagsArray } from "./tagsArray.js"
+import { transitionOpacityAnimation } from '../Animation/script.js';
 
 export const htmlTags = () => {
   let tagsCategoryWithActive = [];
@@ -129,6 +130,8 @@ export const htmlTags = () => {
   };
 
   const onClick = (event) => {
+    const contentsElement = document.querySelector(".js-outputContainer");
+    
     tagsCategoryWithActive.map((tag) => {
       if (tag.name === event.target.id) {
         tag.active = true
@@ -138,49 +141,54 @@ export const htmlTags = () => {
     })
 
     bindButtons();
+    let example;
+    let exampleOutput;
 
     switch (event.target.id) {
       case "Structure Tags":
-        renderExample(event, "example_1");
-        renderExampleOutput(event, "exampleOutput_1");
+        example = "example_1";
+        exampleOutput = "exampleOutput_1";
         break;
       case "Text Formatting Tags":
-        renderExample(event, "example_2");
-        renderExampleOutput(event, "exampleOutput_2");
+        example = "example_2";
+        exampleOutput = "exampleOutput_2";
         break;
       case "Container Tags":
-        renderExample(event, "example_3");
-        renderExampleOutput(event, "exampleOutput_3");
+        example = "example_3";
+        exampleOutput = "exampleOutput_3";
         break;
       case "Form Tags":
-        renderExample(event, "example_4");
-        renderExampleOutput(event, "exampleOutput_4");
+        example = "example_4";
+        exampleOutput = "exampleOutput_4";
         break;
       case "Semantic Tags":
-        renderExample(event, "example_5");
-        renderExampleOutput(event, "exampleOutput_5");
+        example = "example_5";
+        exampleOutput = "exampleOutput_5";
         break;
       case "List Tags":
-        renderExample(event, "example_6");
-        renderExampleOutput(event, "exampleOutput_6");
+        example = "example_6";
+        exampleOutput = "exampleOutput_6";
         break;
       case "Table Tags":
-        renderExample(event, "example_7");
-        renderExampleOutput(event, "exampleOutput_7");
+        example = "example_7";
+        exampleOutput = "exampleOutput_7";
         break;
       case "Multimedia Tags":
-        renderExample(event, "example_8");
-        renderExampleOutput(event, "exampleOutput_8");
+        example = "example_8";
+        exampleOutput = "exampleOutput_8";
         break;
       case "Script and Style Tags":
-        renderExample(event, "example_9");
-        renderExampleOutput(event, "exampleOutput_9");
+        example = "example_9";
+        exampleOutput = "exampleOutput_9";
         break;
       case "Button Tags":
-        renderExample(event, "example_10");
-        renderExampleOutput(event, "exampleOutput_10");
+        example = "example_10";
+        exampleOutput = "exampleOutput_10";
         break;
     }
+    
+    transitionOpacityAnimation(() => renderExample(event, example), contentsElement, contentsElement);
+    transitionOpacityAnimation(() => renderExampleOutput(event, exampleOutput), contentsElement, contentsElement);
   };
 
   const renderChanges = () => {

@@ -15,6 +15,9 @@ const init = () => {
   const intervalClock = setInterval(startPage, 1000);
 
   const changeActiveButton = (event) => {
+      const settingsElement = document.querySelector(".js-settingsContainer");
+      const outputElement = document.querySelector(".js-outputContainer");
+  
     clearInterval(intervalClock);
     buttons.forEach(button => {
       button.classList.remove('button--active');
@@ -22,19 +25,19 @@ const init = () => {
     event.target.classList.add('button--active');
 
     switch (event.target.innerText) {
-      case "Terminal": transitionOpacityAnimation(() => terminal());
+      case "Terminal": transitionOpacityAnimation(() => terminal(), settingsElement, outputElement);
         break;
-      case "HTML Sections": transitionOpacityAnimation(() => sectionsHtml());
+      case "HTML Sections": transitionOpacityAnimation(() => sectionsHtml(), settingsElement, outputElement);
         break;
-      case "HTML Tags": transitionOpacityAnimation(() => htmlTags());
+      case "HTML Tags": transitionOpacityAnimation(() => htmlTags(), settingsElement, outputElement);
         break;
-      case "CSS Positioning": transitionOpacityAnimation(() => positioning());
+      case "CSS Positioning": transitionOpacityAnimation(() => positioning(), settingsElement, outputElement);
         break;
-      case "CSS Flex": transitionOpacityAnimation(() => flex());
+      case "CSS Flex": transitionOpacityAnimation(() => flex(), settingsElement, outputElement);
         break;
-      case "CSS Grid": transitionOpacityAnimation(() => grid());
+      case "CSS Grid": transitionOpacityAnimation(() => grid(), settingsElement, outputElement);
         break;
-      case "JS Arrays": transitionOpacityAnimation(() => arrays());
+      case "JS Arrays": transitionOpacityAnimation(() => arrays(), settingsElement, outputElement);
         break;
     };
   };

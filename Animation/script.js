@@ -14,17 +14,15 @@ export const transitionHeightAnimation = () => {
   heightContent = heightContentNew
 };
 
-export const transitionOpacityAnimation = (callback) => {
-  const settingsElement = document.querySelector(".js-settingsContainer");
-  const outputElement = document.querySelector(".js-outputContainer");
+export const transitionOpacityAnimation = (callback, element_1, element_2) => {
   setTimeout(() => {
-    settingsElement.classList.add("hidden")
-    outputElement.classList.add("hidden")
+  element_1 ? element_1.classList.add("hidden") : "";
+   element_2 ? element_2.classList.add("hidden") : "";
   }, 50);
   setTimeout(() => {
     callback();
-    settingsElement.classList.remove("hidden")
-    outputElement.classList.remove("hidden")
+    element_1 ? element_1.classList.remove("hidden") : "";
+    element_2 ? element_2.classList.remove("hidden") : "";
   }, 500);
 };
 
