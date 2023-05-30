@@ -84,7 +84,7 @@ export const positioning = () => {
       `;
       object.propertiesValues.forEach((obj) => {
         propsElements += `
-          <button ${(property.active) ? "" : " disabled"} class="button ${(obj.active && property.active) ? "button--active" : ""} js-${property.name}ValueButton">
+          <button ${(property.active) ? "" : " disabled"} name="${property.name}" class="button ${(obj.active && property.active) ? "button--active" : ""} js-valueButton">
             ${obj.name}
           </button>
         `;
@@ -111,7 +111,7 @@ export const positioning = () => {
         <div class="outputParent js-outputParent">
         <div class="outputLabelCenter">parent</div>
           <div class="outputChild--withSize">child_1</div>
-          <div class="outputChild--withSize js-child">child_2</div>
+          <div class="outputChild--withSize childSelected js-child">child_2</div>
         </div>
       </div>
     `;
@@ -188,29 +188,27 @@ export const positioning = () => {
   };
 
   const bindValueButtons = () => {
-    const buttonElements = [
-      { selector: ".js-positionValueButton", value: 0 },
-      { selector: ".js-topValueButton", value: 1 },
-      { selector: ".js-leftValueButton", value: 2 },
-      { selector: ".js-bottomValueButton", value: 3 },
-      { selector: ".js-rightValueButton", value: 4 },
-      { selector: ".js-transformValueButton", value: 5 },
-    ];
-
-    buttonElements.forEach((button) => {
-      const buttonValueElements = document.querySelectorAll(button.selector);
+      const buttonValueElements = document.querySelectorAll(".js-valueButton");
 
       buttonValueElements.forEach((buttonValue) => {
-        buttonValue.addEventListener("click", () => {
-          buttonValueToggle(buttonValue, button.value);
+        buttonValue.addEventListener("click", ({target}) => {
+          buttonValueToggle(buttonValue, target.name);
           render();
         });
       });
-    });
   };
 
-  const buttonValueToggle = (button, index) => {
-    buttonsObjects[index].propertiesValues.forEach(prop => {
+  const buttonValueToggle = (button, name) => {
+    let activePropertyIndex
+    
+    buttonsObjects.forEach((object, index) => {
+      object.properties.forEach(prop => {
+          if (prop.name === name) { activePropertyIndex = index;
+          };
+      });
+    });
+    
+    buttonsObjects[activePropertyIndex].propertiesValues.forEach(prop => {
       if (prop.name === button.innerText) {
         prop.active = true;
       } else { prop.active = false }
