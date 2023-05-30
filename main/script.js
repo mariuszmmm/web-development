@@ -10,14 +10,13 @@ import { transitionOpacityAnimation } from '../Animation/script.js';
 
 const init = () => {
   const buttons = document.querySelectorAll('.js-buttonNav');
+  const settingsElement = document.querySelector(".js-settingsContainer");
+  const outputElement = document.querySelector(".js-outputContainer");
 
-  transitionOpacityAnimation(() => startPage());
+  transitionOpacityAnimation(() => startPage(), settingsElement, outputElement);
   const intervalClock = setInterval(startPage, 1000);
 
   const changeActiveButton = (event) => {
-      const settingsElement = document.querySelector(".js-settingsContainer");
-      const outputElement = document.querySelector(".js-outputContainer");
-  
     clearInterval(intervalClock);
     buttons.forEach(button => {
       button.classList.remove('button--active');
