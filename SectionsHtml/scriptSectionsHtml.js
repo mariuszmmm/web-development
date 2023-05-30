@@ -10,8 +10,8 @@ export const sectionsHtml = () => {
           Semantic tags - sections HTML
         </div>
       </div>         
-      `;
-  }
+    `;
+  };
 
   const renderOutput = () => {
     const outputElement = document.querySelector(".js-outputContainer");
@@ -22,8 +22,8 @@ export const sectionsHtml = () => {
         <div class="outputLabel"></div>
           <img class="outputImage--sectionsHtml" src="./SectionsHtml/images/sectionsHtml.png" alt="sectionsHtml">
         </div>
-      `;
-  }
+    `;
+  };
 
   const render = () => {
     renderSettings();
@@ -31,4 +31,4 @@ export const sectionsHtml = () => {
   };
 
   render();
-}
+};

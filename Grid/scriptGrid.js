@@ -1,5 +1,5 @@
-import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
-import { transitionHeightAnimation } from "../Animation/script.js"
+import { buttonsArrayRaw } from "./buttonsArrayRaw.js";
+import { transitionHeightAnimation } from "../Animation/script.js";
 let activePropertiesNew = [];
 let activePropertiesLast = [];
 
@@ -23,13 +23,10 @@ export const grid = () => {
     }
   })
 
-
-  console.log(buttonsArray)
   let children = 7;
   let childSelected = 1;
   const childrenMax = 20;
-  const lorem =
-  {
+  const lorem = {
     loremActive: false,
     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
   };
@@ -50,7 +47,9 @@ export const grid = () => {
          ${settingsContents()}
          ${settingsButtons()}
       `;
-    transitionHeightAnimation();
+
+    const settingsContentsElement = document.querySelector(".js-settingsContents");
+    transitionHeightAnimation(settingsContentsElement);
   };
 
   const settingsContents = () => {
@@ -77,7 +76,6 @@ export const grid = () => {
           if (active) {
             buttons.propertiesValues.forEach((prop) => {
               if (prop.active) {
-
                 const areaContent = (prop) => {
                   let textArray = formatTextArea(prop)[0];
                   let element = "";
@@ -89,7 +87,7 @@ export const grid = () => {
                           ${text}
                         </p>
                       `;
-                    })
+                    });
                     element += `  
                       <p class="settingsParagraph settingsParagraph--grid">
                         ;
@@ -97,7 +95,7 @@ export const grid = () => {
                     `;
                   } else element = prop + ";";
 
-                  return element
+                  return element;
                 }
 
                 element += `
@@ -170,7 +168,7 @@ export const grid = () => {
         };
       });
 
-      return element
+      return element;
     };
 
     const buttonsNumbers = (name, value) => {
@@ -204,7 +202,7 @@ export const grid = () => {
         }  
         </div>`;
 
-      return element
+      return element;
     };
 
     buttonsElement += `
@@ -223,7 +221,7 @@ export const grid = () => {
       </div>
     `;
 
-    return buttonsElement
+    return buttonsElement;
   };
 
   const renderOutput = () => {
@@ -241,7 +239,7 @@ export const grid = () => {
         `;
       };
 
-      return element
+      return element;
     };
 
     outputElement.innerHTML = "";
@@ -258,7 +256,7 @@ export const grid = () => {
             </div>
          </div>
          `;
-    console.log(buttonsArray)
+
     const changeGridStyles = () => {
       const parentStyles = document.querySelectorAll(".js-outputParent");
       const childAllStyles = document.querySelectorAll(".js-child_all");
@@ -272,11 +270,10 @@ export const grid = () => {
         let resetValues = false;
 
         object.properties.forEach(obj => {
-
           if (!obj.active && obj.name === "display" && object.destiny !== "child") {
             prop = "display";
             destiny = object.destiny;
-            propValue = "block"
+            propValue = "block";
           }
 
           !obj.active ? resetValues = true : "";
@@ -298,12 +295,8 @@ export const grid = () => {
 
         if (prop && propValue) {
           activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }]
-          console.log("block false")
         };
-
       });
-      console.log(activePropertiesNew)
-
 
       const setStyles = (elements, properties, name) => {
         elements.forEach((element) => {
@@ -313,12 +306,11 @@ export const grid = () => {
             };
           });
         });
-      }
+      };
 
       setStyles(parentStyles, activePropertiesLast, "parent");
       setStyles(childAllStyles, activePropertiesLast, "child_all");
       setStyles(childStyles, activePropertiesLast, "child");
-
 
       setTimeout(() => {
         setStyles(parentStyles, activePropertiesNew, "parent");
@@ -326,11 +318,10 @@ export const grid = () => {
         setStyles(childStyles, activePropertiesNew, "child");
       }, 200);
 
-      activePropertiesLast = activePropertiesNew
+      activePropertiesLast = activePropertiesNew;
     };
 
     changeGridStyles();
-    console.log(buttonsArray)
   };
 
   const bindPropertyButtons = () => {
@@ -349,7 +340,7 @@ export const grid = () => {
 
         if (buttonObject.key === buttonEvent.id) {
           buttonObject.active = !buttonObject.active;
-        }
+        };
       });
     };
   };
@@ -358,7 +349,7 @@ export const grid = () => {
     const buttonElements = buttonsArray.map((buttons, index) => {
       let name = ".js-" + buttons.properties[0].key + "groupValueButtons";
 
-      return { selector: name, value: index }
+      return { selector: name, value: index };
     });
 
     buttonElements.forEach((button) => {
@@ -376,7 +367,7 @@ export const grid = () => {
       buttonsArray[index].propertiesValues.forEach(prop => {
         if (prop.key === button.id) {
           prop.active = true;
-        } else { prop.active = false }
+        } else { prop.active = false };
       });
     };
   };
@@ -388,30 +379,29 @@ export const grid = () => {
     const plusButtonChildrenElement = document.querySelector(".js-plusButtonChildren");
     const loremButtonElement = document.querySelector(".js-loremButton");
 
-
     minusButtonSelectedElement.addEventListener("click", () => {
-      if (childSelected > 1) { childSelected-- }
+      if (childSelected > 1) { childSelected-- };
       render();
     });
 
     plusButtonSelectedElement.addEventListener("click", () => {
-      if (childSelected < children) { childSelected++ }
+      if (childSelected < children) { childSelected++ };
       render();
     });
 
     minusButtonChildrenElement.addEventListener("click", () => {
-      if (children > 1) { children-- }
-      if (childSelected > children) { childSelected = children }
+      if (children > 1) { children-- };
+      if (childSelected > children) { childSelected = children };
       render();
     });
 
     plusButtonChildrenElement.addEventListener("click", () => {
-      if (children < childrenMax) { children++ }
+      if (children < childrenMax) { children++ };
       render();
     });
 
     loremButtonElement.addEventListener("click", () => {
-      lorem.loremActive = !lorem.loremActive
+      lorem.loremActive = !lorem.loremActive;
       render();
     });
   };

@@ -1,5 +1,5 @@
-import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
-import { transitionHeightAnimation } from "../Animation/script.js"
+import { buttonsArrayRaw } from "./buttonsArrayRaw.js";
+import { transitionHeightAnimation } from "../Animation/script.js";
 let activePropertiesNew = [];
 let activePropertiesLast = [];
 
@@ -14,7 +14,7 @@ export const flex = () => {
         propertiesValues: buttons.propertiesValues.map((val, i) => {
           index++;
 
-          return { name: val, active: i === 0, key: `${index}` }
+          return { name: val, active: false, key: `${index}` }
         }),
         destiny: value
       },
@@ -39,7 +39,9 @@ export const flex = () => {
         ${settingsContents()}
         ${settingsButtons()}
       `;
-    transitionHeightAnimation();
+
+    const settingsContentsElement = document.querySelector(".js-settingsContents");
+    transitionHeightAnimation(settingsContentsElement);
   };
 
   const settingsContents = () => {
@@ -185,7 +187,7 @@ export const flex = () => {
       </div>  
     `;
 
-    return buttonsElement
+    return buttonsElement;
   };
 
   const renderOutput = () => {
@@ -203,7 +205,7 @@ export const flex = () => {
         `;
       };
 
-      return element
+      return element;
     };
 
     outputElement.innerHTML = "";
@@ -238,7 +240,7 @@ export const flex = () => {
           if (!obj.active && obj.name === "display" && object.destiny !== "child") {
             prop = "display";
             destiny = object.destiny;
-            propValue = "block"
+            propValue = "block";
           }
 
           !obj.active ? resetValues = true : "";
@@ -248,7 +250,7 @@ export const flex = () => {
 
         object.propertiesValues.forEach((obj, index) => {
           if (!!resetValues) {
-            index === 0 ? obj.active = true : obj.active = false
+            index === 0 ? obj.active = true : obj.active = false;
           };
 
           if (propValue !== "block") {
@@ -259,13 +261,10 @@ export const flex = () => {
         });
 
         if (prop && propValue) {
-          activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }]
-          console.log("block false")
+          activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }];
         };
 
       });
-
-      console.log(activePropertiesNew)
 
       const setStyles = (elements, properties, name) => {
         elements.forEach((element) => {
@@ -275,12 +274,11 @@ export const flex = () => {
             };
           });
         });
-      }
+      };
 
       setStyles(parentStyles, activePropertiesLast, "parent");
       setStyles(childAllStyles, activePropertiesLast, "child_all");
       setStyles(childStyles, activePropertiesLast, "child");
-
 
       setTimeout(() => {
         setStyles(parentStyles, activePropertiesNew, "parent");
@@ -288,7 +286,7 @@ export const flex = () => {
         setStyles(childStyles, activePropertiesNew, "child");
       }, 200);
 
-      activePropertiesLast = activePropertiesNew
+      activePropertiesLast = activePropertiesNew;
     };
 
     changeFlexStyles();
@@ -310,7 +308,7 @@ export const flex = () => {
 
         if (buttonObject.key === buttonEvent.id) {
           buttonObject.active = !buttonObject.active;
-        }
+        };
       });
     };
   };
@@ -319,7 +317,7 @@ export const flex = () => {
     const buttonElements = buttonsArray.map((buttons, index) => {
       let name = ".js-" + buttons.properties[0].key + "groupValueButtons";
 
-      return { selector: name, value: index }
+      return { selector: name, value: index };
     });
 
     buttonElements.forEach((button) => {
@@ -337,7 +335,7 @@ export const flex = () => {
       buttonsArray[index].propertiesValues.forEach(prop => {
         if (prop.key === button.id) {
           prop.active = true;
-        } else { prop.active = false }
+        } else { prop.active = false };
       });
     };
   };

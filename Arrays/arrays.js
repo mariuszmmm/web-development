@@ -60,5 +60,5 @@ const makeArrayOfIntegers = () => {
 makeArrayOfLetters();
 makeArrayOfIntegers();
 
-export const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords, ...arrayEmoticons, ...arrayObjects]
+export const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords, ...arrayEmoticons, ...arrayObjects];
 

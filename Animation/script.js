@@ -1,24 +1,24 @@
-let heightContent;
+let heightContentLast;
 let heightContentNew;
-let activeProperties = [];
 let activePropertiesLast = [];
+let activePropertiesNew = [];
 
-export const transitionHeightAnimation = () => {
-  const settingsContentsElement = document.querySelector(".js-settingsContents");
-  heightContentNew = settingsContentsElement.scrollHeight
+export const transitionHeightAnimation = (element) => {
+  heightContentNew = element.scrollHeight;
+  element.style.height = heightContentLast + "px"
 
-  settingsContentsElement.style.height = heightContent + "px"
   setTimeout(() => {
-    settingsContentsElement.style.height = heightContentNew + "px"
+    element.style.height = heightContentNew + "px"
   }, 10);
-  heightContent = heightContentNew
+  heightContentLast = heightContentNew;
 };
 
 export const transitionOpacityAnimation = (callback, element_1, element_2) => {
   setTimeout(() => {
-  element_1 ? element_1.classList.add("hidden") : "";
-   element_2 ? element_2.classList.add("hidden") : "";
+    element_1 ? element_1.classList.add("hidden") : "";
+    element_2 ? element_2.classList.add("hidden") : "";
   }, 50);
+
   setTimeout(() => {
     callback();
     element_1 ? element_1.classList.remove("hidden") : "";
@@ -26,14 +26,12 @@ export const transitionOpacityAnimation = (callback, element_1, element_2) => {
   }, 500);
 };
 
-export const animationPositioning = (buttonsObjects) => {
-  const childElement = document.querySelector(".js-child");
-  activeProperties = [];
+export const animationPositioning = (buttonsObjects, element) => {
+  activePropertiesNew = [];
 
   buttonsObjects.forEach((object) => {
     let prop = "";
     let propValue = "";
-    let positionValue;
 
     object.properties.forEach(obj => {
       obj.active ? prop = obj.name : "";
@@ -44,27 +42,27 @@ export const animationPositioning = (buttonsObjects) => {
     });
 
     if (prop && propValue) {
-      activeProperties = [...activeProperties, { property: prop, propertyValue: propValue }];
+      activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue }];
     };
   });
 
   activePropertiesLast.forEach((property) => {
-    childElement.style[property.property] = property.propertyValue;
+    element.style[property.property] = property.propertyValue;
   });
 
   setTimeout(() => {
     buttonsObjects.forEach((object) => {
       object.properties.forEach(obj => {
-        obj.name === "position" ? childElement.style[obj.name] = "static" : "";
-        obj.name === "transform" ? childElement.style[obj.name] = "none" : "";
-        ["top", "bottom", "left", "right"].includes(obj.name) ? childElement.style[obj.name] = "auto" : "";
+        obj.name === "position" ? element.style[obj.name] = "static" : "";
+        obj.name === "transform" ? element.style[obj.name] = "none" : "";
+        ["top", "bottom", "left", "right"].includes(obj.name) ? element.style[obj.name] = "auto" : "";
       });
     });
 
-    activeProperties.forEach((property) => {
-      childElement.style[property.property] = property.propertyValue;
+    activePropertiesNew.forEach((property) => {
+      element.style[property.property] = property.propertyValue;
     });
   }, 100)
 
-  activePropertiesLast = activeProperties
+  activePropertiesLast = activePropertiesNew;
 };

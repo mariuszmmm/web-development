@@ -1,4 +1,4 @@
-import { tagsArray } from "./tagsArray.js"
+import { tagsArray } from "./tagsArray.js";
 import { transitionOpacityAnimation } from '../Animation/script.js';
 
 export const htmlTags = () => {
@@ -21,11 +21,11 @@ export const htmlTags = () => {
       if (!tagsCategory.includes(tag.category)) {
         tagsCategory.push(tag.category)
       };
-    })
+    });
 
     tagsCategoryWithActive = tagsCategory.map((tag) => ({
       name: tag, active: false
-    }))
+    }));
 
     let labelElement = "";
     tagsCategoryWithActive.forEach((tagCategory) => {
@@ -45,35 +45,33 @@ export const htmlTags = () => {
                 ${tag.description}
             </p>
           `;
-        }
+        };
       });
 
       labelElement += `   
         </div>
-        <button id="${tagCategory.name}" 
-          class="button button--example ${tagCategory.active ? "button--active" : ""} 
-                  js-exampleButton">
-            example
+        <button id="${tagCategory.name}" class="button button--example ${tagCategory.active ? "button--active" : ""} js-exampleButton">
+          example
         </button> 
         </div>
       `;
     });
 
-    return labelElement
+    return labelElement;
   };
 
   const bindButtons = () => {
     const buttonElements = document.querySelectorAll(".js-exampleButton");
 
     buttonElements.forEach((button) => {
-      button.addEventListener("click", onClick)
-      button.classList.remove("button--active")
+      button.addEventListener("click", onClick);
+      button.classList.remove("button--active");
       tagsCategoryWithActive.forEach((tag) => {
         if ((button.id === tag.name) && tag.active) {
-          button.classList.add("button--active")
-        }
-      })
-    })
+          button.classList.add("button--active");
+        };
+      });
+    });
   };
 
   const renderExample = (event, example) => {
@@ -137,8 +135,8 @@ export const htmlTags = () => {
         tag.active = true
       } else {
         tag.active = false
-      }
-    })
+      };
+    });
 
     bindButtons();
     let example;

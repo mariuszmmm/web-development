@@ -1,6 +1,6 @@
-import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
-import { transitionHeightAnimation } from "../Animation/script.js"
-import { animationPositioning } from "../Animation/script.js"
+import { buttonsArrayRaw } from "./buttonsArrayRaw.js";
+import { transitionHeightAnimation } from "../Animation/script.js";
+import { animationPositioning } from "../Animation/script.js";
 
 export const positioning = () => {
   let buttonsObjects = buttonsArrayRaw.map((obj) => {
@@ -20,7 +20,9 @@ export const positioning = () => {
          ${settingsContents()}
          ${buttonsContainer()}
       `;
-    transitionHeightAnimation();
+
+    const settingsContentsElement = document.querySelector(".js-settingsContents");
+    transitionHeightAnimation(settingsContentsElement);
   };
 
   const settingsContents = () => {
@@ -29,23 +31,26 @@ export const positioning = () => {
     const settingsLabel = () => {
       let contentsElement = "";
       buttonsObjects.forEach((buttons) => {
-        const active = (buttons.properties.find((buttons) => buttons.active === true))
+        const active = (buttons.properties.find((buttons) => buttons.active === true));
 
         buttons.properties.forEach((prop) => {
           if (prop.active) {
-            contentsElement += `<p class="settingsParagraph settingsParagraph--positioning">
-                  ${prop.active ? prop.name : ""}`
+            contentsElement += `
+              <p class="settingsParagraph settingsParagraph--positioning">
+                ${prop.active ? prop.name : ""}
+            `;
           };
         });
+
         if (active !== undefined) {
           buttons.propertiesValues.forEach((prop) => {
             if (prop.active) {
-              contentsElement += `:
-                ${prop.active ? prop.name : ""}; </p>`
+              contentsElement += `: ${prop.active ? prop.name : ""}; </p>`
             };
           });
         };
       });
+
       return contentsElement;
     };
 
@@ -88,12 +93,12 @@ export const positioning = () => {
             ${obj.name}
           </button>
         `;
-      })
+      });
       propsElements += `</div>`;
     });
     propsElements += `</div>`;
 
-    return propsElements
+    return propsElements;
   };
 
   const renderOutput = () => {
@@ -116,7 +121,8 @@ export const positioning = () => {
       </div>
     `;
 
-    animationPositioning(buttonsObjects);
+    const childElement = document.querySelector(".js-child");
+    animationPositioning(buttonsObjects, childElement);
   };
 
   const bindPropertyButtons = () => {
@@ -131,7 +137,6 @@ export const positioning = () => {
   };
 
   const buttonPropertyToggle = (button) => {
-
     const turnOffPropertyButton = (text) => {
       buttonsObjects.forEach(({ properties }) => {
         properties.forEach(prop => {
@@ -142,6 +147,7 @@ export const positioning = () => {
 
     const turnResetValueButton = (text) => {
       let indexPropertyOff;
+
       buttonsObjects.forEach((object, index) => {
         object.properties.forEach(property => {
           if (property.name === text) {
@@ -159,7 +165,7 @@ export const positioning = () => {
       properties.forEach(prop => {
         if (prop.name === button.innerText) {
           if (!prop.active) {
-            prop.active = true
+            prop.active = true;
             switch (button.innerText) {
               case "top":
                 turnOffPropertyButton("bottom");
@@ -181,37 +187,38 @@ export const positioning = () => {
           } else {
             prop.active = false;
             turnResetValueButton(prop.name);
-          }
+          };
         };
       });
     });
   };
 
   const bindValueButtons = () => {
-      const buttonValueElements = document.querySelectorAll(".js-valueButton");
+    const buttonValueElements = document.querySelectorAll(".js-valueButton");
 
-      buttonValueElements.forEach((buttonValue) => {
-        buttonValue.addEventListener("click", ({target}) => {
-          buttonValueToggle(buttonValue, target.name);
-          render();
-        });
+    buttonValueElements.forEach((buttonValue) => {
+      buttonValue.addEventListener("click", ({ target }) => {
+        buttonValueToggle(buttonValue, target.name);
+        render();
       });
+    });
   };
 
   const buttonValueToggle = (button, name) => {
-    let activePropertyIndex
-    
+    let activePropertyIndex;
+
     buttonsObjects.forEach((object, index) => {
       object.properties.forEach(prop => {
-          if (prop.name === name) { activePropertyIndex = index;
-          };
+        if (prop.name === name) {
+          activePropertyIndex = index;
+        };
       });
     });
-    
+
     buttonsObjects[activePropertyIndex].propertiesValues.forEach(prop => {
       if (prop.name === button.innerText) {
         prop.active = true;
-      } else { prop.active = false }
+      } else { prop.active = false };
     });
   };
 

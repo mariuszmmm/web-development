@@ -1,6 +1,6 @@
-import { methodsArrayRaw } from "./methodsArrayRaw.js"
-import { arrayExample, letters, arrayWords, arrayEmoticons, arrayObjects, mixArray } from "./arrays.js"
-import { transitionHeightAnimation } from "../Animation/script.js"
+import { methodsArrayRaw } from "./methodsArrayRaw.js";
+import { arrayExample, letters, arrayWords, arrayEmoticons, arrayObjects, mixArray } from "./arrays.js";
+import { transitionHeightAnimation } from "../Animation/script.js";
 
 export const arrays = () => {
   let array = [];
@@ -85,13 +85,13 @@ export const arrays = () => {
             if (obj.active === true) {
               if (obj.methodContent.includes("({")) {
                 content = "})";
-              }
+              };
               if (obj.methodContent.includes("([")) {
                 content = "])";
-              }
+              };
               if (obj.methodContent.includes("find(")) {
                 content = ")";
-              }
+              };
             };
           });
         };
@@ -334,7 +334,9 @@ export const arrays = () => {
       ${leabelContents()}
       ${methodsSettings()}      
     `;
-    transitionHeightAnimation();
+
+    const settingsContentsElement = document.querySelector(".js-settingsContents");
+    transitionHeightAnimation(settingsContentsElement);
   };
 
   const renderOutput = () => {
