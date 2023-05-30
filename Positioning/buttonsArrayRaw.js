@@ -8,7 +8,7 @@ export const buttonsArrayRaw = [
     propertiesValues: ["0", "50px", "100px", "30%", "50%", "100%", "-50px", "-100px", "-30%", "-50%", "-100%"]
   },
   {
-    properties: ["right"],
+    properties: ["left"],
     propertiesValues: ["0", "50px", "100px", "30%", "50%", "100%", "-50px", "-100px", "-30%", "-50%", "-100%"]
   },
   {
@@ -16,11 +16,12 @@ export const buttonsArrayRaw = [
     propertiesValues: ["0", "50px", "100px", "30%", "50%", "100%", "-50px", "-100px", "-30%", "-50%", "-100%"]
   },
   {
-    properties: ["left"],
+    properties: ["right"],
     propertiesValues: ["0", "50px", "100px", "30%", "50%", "100%", "-50px", "-100px", "-30%", "-50%", "-100%"]
+    
   },
-   {
-   properties: ["transform"],
-   propertiesValues: ["none", "translate(-50px, -50px)", "scale(2, 2)", "rotate(45deg)"]
-   },
+  {
+    properties: ["transform"],
+    propertiesValues: ["none", "translate(-50px, -50px)", "scale(2, 2)", "rotate(45deg)"]
+  },
 ];

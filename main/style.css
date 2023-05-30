@@ -283,7 +283,7 @@ body {
 }
 
 .outputParent {
-  position: static;
+  position: relative;
   border: 3px dashed white;
   width: 85%;
   height: 75%;

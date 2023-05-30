@@ -57,7 +57,7 @@ export const positioning = () => {
           <p class="settingsParagraph settingsParagraph--positioning">  border: 3px dashed white; </p>
           <p class="settingsParagraph settingsParagraph--positioning">  background: purple; </p>
           <p class="settingsParagraph--positioning strong">}</p>
-          <p class="settingsParagraph--positioning strong">.child_1 {</p>
+          <p class="settingsParagraph--positioning strong">.child_2 {</p>
             ${settingsLabel()}
           <p class="settingsParagraph--positioning strong">}</p>
         </div>
@@ -107,10 +107,11 @@ export const positioning = () => {
         <div class="outputLabelLeft">LEFT</div>
         <div class="outputLabelRight">RIGHT</div>
         <div class="outputLabelBottom">BOTTOM</div>
-        <div class="outputLabelCenter">parent</div>
+
         <div class="outputParent js-outputParent">
-          <div class="outputChild--withSize js-child">child_1</div>
-          <div class="outputChild--withSize">child_2</div>
+        <div class="outputLabelCenter">parent</div>
+          <div class="outputChild--withSize">child_1</div>
+          <div class="outputChild--withSize js-child">child_2</div>
         </div>
       </div>
     `;
@@ -190,9 +191,9 @@ export const positioning = () => {
     const buttonElements = [
       { selector: ".js-positionValueButton", value: 0 },
       { selector: ".js-topValueButton", value: 1 },
-      { selector: ".js-rightValueButton", value: 2 },
+      { selector: ".js-leftValueButton", value: 2 },
       { selector: ".js-bottomValueButton", value: 3 },
-      { selector: ".js-leftValueButton", value: 4 },
+      { selector: ".js-rightValueButton", value: 4 },
       { selector: ".js-transformValueButton", value: 5 },
     ];
 
