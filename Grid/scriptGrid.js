@@ -142,7 +142,7 @@ export const grid = () => {
           let key = buttons.properties[0].key;
 
           element += `
-            <div class="propertyButtons propertyButtons--grid">
+            <div class="propertyElements propertyElements--grid">
               <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                 ${property.name}
               </button>
@@ -150,7 +150,7 @@ export const grid = () => {
                 :
               </span>
             </div>
-            <div class="valueButtons">
+            <div class="valueElements">
           `;
 
           buttons.propertiesValues.forEach((button) => {
@@ -175,7 +175,7 @@ export const grid = () => {
       let element = "";
 
       element += `
-        <div class="propertyButtons propertyButtons--grid">
+        <div class="propertyElements propertyElements--grid">
           <span class="settingsChild">
             ${name}
           </span>
@@ -183,7 +183,7 @@ export const grid = () => {
             :
           </span>
         </div>
-        <div class="valueButtons">
+        <div class="valueElements">
           <button class="button settingsChild js-minusButton${name}">
             &nbsp-&nbsp
           </button>
@@ -207,14 +207,14 @@ export const grid = () => {
 
     buttonsElement += `
       <div class="buttonsContainer">
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsContainer("parent")}
         </div>
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsNumbers("Children", children)}
           ${buttonsContainer("child_all")}
         </div>
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsNumbers("Selected", childSelected)}
           ${buttonsContainer("child")}
         </div>

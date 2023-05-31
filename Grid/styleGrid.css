@@ -24,12 +24,12 @@
   }
 }
 
-.propertyButtons--grid {
+.propertyElements--grid {
   width: 230px;
 }
 
 @media (max-width: 768px) {
-  .propertyButtons--grid {
+  .propertyElements--grid {
     width: 150px;
   }
 }

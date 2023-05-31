@@ -181,7 +181,7 @@ export const arrays = () => {
 
         element += `
           <form class="form js-form">
-            <div class="propertyButtons propertyButtons--arrays">
+            <div class="propertyElements propertyElements--arrays">
               <span class="methodName">
                 array.${name}
               </span>
@@ -209,13 +209,13 @@ export const arrays = () => {
                 ) 
               </div>
             </div>
-            <div class="valueButtons valueButtons--arrays">
+            <div class="valueElements valueElements--arrays">
               <button id="${name}" class="button button--array button--run">
                 run
               </button>
             </div>
           </form>
-          <div class="valueButtons valueButtons--arrays">
+          <div class="valueElements valueElements--arrays">
        `;
 
         objects.forEach((obj) => {
@@ -253,7 +253,7 @@ export const arrays = () => {
             <span class="arrayMethods--label">
               load array :
             </span>
-            <div class="valueButtons">   
+            <div class="valueElements">   
               <button id="randomNaturalNumbers" class="button js-random">
                 random natural numbers
               </button>
@@ -291,13 +291,13 @@ export const arrays = () => {
                 ${!!rangeValue ? rangeValue : "10"}
               </span>
             </label>          
-            <div class="valueButtons">              
+            <div class="valueElements">              
               <input id="inputRange" type="range" value="${!!rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
             </div>
             <span class="arrayMethods--label">
               example array :
             </span>
-            <div class="valueButtons">
+            <div class="valueElements">
               <button id="showExample" class="button ${!!showExampleArray ? "button--active" : ""} js-example">
               show example array
               </button>          
@@ -312,7 +312,7 @@ export const arrays = () => {
           <span class="arrayMethods--label">
             methods :
           </span>
-          <div class="settingsButtons">
+          <div class="settingsElements">
       `;
 
       methodsArray.forEach((object) => {

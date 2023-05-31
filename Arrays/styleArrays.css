@@ -47,18 +47,18 @@
   align-content: start;
 }
 
-.propertyButtons--arrays {
+.propertyElements--arrays {
   width: 515px;
   justify-self: flex-end;
 }
 
 @media (max-width: 960px) {
-  .propertyButtons--arrays {
+  .propertyElements--arrays {
     width: 345px;
   }
 }
 
-.valueButtons--arrays {
+.valueElements--arrays {
   justify-self: flex-start;
 }
 

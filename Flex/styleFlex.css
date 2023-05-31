@@ -24,12 +24,12 @@
   }
 }
 
-.propertyButtons--flex {
+.propertyElements--flex {
   width: 165px;
 }
 
 @media (max-width: 768px) {
-  .propertyButtons--flex {
+  .propertyElements--flex {
     width: 120px;
   }
 }
