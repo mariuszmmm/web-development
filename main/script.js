@@ -1,6 +1,7 @@
 import { startPage } from '../StartPage/scriptStartPage.js';
 import { terminal } from '../Terminal/scriptTerminal.js';
 import { htmlTags } from '../HtmlTags/scriptHtmlTags.js';
+import { inputsHtml } from '../InputsHtml/scriptInputsHtml.js';
 import { sectionsHtml } from '../SectionsHtml/scriptSectionsHtml.js';
 import { positioning } from '../Positioning/scriptPositioning.js';
 import { flex } from '../Flex/scriptFlex.js';
@@ -26,9 +27,11 @@ const init = () => {
     switch (event.target.innerText) {
       case "Terminal": transitionOpacityAnimation(() => terminal(), settingsElement, outputElement);
         break;
-      case "HTML Sections": transitionOpacityAnimation(() => sectionsHtml(), settingsElement, outputElement);
-        break;
       case "HTML Tags": transitionOpacityAnimation(() => htmlTags(), settingsElement, outputElement);
+        break;
+      case "HTML Inputs": transitionOpacityAnimation(() => inputsHtml(), settingsElement, outputElement);
+        break;
+      case "HTML Sections": transitionOpacityAnimation(() => sectionsHtml(), settingsElement, outputElement);
         break;
       case "CSS Positioning": transitionOpacityAnimation(() => positioning(), settingsElement, outputElement);
         break;

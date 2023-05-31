@@ -1,0 +1,49 @@
+.inputsSettings--label {
+  display: inline-block;
+  min-width: max-content;
+  text-align: start;
+  margin: 25px;
+  font-weight: 900;
+  padding: 2px;
+  font-size: 25px;
+}
+
+.inputsSettings {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: start;
+}
+
+.propertyElements--inputs {
+  justify-content: flex-end;
+  width: 550px;
+  align-self: center;
+  margin-right: 50px;
+}
+
+@media (max-width: 960px) {
+  .propertyElements--inputs {
+    width: 415px;
+    margin-right: 5vw;
+  }
+}
+
+.valueElements--inputs {
+  justify-content: center;
+  justify-self: center;
+  align-items: center;
+  align-self: center;
+  margin: 10px;
+  width: 100%;
+}
+
+.contentName {
+  margin: 30px;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.input--inputs {
+  width: 100%;
+  margin: 0 30px;
+}
