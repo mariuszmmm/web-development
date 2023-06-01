@@ -739,6 +739,7 @@ export const arrays = () => {
         });
       };
     });
+
     if (content !== "") return Function(`return (${content})`)();
   };
 
@@ -796,6 +797,11 @@ export const arrays = () => {
       case "findIndex":
         output = array.findIndex(enterContentForArrowFunction(button, inputValue));
         methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        break;
+      case "reduce":
+        output = array.reduce(enterContentForArrowFunction(button),
+          ((array.every(item => typeof (item) === "number") && typeof (readNumberOrString(inputValue)) === "number") ? Number(inputValue) : readNumberOrString(inputValue)));
+        methodContent = [method, enterContentForArrowFunction(button) + ", " + inputValue, "arrowFunction"];
         break;
       case "filter":
         output = array.filter(enterContentForArrowFunction(button, inputValue));

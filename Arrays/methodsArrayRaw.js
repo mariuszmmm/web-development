@@ -409,6 +409,18 @@ export const methodsArrayRaw = [
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
   },
   {
+    method: "reduce",
+    methodContents: [
+      {
+        button: "((acc,cur)=>acc+cur,?)",
+        content: "(acc, cur) => acc + cur ",
+        destiny: "forAll",
+      },
+    ],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined|)$/,
+  },
+  {
     method: "sort",
     methodContents: [
       {
