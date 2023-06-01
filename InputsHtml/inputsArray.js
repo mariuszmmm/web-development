@@ -1,3 +1,22 @@
 export const inputsArray = [
-  "button", "checkbox", "color", "date", "month", "time", "file", "number", "password", "radio", "range", "reset", "search", "submit", "text", "url", "email"
+  { type: "datetime-local", name: "dateAndTime" },
+  { type: "date", name: "date" },
+  { type: "time", name: "time" },
+  { type: "week", name: "week" },
+  { type: "month", name: "month" },
+  { type: "number", name: "number" },
+  { type: "text", name: "name" },
+  { type: "password", name: "password" },
+  { type: "color", value: "#ff0000" },
+  { type: "range", name: "range" },
+  { type: "checkbox", name: "checkbox" },
+  { type: "radio", value: "radio" },
+  { type: "file", name: "file" },
+  { type: "tel", name: "phone" },
+  { type: "email", name: "email" },
+  { type: "url", name: "url" },
+  { type: "hidden", name: "secret-token", value: "d$!&?47+7g%7$" },
+  { type: "button", value: "Button" },
+  { type: "reset", value: "Reset" },
+  { type: "submit", value: "Submit" }
 ];

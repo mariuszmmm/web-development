@@ -19,16 +19,19 @@ export const inputsHtml = () => {
         inputsSetingsElement += `
           <div class="propertyElements propertyElements--inputs">
             <span class="contentName">
-              &lt;input type="${input}"&gt;
+              &lt;input type="${input.type}"&gt;
             </span>
           </div>
           <div class="propertyElements">
-            <span class="contentName">
-              &nbsp; → &nbsp;
+            <span class="arrow">
+              →
             </span>
           </div>
           <div class="valueElements valueElements--inputs">
-            <input class="input--inputs" type="${input}" name="${input}" />
+            <input class="input--inputs" type="${input.type}" required
+              ${!!input.value ? `value="${input.value}"` : ""} 
+              ${!!input.name ? `name="${input.name}"` : ""}
+            />
           </div>
         `;
       });
