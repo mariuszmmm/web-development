@@ -12,7 +12,7 @@ export const inputsHtml = () => {
           <span class="inputsSettings--label">
             HTML Input Types :
           </span>
-          <form class="settingsElements">
+          <form class="settingsElements settingsElements--inputs">
       `;
 
       inputsArray.forEach(input => {
@@ -21,12 +21,14 @@ export const inputsHtml = () => {
             <span class="contentName">
               &lt;input type="${input}"&gt;
             </span>
+          </div>
+          <div class="propertyElements">
             <span class="contentName">
               &nbsp; → &nbsp;
             </span>
           </div>
           <div class="valueElements valueElements--inputs">
-            <input class="input--inputs" type="${input}" />
+            <input class="input--inputs" type="${input}" name="${input}" />
           </div>
         `;
       });
