@@ -108,7 +108,7 @@ export const flex = () => {
           let key = buttons.properties[0].key;
 
           element += `
-            <div class="propertyButtons propertyButtons--flex">
+            <div class="propertyElements propertyElements--flex">
               <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                 &nbsp${property.name}&nbsp
               </button>
@@ -116,7 +116,7 @@ export const flex = () => {
                 :
               </span>
             </div>
-            <div class="valueButtons">
+            <div class="valueElements">
           `;
 
           buttons.propertiesValues.forEach((button) => {
@@ -141,7 +141,7 @@ export const flex = () => {
       let element = "";
 
       element += `
-        <div class="propertyButtons propertyButtons--flex">
+        <div class="propertyElements propertyElements--flex">
           <span class="settingsChild">
             ${name}
           </span>
@@ -149,7 +149,7 @@ export const flex = () => {
             :
           </span>
         </div>
-        <div class="valueButtons">
+        <div class="valueElements">
           <button class="button settingsChild js-minusButton${name}">
             &nbsp-&nbsp
           </button>
@@ -173,14 +173,14 @@ export const flex = () => {
 
     buttonsElement += `
       <div class="buttonsContainer">
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsContainer("parent")}
         </div>
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsNumbers("Children", children)}
           ${buttonsContainer("child_all")}
         </div>
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsNumbers("Selected", childSelected)}
           ${buttonsContainer("child")}
         </div>
