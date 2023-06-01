@@ -728,7 +728,11 @@ export const arrays = () => {
         });
       };
     });
+    content = "(acc,cur) => (acc+cur),(0)"
+    console.log(content)
+    console.log(Function(`return (${content})`)())
     if (content !== "") return Function(`return (${content})`)();
+        
   };
 
   const enterContentForTwoArguments = (inputValue) => {
@@ -785,6 +789,12 @@ export const arrays = () => {
       case "findIndex":
         output = array.findIndex(enterContentForArrowFunction(button, inputValue));
         methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        break;
+      case "reduce":
+        console.log(1)
+      output = array.reduce(enterContentForArrowFunction(button, inputValue));
+             console.log(2)
+      methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "filter":
         output = array.filter(enterContentForArrowFunction(button, inputValue));

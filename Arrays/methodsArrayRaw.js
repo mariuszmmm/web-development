@@ -237,6 +237,25 @@ export const methodsArrayRaw = [
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
   },
+  
+  
+  
+    {
+    method: "reduce",
+    methodContents: [
+      {
+        button: "((acc,cur)=>acc+cur,?)",
+        content: "(acc,cur) => acc+cur,",
+        destiny: "forNumbers",
+      },
+
+    ],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  },
+  
+  
+  
   {
     method: "filter",
     methodContents: [
