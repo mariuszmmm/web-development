@@ -1,25 +1,25 @@
 .settingsContents--positioning {
-   min-width: 400px;
-   flex-grow: 0;
+  min-width: 400px;
+  flex-grow: 0;
 }
 
 @media (max-width: 768px) {
-   .settingsContents--positioning {
-      min-width: 265px;
-   }
+  .settingsContents--positioning {
+    min-width: 265px;
+  }
 }
 
 .settingsParagraph--positioning {
-   margin-top: 5px;
-   margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .outputContents--positioning {
-   aspect-ratio: 16/9;
+  aspect-ratio: 16/9;
 }
 
 @media (min-width: 1650px) {
-   .outputContents--positioning {
-      min-height: 500px;
-   }
+  .outputContents--positioning {
+    min-height: 500px;
+  }
 }

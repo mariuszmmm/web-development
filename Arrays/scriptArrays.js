@@ -1,5 +1,6 @@
-import { methodsArrayRaw } from "./methodsArrayRaw.js"
-import { arrayExample, letters, arrayWords, arrayEmoticons, arrayObjects, mixArray } from "./arrays.js"
+import { methodsArrayRaw } from "./methodsArrayRaw.js";
+import { arrayExample, letters, arrayWords, arrayEmoticons, arrayObjects, mixArray } from "./arrays.js";
+import { transitionHeightAnimation } from "../Animation/script.js";
 
 export const arrays = () => {
   let array = [];
@@ -83,13 +84,13 @@ export const arrays = () => {
             if (obj.active === true) {
               if (obj.methodContent.includes("({")) {
                 content = "})";
-              }
+              };
               if (obj.methodContent.includes("([")) {
                 content = "])";
-              }
+              };
               if (obj.methodContent.includes("find(")) {
                 content = ")";
-              }
+              };
             };
           });
         };
@@ -105,10 +106,8 @@ export const arrays = () => {
 
     for (let property in object) {
       index++
-      content += (property + ":")
-        +
-        (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property])
-        +
+      content += (property + ":") +
+        (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) +
         ((Object.keys(object).length === index + 1) ? "" : ",")
     };
 
@@ -137,7 +136,7 @@ export const arrays = () => {
       let element = "";
 
       element += `
-        <div class="settingsContents settingsContents--array">
+        <div class="settingsContents settingsContents--array js-settingsContents">
           <p class="settingsParagraph--arrays strong">const array = [
           ${array.length > 0 ? `
           </p>
@@ -181,7 +180,7 @@ export const arrays = () => {
 
         element += `
           <form class="form js-form">
-            <div class="propertyButtons propertyButtons--arrays">
+            <div class="propertyElements propertyElements--arrays">
               <span class="methodName">
                 array.${name}
               </span>
@@ -209,25 +208,21 @@ export const arrays = () => {
                 ) 
               </div>
             </div>
-            <div class="valueButtons valueButtons--arrays">
+            <div class="valueElements valueElements--arrays">
               <button id="${name}" class="button button--array button--run">
                 run
               </button>
             </div>
           </form>
-          <div class="valueButtons valueButtons--arrays">
+          <div class="valueElements valueElements--arrays">
        `;
 
         objects.forEach((obj) => {
           if (
-            (obj.destiny === "forAll")
-            ||
-            (array.every(item => typeof (item) === "number") && obj.destiny === "forNumbers")
-            ||
-            (array.every(item => typeof (item) === "string") && obj.destiny === "forStrings")
-            ||
-            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects")
-            ||
+            (obj.destiny === "forAll") ||
+            (array.every(item => typeof (item) === "number") && obj.destiny === "forNumbers") ||
+            (array.every(item => typeof (item) === "string") && obj.destiny === "forStrings") ||
+            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects") ||
             (array.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
           ) {
             element += `  
@@ -257,7 +252,7 @@ export const arrays = () => {
             <span class="arrayMethods--label">
               load array :
             </span>
-            <div class="valueButtons">   
+            <div class="valueElements">   
               <button id="randomNaturalNumbers" class="button js-random">
                 random natural numbers
               </button>
@@ -295,13 +290,13 @@ export const arrays = () => {
                 ${!!rangeValue ? rangeValue : "10"}
               </span>
             </label>          
-            <div class="valueButtons">              
+            <div class="valueElements">              
               <input id="inputRange" type="range" value="${!!rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
             </div>
             <span class="arrayMethods--label">
               example array :
             </span>
-            <div class="valueButtons">
+            <div class="valueElements">
               <button id="showExample" class="button ${!!showExampleArray ? "button--active" : ""} js-example">
               show example array
               </button>          
@@ -316,7 +311,7 @@ export const arrays = () => {
           <span class="arrayMethods--label">
             methods :
           </span>
-          <div class="settingsButtons">
+          <div class="settingsElements">
       `;
 
       methodsArray.forEach((object) => {
@@ -338,6 +333,9 @@ export const arrays = () => {
       ${leabelContents()}
       ${methodsSettings()}      
     `;
+
+    const settingsContentsElement = document.querySelector(".js-settingsContents");
+    transitionHeightAnimation(settingsContentsElement);
   };
 
   const renderOutput = () => {
@@ -375,8 +373,12 @@ export const arrays = () => {
       if (input.name === methodActive) input.focus();
 
       input.addEventListener("click", ({ target }) => {
-        methodsArray.forEach(({ method }) => {
-          if (method === input.name) target.value = "";
+        methodsArray.forEach((method) => {
+          if (method.method === input.name) {
+            target.value = "";
+            output = `Enter a value and then click the "run" button or hit enter.`;
+            renderOutput();
+          };
         });
       });
 
@@ -573,21 +575,29 @@ export const arrays = () => {
 
     randomElements.forEach(element => element.addEventListener("click", ({ target }) => {
       switch (target.id) {
-        case "randomNaturalNumbers": useRandomNaturalNumbers();
+        case "randomNaturalNumbers":
+          useRandomNaturalNumbers();
           break;
-        case "randomIntegers": useRandomIntegers();
+        case "randomIntegers":
+          useRandomIntegers();
           break;
-        case "randomLetters": useRandomLetters();
+        case "randomLetters":
+          useRandomLetters();
           break;
-        case "randomWords": useRandomWords();
+        case "randomWords":
+          useRandomWords();
           break;
-        case "randomObjects": useRandomObjects();
+        case "randomObjects":
+          useRandomObjects();
           break;
-        case "randomArrays": useRandomArrays();
+        case "randomArrays":
+          useRandomArrays();
           break;
-        case "randomEmoticons": useRandomEmoticons();
+        case "randomEmoticons":
+          useRandomEmoticons();
           break;
-        case "randomElements": useRandomElements();
+        case "randomElements":
+          useRandomElements();
           break;
       };
     }));
@@ -639,15 +649,20 @@ export const arrays = () => {
     exampleElements.forEach((element) => {
       element.addEventListener("click", ({ target }) => {
         switch (target.id) {
-          case "showExample": changeShowExampleArray();
+          case "showExample":
+            changeShowExampleArray();
             break;
-          case "loadFromExample": loadFromExample();
+          case "loadFromExample":
+            loadFromExample();
             break;
-          case "saveToExample": saveToExample();
+          case "saveToExample":
+            saveToExample();
             break;
-          case "resetExample": resetExample();
+          case "resetExample":
+            resetExample();
             break;
-          case "loadFromOutput": loadFromOutput();
+          case "loadFromOutput":
+            loadFromOutput();
             break;
         };
       });
@@ -675,9 +690,7 @@ export const arrays = () => {
                 obj.active = false;
               };
             });
-            output = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.`
-              + `${!!object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}`
-              : "."}`;
+            output = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.` + `${!!object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}` : "."}${!object.inputType ? `<br>Now click the "run" button.` : ""}`;
             render();
           };
         });
@@ -705,8 +718,7 @@ export const arrays = () => {
   const enterNumberOrString = (inputValue) => {
     return (
       !["null", "true", "false", "undefined", "NaN"].includes(inputValue) ?
-        (typeof (inputValue) === "string" ? (inputValue) : "")
-        :
+        (typeof (inputValue) === "string" ? (inputValue) : "") :
         (!isNaN(inputValue) ?
           (inputValue !== "" ? (Number(inputValue)) : null) :
           notString(inputValue)
@@ -733,8 +745,8 @@ export const arrays = () => {
           if (!!element.active) {
             content = element.methodContent +
               (!!inputValue ?
-                ((typeof (inputValue) === "object" ? inputValue.name : inputValue) + (changeArrowFunctionIfObject(method)))
-                : ""
+                ((typeof (inputValue) === "object" ? inputValue.name : inputValue) + (changeArrowFunctionIfObject(method))) :
+                ""
               )
           };
         });
@@ -846,7 +858,7 @@ export const arrays = () => {
     renderSettings();
     renderOutput();
     bindInputsAndButtons();
-  };
+  }
 
   render();
 };

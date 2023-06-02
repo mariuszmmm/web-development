@@ -173,7 +173,7 @@ export const methodsArrayRaw = [
       },
       {
         button: "(a=>a.find(e=>e===?))",
-        content: "a => a.find(e=>e=== ",
+        content: "a => a.find( e => e === ",
         destiny: "forArrays",
       },
     ],

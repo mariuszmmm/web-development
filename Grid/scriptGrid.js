@@ -1,4 +1,7 @@
-import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
+import { buttonsArrayRaw } from "./buttonsArrayRaw.js";
+import { transitionHeightAnimation } from "../Animation/script.js";
+let activePropertiesNew = [];
+let activePropertiesLast = [];
 
 export const grid = () => {
   let buttonsArray = [];
@@ -23,8 +26,7 @@ export const grid = () => {
   let children = 7;
   let childSelected = 1;
   const childrenMax = 20;
-  const lorem =
-  {
+  const lorem = {
     loremActive: false,
     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
   };
@@ -45,6 +47,9 @@ export const grid = () => {
          ${settingsContents()}
          ${settingsButtons()}
       `;
+
+    const settingsContentsElement = document.querySelector(".js-settingsContents");
+    transitionHeightAnimation(settingsContentsElement);
   };
 
   const settingsContents = () => {
@@ -71,7 +76,6 @@ export const grid = () => {
           if (active) {
             buttons.propertiesValues.forEach((prop) => {
               if (prop.active) {
-
                 const areaContent = (prop) => {
                   let textArray = formatTextArea(prop)[0];
                   let element = "";
@@ -83,7 +87,7 @@ export const grid = () => {
                           ${text}
                         </p>
                       `;
-                    })
+                    });
                     element += `  
                       <p class="settingsParagraph settingsParagraph--grid">
                         ;
@@ -91,7 +95,7 @@ export const grid = () => {
                     `;
                   } else element = prop + ";";
 
-                  return element
+                  return element;
                 }
 
                 element += `
@@ -108,7 +112,7 @@ export const grid = () => {
     };
 
     contentsElement += `
-      <div class="settingsContents settingsContents--grid">
+      <div class="settingsContents settingsContents--grid js-settingsContents">
         <p class="settingsParagraph--grid strong">.parent {</p>
         ${settingsLabel("parent")}
         <p class="settingsParagraph--grid strong">}</p>
@@ -138,7 +142,7 @@ export const grid = () => {
           let key = buttons.properties[0].key;
 
           element += `
-            <div class="propertyButtons propertyButtons--grid">
+            <div class="propertyElements propertyElements--grid">
               <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                 ${property.name}
               </button>
@@ -146,7 +150,7 @@ export const grid = () => {
                 :
               </span>
             </div>
-            <div class="valueButtons">
+            <div class="valueElements">
           `;
 
           buttons.propertiesValues.forEach((button) => {
@@ -164,14 +168,14 @@ export const grid = () => {
         };
       });
 
-      return element
+      return element;
     };
 
     const buttonsNumbers = (name, value) => {
       let element = "";
 
       element += `
-        <div class="propertyButtons propertyButtons--grid">
+        <div class="propertyElements propertyElements--grid">
           <span class="settingsChild">
             ${name}
           </span>
@@ -179,7 +183,7 @@ export const grid = () => {
             :
           </span>
         </div>
-        <div class="valueButtons">
+        <div class="valueElements">
           <button class="button settingsChild js-minusButton${name}">
             &nbsp-&nbsp
           </button>
@@ -198,26 +202,26 @@ export const grid = () => {
         }  
         </div>`;
 
-      return element
+      return element;
     };
 
     buttonsElement += `
       <div class="buttonsContainer">
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsContainer("parent")}
         </div>
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsNumbers("Children", children)}
           ${buttonsContainer("child_all")}
         </div>
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsNumbers("Selected", childSelected)}
           ${buttonsContainer("child")}
         </div>
       </div>
     `;
 
-    return buttonsElement
+    return buttonsElement;
   };
 
   const renderOutput = () => {
@@ -235,38 +239,7 @@ export const grid = () => {
         `;
       };
 
-      return element
-    };
-
-    const styleAdd = (container) => {
-      const parentStyles = document.querySelectorAll(".js-outputParent");
-      const childAllStyles = document.querySelectorAll(".js-child_all");
-      const childStyles = document.querySelectorAll(".js-child");
-
-      buttonsArray.forEach((buttons) => {
-        const activeProperties = (buttons.properties[0].active ? buttons.properties[0] : undefined);
-        const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active));
-        let element;
-
-        switch (container) {
-          case "parent":
-            element = parentStyles;
-            break;
-          case "child_all":
-            element = childAllStyles;
-            break;
-          case "child":
-            element = childStyles;
-            break;
-        };
-
-        if (buttons.destiny === container) {
-          element.forEach((elem) => {
-            elem.style[((activeProperties) ? activeProperties.name : "")] =
-              ((activeValuesProperties) ? activeValuesProperties.name : "");
-          });
-        };
-      });
+      return element;
     };
 
     outputElement.innerHTML = "";
@@ -284,9 +257,71 @@ export const grid = () => {
          </div>
          `;
 
-    styleAdd("parent");
-    styleAdd("child_all");
-    styleAdd("child");
+    const changeGridStyles = () => {
+      const parentStyles = document.querySelectorAll(".js-outputParent");
+      const childAllStyles = document.querySelectorAll(".js-child_all");
+      const childStyles = document.querySelectorAll(".js-child");
+      activePropertiesNew = [];
+
+      buttonsArray.forEach(object => {
+        let prop = "";
+        let propValue = "";
+        let destiny;
+        let resetValues = false;
+
+        object.properties.forEach(obj => {
+          if (!obj.active && obj.name === "display" && object.destiny !== "child") {
+            prop = "display";
+            destiny = object.destiny;
+            propValue = "block";
+          }
+
+          !obj.active ? resetValues = true : "";
+          prop = obj.name;
+          destiny = object.destiny;
+        });
+
+        object.propertiesValues.forEach((obj, index) => {
+          if (!!resetValues) {
+            index === 0 ? obj.active = true : obj.active = false
+          };
+
+          if (propValue !== "block") {
+            if (obj.active) {
+              propValue = obj.name;
+            };
+          };
+        });
+
+        if (prop && propValue) {
+          activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }]
+        };
+      });
+
+      const setStyles = (elements, properties, name) => {
+        elements.forEach((element) => {
+          properties.forEach((property) => {
+            if (property.destiny === name) {
+              element.style[property.property] = property.propertyValue;
+            };
+          });
+        });
+      };
+
+      setStyles(parentStyles, activePropertiesLast, "parent");
+      setStyles(childAllStyles, activePropertiesLast, "child_all");
+      setStyles(childStyles, activePropertiesLast, "child");
+
+      setTimeout(() => {
+        setStyles(parentStyles, activePropertiesNew, "parent");
+        setStyles(childAllStyles, activePropertiesNew, "child_all");
+        setStyles(childStyles, activePropertiesNew, "child");
+      }, 200);
+
+      activePropertiesLast = activePropertiesNew;
+    };
+
+    changeGridStyles();
   };
 
   const bindPropertyButtons = () => {
@@ -305,7 +340,7 @@ export const grid = () => {
 
         if (buttonObject.key === buttonEvent.id) {
           buttonObject.active = !buttonObject.active;
-        }
+        };
       });
     };
   };
@@ -314,7 +349,7 @@ export const grid = () => {
     const buttonElements = buttonsArray.map((buttons, index) => {
       let name = ".js-" + buttons.properties[0].key + "groupValueButtons";
 
-      return { selector: name, value: index }
+      return { selector: name, value: index };
     });
 
     buttonElements.forEach((button) => {
@@ -332,7 +367,7 @@ export const grid = () => {
       buttonsArray[index].propertiesValues.forEach(prop => {
         if (prop.key === button.id) {
           prop.active = true;
-        } else { prop.active = false }
+        } else { prop.active = false };
       });
     };
   };
@@ -344,30 +379,29 @@ export const grid = () => {
     const plusButtonChildrenElement = document.querySelector(".js-plusButtonChildren");
     const loremButtonElement = document.querySelector(".js-loremButton");
 
-
     minusButtonSelectedElement.addEventListener("click", () => {
-      if (childSelected > 1) { childSelected-- }
+      if (childSelected > 1) { childSelected-- };
       render();
     });
 
     plusButtonSelectedElement.addEventListener("click", () => {
-      if (childSelected < children) { childSelected++ }
+      if (childSelected < children) { childSelected++ };
       render();
     });
 
     minusButtonChildrenElement.addEventListener("click", () => {
-      if (children > 1) { children-- }
-      if (childSelected > children) { childSelected = children }
+      if (children > 1) { children-- };
+      if (childSelected > children) { childSelected = children };
       render();
     });
 
     plusButtonChildrenElement.addEventListener("click", () => {
-      if (children < childrenMax) { children++ }
+      if (children < childrenMax) { children++ };
       render();
     });
 
     loremButtonElement.addEventListener("click", () => {
-      lorem.loremActive = !lorem.loremActive
+      lorem.loremActive = !lorem.loremActive;
       render();
     });
   };

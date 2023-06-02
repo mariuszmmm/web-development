@@ -1,35 +1,35 @@
 .settingsContents--grid {
-   min-width: 400px;
-   flex-grow: 0;
+  min-width: 400px;
+  flex-grow: 0;
 }
 
 @media (max-width: 768px) {
-   .settingsContents--grid {
-      min-width: 265px;
-   }
+  .settingsContents--grid {
+    min-width: 265px;
+  }
 }
 
 .settingsParagraph--grid {
-   margin-top: 5px;
-   margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .outputContents--grid {
-   aspect-ratio: 16/9;
+  aspect-ratio: 16/9;
 }
 
 @media (min-width: 1650px) {
-   .outputContents--grid {
-      min-height: 500px;
-   }
+  .outputContents--grid {
+    min-height: 500px;
+  }
 }
 
-.propertyButtons--grid {
-   width: 230px;
+.propertyElements--grid {
+  width: 230px;
 }
 
 @media (max-width: 768px) {
-   .propertyButtons--grid {
-      width: 150px;
-   }
+  .propertyElements--grid {
+    width: 150px;
+  }
 }

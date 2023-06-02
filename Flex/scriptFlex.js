@@ -1,4 +1,7 @@
-import { buttonsArrayRaw } from "./buttonsArrayRaw.js"
+import { buttonsArrayRaw } from "./buttonsArrayRaw.js";
+import { transitionHeightAnimation } from "../Animation/script.js";
+let activePropertiesNew = [];
+let activePropertiesLast = [];
 
 export const flex = () => {
   let buttonsArray = [];
@@ -11,7 +14,7 @@ export const flex = () => {
         propertiesValues: buttons.propertiesValues.map((val, i) => {
           index++;
 
-          return { name: val, active: i === 0, key: `${index}` }
+          return { name: val, active: false, key: `${index}` }
         }),
         destiny: value
       },
@@ -23,8 +26,7 @@ export const flex = () => {
   let children = 3;
   let childSelected = 1;
   const childrenMax = 20;
-  const lorem =
-  {
+  const lorem = {
     loremActive: false,
     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa molestiae laboriosam, error suscipit excepturi quos maxime quidem odit repellendus, odio dolorem natus fuga dolorum autem, alias laborum id. Possimus, ullam?"
   };
@@ -34,9 +36,12 @@ export const flex = () => {
 
     settingsElement.innerHTML = "";
     settingsElement.innerHTML += `
-         ${settingsContents()}
-         ${settingsButtons()}
+        ${settingsContents()}
+        ${settingsButtons()}
       `;
+
+    const settingsContentsElement = document.querySelector(".js-settingsContents");
+    transitionHeightAnimation(settingsContentsElement);
   };
 
   const settingsContents = () => {
@@ -44,7 +49,7 @@ export const flex = () => {
 
     const settingsLabel = (name) => {
       let element = "";
-      
+
       buttonsArray.forEach((buttons) => {
         if (buttons.destiny === name) {
           const active = !!buttons.properties[0].active;
@@ -73,7 +78,7 @@ export const flex = () => {
     };
 
     contentsElement += `
-      <div class="settingsContents settingsContents--flex">
+      <div class="settingsContents settingsContents--flex js-settingsContents">
         <p class="settingsParagraph--flex strong">.parent {</p>
         ${settingsLabel("parent")}
         <p class="settingsParagraph--flex strong">}</p>
@@ -103,7 +108,7 @@ export const flex = () => {
           let key = buttons.properties[0].key;
 
           element += `
-            <div class="propertyButtons propertyButtons--flex">
+            <div class="propertyElements propertyElements--flex">
               <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
                 &nbsp${property.name}&nbsp
               </button>
@@ -111,7 +116,7 @@ export const flex = () => {
                 :
               </span>
             </div>
-            <div class="valueButtons">
+            <div class="valueElements">
           `;
 
           buttons.propertiesValues.forEach((button) => {
@@ -136,7 +141,7 @@ export const flex = () => {
       let element = "";
 
       element += `
-        <div class="propertyButtons propertyButtons--flex">
+        <div class="propertyElements propertyElements--flex">
           <span class="settingsChild">
             ${name}
           </span>
@@ -144,7 +149,7 @@ export const flex = () => {
             :
           </span>
         </div>
-        <div class="valueButtons">
+        <div class="valueElements">
           <button class="button settingsChild js-minusButton${name}">
             &nbsp-&nbsp
           </button>
@@ -168,21 +173,21 @@ export const flex = () => {
 
     buttonsElement += `
       <div class="buttonsContainer">
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsContainer("parent")}
         </div>
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsNumbers("Children", children)}
           ${buttonsContainer("child_all")}
         </div>
-        <div class="settingsButtons">
+        <div class="settingsElements">
           ${buttonsNumbers("Selected", childSelected)}
           ${buttonsContainer("child")}
         </div>
       </div>  
     `;
 
-    return buttonsElement
+    return buttonsElement;
   };
 
   const renderOutput = () => {
@@ -200,58 +205,91 @@ export const flex = () => {
         `;
       };
 
-      return element
-    };
-
-    const styleAdd = (container) => {
-      const parentStyles = document.querySelectorAll(".js-outputParent");
-      const childAllStyles = document.querySelectorAll(".js-child_all");
-      const childStyles = document.querySelectorAll(".js-child");
-
-      buttonsArray.forEach((buttons) => {
-        const activeProperties = (buttons.properties[0].active ? buttons.properties[0] : undefined);
-        const activeValuesProperties = (buttons.propertiesValues.find((buttons) => buttons.active));
-        let element;
-
-        switch (container) {
-          case "parent":
-            element = parentStyles;
-            break;
-          case "child_all":
-            element = childAllStyles;
-            break;
-          case "child":
-            element = childStyles;
-            break;
-        };
-
-        if (buttons.destiny === container) {
-          element.forEach((elem) => {
-            elem.style[((activeProperties) ? activeProperties.name : "")] =
-              ((activeValuesProperties) ? activeValuesProperties.name : "");
-          });
-        };
-      });
+      return element;
     };
 
     outputElement.innerHTML = "";
     outputElement.innerHTML += `
-         <div class="outputContents outputContents--flex">
-            <div class="outputLabel">OUTPUT :</div>
-            <div class="outputLabelTop">TOP</div>
-            <div class="outputLabelLeft">LEFT</div>
-            <div class="outputLabelRight">RIGHT</div>
-            <div class="outputLabelBottom">BOTTOM</div>
-            <div class="outputLabelCenter">parent</div>
-            <div class="outputParent js-outputParent">
-               ${changeChildren()}
-            </div>
-         </div>
-         `;
+      <div class="outputContents outputContents--flex">
+        <div class="outputLabel">OUTPUT :</div>
+        <div class="outputLabelTop">TOP</div>
+        <div class="outputLabelLeft">LEFT</div>
+        <div class="outputLabelRight">RIGHT</div>
+        <div class="outputLabelBottom">BOTTOM</div>
+        <div class="outputLabelCenter">parent</div>
+        <div class="outputParent js-outputParent">
+          ${changeChildren()}
+        </div>
+      </div>
+    `;
 
-    styleAdd("parent");
-    styleAdd("child_all");
-    styleAdd("child");
+    const changeFlexStyles = () => {
+      const parentStyles = document.querySelectorAll(".js-outputParent");
+      const childAllStyles = document.querySelectorAll(".js-child_all");
+      const childStyles = document.querySelectorAll(".js-child");
+      activePropertiesNew = [];
+
+      buttonsArray.forEach((object) => {
+        let prop = "";
+        let propValue = "";
+        let destiny;
+        let resetValues = false;
+
+        object.properties.forEach(obj => {
+
+          if (!obj.active && obj.name === "display" && object.destiny !== "child") {
+            prop = "display";
+            destiny = object.destiny;
+            propValue = "block";
+          }
+
+          !obj.active ? resetValues = true : "";
+          prop = obj.name;
+          destiny = object.destiny;
+        });
+
+        object.propertiesValues.forEach((obj, index) => {
+          if (!!resetValues) {
+            index === 0 ? obj.active = true : obj.active = false;
+          };
+
+          if (propValue !== "block") {
+            if (obj.active) {
+              propValue = obj.name;
+            };
+          };
+        });
+
+        if (prop && propValue) {
+          activePropertiesNew = [...activePropertiesNew, { property: prop, propertyValue: propValue, destiny: destiny }];
+        };
+
+      });
+
+      const setStyles = (elements, properties, name) => {
+        elements.forEach((element) => {
+          properties.forEach((property) => {
+            if (property.destiny === name) {
+              element.style[property.property] = property.propertyValue;
+            };
+          });
+        });
+      };
+
+      setStyles(parentStyles, activePropertiesLast, "parent");
+      setStyles(childAllStyles, activePropertiesLast, "child_all");
+      setStyles(childStyles, activePropertiesLast, "child");
+
+      setTimeout(() => {
+        setStyles(parentStyles, activePropertiesNew, "parent");
+        setStyles(childAllStyles, activePropertiesNew, "child_all");
+        setStyles(childStyles, activePropertiesNew, "child");
+      }, 200);
+
+      activePropertiesLast = activePropertiesNew;
+    };
+
+    changeFlexStyles();
   };
 
   const bindPropertyButtons = () => {
@@ -270,7 +308,7 @@ export const flex = () => {
 
         if (buttonObject.key === buttonEvent.id) {
           buttonObject.active = !buttonObject.active;
-        }
+        };
       });
     };
   };
@@ -279,7 +317,7 @@ export const flex = () => {
     const buttonElements = buttonsArray.map((buttons, index) => {
       let name = ".js-" + buttons.properties[0].key + "groupValueButtons";
 
-      return { selector: name, value: index }
+      return { selector: name, value: index };
     });
 
     buttonElements.forEach((button) => {
@@ -297,7 +335,7 @@ export const flex = () => {
       buttonsArray[index].propertiesValues.forEach(prop => {
         if (prop.key === button.id) {
           prop.active = true;
-        } else { prop.active = false }
+        } else { prop.active = false };
       });
     };
   };
@@ -343,7 +381,7 @@ export const flex = () => {
     bindPropertyButtons();
     bindValueButtons();
     bindChildSettingButtons();
-  };
+  }
 
   render();
 };

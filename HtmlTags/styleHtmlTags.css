@@ -1,35 +1,35 @@
 .settingsContents--HtmlTags {
-   max-height: 35vh;
-   overflow-y: scroll;
+  max-height: 50vh;
+  overflow-y: scroll;
 }
 
 .settingsSubcontainer--HtmlTags {
-   display: flex;
-   justify-content: space-between;
-   align-items: start;
-   gap: 20px;
-   padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 20px;
+  padding: 0;
 }
 
 .outputImage--HtmlTags {
-   margin-top: 30px;
-   width: 100%;
-   max-height: 100%;
-   padding: 3%;
-   object-fit: contain;
- }
- 
- .outputContents--HtmlTags {
-   align-items: flex-start;
- }
+  margin-top: 30px;
+  width: 100%;
+  max-height: 1500px;
+  padding: 3%;
+  object-fit: contain;
+}
+
+.outputContents--HtmlTags {
+  align-items: flex-start;
+}
 
 .button--example {
-   margin-top: 15px;
-   margin-right: 40px;
+  margin-top: 15px;
+  margin-right: 40px;
 }
 
 @media (max-width: 768px) {
-   .button--example {
-      margin-right: 5%;
-   }
+  .button--example {
+    margin-right: 5%;
+  }
 }

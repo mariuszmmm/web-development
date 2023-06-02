@@ -2,54 +2,57 @@
 <html lang="pl">
 
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono&display=swap" rel="stylesheet">
-   <title>Web Development</title>
-   <link rel="icon" href="./images/logo.png">
-   <link href="./main/style.css" rel="stylesheet">
-   <link href="./StartPage/styleStartPage.css" rel="stylesheet">
-   <link href="./Terminal/styleTerminal.css" rel="stylesheet">
-   <link href="./HtmlTags/styleHtmlTags.css" rel="stylesheet">
-   <link href="./SectionsHtml/styleSectionsHtml.css" rel="stylesheet">
-   <link href="./Positioning/stylePositioning.css" rel="stylesheet">
-   <link href="./Flex/styleFlex.css" rel="stylesheet">
-   <link href="./Grid/styleGrid.css" rel="stylesheet">
-   <link href="./Arrays/styleArrays.css" rel="stylesheet">
-   <script defer type="module" src="./main/script.js"></script>
-   <script defer type="module" src="./StartPage/scriptStartPage.js"></script>
-   <script defer type="module" src="./Terminal/scriptTerminal.js"></script>
-   <script defer type="module" src="./HtmlTags/scriptHtmlTags.js"></script>
-   <script defer type="module" src="./SectionsHtml/scriptSectionsHtml.js"></script>
-   <script defer type="module" src="./Positioning/scriptPositioning.js"></script>
-   <script defer type="module" src="./Flex/scriptFlex.js"></script>
-   <script defer type="module" src="./Grid/scriptGrid.js"></script>
-   <script defer type="module" src="./Arrays/scriptArrays.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono&display=swap" rel="stylesheet">
+  <title>Web Development</title>
+  <link rel="icon" href="./images/logo.png">
+  <link href="./main/style.css" rel="stylesheet">
+  <link href="./StartPage/styleStartPage.css" rel="stylesheet">
+  <link href="./Terminal/styleTerminal.css" rel="stylesheet">
+  <link href="./HtmlTags/styleHtmlTags.css" rel="stylesheet">
+  <link href="./InputsHtml/styleInputsHtml.css" rel="stylesheet">
+  <link href="./SectionsHtml/styleSectionsHtml.css" rel="stylesheet">
+  <link href="./Positioning/stylePositioning.css" rel="stylesheet">
+  <link href="./Flex/styleFlex.css" rel="stylesheet">
+  <link href="./Grid/styleGrid.css" rel="stylesheet">
+  <link href="./Arrays/styleArrays.css" rel="stylesheet">
+  <script defer type="module" src="./main/script.js"></script>
+  <script defer type="module" src="./StartPage/scriptStartPage.js"></script>
+  <script defer type="module" src="./Terminal/scriptTerminal.js"></script>
+  <script defer type="module" src="./HtmlTags/scriptHtmlTags.js"></script>
+  <script defer type="module" src="./InputsHtml/scriptInputsHtml.js"></script>
+  <script defer type="module" src="./SectionsHtml/scriptSectionsHtml.js"></script>
+  <script defer type="module" src="./Positioning/scriptPositioning.js"></script>
+  <script defer type="module" src="./Flex/scriptFlex.js"></script>
+  <script defer type="module" src="./Grid/scriptGrid.js"></script>
+  <script defer type="module" src="./Arrays/scriptArrays.js"></script>
 </head>
 
 <body>
-   <div class="container">
-      <nav class="navContainer">
-         <button name="button" type="radio" class="button button--nav js-buttonNav">Terminal</button>
-         <button name="button" type="radio" class="button button--nav js-buttonNav">HTML Tags</button>
-         <button name="button" type="radio" class="button button--nav js-buttonNav">HTML Sections</button>
-         <button name="button" type="radio" class="button button--nav js-buttonNav">CSS Positioning</button>
-         <button name="button" type="radio" class="button button--nav js-buttonNav">CSS Flex</button>
-         <button name="button" type="radio" class="button button--nav js-buttonNav">CSS Grid</button>
-         <button name="button" type="radio" class="button button--nav js-buttonNav">JS Arrays</button>
-      </nav>
-      <div class="settingsContainer js-settingsContainer">
-      </div>
-      <div class="outputContainer js-outputContainer">
-      </div>
-   </div>
+  <div class="container">
+    <nav class="navContainer">
+      <button name="button" type="radio" class="button button--nav js-buttonNav">Terminal</button>
+      <button name="button" type="radio" class="button button--nav js-buttonNav">HTML Tags</button>
+      <button name="button" type="radio" class="button button--nav js-buttonNav">HTML Inputs</button>
+      <button name="button" type="radio" class="button button--nav js-buttonNav">HTML Sections</button>
+      <button name="button" type="radio" class="button button--nav js-buttonNav">CSS Positioning</button>
+      <button name="button" type="radio" class="button button--nav js-buttonNav">CSS Flex</button>
+      <button name="button" type="radio" class="button button--nav js-buttonNav">CSS Grid</button>
+      <button name="button" type="radio" class="button button--nav js-buttonNav">JS Arrays</button>
+    </nav>
+    <div class="settingsContainer js-settingsContainer">
+    </div>
+    <div class="outputContainer js-outputContainer">
+    </div>
+  </div>
 </body>
 
 </html>
