@@ -399,6 +399,9 @@ export const arrays = () => {
       if (array.includes(undefined)) {
         output = `Error: Cannot read properties of undefined (reading 'length')`;
       };
+      if (array.length === 0) {
+        output = `Error: Reduce of empty array with no initial value`;
+      };
       renderOutput();
     };
 
@@ -413,6 +416,22 @@ export const arrays = () => {
       input.focus();
       renderOutput();
     };
+    
+    const checkDependency_1 = (method, button, input) => {
+      return (
+                    ["filter", "find", "findIndex", "some"].includes(method.method)
+                    && !!method.methodContents[0].active
+                    && (array.includes(null) || array.includes(undefined))
+                  ) 
+    };
+
+     const checkDependency_2 = (method, button, input) => {
+        return (
+                    ["reduce"].includes(method.method)
+                    && array.length === 0 && input.value === ""
+                  ) 
+    };
+
 
     formElements.forEach((formElement) => {
       formElement.addEventListener("submit", (event) => {
@@ -426,19 +445,20 @@ export const arrays = () => {
                 const pattern = method.inputPattern;
                 if (pattern.test(input.value)) {
                   if (
-                    ["filter", "find", "findIndex", "some"].includes(method.method)
-                    && !!method.methodContents[0].active
-                    && (array.includes(null) || array.includes(undefined))
+                  checkDependency_1(method, button, input) ||
+                checkDependency_2(method, button, input)
                   ) {
                     render();
-                    displayWarningAboutArray();
+            displayWarningAboutArray();
                     return
                   } else {
-                    runMethod(button.id, enterNumberOrString(input.value), method.method);
+                   runMethod(button.id, enterNumberOrString(input.value), method.method);
                     methodActive = input.name;
                     render();
                     methodActive = "";
-                  }
+                  };
+                  
+
                 } else {
                   displayWarningAboutInputValue(method, input);
                   return
