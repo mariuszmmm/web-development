@@ -74,6 +74,7 @@
    font-family: monospace;
    display: inline;
    min-height: 290px;
+   word-break: break-word;
 }
 
 .methodInput {
