@@ -63,16 +63,18 @@
 }
 
 .outputContents--arrays {
-  word-spacing: 5px;
-  line-height: 2;
-  padding: 50px 5%;
-  font-size: 18px;
-  justify-content: flex-start;
-  line-height: 2;
-  min-height: 150px;
-  font-family: monospace;
-  align-items: flex-start;
-  min-height: 290px;
+   word-spacing: 5px;
+   line-height: 2;
+   padding: 50px 5%;
+   flex-grow: 1;
+   font-size: 18px;
+   justify-content: flex-start;
+   line-height: 2;
+   min-height: 150px;
+   font-family: monospace;
+   display: inline;
+   min-height: 290px;
+   word-break: break-word;
 }
 
 .methodInput {

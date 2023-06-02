@@ -13,7 +13,6 @@ export const arrays = () => {
   let methodActive = "";
 
   const methodsArray = methodsArrayRaw.map((object) => {
-
     return {
       method: object.method,
       methodContents: object.methodContents.map((obj, index) => {
@@ -154,7 +153,7 @@ export const arrays = () => {
           </p>
           <p class="settingsParagraph--arrays strong">];</p>
           <p></p>` : ""}          
-          ${!!methodContent[0] ? vievMethodContent(methodContent) : ""}
+          ${(!!methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
         </div>
       `;
 
@@ -350,7 +349,7 @@ export const arrays = () => {
         <p class="settingsParagraph--arrays strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
         <p class="settingsParagraph--arrays strong"> ${output !== null ? viewObject(output) : output} </p>`
         :
-        ((typeof (output) === "string" && methodContent.length > 0) ?
+        ((typeof (output) === "string" && !methodContent.includes("warning")) ?
           (output !== "" ? `"` + output + `"` : output)
           :
           output
@@ -368,6 +367,7 @@ export const arrays = () => {
     const rangeElement = document.querySelector(".js-range");
     const rangeValueElement = document.querySelector(".js-rangeValue");
     const typeButtonElements = document.querySelectorAll(".js-typeButton");
+    methodContent = [];
 
     inputElements.forEach((input) => {
       if (input.name === methodActive) input.focus();
@@ -395,17 +395,21 @@ export const arrays = () => {
     });
 
     const displayWarningAboutArray = () => {
+      methodContent = [...methodContent, "warning"];
       if (array.includes(null)) {
         output = `Error: Cannot read properties of null (reading 'length')`;
       };
       if (array.includes(undefined)) {
         output = `Error: Cannot read properties of undefined (reading 'length')`;
       };
+      if (array.length === 0) {
+        output = `Error: Reduce of empty array with no initial value`;
+      };
       renderOutput();
     };
 
     const displayWarningAboutInputValue = ({ method }, input) => {
-      methodContent = [];
+      methodContent = [...methodContent, "warning"];
       if (method === "slice") {
         output = `The entered value is not allowed. Please enter a number or two numbers separated by a comma.`;
       } else {
@@ -414,6 +418,20 @@ export const arrays = () => {
       input.classList.add("errorInput")
       input.focus();
       renderOutput();
+    };
+
+    const checkDependency_1 = (method) => {
+      return (
+        ["filter", "find", "findIndex", "some"].includes(method.method)
+        && !!method.methodContents[0].active
+        && (array.includes(null) || array.includes(undefined))
+      )
+    };
+
+    const checkDependency_2 = (method, input) => {
+      return (
+        ["reduce"].includes(method.method) && (array.length === 0) && (input.value === "")
+      )
     };
 
     formElements.forEach((formElement) => {
@@ -427,11 +445,7 @@ export const arrays = () => {
               if (method.method === button.id) {
                 const pattern = method.inputPattern;
                 if (pattern.test(input.value)) {
-                  if (
-                    ["filter", "find", "findIndex", "some"].includes(method.method) &&
-                    !!method.methodContents[0].active &&
-                    (array.includes(null) || array.includes(undefined))
-                  ) {
+                  if (checkDependency_1(method) || checkDependency_2(method, input)) {
                     render();
                     displayWarningAboutArray();
                     return
@@ -440,7 +454,7 @@ export const arrays = () => {
                     methodActive = input.name;
                     render();
                     methodActive = "";
-                  }
+                  };
                 } else {
                   displayWarningAboutInputValue(method, input);
                   return
@@ -702,7 +716,6 @@ export const arrays = () => {
   };
 
   const enterNumberOrString = (inputValue) => {
-
     return (
       !["null", "true", "false", "undefined", "NaN"].includes(inputValue) ?
         (typeof (inputValue) === "string" ? (inputValue) : "") :
@@ -713,12 +726,12 @@ export const arrays = () => {
     );
   };
 
-  const readNumberOrString = (inputValue, content) => {
-
+  const readNumberOrString = (inputValue) => {
     return (
       (typeof (inputValue) === "string") ?
         ((inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ?
-          (content === "forArrowFunction" ? inputValue : inputValue.slice(1, -1)) : Number(inputValue)) :
+          inputValue.slice(1, -1) : (inputValue === "" ? inputValue : Number(inputValue)))
+        :
         ((typeof (inputValue) === "object") ? inputValue.name : Number(inputValue))
     );
   };
@@ -747,12 +760,20 @@ export const arrays = () => {
     let content = [];
 
     if (!isNaN(enterNumberOrString(inputValue))) {
-
       return [...content, (enterNumberOrString(inputValue))]
     }
     else {
       return (enterNumberOrString(inputValue).split(",")).map(number => number);
     };
+  };
+
+  const setAadditionalParameter = (inputValue) => {
+    return (
+      array.every(item => typeof (item) === "number") ?
+        (inputValue === "" ? null : readNumberOrString(inputValue))
+        :
+        (inputValue === "0" ? "" : readNumberOrString(inputValue))
+    )
   };
 
   const runMethod = (button, inputValue, method) => {
@@ -799,8 +820,7 @@ export const arrays = () => {
         methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "reduce":
-        output = array.reduce(enterContentForArrowFunction(button),
-          ((array.every(item => typeof (item) === "number") && typeof (readNumberOrString(inputValue)) === "number") ? Number(inputValue) : readNumberOrString(inputValue)));
+        output = array.reduce(enterContentForArrowFunction(button), setAadditionalParameter(inputValue));
         methodContent = [method, enterContentForArrowFunction(button) + ", " + inputValue, "arrowFunction"];
         break;
       case "filter":
