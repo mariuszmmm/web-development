@@ -7,12 +7,12 @@ html {
 }
 
 body {
-   font-family: 'Montserrat', sans-serif;
-   background-color: grey;
-   font-size: 15px;
-   padding: 0 10px;
-   user-select: none;
-   overflow-y: scroll;
+  font-family: 'Montserrat', sans-serif;
+  background-color: grey;
+  font-size: 15px;
+  padding: 0 10px;
+  user-select: none;
+  overflow-y: scroll;
 }
 
 @media (max-width: 768px) {
@@ -194,15 +194,15 @@ body {
 }
 
 .button--run {
-   background-color: hsl(0, 100%, 63%);
+  background-color: hsl(0, 100%, 63%);
 }
 
 .button--run:hover {
-   background-color: hsl(0, 100%, 55%);
+  background-color: hsl(0, 100%, 55%);
 }
 
 .button--run:active {
-   background-color: #32fa64;
+  background-color: #32fa64;
 }
 
 .input {
@@ -393,21 +393,22 @@ body {
 }
 
 .sectionDivision {
-   width: 1px;
-   background: black;
+  width: 1px;
+  background: black;
 }
 
 ::-webkit-scrollbar {
-   width: 7px;
-   height: 7px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-thumb {
-   background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-   background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
+}
 
 .hidden {
   opacity: 0;
