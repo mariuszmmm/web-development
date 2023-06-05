@@ -50,15 +50,21 @@ export const inputsHtml = () => {
     `;
   };
 
-  const renderOutput = () => {
-    const outputElement = document.querySelector(".js-outputContainer");
-    outputElement.innerHTML = "";
+  const renderMainContainer = () => {
+    const mainContainerElement = document.getElementById("main");
+    mainContainerElement.classList = "";
+    mainContainerElement.classList.add("mainContainer")
+
+    mainContainerElement.innerHTML = "";
+    mainContainerElement.innerHTML = `
+    <div class="settingsContainer js-settingsContainer">
+  `;
   };
 
   const render = () => {
-    renderSettings();
-    renderOutput();
-  }
+    renderMainContainer();
+    renderSettings()
+  };
 
   render();
-}
+};

@@ -1,5 +1,5 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js";
-import { transitionHeightAnimation } from "../Animation/script.js";
+import { heightAnimation } from "../Animation/scriptAnimation.js";
 let activePropertiesNew = [];
 let activePropertiesLast = [];
 
@@ -41,7 +41,7 @@ export const flex = () => {
       `;
 
     const settingsContentsElement = document.querySelector(".js-settingsContents");
-    transitionHeightAnimation(settingsContentsElement);
+    heightAnimation(settingsContentsElement);
   };
 
   const settingsContents = () => {
@@ -57,7 +57,7 @@ export const flex = () => {
           buttons.properties.forEach((prop) => {
             if (prop.active) {
               element += `
-                <p class="settingsParagraph settingsParagraph--flex">
+                <p class="labelParagraph labelParagraph--flex">
                   ${prop.active ? prop.name : ""}`;
             };
           });
@@ -79,17 +79,17 @@ export const flex = () => {
 
     contentsElement += `
       <div class="settingsContents settingsContents--flex js-settingsContents">
-        <p class="settingsParagraph--flex strong">.parent {</p>
+        <p class="labelParagraph--flex strong">.parent {</p>
         ${settingsLabel("parent")}
-        <p class="settingsParagraph--flex strong">}</p>
+        <p class="labelParagraph--flex strong">}</p>
         <p></p>
-        <p class="settingsParagraph--flex strong">.child_all {</p>
+        <p class="labelParagraph--flex strong">.child_all {</p>
         ${settingsLabel("child_all")}
-        <p class="settingsParagraph--flex strong">}</p>
+        <p class="labelParagraph--flex strong">}</p>
         <p></p>
-        <p class="settingsParagraph--flex strong">.child_${childSelected} {</p>
+        <p class="labelParagraph--flex strong">.child_${childSelected} {</p>
         ${settingsLabel("child")}
-        <p class="settingsParagraph--flex strong">}</p>
+        <p class="labelParagraph--flex strong">}</p>
       </div>
     `;
 

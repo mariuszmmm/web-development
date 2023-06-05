@@ -61,4 +61,3 @@ makeArrayOfLetters();
 makeArrayOfIntegers();
 
 export const mixArray = [...arrayLetters, ...arrayIntegers, ...arrayWords, ...arrayEmoticons, ...arrayObjects];
-

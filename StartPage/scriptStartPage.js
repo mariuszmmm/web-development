@@ -27,12 +27,12 @@ export const startPage = () => {
     return clockString;
   };
 
-  const renderLeabel = () => {
-    const settingsElement = document.querySelector(".js-settingsContainer");
+  const renderLabel = () => {
+    const labelElement = document.querySelector(".js-labelContainer");
 
-    settingsElement.innerHTML = "";
-    settingsElement.innerHTML = `
-      <div class="settingsContents settingsContents--clock">
+    labelElement.innerHTML = "";
+    labelElement.innerHTML = `
+      <div class="labelContents labelContents--clock">
         TIME
       </div>         
     `;
@@ -53,9 +53,24 @@ export const startPage = () => {
     `;
   };
 
+  const renderMainContainer = () => {
+    const mainContainerElement = document.getElementById("main");
+    mainContainerElement.classList = "";
+    mainContainerElement.classList.add("mainContainer", "mainContainer--startPage")
+
+    mainContainerElement.innerHTML = "";
+    mainContainerElement.innerHTML = `
+      <div class="labelContainer js-labelContainer">
+      </div>
+      <div class="outputContainer js-outputContainer">
+      </div>
+    `;
+  };
+
   const render = () => {
-    renderLeabel();
-    renderOutput();
+    renderMainContainer();
+    renderLabel()
+    renderOutput()
   };
 
   render();

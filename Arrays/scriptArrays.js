@@ -1,6 +1,6 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js";
 import { arrayExample, letters, arrayWords, arrayEmoticons, arrayObjects, mixArray } from "./arrays.js";
-import { transitionHeightAnimation } from "../Animation/script.js";
+import { heightAnimation } from "../Animation/scriptAnimation.js";
 
 export const arrays = () => {
   let array = [];
@@ -37,7 +37,7 @@ export const arrays = () => {
 
     exampleArray.forEach((arrayElement, index) => {
       element += `
-        <span class="settingsParagraph--arrays">
+        <span class="labelParagraph--arrays">
           ${(typeof (arrayElement) === "string" ?
           (`"` + arrayElement + `"`)
           :
@@ -57,7 +57,7 @@ export const arrays = () => {
   const vievMethodContent = (methodContent) => {
     let element = "";
     element += `
-      <span class="settingsParagraph--arrays strong">
+      <span class="labelParagraph--arrays strong">
         array.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
         (typeof (methodContent[1]) === "string" ?
           (methodContent[1])
@@ -129,29 +129,29 @@ export const arrays = () => {
     return `<span class="${(subArray.length < 4) ? "nowrap" : ""}">[${content}]</span>`;
   }
 
-  const renderSettings = () => {
-    const settingsElement = document.querySelector(".js-settingsContainer");
+  const renderLabel = () => {
+    const labelElement = document.querySelector(".js-labelContainer");
 
-    const leabelContents = () => {
+    const labelContents = () => {
       let element = "";
 
       element += `
-        <div class="settingsContents settingsContents--array js-settingsContents">
-          <p class="settingsParagraph--arrays strong">const array = [
+        <div class="settingsContents settingsContents--array labelContents js-settingsContents">
+          <p class="labelParagraph--arrays strong">const array = [
           ${array.length > 0 ? `
           </p>
-          <p class="settingsParagraph settingsParagraph--arrays">
+          <p class="labelParagraph labelParagraph--arrays">
             ${viewArray(array)}
           </p>
-          <p class="settingsParagraph--arrays strong">
+          <p class="labelParagraph--arrays strong">
           ` : ""}
           ];</p>
           <p></p>
-          ${!!showExampleArray ? `<p class="settingsParagraph--arrays strong">const exampleArray = [</p>
-          <p class="settingsParagraph settingsParagraph--arrays">
+          ${!!showExampleArray ? `<p class="labelParagraph--arrays strong">const exampleArray = [</p>
+          <p class="labelParagraph labelParagraph--arrays">
             ${viewArray(arrayExampleSaved.length > 0 ? arrayExampleSaved : arrayExample)}
           </p>
-          <p class="settingsParagraph--arrays strong">];</p>
+          <p class="labelParagraph--arrays strong">];</p>
           <p></p>` : ""}          
           ${(!!methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
         </div>
@@ -159,6 +159,15 @@ export const arrays = () => {
 
       return element;
     };
+
+    labelElement.innerHTML = "";
+    labelElement.innerHTML += `
+      ${labelContents()}  
+    `;
+  }
+
+  const renderSettings = () => {
+    const settingsElement = document.querySelector(".js-settingsContainer");
 
     const methodsSettings = () => {
       let methodsSetingsElement = "";
@@ -330,12 +339,11 @@ export const arrays = () => {
 
     settingsElement.innerHTML = "";
     settingsElement.innerHTML += `
-      ${leabelContents()}
       ${methodsSettings()}      
     `;
 
     const settingsContentsElement = document.querySelector(".js-settingsContents");
-    transitionHeightAnimation(settingsContentsElement);
+    heightAnimation(settingsContentsElement);
   };
 
   const renderOutput = () => {
@@ -346,8 +354,8 @@ export const arrays = () => {
       <div class="outputContents outputContents--arrays">
         <div class="outputLabel">OUTPUT :</div>
         ${Array.isArray(output) ? `
-        <p class="settingsParagraph--arrays strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
-        <p class="settingsParagraph--arrays strong"> ${output !== null ? viewObject(output) : output} </p>`
+        <p class="labelParagraph--arrays strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
+        <p class="labelParagraph--arrays strong"> ${output !== null ? viewObject(output) : output} </p>`
         :
         ((typeof (output) === "string" && !methodContent.includes("warning")) ?
           (output !== "" ? `"` + output + `"` : output)
@@ -855,6 +863,7 @@ export const arrays = () => {
   };
 
   const render = () => {
+    renderLabel();
     renderSettings();
     renderOutput();
     bindInputsAndButtons();

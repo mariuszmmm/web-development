@@ -1,4 +1,14 @@
-.settingsContents--clock {
+.mainContainer--startPage {
+   display: grid;
+   grid-template-columns: 1fr;
+   grid-template-rows: auto 1fr;
+   grid-template-areas:
+      "lab"
+      "out"
+   ;
+}
+
+.labelContents--clock {
    display: flex;
    justify-content: center;
    align-items: center;

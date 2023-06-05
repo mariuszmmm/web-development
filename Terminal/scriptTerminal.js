@@ -1,59 +1,48 @@
 export const terminal = () => {
 
-  const renderSettings = () => {
-    const settingsElement = document.querySelector(".js-settingsContainer");
+  const renderLabel = () => {
+    const labelElement = document.querySelector(".js-labelContainer");
 
-    settingsElement.innerHTML = "";
-    settingsElement.innerHTML += `
-      <div class="settingsContents">
-        ${settingsLabelContainer()}
-      </div>
+    labelElement.innerHTML = `
+      <div class="labelContents">
+        <h1 class="labelHeader">Terminal commands :</h1>
+        <div>
+          <p class="labelParagraph">
+            <span class="strong">dir &nbsp; → </span>
+            list directory contents
+          </p>
+          <p class="labelParagraph">
+            <span class="strong">cd C:\\dev &nbsp; → </span>
+            change directory to C:\\dev
+          </p>
+          <p class="labelParagraph">
+            <span class="strong">cd .. &nbsp; → </span>
+            change directory to the parent directory
+          </p>
+          <p class="labelParagraph">
+            <span class="strong">cd ../..  &nbsp; → </span>
+            change directory to two parent directories up
+          </p>
+          <p class="labelParagraph">
+            <span class="strong">cd  &nbsp; → </span>
+            change directory to the user's home directory
+          </p>
+          <p class="labelParagraph">
+            <span class="strong">code .  &nbsp; → </span>
+            open Visual Studio Code in the current directory
+          </p>
+          <p class="labelParagraph">
+            <span class="strong">code directory_name  &nbsp; → </span>
+            open Visual Studio Code in the specified directory.
+          </p>
+        </div>  
+      </div>     
     `;
-  };
-
-  const settingsLabelContainer = () => {
-    let labelElement = "";
-    labelElement += `
-      <h1 class="settingsHeader">Terminal commands :</h1>
-      <div>
-        <p class="settingsParagraph">
-          <span class="strong">dir &nbsp; → </span>
-          list directory contents
-        </p>
-        <p class="settingsParagraph">
-          <span class="strong">cd C:\\dev &nbsp; → </span>
-          change directory to C:\\dev
-        </p>
-        <p class="settingsParagraph">
-          <span class="strong">cd .. &nbsp; → </span>
-          change directory to the parent directory
-        </p>
-        <p class="settingsParagraph">
-          <span class="strong">cd ../..  &nbsp; → </span>
-          change directory to two parent directories up
-        </p>
-        <p class="settingsParagraph">
-          <span class="strong">cd  &nbsp; → </span>
-          change directory to the user's home directory
-        </p>
-        <p class="settingsParagraph">
-          <span class="strong">code .  &nbsp; → </span>
-          open Visual Studio Code in the current directory
-        </p>
-        <p class="settingsParagraph">
-          <span class="strong">code directory_name  &nbsp; → </span>
-          open Visual Studio Code in the specified directory.
-        </p>
-      </div>
-    `;
-
-    return labelElement;
   };
 
   const renderOutput = () => {
     const contentsElement = document.querySelector(".js-outputContainer");
 
-    contentsElement.innerHTML = ""
     contentsElement.innerHTML += `
       <div class="outputContents outputContents--terminal">
         <div class="outputLabel">TERMINAL :</div>
@@ -62,8 +51,22 @@ export const terminal = () => {
     `;
   };
 
+  const renderMainContainer = () => {
+    const mainContainerElement = document.getElementById("main");
+    mainContainerElement.classList = "";
+    mainContainerElement.classList.add("mainContainer")
+
+    mainContainerElement.innerHTML = `
+      <div class="labelContainer js-labelContainer">
+      </div>
+      <div class="outputContainer js-outputContainer">
+      </div>
+    `;
+  };
+
   const render = () => {
-    renderSettings();
+    renderMainContainer();
+    renderLabel();
     renderOutput();
   };
 

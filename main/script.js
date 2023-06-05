@@ -7,46 +7,46 @@ import { positioning } from '../Positioning/scriptPositioning.js';
 import { flex } from '../Flex/scriptFlex.js';
 import { grid } from '../Grid/scriptGrid.js';
 import { arrays } from '../Arrays/scriptArrays.js';
-import { transitionOpacityAnimation } from '../Animation/script.js';
+import { opacityAnimation } from '../Animation/scriptAnimation.js';
+{
+  const init = () => {
+    const buttons = document.querySelectorAll(".js-buttonNav");
+    const mainContainerElement = document.querySelector(".js-mainContainer");
 
-const init = () => {
-  const buttons = document.querySelectorAll('.js-buttonNav');
-  const settingsElement = document.querySelector(".js-settingsContainer");
-  const outputElement = document.querySelector(".js-outputContainer");
+    opacityAnimation(() => startPage(), mainContainerElement);
+    const intervalClock = setInterval(startPage, 1000);
 
-  transitionOpacityAnimation(() => startPage(), settingsElement, outputElement);
-  const intervalClock = setInterval(startPage, 1000);
+    const changeActiveButton = (event) => {
+      clearInterval(intervalClock);
+      buttons.forEach(button => {
+        button.classList.remove('button--active');
+      });
+      event.target.classList.add('button--active');
 
-  const changeActiveButton = (event) => {
-    clearInterval(intervalClock);
-    buttons.forEach(button => {
-      button.classList.remove('button--active');
-    });
-    event.target.classList.add('button--active');
-
-    switch (event.target.innerText) {
-      case "Terminal": transitionOpacityAnimation(() => terminal(), settingsElement, outputElement);
-        break;
-      case "HTML Tags": transitionOpacityAnimation(() => htmlTags(), settingsElement, outputElement);
-        break;
-      case "HTML Inputs": transitionOpacityAnimation(() => inputsHtml(), settingsElement, outputElement);
-        break;
-      case "HTML Sections": transitionOpacityAnimation(() => sectionsHtml(), settingsElement, outputElement);
-        break;
-      case "CSS Positioning": transitionOpacityAnimation(() => positioning(), settingsElement, outputElement);
-        break;
-      case "CSS Flex": transitionOpacityAnimation(() => flex(), settingsElement, outputElement);
-        break;
-      case "CSS Grid": transitionOpacityAnimation(() => grid(), settingsElement, outputElement);
-        break;
-      case "JS Arrays": transitionOpacityAnimation(() => arrays(), settingsElement, outputElement);
-        break;
+      switch (event.target.innerText) {
+        case "Terminal": opacityAnimation(() => terminal(), mainContainerElement);
+          break;
+        case "HTML Tags": opacityAnimation(() => htmlTags(), mainContainerElement);
+          break;
+        case "HTML Inputs": opacityAnimation(() => inputsHtml(), mainContainerElement);
+          break;
+        case "HTML Sections": opacityAnimation(() => sectionsHtml(), mainContainerElement);
+          break;
+        case "CSS Positioning": opacityAnimation(() => positioning(), mainContainerElement);
+          break;
+        case "CSS Flex": opacityAnimation(() => flex(), mainContainerElement);
+          break;
+        case "CSS Grid": opacityAnimation(() => grid(), mainContainerElement);
+          break;
+        case "JS Arrays": opacityAnimation(() => arrays(), mainContainerElement);
+          break;
+      };
     };
+
+    buttons.forEach(button => {
+      button.addEventListener("click", changeActiveButton);
+    });
   };
 
-  buttons.forEach(button => {
-    button.addEventListener("click", changeActiveButton);
-  });
-};
-
-init();
+  init();
+}

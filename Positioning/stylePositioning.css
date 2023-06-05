@@ -1,3 +1,14 @@
+.mainContainer--Positioning {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "lab set set"
+    "out out out"
+  ;
+}
+
+
 .settingsContents--positioning {
   min-width: 400px;
   flex-grow: 0;
@@ -9,7 +20,7 @@
   }
 }
 
-.settingsParagraph--positioning {
+.labelParagraph--positioning {
   margin-top: 5px;
   margin-bottom: 5px;
 }

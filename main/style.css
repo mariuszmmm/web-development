@@ -10,9 +10,8 @@ body {
   font-family: 'Montserrat', sans-serif;
   background-color: grey;
   font-size: 15px;
-  padding: 0 10px;
+  margin: 10px;
   user-select: none;
-  overflow-y: scroll;
 }
 
 @media (max-width: 768px) {
@@ -24,34 +23,24 @@ body {
 
 .container {
   display: grid;
-  grid-template-columns: auto 1fr 1fr;
-  grid-template-rows: auto auto 1fr;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr;
   border: 1px solid black;
-  margin: 10px auto;
+  margin: 0 auto;
   min-width: 699px;
-  width: 100%;
-  max-width: 2100px;
-  min-height: calc(100vh - 20px);
-  grid-template-areas:
-    "nav set set"
-    "nav out out"
-    "nav out out"
-  ;
+  max-width: 1920px;
+  aspect-ratio: 16/9;
 }
 
 @media (max-width: 1649px) {
   .container {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas:
-      "nav nav nav"
-      "set set set"
-      "out out out"
-    ;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    aspect-ratio: 1/1;
   }
 }
 
 .navContainer {
-  grid-area: nav;
   display: flex;
   flex-direction: column;
   border-right: 1px solid black;
@@ -70,6 +59,39 @@ body {
   }
 }
 
+.mainContainer {
+  gap: 10px;
+  margin: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  transition: opacity 0.5s ease;
+}
+
+.labelContainer {
+  grid-area: lab;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: flex-start;
+  width: 100%;
+  height: fit-content;
+  transition: opacity 0.5s ease;
+}
+
+.labelContents {
+  align-self: stretch;
+  display: block;
+  background-color: rgb(60, 206, 250);
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  flex-grow: 1;
+  font-weight: 700;
+  overflow: hidden;
+  transition: height 0.3s ease;
+  overflow-y: scroll;
+}
+
 .settingsContainer {
   grid-area: set;
   display: flex;
@@ -77,10 +99,14 @@ body {
   justify-content: start;
   align-items: flex-start;
   width: 100%;
-  height: 100%;
+  height: calc(100%-20px);
   padding: 10px;
-  gap: 5px;
+  margin: 10px 0;
+  /* gap: 50px; */
   transition: opacity 0.5s ease;
+  /* height: 1080px; */
+  overflow-y: scroll;
+
 }
 
 @media (max-width: 1649px) {
@@ -102,9 +128,10 @@ body {
   font-weight: 700;
   overflow: hidden;
   transition: height 0.3s ease;
+  overflow-y: scroll;
 }
 
-.settingsHeader {
+.labelHeader {
   margin-left: 10px;
   color: white;
   text-align: left;
@@ -115,22 +142,22 @@ body {
   margin: 5px;
 }
 
-.settingsParagraph {
+.labelParagraph {
   margin-left: 30px;
 }
 
 @media (max-width: 768px) {
-  .settingsParagraph {
+  .labelParagraph {
     margin-left: 4%;
   }
 }
 
-.settingsParagraph--areaText {
+.labelParagraph--areaText {
   margin-left: 60px;
 }
 
 @media (max-width: 768px) {
-  .settingsParagraph--areaText {
+  .labelParagraph--areaText {
     margin-left: 8%;
   }
 }
@@ -177,7 +204,7 @@ body {
 
 @media (min-width: 1650px) {
   .button--nav {
-    width: 93%;
+    text-align: center;
   }
 }
 
@@ -296,20 +323,25 @@ body {
 
 .outputContainer {
   grid-area: out;
-  width: 100%;
-  height: 100%;
-  padding: 0 10px 10px;
+  /* width: 100%;
+  height: calc(100% - 10px); */
   display: flex;
   flex-direction: row;
-  gap: 10px;
+
   font-size: 19px;
   transition: opacity 0.5s ease;
+  /* height: 1080px; */
+  /* overflow-y: scroll; */
+  /* margin-bottom: 10px; */
+  width: 100%;
+  height: 100%;
+  gap: 10px;
 }
 
 @media (max-width: 1649px) {
   .outputContainer {
     font-size: 1.5vw;
-    padding: 0 1% 1%;
+    /* padding: 0 1% 1%; */
   }
 }
 
@@ -325,13 +357,15 @@ body {
   color: white;
   position: relative;
   width: 100%;
-  height: 100%;
+  height: fit-content;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   background-color: black;
   border-radius: 5px;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .outputLabel {

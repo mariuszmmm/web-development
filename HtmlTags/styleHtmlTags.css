@@ -1,5 +1,13 @@
-.settingsContents--HtmlTags {
-  max-height: 50vh;
+.mainContainer--htmlTags {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "lab"
+    "out";
+}
+
+.labelContents--HtmlTags {
   overflow-y: scroll;
 }
 
@@ -21,6 +29,7 @@
 
 .outputContents--HtmlTags {
   align-items: flex-start;
+  height: 100%;
 }
 
 .button--example {

@@ -1,5 +1,5 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js";
-import { transitionHeightAnimation } from "../Animation/script.js";
+import { heightAnimation } from "../Animation/scriptAnimation.js";
 let activePropertiesNew = [];
 let activePropertiesLast = [];
 
@@ -49,7 +49,7 @@ export const grid = () => {
       `;
 
     const settingsContentsElement = document.querySelector(".js-settingsContents");
-    transitionHeightAnimation(settingsContentsElement);
+    heightAnimation(settingsContentsElement);
   };
 
   const settingsContents = () => {
@@ -65,7 +65,7 @@ export const grid = () => {
           buttons.properties.forEach((prop) => {
             if (prop.active) {
               element += `
-                <p class="settingsParagraph settingsParagraph--grid">
+                <p class="labelParagraph labelParagraph--grid">
                 ${prop.active ? prop.name + ":" +
                   ((prop.name === "grid-template-areas") ? "<br>" : "")
                   : ""}
@@ -83,13 +83,13 @@ export const grid = () => {
                   if (!!textArray) {
                     textArray.forEach((text) => {
                       element += `
-                        <p class="settingsParagraph--areaText settingsParagraph--grid">
+                        <p class="labelParagraph--areaText labelParagraph--grid">
                           ${text}
                         </p>
                       `;
                     });
                     element += `  
-                      <p class="settingsParagraph settingsParagraph--grid">
+                      <p class="labelParagraph labelParagraph--grid">
                         ;
                       </p>
                     `;
@@ -113,17 +113,17 @@ export const grid = () => {
 
     contentsElement += `
       <div class="settingsContents settingsContents--grid js-settingsContents">
-        <p class="settingsParagraph--grid strong">.parent {</p>
+        <p class="labelParagraph--grid strong">.parent {</p>
         ${settingsLabel("parent")}
-        <p class="settingsParagraph--grid strong">}</p>
+        <p class="labelParagraph--grid strong">}</p>
         <p></p>
-        <p class="settingsParagraph--grid strong">.child_all {</p>
+        <p class="labelParagraph--grid strong">.child_all {</p>
         ${settingsLabel("child_all")}
-        <p class="settingsParagraph--grid strong">}</p>
+        <p class="labelParagraph--grid strong">}</p>
         <p></p>
-        <p class="settingsParagraph--grid strong">.child_${childSelected} {</p>
+        <p class="labelParagraph--grid strong">.child_${childSelected} {</p>
         ${settingsLabel("child")}
-        <p class="settingsParagraph--grid strong">}</p>
+        <p class="labelParagraph--grid strong">}</p>
       </div>
     `;
 
