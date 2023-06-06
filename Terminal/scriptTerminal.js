@@ -54,8 +54,9 @@ export const terminal = () => {
   const renderMainContainer = () => {
     const mainContainerElement = document.getElementById("main");
     mainContainerElement.classList = "";
-    mainContainerElement.classList.add("mainContainer")
+    mainContainerElement.classList.add("mainContainer", "mainContainer--terminal")
 
+    mainContainerElement.innerHTML = "";
     mainContainerElement.innerHTML = `
       <div class="labelContainer js-labelContainer">
       </div>

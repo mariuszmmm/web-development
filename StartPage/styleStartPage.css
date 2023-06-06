@@ -1,5 +1,4 @@
 .mainContainer--startPage {
-   display: grid;
    grid-template-columns: 1fr;
    grid-template-rows: auto 1fr;
    grid-template-areas:
@@ -13,6 +12,10 @@
    justify-content: center;
    align-items: center;
    font-size: 45px;
+}
+
+.outputContents--startPage{
+  height: 100%;
 }
 
 .clockContents {

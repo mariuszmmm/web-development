@@ -43,7 +43,7 @@ export const startPage = () => {
 
     outputElement.innerHTML = "";
     outputElement.innerHTML = `
-      <div class="outputContents">
+      <div class="outputContents outputContents--startPage">
         <div class="clockContainer">
           <div class="clockContents">
             ${clock()}

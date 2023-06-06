@@ -1,3 +1,12 @@
+mainContainer--terminal {
+   grid-template-columns: 1fr;
+   grid-template-rows: auto 1fr;
+   grid-template-areas:
+      "lab"
+      "out"
+   ;
+}
+
 .outputImage--terminal {
   margin-top: 30px;
   width: 100%;
@@ -8,4 +17,5 @@
 
 .outputContents--terminal {
   align-items: flex-start;
+  height: fit-content;
 }
