@@ -9,6 +9,7 @@
 
 .labelContents--HtmlTags {
   overflow-y: scroll;
+  height: 20em;
 }
 
 .settingsSubcontainer--HtmlTags {
