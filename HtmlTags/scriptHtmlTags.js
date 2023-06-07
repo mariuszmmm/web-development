@@ -63,13 +63,17 @@ export const htmlTags = () => {
       <div class="outputContainer js-outputContainerHTML">
         <div class="outputContents outputContents--HtmlTags">
           <div class="outputLabel">HTML :</div>
+           <div class="imgContainer">
             <img class="outputImage--HtmlTags" src="./HtmlTags/images/${exampleHtml}.gif" alt="HtmlTags_example">
+            </div>
         </div>
       </div>
       <div class="outputContainer js-outputContainerOUTPUT">
       <div class="outputContents outputContents--HtmlTags">
         <div class="outputLabel">OUTPUT :</div>
+        <div class="imgContainer">
           <img class="outputImage--HtmlTags" src="./HtmlTags/images/${exampleOutput}.gif" alt="HtmlTags_example">
+          </div>
       </div>
     </div>
     `;
@@ -92,7 +96,8 @@ export const htmlTags = () => {
   const onClick = (event) => {
     const labelElement = document.querySelector(".js-labelContainer");
     const outputElement = document.querySelector(`.js-outputContainer`);
-    labelElement.style.height = 365 + "px"
+ /*   labelElement.style.height = 365 + "px"; */
+    outputElement.classList.remove("none")
 
     tagsCategoryWithActive.map((tag) => {
       if (tag.name === event.target.id) {
@@ -162,6 +167,9 @@ export const htmlTags = () => {
       <div class="outputContainer js-outputContainer">
       </div>
     `;
+    
+  const outputElement = document.querySelector(`.js-outputContainer`);
+   outputElement.classList.add("none"),
 
     labelHeight = mainContainerElement.offsetHeight - 10;
   };

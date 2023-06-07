@@ -46,7 +46,9 @@ export const terminal = () => {
     contentsElement.innerHTML += `
       <div class="outputContents outputContents--terminal">
         <div class="outputLabel">TERMINAL :</div>
+       <div class="imgContainer">
         <img class="outputImage--terminal" src="Terminal/images/terminal.gif" alt="terminal">
+        </div>
       </div>
     `;
   };
