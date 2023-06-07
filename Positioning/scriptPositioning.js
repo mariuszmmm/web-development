@@ -14,45 +14,50 @@ export const positioning = () => {
 
   const renderLabel = () => {
     const labelElement = document.querySelector(".js-labelContainer");
-    let element;
 
-    buttonsObjects.forEach((buttons) => {
-      const active = (buttons.properties.find((buttons) => buttons.active === true));
+    const renderContentLabel = () => {
+      let element = "";
+      buttonsObjects.forEach((buttons) => {
+        const active = (buttons.properties.find((buttons) => buttons.active === true));
 
-      buttons.properties.forEach((prop) => {
-        if (prop.active) {
-          element += `
+        buttons.properties.forEach((prop) => {
+          if (prop.active) {
+            element += `
               <p class="labelParagraph labelParagraph--positioning">
                 ${prop.active ? prop.name : ""}
             `;
+          };
+        });
+
+        if (active !== undefined) {
+          buttons.propertiesValues.forEach((prop) => {
+            if (prop.active) {
+              element += `: ${prop.active ? prop.name : ""}; </p>`
+            };
+          });
         };
       });
 
-      if (active !== undefined) {
-        buttons.propertiesValues.forEach((prop) => {
-          if (prop.active) {
-            element += `: ${prop.active ? prop.name : ""}; </p>`
-          };
-        });
-      };
-    });
+      return element;
+    };
 
     labelElement.innerHTML = `
-      <div class="labelContents">
-      <div class="settingsContents settingsContents--positioning js-settingsContents">
-      <div id="text">
-        <p class="labelParagraph--positioning strong">.parent {</p>
-        <p class="labelParagraph labelParagraph--positioning">  position: relative; </p>
-        <p class="labelParagraph labelParagraph--positioning">  border: 3px dashed white; </p>
-        <p class="labelParagraph labelParagraph--positioning">  background: purple; </p>
-        <p class="labelParagraph--positioning strong">}</p>
-        <p class="labelParagraph--positioning strong">.child_2 {</p>
-        ${element}
-        <p class="labelParagraph--positioning strong">}</p>
+      <div class="labelContents labelContents--positioning js-labelContents">
+        <div id="text">
+          <p class="labelParagraph--positioning strong">.parent {</p>
+          <p class="labelParagraph labelParagraph--positioning">  position: relative; </p>
+          <p class="labelParagraph labelParagraph--positioning">  border: 3px dashed white; </p>
+          <p class="labelParagraph labelParagraph--positioning">  background: purple; </p>
+          <p class="labelParagraph--positioning strong">}</p>
+          <p class="labelParagraph--positioning strong">.child_2 {</p>
+          ${renderContentLabel()}
+          <p class="labelParagraph--positioning strong">}</p>
         </div>
       </div>
-      </div>
     `;
+
+    const labelContentsElement = document.querySelector(".js-labelContents");
+    heightAnimation(labelContentsElement);
   };
 
   const renderSettings = () => {
@@ -60,23 +65,9 @@ export const positioning = () => {
 
     settingsElement.innerHTML = "";
     settingsElement.innerHTML += `
-
          ${buttonsContainer()}
       `;
 
-    const settingsContentsElement = document.querySelector(".js-settingsContents");
-    heightAnimation(settingsContentsElement);
-  };
-
-  const settingsContents = () => {
-    let element;
-    element += `
-    
-            ${settingsLabel()}
-      
-    `;
-
-    return element;
   };
 
   const buttonsContainer = () => {
@@ -232,7 +223,7 @@ export const positioning = () => {
   const renderMainContainer = () => {
     const mainContainerElement = document.getElementById("main");
     mainContainerElement.classList = "";
-    mainContainerElement.classList.add("mainContainer", "mainContainer--Positioning")
+    mainContainerElement.classList.add("mainContainer", "mainContainer--positioning")
 
     mainContainerElement.innerHTML = "";
     mainContainerElement.innerHTML = `

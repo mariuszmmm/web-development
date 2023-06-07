@@ -1,11 +1,22 @@
-.settingsContents--flex {
-  min-width: 400px;
+.mainContainer--flex {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "lab set"
+    "out out"
+  ;
+}
+
+.labelContents--flex {
+  min-width: 300px;
   flex-grow: 0;
 }
 
 @media (max-width: 768px) {
-  .settingsContents--flex {
-    min-width: 265px;
+  .labelContents--flex {
+    min-width: 230px;
   }
 }
 

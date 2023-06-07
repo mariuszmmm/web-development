@@ -31,17 +31,65 @@ export const flex = () => {
     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa molestiae laboriosam, error suscipit excepturi quos maxime quidem odit repellendus, odio dolorem natus fuga dolorum autem, alias laborum id. Possimus, ullam?"
   };
 
+  const renderLabel = () => {
+    const labelElement = document.querySelector(".js-labelContainer");
+
+    const renderContentLabel = (name) => {
+      let element = "";
+      buttonsArray.forEach((buttons) => {
+        if (buttons.destiny === name) {
+          const active = !!buttons.properties[0].active;
+
+          buttons.properties.forEach((prop) => {
+            if (prop.active) {
+              element += `
+              <p class="labelParagraph labelParagraph--flex">
+                ${prop.active ? prop.name : ""}`;
+            };
+          });
+
+          if (active) {
+            buttons.propertiesValues.forEach((prop) => {
+              if (prop.active) {
+                element += `: ${prop.active ? prop.name : ""};  
+                </p>
+              `;
+              };
+            });
+          };
+        };
+      });
+
+      return element;
+    };
+
+    labelElement.innerHTML = `
+      <div class="labelContents labelContents--flex js-labelContents">
+        <p class="labelParagraph--flex strong">.parent {</p>
+        ${renderContentLabel("parent")}
+        <p class="labelParagraph--flex strong">}</p>
+        <p></p>
+        <p class="labelParagraph--flex strong">.child_all {</p>
+        ${renderContentLabel("child_all")}
+        <p class="labelParagraph--flex strong">}</p>
+        <p></p>
+        <p class="labelParagraph--flex strong">.child_${childSelected} {</p>
+        ${renderContentLabel("child")}
+        <p class="labelParagraph--flex strong">}</p>
+      </div>
+    `;
+
+    const labelContentsElement = document.querySelector(".js-labelContents");
+    heightAnimation(labelContentsElement);
+  };
+
   const renderSettings = () => {
     const settingsElement = document.querySelector(".js-settingsContainer");
 
     settingsElement.innerHTML = "";
     settingsElement.innerHTML += `
-        ${settingsContents()}
         ${settingsButtons()}
       `;
-
-    const settingsContentsElement = document.querySelector(".js-settingsContents");
-    heightAnimation(settingsContentsElement);
   };
 
   const settingsContents = () => {
@@ -78,7 +126,7 @@ export const flex = () => {
     };
 
     contentsElement += `
-      <div class="settingsContents settingsContents--flex js-settingsContents">
+      <div class="labelContents labelContents--flex js-labelContents">
         <p class="labelParagraph--flex strong">.parent {</p>
         ${settingsLabel("parent")}
         <p class="labelParagraph--flex strong">}</p>
@@ -375,13 +423,35 @@ export const flex = () => {
     });
   };
 
+  const renderMainContainer = () => {
+    const mainContainerElement = document.getElementById("main");
+    mainContainerElement.classList = "";
+    mainContainerElement.classList.add("mainContainer", "mainContainer--flex")
+
+    mainContainerElement.innerHTML = "";
+    mainContainerElement.innerHTML = `
+<div class="labelContainer js-labelContainer">
+</div>
+<div class="settingsContainer js-settingsContainer">
+</div>
+<div class="outputContainer js-outputContainer">
+</div>
+`;
+  };
+
   const render = () => {
+    let scrollPosition = window.scrollY || window.pageYOffset;
+    renderMainContainer();
+    renderLabel()
     renderSettings();
-    renderOutput();
+    renderOutput()
     bindPropertyButtons();
     bindValueButtons();
     bindChildSettingButtons();
-  }
+    window.scrollTo(0, scrollPosition);
 
+  };
+
+  window.scrollTo(0, 0);
   render();
 };

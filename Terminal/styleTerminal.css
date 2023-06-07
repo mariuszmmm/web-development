@@ -1,4 +1,6 @@
 .mainContainer--terminal {
+   display: grid;
+   gap: 10px;
    grid-template-columns: 1fr;
    grid-template-rows: auto 1fr;
    grid-template-areas:
@@ -8,13 +10,13 @@
 }
 
 .outputImage--terminal {
-       width: 100%;
-       position: relative;
-       top: 2px;
-       padding: 1px 2px;
+   width: 100%;
+   position: relative;
+   top: 2px;
+   padding: 1px 2px;
 }
 
 .outputContents--terminal {
-  align-items: flex-start;
-  height: fit-content;
+   align-items: flex-start;
+   height: fit-content;
 }

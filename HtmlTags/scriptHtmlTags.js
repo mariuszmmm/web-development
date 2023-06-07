@@ -94,9 +94,11 @@ export const htmlTags = () => {
   };
 
   const onClick = (event) => {
+    const mainContainerElement = document.getElementById("main");
     const labelElement = document.querySelector(".js-labelContainer");
     const outputElement = document.querySelector(`.js-outputContainer`);
- /*   labelElement.style.height = 365 + "px"; */
+    mainContainerElement.classList.add("mainContainer", "mainContainer--htmlTags")
+    labelElement.style.height = labelHeight / 2 + "px";
     outputElement.classList.remove("none")
 
     tagsCategoryWithActive.map((tag) => {
@@ -158,8 +160,11 @@ export const htmlTags = () => {
 
   const renderMainContainer = () => {
     const mainContainerElement = document.getElementById("main");
+    const labelElement = document.querySelector(".js-labelContainer");
+
     mainContainerElement.classList = "";
-    mainContainerElement.classList.add("mainContainer", "mainContainer--htmlTags")
+    mainContainerElement.classList.add("mainContainer")
+
 
     mainContainerElement.innerHTML = `
       <div class="labelContainer js-labelContainer">
@@ -167,11 +172,12 @@ export const htmlTags = () => {
       <div class="outputContainer js-outputContainer">
       </div>
     `;
-    
-  const outputElement = document.querySelector(`.js-outputContainer`);
-   outputElement.classList.add("none"),
 
-    labelHeight = mainContainerElement.offsetHeight - 10;
+    const outputElement = document.querySelector(`.js-outputContainer`);
+    outputElement.classList.add("none")
+
+    labelHeight = mainContainerElement.offsetHeight;
+
   };
 
   const render = () => {

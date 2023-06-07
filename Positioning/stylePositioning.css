@@ -1,22 +1,22 @@
-.mainContainer--Positioning {
+.mainContainer--positioning {
   display: grid;
-  grid-template-columns: auto auto;
+  gap: 10px;
+  grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr;
   grid-template-areas:
-    "lab set set"
-    "out out out"
+    "lab set"
+    "out out"
   ;
 }
 
-
-.settingsContents--positioning {
-  min-width: 400px;
+.labelContents--positioning {
+  min-width: 300px;
   flex-grow: 0;
 }
 
 @media (max-width: 768px) {
-  .settingsContents--positioning {
-    min-width: 265px;
+  .labelContents--positioning {
+    min-width: 250px;
   }
 }
 

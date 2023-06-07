@@ -28,7 +28,7 @@ export const sectionsHtml = () => {
   const renderMainContainer = () => {
     const mainContainerElement = document.getElementById("main");
     mainContainerElement.classList = "";
-    mainContainerElement.classList.add("mainContainer")
+    mainContainerElement.classList.add("mainContainer", "mainContainer--sectionsHtml")
 
     mainContainerElement.innerHTML = "";
     mainContainerElement.innerHTML = `

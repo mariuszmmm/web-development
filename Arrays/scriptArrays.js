@@ -132,11 +132,8 @@ export const arrays = () => {
   const renderLabel = () => {
     const labelElement = document.querySelector(".js-labelContainer");
 
-    const labelContents = () => {
-      let element = "";
-
-      element += `
-        <div class="settingsContents settingsContents--array labelContents js-settingsContents">
+    labelElement.innerHTML = `
+        <div class="labelContents labelContents--arrays js-labelContents">
           <p class="labelParagraph--arrays strong">const array = [
           ${array.length > 0 ? `
           </p>
@@ -156,14 +153,6 @@ export const arrays = () => {
           ${(!!methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
         </div>
       `;
-
-      return element;
-    };
-
-    labelElement.innerHTML = "";
-    labelElement.innerHTML += `
-      ${labelContents()}  
-    `;
   }
 
   const renderSettings = () => {
@@ -342,7 +331,7 @@ export const arrays = () => {
       ${methodsSettings()}      
     `;
 
-    const settingsContentsElement = document.querySelector(".js-settingsContents");
+    const settingsContentsElement = document.querySelector(".js-labelContents");
     heightAnimation(settingsContentsElement);
   };
 
@@ -862,12 +851,32 @@ export const arrays = () => {
     };
   };
 
-  const render = () => {
-    renderLabel();
-    renderSettings();
-    renderOutput();
-    bindInputsAndButtons();
-  }
+  const renderMainContainer = () => {
+    const mainContainerElement = document.getElementById("main");
+    mainContainerElement.classList = "";
+    mainContainerElement.classList.add("mainContainer", "mainContainer--arrays")
 
+    mainContainerElement.innerHTML = "";
+    mainContainerElement.innerHTML = `
+<div class="labelContainer js-labelContainer">
+</div>
+<div class="settingsContainer js-settingsContainer">
+</div>
+<div class="outputContainer js-outputContainer">
+</div>
+`;
+  };
+
+  const render = () => {
+    let scrollPosition = window.scrollY || window.pageYOffset;
+    renderMainContainer();
+    renderLabel()
+    renderSettings();
+    renderOutput()
+    bindInputsAndButtons();
+    window.scrollTo(0, scrollPosition);
+  };
+
+  window.scrollTo(0, 0);
   render();
 };

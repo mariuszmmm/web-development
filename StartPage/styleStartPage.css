@@ -1,4 +1,6 @@
 .mainContainer--startPage {
+   display: grid;
+   gap: 10px;
    grid-template-columns: 1fr;
    grid-template-rows: auto 1fr;
    grid-template-areas:
@@ -15,10 +17,10 @@
 
 .outputContents--startPage {
    height: 100%;
-   
+
 }
 
-@media (orientation: portrait)  {
+@media (orientation: portrait) {
    .outputContents--startPage {
       height: 100em;
    }

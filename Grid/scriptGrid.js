@@ -39,17 +39,92 @@ export const grid = () => {
     return [stringWithRegex, textArea];
   };
 
+  const renderLabel = () => {
+    const labelElement = document.querySelector(".js-labelContainer");
+
+    const renderContentLabel = (name) => {
+      let element = "";
+
+      buttonsArray.forEach((buttons) => {
+        if (buttons.destiny === name) {
+          const active = !!buttons.properties[0].active;
+
+          buttons.properties.forEach((prop) => {
+            if (prop.active) {
+              element += `
+                <p class="labelParagraph labelParagraph--grid">
+                ${prop.active ? prop.name + ":" +
+                  ((prop.name === "grid-template-areas") ? "<br>" : "")
+                  : ""}
+              `;
+            };
+          });
+
+          if (active) {
+            buttons.propertiesValues.forEach((prop) => {
+              if (prop.active) {
+                const areaContent = (prop) => {
+                  let textArray = formatTextArea(prop)[0];
+                  let element = "";
+
+                  if (!!textArray) {
+                    textArray.forEach((text) => {
+                      element += `
+                        <p class="labelParagraph--areaText labelParagraph--grid">
+                          ${text}
+                        </p>
+                      `;
+                    });
+                    element += `  
+                      <p class="labelParagraph labelParagraph--grid">
+                        ;
+                      </p>
+                    `;
+                  } else element = prop + ";";
+
+                  return element;
+                }
+
+                element += `
+                  ${areaContent(prop.name)}
+                  </p>
+                `;
+              };
+            });
+          };
+        };
+      });
+
+      return element;
+    };
+
+    labelElement.innerHTML = `
+      <div class="labelContents labelContents--grid js-labelContents">
+        <p class="labelParagraph--grid strong">.parent {</p>
+        ${renderContentLabel("parent")}
+        <p class="labelParagraph--grid strong">}</p>
+        <p></p>
+        <p class="labelParagraph--grid strong">.child_all {</p>
+        ${renderContentLabel("child_all")}
+        <p class="labelParagraph--grid strong">}</p>
+        <p></p>
+        <p class="labelParagraph--grid strong">.child_${childSelected} {</p>
+        ${renderContentLabel("child")}
+        <p class="labelParagraph--grid strong">}</p>
+      </div>
+    `;
+
+    const labelContentsElement = document.querySelector(".js-labelContents");
+    heightAnimation(labelContentsElement);
+  };
+
   const renderSettings = () => {
     const settingsElement = document.querySelector(".js-settingsContainer");
 
     settingsElement.innerHTML = "";
     settingsElement.innerHTML += `
-         ${settingsContents()}
-         ${settingsButtons()}
+           ${settingsButtons()}
       `;
-
-    const settingsContentsElement = document.querySelector(".js-settingsContents");
-    heightAnimation(settingsContentsElement);
   };
 
   const settingsContents = () => {
@@ -406,13 +481,34 @@ export const grid = () => {
     });
   };
 
+  const renderMainContainer = () => {
+    const mainContainerElement = document.getElementById("main");
+    mainContainerElement.classList = "";
+    mainContainerElement.classList.add("mainContainer", "mainContainer--grid")
+
+    mainContainerElement.innerHTML = "";
+    mainContainerElement.innerHTML = `
+<div class="labelContainer js-labelContainer">
+</div>
+<div class="settingsContainer js-settingsContainer">
+</div>
+<div class="outputContainer js-outputContainer">
+</div>
+`;
+  };
+
   const render = () => {
+    let scrollPosition = window.scrollY || window.pageYOffset;
+    renderMainContainer();
+    renderLabel()
     renderSettings();
-    renderOutput();
+    renderOutput()
     bindPropertyButtons();
     bindValueButtons();
     bindChildSettingButtons();
+    window.scrollTo(0, scrollPosition);
   };
 
+  window.scrollTo(0, 0);
   render();
 };
