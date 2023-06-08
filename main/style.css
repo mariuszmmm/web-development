@@ -43,6 +43,12 @@ body {
   }
 }
 
+@media (orientation: portrait) {
+  .container {
+    height: 100em;
+  }
+}
+
 .navContainer {
   display: flex;
   flex-direction: column;
@@ -148,11 +154,12 @@ body {
   height: 100%;
   gap: 10px;
 }
+
 @media (max-width: 1649px) {
   .outputContainer {
     font-size: 1.5vw;
   }
-} 
+}
 
 @media (max-width: 768px) {
   .outputContainer {
@@ -455,11 +462,11 @@ body {
 }
 
 .imgContainer {
-    margin: 50px 20px 20px;
-  
+  margin: 50px 20px 20px;
 
-    /* max-height: 1500px; */
-    
-   /* object-fit: contain; */
-    border: 1px solid darkgrey;
+
+  /* max-height: 1500px; */
+
+  /* object-fit: contain; */
+  border: 1px solid darkgrey;
 }

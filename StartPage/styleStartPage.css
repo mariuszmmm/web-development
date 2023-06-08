@@ -20,11 +20,11 @@
 
 }
 
-@media (orientation: portrait) {
+/* @media (orientation: portrait) {
    .outputContents--startPage {
       height: 100em;
    }
-}
+} */
 
 .clockContents {
    font-family: 'Chivo Mono', monospace;
