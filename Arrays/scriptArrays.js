@@ -187,7 +187,10 @@ export const arrays = () => {
 
         objects.forEach((obj) => {
           element += `
-            ${!!obj.active ? obj.methodContent : ""}
+            ${!!obj.active ?
+            (name === "reduce" ?
+            (obj.methodContent).trim() + ",&nbsp;" : obj.methodContent)
+            : ""}
           `;
         });
 
@@ -818,7 +821,7 @@ export const arrays = () => {
         break;
       case "reduce":
         output = array.reduce(enterContentForArrowFunction(button), setAadditionalParameter(inputValue));
-        methodContent = [method, enterContentForArrowFunction(button) + ", " + inputValue, "arrowFunction"];
+        methodContent = [method, enterContentForArrowFunction(button) + (!!inputValue ? ", " + inputValue : ""), "arrowFunction"];
         break;
       case "filter":
         output = array.filter(enterContentForArrowFunction(button, inputValue));
