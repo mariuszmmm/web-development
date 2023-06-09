@@ -434,7 +434,7 @@ export const flex = () => {
 </div>
 <div class="settingsContainer js-settingsContainer">
 </div>
-<div class="outputContainer js-outputContainer">
+<div class="outputContainer outputContainer--flex js-outputContainer">
 </div>
 `;
   };

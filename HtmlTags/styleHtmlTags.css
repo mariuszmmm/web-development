@@ -30,7 +30,7 @@
 
 .outputContents--HtmlTags {
   align-items: flex-start;
-  height: 100%;
+  height: fit-content;
 }
 
 .button--example {
@@ -42,4 +42,8 @@
   .button--example {
     margin-right: 5%;
   }
+}
+
+.outputContainer--HtmlTags {
+  height: 100%;
 }

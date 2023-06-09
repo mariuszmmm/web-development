@@ -231,7 +231,7 @@ export const positioning = () => {
   </div>
   <div class="settingsContainer js-settingsContainer">
   </div>
-  <div class="outputContainer js-outputContainer">
+  <div class="outputContainer outputContainer--positioning js-outputContainer">
   </div>
 `;
   };

@@ -37,6 +37,7 @@
   margin-bottom: 5px;
 }
 
+/*
 .outputContents--grid {
   aspect-ratio: 16/9;
 }
@@ -46,6 +47,7 @@
     min-height: 500px;
   }
 }
+*/
 
 .propertyElements--grid {
   width: 230px;
@@ -55,4 +57,8 @@
   .propertyElements--grid {
     width: 150px;
   }
+}
+
+.outputContainer--grid {
+  aspect-ratio: 16/9;
 }

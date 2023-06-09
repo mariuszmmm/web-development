@@ -17,4 +17,5 @@
 
 .outputContents--sectionsHtml {
   align-items: flex-start;
+  height: fit-content;
 }
