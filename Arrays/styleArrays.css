@@ -5,8 +5,7 @@
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "lab set"
-    "out set"
-  ;
+    "out set";
 }
 
 @media (max-width: 1649px) {
@@ -21,24 +20,27 @@
   }
 }
 
+.labelContainer--arrays {
+  position: static;
+}
 
 .labelContents--arrays {
-  /* width: 100%; */
   min-width: 559px;
   max-width: 559px;
-  /* flex-grow: 0; */
   line-height: 1.5;
   font-family: monospace;
-  /* max-height: 750px;
-  overflow-y: scroll; */
-  /* min-height: 290px; */
   min-height: 150px;
-
 }
 
 @media (max-width: 1649px) {
   .labelContents--arrays {
     min-width: 100%;
+  }
+}
+
+@media (min-width: 1650px) {
+  .settingsContainer--arrays {
+    overflow-y: scroll;
   }
 }
 
@@ -96,19 +98,16 @@
   word-spacing: 5px;
   line-height: 2;
   padding: 50px 5%;
-  /* flex-grow: 1; */
   font-size: 18px;
   justify-content: flex-start;
   line-height: 2;
   min-height: 150px;
   font-family: monospace;
   display: inline;
-  /* min-height: 290px; */
   word-break: break-word;
   width: 100%;
   max-width: 559px;
   min-width: 559px;
-  /* flex-grow: 0; */
   line-height: 1.5;
 }
 

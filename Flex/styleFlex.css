@@ -25,18 +25,6 @@
   margin-bottom: 5px;
 }
 
-/*
-.outputContents--flex {
-  aspect-ratio: 16/9;
-}
-
-@media (min-width: 1650px) {
-  .outputContents--flex {
-   min-height: 500px;
-  }
-}
-*/
-
 .propertyElements--flex {
   width: 165px;
 }
@@ -49,4 +37,8 @@
 
 .outputContainer--flex {
   aspect-ratio: 16/9;
+}
+
+.outputContents--flex {
+  min-height: 500px;
 }

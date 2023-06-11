@@ -52,8 +52,10 @@ export const inputsHtml = () => {
 
   const renderMainContainer = () => {
     const mainContainerElement = document.getElementById("main");
+
+    mainContainerElement.scrollTo(0, 0);
     mainContainerElement.classList = "";
-    mainContainerElement.classList.add("mainContainer")
+    mainContainerElement.classList.add("mainContainer");
 
     mainContainerElement.innerHTML = "";
     mainContainerElement.innerHTML = `
@@ -62,9 +64,9 @@ export const inputsHtml = () => {
   };
 
   const render = () => {
-    renderMainContainer();
-    renderSettings()
+    renderSettings();
   };
 
+  renderMainContainer();
   render();
 };

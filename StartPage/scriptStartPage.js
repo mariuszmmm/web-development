@@ -55,8 +55,10 @@ export const startPage = () => {
 
   const renderMainContainer = () => {
     const mainContainerElement = document.getElementById("main");
+
+    mainContainerElement.scrollTo(0, 0);
     mainContainerElement.classList = "";
-    mainContainerElement.classList.add("mainContainer", "mainContainer--startPage")
+    mainContainerElement.classList.add("mainContainer", "mainContainer--startPage");
 
     mainContainerElement.innerHTML = "";
     mainContainerElement.innerHTML = `
@@ -68,10 +70,10 @@ export const startPage = () => {
   };
 
   const render = () => {
-    renderMainContainer();
-    renderLabel()
-    renderOutput()
+    renderLabel();
+    renderOutput();
   };
 
+  renderMainContainer();
   render();
 };

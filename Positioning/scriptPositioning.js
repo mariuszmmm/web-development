@@ -222,8 +222,10 @@ export const positioning = () => {
 
   const renderMainContainer = () => {
     const mainContainerElement = document.getElementById("main");
+
+    mainContainerElement.scrollTo(0, 0);
     mainContainerElement.classList = "";
-    mainContainerElement.classList.add("mainContainer", "mainContainer--positioning")
+    mainContainerElement.classList.add("mainContainer", "mainContainer--positioning");
 
     mainContainerElement.innerHTML = "";
     mainContainerElement.innerHTML = `
@@ -237,13 +239,13 @@ export const positioning = () => {
   };
 
   const render = () => {
-    renderMainContainer();
-    renderLabel()
+    renderLabel();
     renderSettings();
-    renderOutput()
+    renderOutput();
     bindPropertyButtons();
     bindValueButtons();
   };
 
+  renderMainContainer();
   render();
 };

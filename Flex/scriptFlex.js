@@ -425,8 +425,10 @@ export const flex = () => {
 
   const renderMainContainer = () => {
     const mainContainerElement = document.getElementById("main");
+
+    mainContainerElement.scrollTo(0, 0);
     mainContainerElement.classList = "";
-    mainContainerElement.classList.add("mainContainer", "mainContainer--flex")
+    mainContainerElement.classList.add("mainContainer", "mainContainer--flex");
 
     mainContainerElement.innerHTML = "";
     mainContainerElement.innerHTML = `
@@ -440,18 +442,14 @@ export const flex = () => {
   };
 
   const render = () => {
-    let scrollPosition = window.scrollY || window.pageYOffset;
-    renderMainContainer();
-    renderLabel()
+    renderLabel();
     renderSettings();
-    renderOutput()
+    renderOutput();
     bindPropertyButtons();
     bindValueButtons();
     bindChildSettingButtons();
-    window.scrollTo(0, scrollPosition);
-
   };
 
-  window.scrollTo(0, 0);
+  renderMainContainer();
   render();
 };

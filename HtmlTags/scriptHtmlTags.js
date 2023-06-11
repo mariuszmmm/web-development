@@ -3,7 +3,6 @@ import { opacityAnimation } from '../Animation/scriptAnimation.js';
 
 export const htmlTags = () => {
   let tagsCategoryWithActive = [];
-  let labelHeight;
 
   const renderLabel = () => {
     const labelElement = document.querySelector(".js-labelContainer");
@@ -54,8 +53,6 @@ export const htmlTags = () => {
         ${element}
       </div>
     `;
-
-    labelElement.style.height = labelHeight + "px"
   };
 
   const renderOutput = (outputElement, exampleHtml, exampleOutput) => {
@@ -98,7 +95,7 @@ export const htmlTags = () => {
     const labelElement = document.querySelector(".js-labelContainer");
     const outputElement = document.querySelector(`.js-outputContainer`);
     mainContainerElement.classList.add("mainContainer", "mainContainer--htmlTags")
-    labelElement.style.height = labelHeight / 2 + "px";
+    labelElement.style.height = "50vh";
     outputElement.classList.remove("none")
 
     tagsCategoryWithActive.map((tag) => {
@@ -162,9 +159,9 @@ export const htmlTags = () => {
     const mainContainerElement = document.getElementById("main");
     const labelElement = document.querySelector(".js-labelContainer");
 
+    mainContainerElement.scrollTo(0, 0);
     mainContainerElement.classList = "";
-    mainContainerElement.classList.add("mainContainer")
-
+    mainContainerElement.classList.add("mainContainer");
 
     mainContainerElement.innerHTML = `
       <div class="labelContainer js-labelContainer">
@@ -174,17 +171,14 @@ export const htmlTags = () => {
     `;
 
     const outputElement = document.querySelector(`.js-outputContainer`);
-    outputElement.classList.add("none")
-
-    labelHeight = mainContainerElement.offsetHeight;
-
+    outputElement.classList.add("none");
   };
 
   const render = () => {
-    renderMainContainer();
     renderLabel();
     bindButtons();
   };
 
+  renderMainContainer();
   render();
 };

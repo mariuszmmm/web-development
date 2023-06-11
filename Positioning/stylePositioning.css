@@ -25,18 +25,10 @@
   margin-bottom: 5px;
 }
 
-/*
-.outputContents--positioning {
-  aspect-ratio: 16/9;
-}
-
-@media (min-width: 1650px) {
-  .outputContents--positioning {
-    min-height: 500px;
-  }
-}
-*/
-
 .outputContainer--positioning {
   aspect-ratio: 16/9;
+}
+
+.outputContents--positioning {
+  min-height: 500px;
 }

@@ -108,25 +108,23 @@ export const arrays = () => {
       index++
       content += (property + ":") +
         (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) +
-        ((Object.keys(object).length === index + 1) ? "" : ",")
+        ((Object.keys(object).length === index + 1) ? "" : ",&nbsp;")
     };
 
-    return `<span class="${(Object.keys(object).length < 3) ? "nowrap" : ""}">{ ${content} }</span>`;
+    return `<span class="${(Object.keys(object).length < 3) ? "nowrap" : ""}">{&nbsp;${content}&nbsp;}</span>`;
   };
 
   const viewSubArray = (subArray) => {
     let content = "";
 
     subArray.forEach((subArrayElement, index) => {
-      content += `
-      ${typeof (subArrayElement) === "string" ?
-          ((`"` + subArrayElement + `"`) + ((subArray.length === index + 1) ? "" : ","))
-          :
-          (subArrayElement + ((subArray.length === index + 1) ? "" : ","))}
-      `;
+      content += `${typeof (subArrayElement) === "string" ?
+        ((`"` + subArrayElement + `"`) + ((subArray.length === index + 1) ? "" : ",&nbsp;"))
+        :
+        (subArrayElement + ((subArray.length === index + 1) ? "" : ","))}`;
     });
 
-    return `<span class="${(subArray.length < 4) ? "nowrap" : ""}">[${content}]</span>`;
+    return `<span class="${(subArray.length < 4) ? "nowrap" : ""}">[&nbsp;${content}&nbsp;]</span>`;
   }
 
   const renderLabel = () => {
@@ -188,9 +186,9 @@ export const arrays = () => {
         objects.forEach((obj) => {
           element += `
             ${!!obj.active ?
-            (name === "reduce" ?
-            (obj.methodContent).trim() + ",&nbsp;" : obj.methodContent)
-            : ""}
+              (name === "reduce" ?
+                (obj.methodContent).trim() + ",&nbsp;" : obj.methodContent)
+              : ""}
           `;
         });
 
@@ -856,30 +854,29 @@ export const arrays = () => {
 
   const renderMainContainer = () => {
     const mainContainerElement = document.getElementById("main");
+
+    mainContainerElement.scrollTo(0, 0);
     mainContainerElement.classList = "";
-    mainContainerElement.classList.add("mainContainer", "mainContainer--arrays")
+    mainContainerElement.classList.add("mainContainer", "mainContainer--arrays");
 
     mainContainerElement.innerHTML = "";
     mainContainerElement.innerHTML = `
-<div class="labelContainer js-labelContainer">
-</div>
-<div class="settingsContainer js-settingsContainer">
-</div>
-<div class="outputContainer js-outputContainer">
-</div>
-`;
+      <div class="labelContainer labelContainer--arrays js-labelContainer">
+      </div>
+      <div class="settingsContainer settingsContainer--arrays js-settingsContainer">
+      </div>
+      <div class="outputContainer js-outputContainer">
+      </div>
+    `;
   };
 
   const render = () => {
-    let scrollPosition = window.scrollY || window.pageYOffset;
-    renderMainContainer();
-    renderLabel()
+    renderLabel();
     renderSettings();
-    renderOutput()
+    renderOutput();
     bindInputsAndButtons();
-    window.scrollTo(0, scrollPosition);
   };
 
-  window.scrollTo(0, 0);
+  renderMainContainer();
   render();
 };
