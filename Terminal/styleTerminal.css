@@ -1,11 +1,22 @@
+.mainContainer--terminal {
+   display: grid;
+   gap: 10px;
+   grid-template-columns: 1fr;
+   grid-template-rows: auto 1fr;
+   grid-template-areas:
+      "lab"
+      "out"
+   ;
+}
+
 .outputImage--terminal {
-  margin-top: 30px;
-  width: 100%;
-  max-height: 1000px;
-  padding: 3%;
-  object-fit: contain;
+   width: 100%;
+   position: relative;
+   top: 2px;
+   padding: 1px 2px;
 }
 
 .outputContents--terminal {
-  align-items: flex-start;
+   align-items: flex-start;
+   height: fit-content;
 }

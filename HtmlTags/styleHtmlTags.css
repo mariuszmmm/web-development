@@ -1,6 +1,16 @@
-.settingsContents--HtmlTags {
-  max-height: 50vh;
+.mainContainer--htmlTags {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "lab"
+    "out";
+}
+
+.labelContents--HtmlTags {
   overflow-y: scroll;
+  height: 100%;
 }
 
 .settingsSubcontainer--HtmlTags {
@@ -12,15 +22,15 @@
 }
 
 .outputImage--HtmlTags {
-  margin-top: 30px;
   width: 100%;
-  max-height: 1500px;
-  padding: 3%;
-  object-fit: contain;
+  position: relative;
+  top: 2px;
+  padding: 1px 2px;
 }
 
 .outputContents--HtmlTags {
   align-items: flex-start;
+  height: fit-content;
 }
 
 .button--example {
@@ -32,4 +42,8 @@
   .button--example {
     margin-right: 5%;
   }
+}
+
+.outputContainer--HtmlTags {
+  height: 100%;
 }

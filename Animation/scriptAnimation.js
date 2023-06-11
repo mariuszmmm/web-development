@@ -3,7 +3,7 @@ let heightContentNew;
 let activePropertiesLast = [];
 let activePropertiesNew = [];
 
-export const transitionHeightAnimation = (element) => {
+export const heightAnimation = (element) => {
   heightContentNew = element.scrollHeight;
   element.style.height = heightContentLast + "px"
 
@@ -13,20 +13,18 @@ export const transitionHeightAnimation = (element) => {
   heightContentLast = heightContentNew;
 };
 
-export const transitionOpacityAnimation = (callback, element_1, element_2) => {
+export const opacityAnimation = (callback, element) => {
   setTimeout(() => {
-    element_1 ? element_1.classList.add("hidden") : "";
-    element_2 ? element_2.classList.add("hidden") : "";
+    element ? element.classList.add("hidden") : "";
   }, 50);
 
   setTimeout(() => {
     callback();
-    element_1 ? element_1.classList.remove("hidden") : "";
-    element_2 ? element_2.classList.remove("hidden") : "";
+    element ? element.classList.remove("hidden") : "";
   }, 500);
 };
 
-export const animationPositioning = (buttonsObjects, element) => {
+export const positioningAnimation = (buttonsObjects, element) => {
   activePropertiesNew = [];
 
   buttonsObjects.forEach((object) => {

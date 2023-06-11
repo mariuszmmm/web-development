@@ -1,5 +1,5 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js";
-import { transitionHeightAnimation } from "../Animation/script.js";
+import { heightAnimation } from "../Animation/scriptAnimation.js";
 let activePropertiesNew = [];
 let activePropertiesLast = [];
 
@@ -39,23 +39,10 @@ export const grid = () => {
     return [stringWithRegex, textArea];
   };
 
-  const renderSettings = () => {
-    const settingsElement = document.querySelector(".js-settingsContainer");
+  const renderLabel = () => {
+    const labelElement = document.querySelector(".js-labelContainer");
 
-    settingsElement.innerHTML = "";
-    settingsElement.innerHTML += `
-         ${settingsContents()}
-         ${settingsButtons()}
-      `;
-
-    const settingsContentsElement = document.querySelector(".js-settingsContents");
-    transitionHeightAnimation(settingsContentsElement);
-  };
-
-  const settingsContents = () => {
-    let contentsElement = "";
-
-    const settingsLabel = (name) => {
+    const renderContentLabel = (name) => {
       let element = "";
 
       buttonsArray.forEach((buttons) => {
@@ -65,7 +52,7 @@ export const grid = () => {
           buttons.properties.forEach((prop) => {
             if (prop.active) {
               element += `
-                <p class="settingsParagraph settingsParagraph--grid">
+                <p class="labelParagraph labelParagraph--grid">
                 ${prop.active ? prop.name + ":" +
                   ((prop.name === "grid-template-areas") ? "<br>" : "")
                   : ""}
@@ -83,13 +70,101 @@ export const grid = () => {
                   if (!!textArray) {
                     textArray.forEach((text) => {
                       element += `
-                        <p class="settingsParagraph--areaText settingsParagraph--grid">
+                        <p class="labelParagraph--areaText labelParagraph--grid">
                           ${text}
                         </p>
                       `;
                     });
                     element += `  
-                      <p class="settingsParagraph settingsParagraph--grid">
+                      <p class="labelParagraph labelParagraph--grid">
+                        ;
+                      </p>
+                    `;
+                  } else element = prop + ";";
+
+                  return element;
+                }
+
+                element += `
+                  ${areaContent(prop.name)}
+                  </p>
+                `;
+              };
+            });
+          };
+        };
+      });
+
+      return element;
+    };
+
+    labelElement.innerHTML = `
+      <div class="labelContents labelContents--grid js-labelContents">
+        <p class="labelParagraph--grid strong">.parent {</p>
+        ${renderContentLabel("parent")}
+        <p class="labelParagraph--grid strong">}</p>
+        <p></p>
+        <p class="labelParagraph--grid strong">.child_all {</p>
+        ${renderContentLabel("child_all")}
+        <p class="labelParagraph--grid strong">}</p>
+        <p></p>
+        <p class="labelParagraph--grid strong">.child_${childSelected} {</p>
+        ${renderContentLabel("child")}
+        <p class="labelParagraph--grid strong">}</p>
+      </div>
+    `;
+
+    const labelContentsElement = document.querySelector(".js-labelContents");
+    heightAnimation(labelContentsElement);
+  };
+
+  const renderSettings = () => {
+    const settingsElement = document.querySelector(".js-settingsContainer");
+
+    settingsElement.innerHTML = "";
+    settingsElement.innerHTML += `
+           ${settingsButtons()}
+      `;
+  };
+
+  const settingsContents = () => {
+    let contentsElement = "";
+
+    const settingsLabel = (name) => {
+      let element = "";
+
+      buttonsArray.forEach((buttons) => {
+        if (buttons.destiny === name) {
+          const active = !!buttons.properties[0].active;
+
+          buttons.properties.forEach((prop) => {
+            if (prop.active) {
+              element += `
+                <p class="labelParagraph labelParagraph--grid">
+                ${prop.active ? prop.name + ":" +
+                  ((prop.name === "grid-template-areas") ? "<br>" : "")
+                  : ""}
+              `;
+            };
+          });
+
+          if (active) {
+            buttons.propertiesValues.forEach((prop) => {
+              if (prop.active) {
+                const areaContent = (prop) => {
+                  let textArray = formatTextArea(prop)[0];
+                  let element = "";
+
+                  if (!!textArray) {
+                    textArray.forEach((text) => {
+                      element += `
+                        <p class="labelParagraph--areaText labelParagraph--grid">
+                          ${text}
+                        </p>
+                      `;
+                    });
+                    element += `  
+                      <p class="labelParagraph labelParagraph--grid">
                         ;
                       </p>
                     `;
@@ -113,17 +188,17 @@ export const grid = () => {
 
     contentsElement += `
       <div class="settingsContents settingsContents--grid js-settingsContents">
-        <p class="settingsParagraph--grid strong">.parent {</p>
+        <p class="labelParagraph--grid strong">.parent {</p>
         ${settingsLabel("parent")}
-        <p class="settingsParagraph--grid strong">}</p>
+        <p class="labelParagraph--grid strong">}</p>
         <p></p>
-        <p class="settingsParagraph--grid strong">.child_all {</p>
+        <p class="labelParagraph--grid strong">.child_all {</p>
         ${settingsLabel("child_all")}
-        <p class="settingsParagraph--grid strong">}</p>
+        <p class="labelParagraph--grid strong">}</p>
         <p></p>
-        <p class="settingsParagraph--grid strong">.child_${childSelected} {</p>
+        <p class="labelParagraph--grid strong">.child_${childSelected} {</p>
         ${settingsLabel("child")}
-        <p class="settingsParagraph--grid strong">}</p>
+        <p class="labelParagraph--grid strong">}</p>
       </div>
     `;
 
@@ -406,7 +481,26 @@ export const grid = () => {
     });
   };
 
+  const renderMainContainer = () => {
+    const mainContainerElement = document.getElementById("main");
+
+    mainContainerElement.scrollTo(0, 0);
+    mainContainerElement.classList = "";
+    mainContainerElement.classList.add("mainContainer", "mainContainer--grid");
+
+    mainContainerElement.innerHTML = "";
+    mainContainerElement.innerHTML = `
+<div class="labelContainer js-labelContainer">
+</div>
+<div class="settingsContainer js-settingsContainer">
+</div>
+<div class="outputContainer outputContainer--grid js-outputContainer">
+</div>
+`;
+  };
+
   const render = () => {
+    renderLabel();
     renderSettings();
     renderOutput();
     bindPropertyButtons();
@@ -414,5 +508,6 @@ export const grid = () => {
     bindChildSettingButtons();
   };
 
+  renderMainContainer();
   render();
 };

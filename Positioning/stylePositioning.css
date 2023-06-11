@@ -1,25 +1,34 @@
-.settingsContents--positioning {
-  min-width: 400px;
+.mainContainer--positioning {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "lab set"
+    "out out"
+  ;
+}
+
+.labelContents--positioning {
+  min-width: 300px;
   flex-grow: 0;
 }
 
 @media (max-width: 768px) {
-  .settingsContents--positioning {
-    min-width: 265px;
+  .labelContents--positioning {
+    min-width: 250px;
   }
 }
 
-.settingsParagraph--positioning {
+.labelParagraph--positioning {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-.outputContents--positioning {
+.outputContainer--positioning {
   aspect-ratio: 16/9;
 }
 
-@media (min-width: 1650px) {
-  .outputContents--positioning {
-    min-height: 500px;
-  }
+.outputContents--positioning {
+  min-height: 500px;
 }

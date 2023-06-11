@@ -1,6 +1,6 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js";
 import { arrayExample, letters, arrayWords, arrayEmoticons, arrayObjects, mixArray } from "./arrays.js";
-import { transitionHeightAnimation } from "../Animation/script.js";
+import { heightAnimation } from "../Animation/scriptAnimation.js";
 
 export const arrays = () => {
   let array = [];
@@ -37,7 +37,7 @@ export const arrays = () => {
 
     exampleArray.forEach((arrayElement, index) => {
       element += `
-        <span class="settingsParagraph--arrays">
+        <span class="labelParagraph--arrays">
           ${(typeof (arrayElement) === "string" ?
           (`"` + arrayElement + `"`)
           :
@@ -57,7 +57,7 @@ export const arrays = () => {
   const vievMethodContent = (methodContent) => {
     let element = "";
     element += `
-      <span class="settingsParagraph--arrays strong">
+      <span class="labelParagraph--arrays strong">
         array.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
         (typeof (methodContent[1]) === "string" ?
           (methodContent[1])
@@ -108,57 +108,53 @@ export const arrays = () => {
       index++
       content += (property + ":") +
         (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) +
-        ((Object.keys(object).length === index + 1) ? "" : ",")
+        ((Object.keys(object).length === index + 1) ? "" : ",&nbsp;")
     };
 
-    return `<span class="${(Object.keys(object).length < 3) ? "nowrap" : ""}">{ ${content} }</span>`;
+    return `<span class="${(Object.keys(object).length < 3) ? "nowrap" : ""}">{&nbsp;${content}&nbsp;}</span>`;
   };
 
   const viewSubArray = (subArray) => {
     let content = "";
 
     subArray.forEach((subArrayElement, index) => {
-      content += `
-      ${typeof (subArrayElement) === "string" ?
-          ((`"` + subArrayElement + `"`) + ((subArray.length === index + 1) ? "" : ","))
-          :
-          (subArrayElement + ((subArray.length === index + 1) ? "" : ","))}
-      `;
+      content += `${typeof (subArrayElement) === "string" ?
+        ((`"` + subArrayElement + `"`) + ((subArray.length === index + 1) ? "" : ",&nbsp;"))
+        :
+        (subArrayElement + ((subArray.length === index + 1) ? "" : ","))}`;
     });
 
-    return `<span class="${(subArray.length < 4) ? "nowrap" : ""}">[${content}]</span>`;
+    return `<span class="${(subArray.length < 4) ? "nowrap" : ""}">[&nbsp;${content}&nbsp;]</span>`;
   }
 
-  const renderSettings = () => {
-    const settingsElement = document.querySelector(".js-settingsContainer");
+  const renderLabel = () => {
+    const labelElement = document.querySelector(".js-labelContainer");
 
-    const leabelContents = () => {
-      let element = "";
-
-      element += `
-        <div class="settingsContents settingsContents--array js-settingsContents">
-          <p class="settingsParagraph--arrays strong">const array = [
+    labelElement.innerHTML = `
+        <div class="labelContents labelContents--arrays js-labelContents">
+          <p class="labelParagraph--arrays strong">const array = [
           ${array.length > 0 ? `
           </p>
-          <p class="settingsParagraph settingsParagraph--arrays">
+          <p class="labelParagraph labelParagraph--arrays">
             ${viewArray(array)}
           </p>
-          <p class="settingsParagraph--arrays strong">
+          <p class="labelParagraph--arrays strong">
           ` : ""}
           ];</p>
           <p></p>
-          ${!!showExampleArray ? `<p class="settingsParagraph--arrays strong">const exampleArray = [</p>
-          <p class="settingsParagraph settingsParagraph--arrays">
+          ${!!showExampleArray ? `<p class="labelParagraph--arrays strong">const exampleArray = [</p>
+          <p class="labelParagraph labelParagraph--arrays">
             ${viewArray(arrayExampleSaved.length > 0 ? arrayExampleSaved : arrayExample)}
           </p>
-          <p class="settingsParagraph--arrays strong">];</p>
+          <p class="labelParagraph--arrays strong">];</p>
           <p></p>` : ""}          
           ${(!!methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
         </div>
       `;
+  }
 
-      return element;
-    };
+  const renderSettings = () => {
+    const settingsElement = document.querySelector(".js-settingsContainer");
 
     const methodsSettings = () => {
       let methodsSetingsElement = "";
@@ -189,7 +185,10 @@ export const arrays = () => {
 
         objects.forEach((obj) => {
           element += `
-            ${!!obj.active ? obj.methodContent : ""}
+            ${!!obj.active ?
+              (name === "reduce" ?
+                (obj.methodContent).trim() + ",&nbsp;" : obj.methodContent)
+              : ""}
           `;
         });
 
@@ -330,12 +329,11 @@ export const arrays = () => {
 
     settingsElement.innerHTML = "";
     settingsElement.innerHTML += `
-      ${leabelContents()}
       ${methodsSettings()}      
     `;
 
-    const settingsContentsElement = document.querySelector(".js-settingsContents");
-    transitionHeightAnimation(settingsContentsElement);
+    const settingsContentsElement = document.querySelector(".js-labelContents");
+    heightAnimation(settingsContentsElement);
   };
 
   const renderOutput = () => {
@@ -346,8 +344,8 @@ export const arrays = () => {
       <div class="outputContents outputContents--arrays">
         <div class="outputLabel">OUTPUT :</div>
         ${Array.isArray(output) ? `
-        <p class="settingsParagraph--arrays strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
-        <p class="settingsParagraph--arrays strong"> ${output !== null ? viewObject(output) : output} </p>`
+        <p class="labelParagraph--arrays strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
+        <p class="labelParagraph--arrays strong"> ${output !== null ? viewObject(output) : output} </p>`
         :
         ((typeof (output) === "string" && !methodContent.includes("warning")) ?
           (output !== "" ? `"` + output + `"` : output)
@@ -821,7 +819,7 @@ export const arrays = () => {
         break;
       case "reduce":
         output = array.reduce(enterContentForArrowFunction(button), setAadditionalParameter(inputValue));
-        methodContent = [method, enterContentForArrowFunction(button) + ", " + inputValue, "arrowFunction"];
+        methodContent = [method, enterContentForArrowFunction(button) + (!!inputValue ? ", " + inputValue : ""), "arrowFunction"];
         break;
       case "filter":
         output = array.filter(enterContentForArrowFunction(button, inputValue));
@@ -854,11 +852,31 @@ export const arrays = () => {
     };
   };
 
+  const renderMainContainer = () => {
+    const mainContainerElement = document.getElementById("main");
+
+    mainContainerElement.scrollTo(0, 0);
+    mainContainerElement.classList = "";
+    mainContainerElement.classList.add("mainContainer", "mainContainer--arrays");
+
+    mainContainerElement.innerHTML = "";
+    mainContainerElement.innerHTML = `
+      <div class="labelContainer labelContainer--arrays js-labelContainer">
+      </div>
+      <div class="settingsContainer settingsContainer--arrays js-settingsContainer">
+      </div>
+      <div class="outputContainer js-outputContainer">
+      </div>
+    `;
+  };
+
   const render = () => {
+    renderLabel();
     renderSettings();
     renderOutput();
     bindInputsAndButtons();
-  }
+  };
 
+  renderMainContainer();
   render();
 };

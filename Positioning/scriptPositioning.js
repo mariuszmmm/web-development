@@ -1,6 +1,6 @@
 import { buttonsArrayRaw } from "./buttonsArrayRaw.js";
-import { transitionHeightAnimation } from "../Animation/script.js";
-import { animationPositioning } from "../Animation/script.js";
+import { heightAnimation } from "../Animation/scriptAnimation.js";
+import { positioningAnimation } from "../Animation/scriptAnimation.js";
 
 export const positioning = () => {
   let buttonsObjects = buttonsArrayRaw.map((obj) => {
@@ -12,31 +12,18 @@ export const positioning = () => {
     };
   });
 
-  const renderSettings = () => {
-    const settingsElement = document.querySelector(".js-settingsContainer");
+  const renderLabel = () => {
+    const labelElement = document.querySelector(".js-labelContainer");
 
-    settingsElement.innerHTML = "";
-    settingsElement.innerHTML += `
-         ${settingsContents()}
-         ${buttonsContainer()}
-      `;
-
-    const settingsContentsElement = document.querySelector(".js-settingsContents");
-    transitionHeightAnimation(settingsContentsElement);
-  };
-
-  const settingsContents = () => {
-    let contentsElement = "";
-
-    const settingsLabel = () => {
-      let contentsElement = "";
+    const renderContentLabel = () => {
+      let element = "";
       buttonsObjects.forEach((buttons) => {
         const active = (buttons.properties.find((buttons) => buttons.active === true));
 
         buttons.properties.forEach((prop) => {
           if (prop.active) {
-            contentsElement += `
-              <p class="settingsParagraph settingsParagraph--positioning">
+            element += `
+              <p class="labelParagraph labelParagraph--positioning">
                 ${prop.active ? prop.name : ""}
             `;
           };
@@ -45,31 +32,42 @@ export const positioning = () => {
         if (active !== undefined) {
           buttons.propertiesValues.forEach((prop) => {
             if (prop.active) {
-              contentsElement += `: ${prop.active ? prop.name : ""}; </p>`
+              element += `: ${prop.active ? prop.name : ""}; </p>`
             };
           });
         };
       });
 
-      return contentsElement;
+      return element;
     };
 
-    contentsElement += `
-      <div class="settingsContents settingsContents--positioning js-settingsContents">
+    labelElement.innerHTML = `
+      <div class="labelContents labelContents--positioning js-labelContents">
         <div id="text">
-          <p class="settingsParagraph--positioning strong">.parent {</p>
-          <p class="settingsParagraph settingsParagraph--positioning">  position: relative; </p>
-          <p class="settingsParagraph settingsParagraph--positioning">  border: 3px dashed white; </p>
-          <p class="settingsParagraph settingsParagraph--positioning">  background: purple; </p>
-          <p class="settingsParagraph--positioning strong">}</p>
-          <p class="settingsParagraph--positioning strong">.child_2 {</p>
-            ${settingsLabel()}
-          <p class="settingsParagraph--positioning strong">}</p>
+          <p class="labelParagraph--positioning strong">.parent {</p>
+          <p class="labelParagraph labelParagraph--positioning">  position: relative; </p>
+          <p class="labelParagraph labelParagraph--positioning">  border: 3px dashed white; </p>
+          <p class="labelParagraph labelParagraph--positioning">  background: purple; </p>
+          <p class="labelParagraph--positioning strong">}</p>
+          <p class="labelParagraph--positioning strong">.child_2 {</p>
+          ${renderContentLabel()}
+          <p class="labelParagraph--positioning strong">}</p>
         </div>
       </div>
     `;
 
-    return contentsElement;
+    const labelContentsElement = document.querySelector(".js-labelContents");
+    heightAnimation(labelContentsElement);
+  };
+
+  const renderSettings = () => {
+    const settingsElement = document.querySelector(".js-settingsContainer");
+
+    settingsElement.innerHTML = "";
+    settingsElement.innerHTML += `
+         ${buttonsContainer()}
+      `;
+
   };
 
   const buttonsContainer = () => {
@@ -122,7 +120,7 @@ export const positioning = () => {
     `;
 
     const childElement = document.querySelector(".js-child");
-    animationPositioning(buttonsObjects, childElement);
+    positioningAnimation(buttonsObjects, childElement);
   };
 
   const bindPropertyButtons = () => {
@@ -222,13 +220,32 @@ export const positioning = () => {
     });
   };
 
+  const renderMainContainer = () => {
+    const mainContainerElement = document.getElementById("main");
+
+    mainContainerElement.scrollTo(0, 0);
+    mainContainerElement.classList = "";
+    mainContainerElement.classList.add("mainContainer", "mainContainer--positioning");
+
+    mainContainerElement.innerHTML = "";
+    mainContainerElement.innerHTML = `
+  <div class="labelContainer js-labelContainer">
+  </div>
+  <div class="settingsContainer js-settingsContainer">
+  </div>
+  <div class="outputContainer outputContainer--positioning js-outputContainer">
+  </div>
+`;
+  };
+
   const render = () => {
+    renderLabel();
     renderSettings();
     renderOutput();
     bindPropertyButtons();
     bindValueButtons();
   };
 
+  renderMainContainer();
   render();
 };
-

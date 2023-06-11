@@ -1,12 +1,12 @@
 export const sectionsHtml = () => {
 
-  const renderSettings = () => {
-    const settingsElement = document.querySelector(".js-settingsContainer");
+  const renderLabel = () => {
+    const labelElement = document.querySelector(".js-labelContainer");
 
-    settingsElement.innerHTML = "";
-    settingsElement.innerHTML = `
-      <div class="settingsContents">
-        <div class="settingsHeader">
+    labelElement.innerHTML = "";
+    labelElement.innerHTML = `
+      <div class="labelContents">
+        <div class="labelHeader">
           Semantic tags - sections HTML
         </div>
       </div>         
@@ -25,10 +25,28 @@ export const sectionsHtml = () => {
     `;
   };
 
+  const renderMainContainer = () => {
+    const mainContainerElement = document.getElementById("main");
+
+    mainContainerElement.scrollTo(0, 0);
+    mainContainerElement.classList = "";
+    mainContainerElement.classList.add("mainContainer", "mainContainer--sectionsHtml");
+
+    mainContainerElement.innerHTML = "";
+    mainContainerElement.innerHTML = `
+    <div class="labelContainer js-labelContainer">
+    </div>
+    <div class="outputContainer js-outputContainer">
+    </div>
+  `;
+  };
+
   const render = () => {
-    renderSettings();
+
+    renderLabel();
     renderOutput();
   };
 
+  renderMainContainer();
   render();
 };

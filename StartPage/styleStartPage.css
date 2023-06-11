@@ -1,8 +1,22 @@
-.settingsContents--clock {
+.mainContainer--startPage {
+   display: grid;
+   gap: 10px;
+   grid-template-columns: 1fr;
+   grid-template-rows: auto 1fr;
+   grid-template-areas:
+      "lab"
+      "out";
+}
+
+.labelContents--clock {
    display: flex;
    justify-content: center;
    align-items: center;
    font-size: 45px;
+}
+
+.outputContents--startPage {
+   height: 100%;
 }
 
 .clockContents {

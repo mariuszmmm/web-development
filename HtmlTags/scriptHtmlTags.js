@@ -1,21 +1,12 @@
 import { tagsArray } from "./tagsArray.js";
-import { transitionOpacityAnimation } from '../Animation/script.js';
+import { opacityAnimation } from '../Animation/scriptAnimation.js';
 
 export const htmlTags = () => {
   let tagsCategoryWithActive = [];
 
-  const renderSettings = () => {
-    const settingsElement = document.querySelector(".js-settingsContainer");
+  const renderLabel = () => {
+    const labelElement = document.querySelector(".js-labelContainer");
 
-    settingsElement.innerHTML = "";
-    settingsElement.innerHTML += `
-      <div class="settingsContents settingsContents--HtmlTags">
-        ${renderSettingsContents()}
-      </div>
-      `;
-  };
-
-  const renderSettingsContents = () => {
     let tagsCategory = [];
     tagsArray.forEach((tag) => {
       if (!tagsCategory.includes(tag.category)) {
@@ -27,11 +18,11 @@ export const htmlTags = () => {
       name: tag, active: false
     }));
 
-    let labelElement = "";
+    let element = "";
     tagsCategoryWithActive.forEach((tagCategory) => {
 
-      labelElement += `
-        <div class="settingsHeader settingsHeader--HtmlTags">
+      element += `
+        <div class="labelHeader labelHeader--HtmlTags">
           ${tagCategory.name} :
         </div>    
         <div class="settingsSubcontainer--HtmlTags">
@@ -39,8 +30,8 @@ export const htmlTags = () => {
 
       tagsArray.forEach((tag) => {
         if (tag.category === tagCategory.name) {
-          labelElement += `
-            <p class="settingsParagraph">
+          element += `
+            <p class="labelParagraph">
               <span class="strong"> &lt;${tag.name}&gt; &nbsp; → </span>
                 ${tag.description}
             </p>
@@ -48,7 +39,7 @@ export const htmlTags = () => {
         };
       });
 
-      labelElement += `   
+      element += `   
         </div>
         <button id="${tagCategory.name}" class="button button--example ${tagCategory.active ? "button--active" : ""} js-exampleButton">
           example
@@ -57,7 +48,32 @@ export const htmlTags = () => {
       `;
     });
 
-    return labelElement;
+    labelElement.innerHTML = `
+      <div class="labelContents labelContents--HtmlTags">
+        ${element}
+      </div>
+    `;
+  };
+
+  const renderOutput = (outputElement, exampleHtml, exampleOutput) => {
+    outputElement.innerHTML = `
+      <div class="outputContainer js-outputContainerHTML">
+        <div class="outputContents outputContents--HtmlTags">
+          <div class="outputLabel">HTML :</div>
+           <div class="imgContainer">
+            <img class="outputImage--HtmlTags" src="./HtmlTags/images/${exampleHtml}.gif" alt="HtmlTags_example">
+            </div>
+        </div>
+      </div>
+      <div class="outputContainer js-outputContainerOUTPUT">
+      <div class="outputContents outputContents--HtmlTags">
+        <div class="outputLabel">OUTPUT :</div>
+        <div class="imgContainer">
+          <img class="outputImage--HtmlTags" src="./HtmlTags/images/${exampleOutput}.gif" alt="HtmlTags_example">
+          </div>
+      </div>
+    </div>
+    `;
   };
 
   const bindButtons = () => {
@@ -74,61 +90,13 @@ export const htmlTags = () => {
     });
   };
 
-  const renderExample = (event, example) => {
-    const contentsElement = document.querySelector(".js-outputContainer");
-
-    contentsElement.innerHTML = "";
-    let contentsExample = "";
-    contentsExample += `
-      <div class="outputContents outputContents--HtmlTags">
-        ${example ? `
-        <div class="outputLabel">HTML :</div>
-        ` : ""}
-      `;
-
-    if (event) {
-      contentsExample += `
-        <img class="outputImage--HtmlTags" src="./HtmlTags/images/${example}.gif" alt="HtmlTags_example">
-      `;
-    };
-
-    contentsExample += `
-      </div>
-      `;
-
-    contentsElement.innerHTML += contentsExample;
-  }
-
-  const renderExampleOutput = (event, example_output) => {
-    const contentsElement = document.querySelector(".js-outputContainer");
-
-    let contentsOutput = "";
-    contentsOutput += `
-      <div class="outputContents outputContents--HtmlTags">
-        ${example_output ? `
-        <div class="outputLabel">OUTPUT :</div>
-        ` : ""}
-      `;
-
-    if (event) {
-      contentsOutput += `
-        <img class="outputImage--HtmlTags" src="./HtmlTags/images/${example_output}.gif" alt="HtmlTags_example_output">
-      `;
-    };
-
-    contentsOutput += `
-      </div>
-    `;
-    contentsElement.innerHTML += contentsOutput;
-  }
-
-  const renderOutput = () => {
-    renderExample();
-    renderExampleOutput();
-  };
-
   const onClick = (event) => {
-    const contentsElement = document.querySelector(".js-outputContainer");
+    const mainContainerElement = document.getElementById("main");
+    const labelElement = document.querySelector(".js-labelContainer");
+    const outputElement = document.querySelector(`.js-outputContainer`);
+    mainContainerElement.classList.add("mainContainer", "mainContainer--htmlTags")
+    labelElement.style.height = "50vh";
+    outputElement.classList.remove("none")
 
     tagsCategoryWithActive.map((tag) => {
       if (tag.name === event.target.id) {
@@ -138,62 +106,79 @@ export const htmlTags = () => {
       };
     });
 
-    bindButtons();
-    let example;
+    let exampleHtml;
     let exampleOutput;
 
     switch (event.target.id) {
       case "Structure Tags":
-        example = "example_1";
+        exampleHtml = "example_1";
         exampleOutput = "exampleOutput_1";
         break;
       case "Text Formatting Tags":
-        example = "example_2";
+        exampleHtml = "example_2";
         exampleOutput = "exampleOutput_2";
         break;
       case "Container Tags":
-        example = "example_3";
+        exampleHtml = "example_3";
         exampleOutput = "exampleOutput_3";
         break;
       case "Form Tags":
-        example = "example_4";
+        exampleHtml = "example_4";
         exampleOutput = "exampleOutput_4";
         break;
       case "Semantic Tags":
-        example = "example_5";
+        exampleHtml = "example_5";
         exampleOutput = "exampleOutput_5";
         break;
       case "List Tags":
-        example = "example_6";
+        exampleHtml = "example_6";
         exampleOutput = "exampleOutput_6";
         break;
       case "Table Tags":
-        example = "example_7";
+        exampleHtml = "example_7";
         exampleOutput = "exampleOutput_7";
         break;
       case "Multimedia Tags":
-        example = "example_8";
+        exampleHtml = "example_8";
         exampleOutput = "exampleOutput_8";
         break;
       case "Script and Style Tags":
-        example = "example_9";
+        exampleHtml = "example_9";
         exampleOutput = "exampleOutput_9";
         break;
       case "Button Tags":
-        example = "example_10";
+        exampleHtml = "example_10";
         exampleOutput = "exampleOutput_10";
         break;
-    }
+    };
 
-    transitionOpacityAnimation(() => renderExample(event, example), contentsElement, contentsElement);
-    transitionOpacityAnimation(() => renderExampleOutput(event, exampleOutput), contentsElement, contentsElement);
+    opacityAnimation(() => renderOutput(outputElement, exampleHtml, exampleOutput), outputElement);
   };
 
-  const renderChanges = () => {
+  const renderMainContainer = () => {
+    const mainContainerElement = document.getElementById("main");
+    const labelElement = document.querySelector(".js-labelContainer");
+
+    mainContainerElement.scrollTo(0, 0);
+    mainContainerElement.classList = "";
+    mainContainerElement.classList.add("mainContainer");
+
+    mainContainerElement.innerHTML = `
+      <div class="labelContainer js-labelContainer">
+      </div>
+      <div class="outputContainer js-outputContainer">
+      </div>
+    `;
+
+    const outputElement = document.querySelector(`.js-outputContainer`);
+    outputElement.classList.add("none");
+  };
+
+  const render = () => {
+    renderLabel();
     bindButtons();
-    renderOutput();
   };
 
-  renderSettings();
-  renderChanges();
+  renderMainContainer();
+  render();
 };
