@@ -35,6 +35,11 @@ export const buttonsArrayRaw = [
     destiny: ["parent"],
   },
   {
+    properties: ["align-self"],
+    propertiesValues: ["stretch", "flex-start", "flex-end", "center"],
+    destiny: ["child"],
+  },
+  {
     properties: ["order"],
     propertiesValues: ["0", "1", "2", "3", "-1"],
     destiny: ["child", "child_all"],
@@ -50,18 +55,8 @@ export const buttonsArrayRaw = [
     destiny: ["child", "child_all"],
   },
   {
-    properties: ["align-self"],
-    propertiesValues: ["stretch", "flex-start", "flex-end", "center"],
-    destiny: ["child", "child_all"],
-  },
-  {
     properties: ["flex-basis"],
     propertiesValues: ["auto", "100px", "200px", "12vw", "18vw", "50%", "0"],
     destiny: ["child", "child_all"],
-  },
-  {
-    properties: ["flex"],
-    propertiesValues: ["0 1 auto", "1 1 auto", "0 0 auto", "1 0 0", "0 0 100px"],
-    destiny: ["child_all"],
   },
 ];

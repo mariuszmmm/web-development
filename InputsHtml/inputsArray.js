@@ -6,7 +6,7 @@ export const inputsArray = [
   { type: "month", name: "month" },
   { type: "number", name: "number" },
   { type: "text", name: "name" },
-  { type: "password", name: "password" },
+  { type: "password", name: "password", autocomplete: "off" },
   { type: "color", value: "#ff0000" },
   { type: "range", name: "range" },
   { type: "checkbox", name: "checkbox" },

@@ -123,86 +123,8 @@ export const grid = () => {
 
     settingsElement.innerHTML = "";
     settingsElement.innerHTML += `
-           ${settingsButtons()}
-      `;
-  };
-
-  const settingsContents = () => {
-    let contentsElement = "";
-
-    const settingsLabel = (name) => {
-      let element = "";
-
-      buttonsArray.forEach((buttons) => {
-        if (buttons.destiny === name) {
-          const active = !!buttons.properties[0].active;
-
-          buttons.properties.forEach((prop) => {
-            if (prop.active) {
-              element += `
-                <p class="labelParagraph labelParagraph--grid">
-                ${prop.active ? prop.name + ":" +
-                  ((prop.name === "grid-template-areas") ? "<br>" : "")
-                  : ""}
-              `;
-            };
-          });
-
-          if (active) {
-            buttons.propertiesValues.forEach((prop) => {
-              if (prop.active) {
-                const areaContent = (prop) => {
-                  let textArray = formatTextArea(prop)[0];
-                  let element = "";
-
-                  if (!!textArray) {
-                    textArray.forEach((text) => {
-                      element += `
-                        <p class="labelParagraph--areaText labelParagraph--grid">
-                          ${text}
-                        </p>
-                      `;
-                    });
-                    element += `  
-                      <p class="labelParagraph labelParagraph--grid">
-                        ;
-                      </p>
-                    `;
-                  } else element = prop + ";";
-
-                  return element;
-                }
-
-                element += `
-                  ${areaContent(prop.name)}
-                  </p>
-                `;
-              };
-            });
-          };
-        };
-      });
-
-      return element;
-    };
-
-    contentsElement += `
-      <div class="settingsContents settingsContents--grid js-settingsContents">
-        <p class="labelParagraph--grid strong">.parent {</p>
-        ${settingsLabel("parent")}
-        <p class="labelParagraph--grid strong">}</p>
-        <p></p>
-        <p class="labelParagraph--grid strong">.child_all {</p>
-        ${settingsLabel("child_all")}
-        <p class="labelParagraph--grid strong">}</p>
-        <p></p>
-        <p class="labelParagraph--grid strong">.child_${childSelected} {</p>
-        ${settingsLabel("child")}
-        <p class="labelParagraph--grid strong">}</p>
-      </div>
+      ${settingsButtons()}
     `;
-
-    return contentsElement;
   };
 
   const settingsButtons = () => {
@@ -319,18 +241,18 @@ export const grid = () => {
 
     outputElement.innerHTML = "";
     outputElement.innerHTML += `
-         <div class="outputContents outputContents--grid">
-            <div class="outputLabel">OUTPUT :</div>
-            <div class="outputLabelTop">TOP</div>
-            <div class="outputLabelLeft">LEFT</div>
-            <div class="outputLabelRight">RIGHT</div>
-            <div class="outputLabelBottom">BOTTOM</div>
-            <div class="outputLabelCenter">parent</div>
-            <div class="outputParent js-outputParent">
-               ${changeChildren()}
-            </div>
-         </div>
-         `;
+      <div class="outputContents outputContents--grid">
+       <div class="outputLabel">OUTPUT :</div>
+        <div class="outputLabelTop">TOP</div>
+        <div class="outputLabelLeft">LEFT</div>
+        <div class="outputLabelRight">RIGHT</div>
+        <div class="outputLabelBottom">BOTTOM</div>
+        <div class="outputLabelCenter">parent</div>
+        <div class="outputParent js-outputParent">
+          ${changeChildren()}
+        </div>
+      </div>
+    `;
 
     const changeGridStyles = () => {
       const parentStyles = document.querySelectorAll(".js-outputParent");
@@ -357,8 +279,8 @@ export const grid = () => {
         });
 
         object.propertiesValues.forEach((obj, index) => {
-          if (!!resetValues) {
-            index === 0 ? obj.active = true : obj.active = false
+          if (resetValues) {
+            (index === 0 && destiny !== "child") ? obj.active = true : obj.active = false;
           };
 
           if (propValue !== "block") {
@@ -391,7 +313,7 @@ export const grid = () => {
         setStyles(parentStyles, activePropertiesNew, "parent");
         setStyles(childAllStyles, activePropertiesNew, "child_all");
         setStyles(childStyles, activePropertiesNew, "child");
-      }, 200);
+      }, 10);
 
       activePropertiesLast = activePropertiesNew;
     };
@@ -434,6 +356,7 @@ export const grid = () => {
         buttonValue.addEventListener("click", () => {
           buttonValueToggle(buttonValue, button.value);
           render();
+          buttonValue.innerText.includes("auto-fill") ? render() : "";
         });
       });
     });
@@ -490,13 +413,13 @@ export const grid = () => {
 
     mainContainerElement.innerHTML = "";
     mainContainerElement.innerHTML = `
-<div class="labelContainer js-labelContainer">
-</div>
-<div class="settingsContainer js-settingsContainer">
-</div>
-<div class="outputContainer outputContainer--grid js-outputContainer">
-</div>
-`;
+      <div class="labelContainer js-labelContainer">
+      </div>
+      <div class="settingsContainer js-settingsContainer">
+      </div>
+      <div class="outputContainer outputContainer--grid js-outputContainer">
+      </div>
+    `;
   };
 
   const render = () => {

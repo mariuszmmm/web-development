@@ -31,6 +31,7 @@ export const inputsHtml = () => {
             <input class="input--inputs" type="${input.type}" required
               ${!!input.value ? `value="${input.value}"` : ""} 
               ${!!input.name ? `name="${input.name}"` : ""}
+              ${!!input.autocomplete ? `autocomplete="${input.name}"` : ""}
             />
           </div>
         `;

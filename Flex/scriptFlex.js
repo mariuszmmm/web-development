@@ -92,58 +92,6 @@ export const flex = () => {
       `;
   };
 
-  const settingsContents = () => {
-    let contentsElement = "";
-
-    const settingsLabel = (name) => {
-      let element = "";
-
-      buttonsArray.forEach((buttons) => {
-        if (buttons.destiny === name) {
-          const active = !!buttons.properties[0].active;
-
-          buttons.properties.forEach((prop) => {
-            if (prop.active) {
-              element += `
-                <p class="labelParagraph labelParagraph--flex">
-                  ${prop.active ? prop.name : ""}`;
-            };
-          });
-
-          if (active) {
-            buttons.propertiesValues.forEach((prop) => {
-              if (prop.active) {
-                element += `: ${prop.active ? prop.name : ""};  
-                  </p>
-                `;
-              };
-            });
-          };
-        };
-      });
-
-      return element;
-    };
-
-    contentsElement += `
-      <div class="labelContents labelContents--flex js-labelContents">
-        <p class="labelParagraph--flex strong">.parent {</p>
-        ${settingsLabel("parent")}
-        <p class="labelParagraph--flex strong">}</p>
-        <p></p>
-        <p class="labelParagraph--flex strong">.child_all {</p>
-        ${settingsLabel("child_all")}
-        <p class="labelParagraph--flex strong">}</p>
-        <p></p>
-        <p class="labelParagraph--flex strong">.child_${childSelected} {</p>
-        ${settingsLabel("child")}
-        <p class="labelParagraph--flex strong">}</p>
-      </div>
-    `;
-
-    return contentsElement;
-  };
-
   const settingsButtons = () => {
     let buttonsElement = "";
 
@@ -158,7 +106,7 @@ export const flex = () => {
           element += `
             <div class="propertyElements propertyElements--flex">
               <button id="${key}" class="button ${(property.active) ? "button--active" : ""} js-propertyButton">
-                &nbsp${property.name}&nbsp
+                &nbsp;${property.name}&nbsp;
               </button>
               <span class="strong">
                 :
@@ -172,7 +120,7 @@ export const flex = () => {
               <button id="${button.key}" 
                 ${(property.active) ? "" : "disabled"} 
                 class="button ${(button.active && property.active) ? "button--active" : ""} js-${property.key}groupValueButtons">
-                &nbsp${button.name}&nbsp
+                &nbsp;${button.name}&nbsp;
               </button>
             `;
           })
@@ -199,18 +147,18 @@ export const flex = () => {
         </div>
         <div class="valueElements">
           <button class="button settingsChild js-minusButton${name}">
-            &nbsp-&nbsp
+            &nbsp;-&nbsp;
           </button>
           <span style="${(name === "Selected") ? "color: red" : ""}" class="settingsChild">
             ${value}
           </span>
           <button class="button settingsChild js-plusButton${name}">
-            &nbsp+&nbsp
+            &nbsp;+&nbsp;
           </button>
           ${(name === "Selected") ? `
             <button class="button settingsChild js-loremButton 
               ${(lorem.loremActive) ? "button--active" : ""}">
-              &nbsp Lorem ipsum &nbsp
+              &nbsp; Lorem ipsum &nbsp;
             </button>
           ` : ""
         }  
@@ -248,7 +196,7 @@ export const flex = () => {
         element += `
           <div class="outputChild js-child_all ${(k === childSelected) ? "childSelected js-child" : ""}">
             ${k}
-            ${((lorem.loremActive) & (k === childSelected)) ? ". " + lorem.text : ""}
+            ${((lorem.loremActive) && (k === childSelected)) ? ". " + lorem.text : ""}
           </div>
         `;
       };
@@ -284,7 +232,6 @@ export const flex = () => {
         let resetValues = false;
 
         object.properties.forEach(obj => {
-
           if (!obj.active && obj.name === "display" && object.destiny !== "child") {
             prop = "display";
             destiny = object.destiny;
@@ -297,8 +244,8 @@ export const flex = () => {
         });
 
         object.propertiesValues.forEach((obj, index) => {
-          if (!!resetValues) {
-            index === 0 ? obj.active = true : obj.active = false;
+          if (resetValues) {
+            (index === 0 && destiny !== "child") ? obj.active = true : obj.active = false;
           };
 
           if (propValue !== "block") {

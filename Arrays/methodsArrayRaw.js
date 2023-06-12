@@ -110,6 +110,11 @@ export const methodsArrayRaw = [
         destiny: "forArrays",
       },
       {
+        button: "(a=>([...a,a[0]+?]))",
+        content: "a => ([ ...a, a[0] + ",
+        destiny: "forArrays",
+      },
+      {
         button: "(a=>([a[0],?]))",
         content: "a => ([a[0], ",
         destiny: "forArrays",

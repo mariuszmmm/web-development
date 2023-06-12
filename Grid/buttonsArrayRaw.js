@@ -6,22 +6,22 @@ export const buttonsArrayRaw = [
   },
   {
     properties: ["grid-template-columns"],
-    propertiesValues: ["none", "auto", "auto auto", "1fr", "1fr 2fr", "repeat(3, 1fr)", "repeat(2, 1fr 2fr)", "repeat(4, 100px)", "repeat(3, 100px 200px)", "repeat(3, 100px 1fr)", "repeat(auto-fill, 200px)", "repeat(auto-fill, 1fr)", "repeat(auto-fill, minmax(200px, 1fr)", "100px", "25%", "100px 25% auto 1fr", "minmax(50px, 1fr)"],
+    propertiesValues: ["none", "auto", "auto auto", "1fr", "1fr 2fr", "repeat(3, 1fr)", "repeat(2, 1fr 2fr)", "repeat(4, 100px)", "repeat(3, 25%)", "repeat(3, 100px 200px)", "repeat(3, 100px 1fr)", "repeat(auto-fill, 200px)", "repeat(auto-fill, 1fr)", "repeat(auto-fill, minmax(200px, 1fr)", "100px", "25%", "100px 25% auto 1fr", "minmax(50px, 1fr)"],
     destiny: ["parent"],
   },
   {
     properties: ["grid-template-rows"],
-    propertiesValues: ["none", "auto", "auto auto", "1fr", "1fr 2fr", "repeat(3, 1fr)", "repeat(2, 1fr 2fr)", "repeat(4, 100px)", "repeat(3, 100px 200px)", "repeat(3, 100px 1fr)", "repeat(auto-fill, 200px)", "repeat(auto-fill, 1fr)", "repeat(auto-fill, minmax(200px, 1fr)", "100px", "25%", "100px 25% auto 1fr", "minmax(50px, 1fr)"],
+    propertiesValues: ["none", "auto", "auto auto", "1fr", "1fr 2fr", "repeat(3, 1fr)", "repeat(2, 1fr 2fr)", "repeat(4, 100px)", "repeat(3, 25%)", "repeat(3, 100px 200px)", "repeat(3, 100px 1fr)", "repeat(auto-fill, 200px)", "repeat(auto-fill, 1fr)", "repeat(auto-fill, minmax(200px, 1fr)", "100px", "25%", "100px 25% auto 1fr", "minmax(50px, 1fr)"],
     destiny: ["parent"],
   },
   {
     properties: ["grid-auto-columns"],
-    propertiesValues: ["auto", "100px", "250px", "50%", "50px 100px"],
+    propertiesValues: ["auto", "100px", "200px", "300px", "100px 150px", "50%", "50px 100px"],
     destiny: ["parent"],
   },
   {
     properties: ["grid-auto-rows"],
-    propertiesValues: ["auto", "100px", "100px 150px", "25% 50%", "minmax(100px, auto)"],
+    propertiesValues: ["auto", "100px", "200px", "300px", "100px 150px", "25% 50%", "minmax(100px, auto)"],
     destiny: ["parent"],
   },
   {
