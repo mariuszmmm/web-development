@@ -194,7 +194,7 @@ export const arrays = () => {
 
         element += `
           ${!!inputType ? `
-            <input type="text" name="${name}" class="methodInput js-methodInput" />` : ""} 
+            <input type="text" name="${name}" autocomplete="off" class="methodInput js-methodInput" />` : ""} 
         `;
 
         objects.forEach((obj) => {
