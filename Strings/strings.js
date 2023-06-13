@@ -1,3 +1,5 @@
+export const exampleString = "This is another sample string";
+
 export const letters = "abcdefghijklmnopqrstuvwxyz";
 
 export const stringsArray = [

@@ -1,5 +1,5 @@
 import { methodsStringRaw } from "./methodsStringRaw.js";
-import { letters, stringsArray, sentencesArray } from "./strings.js";
+import { exampleString, letters, stringsArray, sentencesArray } from "./strings.js";
 import { heightAnimation } from "../Animation/scriptAnimation.js";
 
 export const strings = () => {
@@ -8,7 +8,7 @@ export const strings = () => {
   let output = "";
   let rangeValue;
   let exampleArraySaved = [];
-  let showExampleArray = false;
+  let showExampleString = false;
   let indexButton = 0;
   let methodActive = "";
 
@@ -142,7 +142,7 @@ export const strings = () => {
           ` : ""}
           ];</p>
           <p></p>
-          ${!!showExampleArray ? `<p class="labelParagraph--strings strong">const exampleArray = [</p>
+          ${!!showExampleString ? `<p class="labelParagraph--strings strong">const exampleArray = [</p>
           <p class="labelParagraph labelParagraph--strings">
             ${viewArray(exampleArraySaved.length > 0 ? exampleArraySaved : exampleArray)}
           </p>
@@ -249,66 +249,45 @@ export const strings = () => {
         <div>
           <div class="settings--string">
             <span class="methods--label">
-              load array :
+              Load string :
             </span>
             <div class="valueElements">   
-              <button id="randomNaturalNumbers" class="button js-random">
-                random natural numbers
+              <button id="randomLetter" class="button js-random">
+                random letter
+              </button>
+              <button id="randomWord" class="button js-random">
+                random word
+              </button> 
+              <button id="randomSentence" class="button js-random">
+                random sentence
               </button>
               <button id="randomIntegers" class="button js-random">
-                random integers
-              </button>     
-              <button id="randomLetters" class="button js-random">
-                random letters
-              </button>
-              <button id="randomWords" class="button js-random">
-                random words
-              </button> 
-              <button id="randomObjects" class="button js-random">
-                random objects
-              </button>
-              <button id="randomArrays" class="button js-random">
-                random arrays
-              </button>
-              <button id="randomEmoticons" class="button js-random">
-                random emoticons
-              </button>                  
-              <button id="randomElements" class="button js-random">
-                random elements
-              </button>
+                random number
+              </button>  
               <button id="loadFromExample" class="button js-example">
-                from example array
+                from example string
               </button>          
-              <button id="loadFromOutput" ${Array.isArray(output) ? "" : "disabled"} class="button js-example">
+              <button id="loadFromOutput" ${typeof (output) === "string" ? "" : "disabled"} class="button js-example">
                 from output
               </button>            
             </div>            
-            <label for="inputRange" class="methods--label">
-              array size : 
-              <span class="js-rangeValue">
-                ${!!rangeValue ? rangeValue : "10"}
-              </span>
-            </label>          
-            <div class="valueElements">              
-              <input id="inputRange" type="range" value="${!!rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
-            </div>
             <span class="methods--label">
-              example array :
+              Example string :
             </span>
             <div class="valueElements">
-              <button id="showExample" class="button ${!!showExampleArray ? "button--active" : ""} js-example">
-              show example array
+              <button id="showExample" class="button ${!!showExampleString ? "button--active" : ""} js-example">
+              show example string
               </button>          
               <button id="saveToExample" class="button js-example">
-                save array to example array
+                save string to example string
               </button>
               <button id="resetExample" class="button js-example">
-                reset example array
+                reset example string
               </button>
             </div>
           </div>
           <span class="methods--label">
-            methods :
+            Strings methods and operations :
           </span>
           <div class="settingsElements">
       `;
@@ -601,8 +580,8 @@ export const strings = () => {
     }));
 
     const changeShowExampleArray = () => {
-      showExampleArray = !showExampleArray
-      if (!!showExampleArray) {
+      showExampleString = !showExampleString
+      if (!!showExampleString) {
         output = "The example array has been displayed.";
       } else {
         output = "The example array has been hidden.";
