@@ -1,4 +1,4 @@
-.mainContainer--arrays {
+.mainContainer--strings {
   display: grid;
   gap: 10px;
   grid-template-columns: auto 1fr;
@@ -9,7 +9,7 @@
 }
 
 @media (max-width: 1649px) {
-  .mainContainer--arrays {
+  .mainContainer--strings {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
     grid-template-areas:
@@ -20,11 +20,11 @@
   }
 }
 
-.labelContainer--arrays {
+.labelContainer--strings {
   position: static;
 }
 
-.labelContents--arrays {
+.labelContents--strings {
   min-width: 559px;
   max-width: 559px;
   line-height: 1.5;
@@ -33,46 +33,46 @@
 }
 
 @media (max-width: 1649px) {
-  .labelContents--arrays {
+  .labelContents--strings {
     min-width: 100%;
   }
 }
 
 @media (min-width: 1650px) {
-  .settingsContainer--arrays {
+  .settingsContainer--strings {
     overflow-y: scroll;
   }
 }
 
-.settings--array {
+.settings--strings {
   display: grid;
   grid-template-columns: 1fr;
   align-content: start;
 }
 
-.labelParagraph--arrays {
+.labelParagraph--strings {
   margin-top: 5px;
   margin-bottom: 5px;
   font-size: 18px;
   word-break: break-word;
 }
 
-.propertyElements--arrays {
+.propertyElements--strings {
   width: 515px;
   justify-self: flex-end;
 }
 
 @media (max-width: 960px) {
-  .propertyElements--arrays {
+  .propertyElements--strings {
     width: 345px;
   }
 }
 
-.valueElements--arrays {
+.valueElements--strings {
   justify-self: flex-start;
 }
 
-.outputContents--arrays {
+.outputContents--strings {
   word-spacing: 5px;
   line-height: 2;
   padding: 50px 5%;
@@ -90,11 +90,11 @@
 }
 
 @media (max-width: 1649px) {
-  .outputContents--arrays {
+  .outputContents--strings {
     min-width: 100%;
   }
 }
 
-.button--arrays {
+.button--strings {
   padding: 4px 6px;
 }

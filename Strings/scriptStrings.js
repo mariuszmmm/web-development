@@ -1,8 +1,8 @@
-import { methodsArrayRaw } from "./methodsArrayRaw.js";
-import { exampleArray, letters, wordsArray, emoticonsArray, objectsArray, mixArray } from "./arrays.js";
+import { methodsStringRaw } from "./methodsStringRaw.js";
+import { letters, stringsArray, sentencesArray } from "./strings.js";
 import { heightAnimation } from "../Animation/scriptAnimation.js";
 
-export const arrays = () => {
+export const strings = () => {
   let array = [];
   let methodContent = [];
   let output = "";
@@ -12,7 +12,7 @@ export const arrays = () => {
   let indexButton = 0;
   let methodActive = "";
 
-  const methodsArray = methodsArrayRaw.map((object) => {
+  const methodsArray = methodsStringRaw.map((object) => {
     return {
       method: object.method,
       methodContents: object.methodContents.map((obj, index) => {
@@ -37,7 +37,7 @@ export const arrays = () => {
 
     exampleArray.forEach((arrayElement, index) => {
       element += `
-        <span class="labelParagraph--arrays">
+        <span class="labelParagraph--strings">
           ${(typeof (arrayElement) === "string" ?
           (`"` + arrayElement + `"`)
           :
@@ -57,7 +57,7 @@ export const arrays = () => {
   const vievMethodContent = (methodContent) => {
     let element = "";
     element += `
-      <span class="labelParagraph--arrays strong">
+      <span class="labelParagraph--strings strong">
         array.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
         (typeof (methodContent[1]) === "string" ?
           (methodContent[1])
@@ -131,22 +131,22 @@ export const arrays = () => {
     const labelElement = document.querySelector(".js-labelContainer");
 
     labelElement.innerHTML = `
-        <div class="labelContents labelContents--arrays js-labelContents">
-          <p class="labelParagraph--arrays strong">const array = [
+        <div class="labelContents labelContents--strings js-labelContents">
+          <p class="labelParagraph--strings strong">const array = [
           ${array.length > 0 ? `
           </p>
-          <p class="labelParagraph labelParagraph--arrays">
+          <p class="labelParagraph labelParagraph--strings">
             ${viewArray(array)}
           </p>
-          <p class="labelParagraph--arrays strong">
+          <p class="labelParagraph--strings strong">
           ` : ""}
           ];</p>
           <p></p>
-          ${!!showExampleArray ? `<p class="labelParagraph--arrays strong">const exampleArray = [</p>
-          <p class="labelParagraph labelParagraph--arrays">
+          ${!!showExampleArray ? `<p class="labelParagraph--strings strong">const exampleArray = [</p>
+          <p class="labelParagraph labelParagraph--strings">
             ${viewArray(exampleArraySaved.length > 0 ? exampleArraySaved : exampleArray)}
           </p>
-          <p class="labelParagraph--arrays strong">];</p>
+          <p class="labelParagraph--strings strong">];</p>
           <p></p>` : ""}          
           ${(!!methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
         </div>
@@ -176,7 +176,7 @@ export const arrays = () => {
 
         element += `
           <form class="form js-form">
-            <div class="propertyElements propertyElements--arrays">
+            <div class="propertyElements propertyElements--strings">
               <span class="methodName">
                 array.${name}
               </span>
@@ -207,13 +207,13 @@ export const arrays = () => {
                 ) 
               </div>
             </div>
-            <div class="valueElements valueElements--arrays">
-              <button id="${name}" class="button button--array button--run">
+            <div class="valueElements valueElements--strings">
+              <button id="${name}" class="button button--strings button--run">
                 run
               </button>
             </div>
           </form>
-          <div class="valueElements valueElements--arrays">
+          <div class="valueElements valueElements--strings">
        `;
 
         objects.forEach((obj) => {
@@ -225,13 +225,13 @@ export const arrays = () => {
             (array.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
           ) {
             element += `  
-              <button name="${name}" id="${obj.id}" class="button button--array ${!!obj.active ? "button--active" : ""} js-typeButton">
+              <button name="${name}" id="${obj.id}" class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
                 ${searchUnknown(obj.name)}
               </button>
           `;
           } else {
             element += `  
-              <button name="${name}" id="${obj.id}" disabled class="button button--array ${!!obj.active ? "button--active" : ""} js-typeButton">
+              <button name="${name}" id="${obj.id}" disabled class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
                 ${searchUnknown(obj.name, "disabled")}
               </button>
             `;
@@ -247,7 +247,7 @@ export const arrays = () => {
 
       methodsSetingsElement += `
         <div>
-          <div class="settings--array">
+          <div class="settings--string">
             <span class="methods--label">
               load array :
             </span>
@@ -341,11 +341,11 @@ export const arrays = () => {
 
     outputElement.innerHTML = "";
     outputElement.innerHTML += `
-      <div class="outputContents outputContents--arrays">
+      <div class="outputContents outputContents--strings">
         <div class="outputLabel">OUTPUT :</div>
         ${Array.isArray(output) ? `
-        <p class="labelParagraph--arrays strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
-        <p class="labelParagraph--arrays strong"> ${output !== null ? viewObject(output) : output} </p>`
+        <p class="labelParagraph--strings strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
+        <p class="labelParagraph--strings strong"> ${output !== null ? viewObject(output) : output} </p>`
         :
         ((typeof (output) === "string" && !methodContent.includes("warning")) ?
           (output !== "" ? `"` + output + `"` : output)
@@ -857,13 +857,13 @@ export const arrays = () => {
 
     mainContainerElement.scrollTo(0, 0);
     mainContainerElement.classList = "";
-    mainContainerElement.classList.add("mainContainer", "mainContainer--arrays");
+    mainContainerElement.classList.add("mainContainer", "mainContainer--strings");
 
     mainContainerElement.innerHTML = "";
     mainContainerElement.innerHTML = `
-      <div class="labelContainer labelContainer--arrays js-labelContainer">
+      <div class="labelContainer labelContainer--strings js-labelContainer">
       </div>
-      <div class="settingsContainer settingsContainer--arrays js-settingsContainer">
+      <div class="settingsContainer settingsContainer--strings js-settingsContainer">
       </div>
       <div class="outputContainer js-outputContainer">
       </div>

@@ -6,6 +6,7 @@ import { sectionsHtml } from '../SectionsHtml/scriptSectionsHtml.js';
 import { positioning } from '../Positioning/scriptPositioning.js';
 import { flex } from '../Flex/scriptFlex.js';
 import { grid } from '../Grid/scriptGrid.js';
+import { strings } from '../Strings/scriptStrings.js';
 import { arrays } from '../Arrays/scriptArrays.js';
 import { opacityAnimation } from '../Animation/scriptAnimation.js';
 {
@@ -37,6 +38,8 @@ import { opacityAnimation } from '../Animation/scriptAnimation.js';
         case "CSS Flex": opacityAnimation(() => flex(), mainContainerElement);
           break;
         case "CSS Grid": opacityAnimation(() => grid(), mainContainerElement);
+          break;
+        case "JS Strings": opacityAnimation(() => strings(), mainContainerElement);
           break;
         case "JS Arrays": opacityAnimation(() => arrays(), mainContainerElement);
           break;
