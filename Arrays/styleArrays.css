@@ -109,6 +109,7 @@
   max-width: 559px;
   min-width: 559px;
   line-height: 1.5;
+  height: 100vh;
 }
 
 @media (max-width: 1649px) {
