@@ -1,4 +1,4 @@
-export const exampleString = "This is sample string";
+export const exampleString = " \'This is sample string\'  ";
 
 export const letters = "abcdefghijklmnopqrstuvwxyz";
 

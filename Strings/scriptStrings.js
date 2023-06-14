@@ -6,6 +6,7 @@ export const strings = () => {
   let string = "";
   let methodContent = [];
   let output = "";
+  let outputInfo = false;
   let rangeValue;
   let exampleStringSaved = "";
   let showExampleString = false;
@@ -34,13 +35,9 @@ export const strings = () => {
 
   const viewString = (exampleString) => {
     let element = "";
-      element += `
-        <span class="labelParagraph--strings">
-          ${(typeof (exampleString) === "string") ?
-          (`"` + exampleString + `"`)
-          :
-           exampleString};
-        </span>`;
+    element += `
+      ${(typeof (exampleString) === "string" ?
+        (`"` + exampleString + `"`) : exampleString)}`;
 
     return element;
   };
@@ -123,7 +120,7 @@ export const strings = () => {
 
     labelElement.innerHTML = `
         <div class="labelContents labelContents--strings js-labelContents">
-          <p class="labelParagraph--strings strong">const string = ${viewString (string)}</p>
+          <p class="labelParagraph--strings strong">const string = ${viewString(string) + ";"}</p>
           <p></p>
           ${!!showExampleString ? `<p class="labelParagraph--strings strong">const exampleString = ${viewString(!!exampleStringSaved ? exampleStringSaved : exampleString)}</p>
           <p></p>` : ""}          
@@ -157,7 +154,7 @@ export const strings = () => {
           <form class="form js-form">
             <div class="propertyElements propertyElements--strings">
               <span class="methodName">
-                array.${name}
+                string.${name}
               </span>
               <div class="methodName methodName--parameters">(
         `;
@@ -195,27 +192,27 @@ export const strings = () => {
           <div class="valueElements valueElements--strings">
        `;
 
-        objects.forEach((obj) => {
-          if (
-            (obj.destiny === "forAll") ||
-            (array.every(item => typeof (item) === "number") && obj.destiny === "forNumbers") ||
-            (array.every(item => typeof (item) === "string") && obj.destiny === "forStrings") ||
-            (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects") ||
-            (array.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
-          ) {
-            element += `  
-              <button name="${name}" id="${obj.id}" class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
-                ${searchUnknown(obj.name)}
-              </button>
-          `;
-          } else {
-            element += `  
-              <button name="${name}" id="${obj.id}" disabled class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
-                ${searchUnknown(obj.name, "disabled")}
-              </button>
-            `;
-          }
-        });
+        // objects.forEach((obj) => {
+        //   if (
+        //     (obj.destiny === "forAll") ||
+        //     (string.every(item => typeof (item) === "number") && obj.destiny === "forNumbers") ||
+        //     (string.every(item => typeof (item) === "string") && obj.destiny === "forStrings") ||
+        //     (string.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects") ||
+        //     (string.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
+        //   ) {
+        //     element += `  
+        //       <button name="${name}" id="${obj.id}" class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
+        //         ${searchUnknown(obj.name)}
+        //       </button>
+        //   `;
+        //   } else {
+        //     element += `  
+        //       <button name="${name}" id="${obj.id}" disabled class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
+        //         ${searchUnknown(obj.name, "disabled")}
+        //       </button>
+        //     `;
+        //   }
+        // });
 
         element += `
           </div>
@@ -298,7 +295,7 @@ export const strings = () => {
     outputElement.innerHTML += `
       <div class="outputContents outputContents--strings">
         <div class="outputLabel">OUTPUT :</div>
-         <p class="labelParagraph--strings strong"> ${!methodContent.includes("warning") ? viewString(output) : output}</p>
+         <p class="labelParagraph--strings strong"> ${!outputInfo ? (!string ? "" : viewString(output)) : outputInfo}</p>
         </div>
       </div>
     `;
@@ -433,17 +430,16 @@ export const strings = () => {
     const useRandomIntegers = () => {
       string = "";
       string = Math.floor(Math.random() * 2000 - 1000);
-      console.log(string)
-      output = "The string has been loaded with a random number.";
-    //  resetTypeButton("forNumbers");
+      outputInfo = "The string has been loaded with a random number.";
+      //  resetTypeButton("forNumbers");
       render();
     };
 
     const useRandomLetters = () => {
       string = "";
-      
+
       string = (letters.charAt(Math.floor(Math.random() * letters.length)));
-      output = "The string has been loaded with a random letter.";
+      outputInfo = "The string has been loaded with a random letter.";
       resetTypeButton("forStrings");
       render();
     };
@@ -451,8 +447,7 @@ export const strings = () => {
     const useRandomWords = () => {
       string = "";
       string = (wordsArray[Math.floor(Math.random() * wordsArray.length)]);
-      
-      output = "The string has been loaded with a random word.";
+      outputInfo = "The string has been loaded with a random word.";
       resetTypeButton("forStrings");
       render();
     };
@@ -460,8 +455,8 @@ export const strings = () => {
     const useRandomSentences = () => {
       string = "";
       string = (sentencesArray[Math.floor(Math.random() * sentencesArray.length)]);
-      output = "The string has been loaded with a random sentence.";
-    //  resetTypeButton("forObjects");
+      outputInfo = "The string has been loaded with a random sentence.";
+      //  resetTypeButton("forObjects");
       render();
     };
 
@@ -485,9 +480,9 @@ export const strings = () => {
     const changeShowexampleString = () => {
       showExampleString = !showExampleString
       if (!!showExampleString) {
-        output = "The example array has been displayed.";
+        outputInfo = "The example string has been displayed.";
       } else {
-        output = "The example array has been hidden.";
+        outputInfo = "The example string has been hidden.";
       }
       render();
     };
@@ -497,31 +492,31 @@ export const strings = () => {
         string = exampleStringSaved
       }
       else { string = exampleString };
-      output = "The string is loaded from an example string."
+      outputInfo = "The string is loaded from an example string."
       render();
     };
 
     const saveToExample = () => {
       if (!!string) {
         exampleStringSaved = string;
-        output = "The string stored as an example string.";
+        outputInfo = "The string stored as an example string.";
         render();
       } else {
-        output = "Not stored. The string is empty.";
+        outputInfo = "Not stored. The string is empty.";
         renderOutput();
       };
     };
 
     const resetExample = () => {
       exampleStringSaved = "";
-      output = "The example string has been reset.";
+      outputInfo = "The example string has been reset.";
       render();
     };
 
     const loadFromOutput = () => {
-      if (typeof(output) === "string") {
+      if (typeof (output) === "string") {
         string = output;
-        output = "The string has been loaded from the output.";
+        outputInfo = "The string has been loaded from the output.";
         render();
       };
     };
@@ -649,19 +644,45 @@ export const strings = () => {
   };
 
   const runMethod = (button, inputValue, method) => {
+    outputInfo = false;
     switch (button) {
       case "toString":
         output = string.toString();
         methodContent = [method];
         break;
-      case "shift":
-        output = array.shift();
+      case "trim":
+        output = string.trim();
         methodContent = [method];
         break;
       case "reverse":
-        output = array.reverse();
+        output = string.reverse();
         methodContent = [method];
         break;
+      case "toLowerCase":
+        output = string.toLowerCase();
+        methodContent = [method];
+        break;
+      case "toUpperCase":
+        output = string.toUpperCase();
+        methodContent = [method];
+        break;
+      case "concat":
+        output = string.concat();
+        methodContent = [method];
+        break;
+      case "repeat":
+        output = string.repeat(readNumberOrString(inputValue));
+        methodContent = [method, inputValue];
+        break;
+      case "charAt":
+        output = string.charAt(readNumberOrString(inputValue));
+        methodContent = [method, inputValue];
+        break;
+
+
+
+
+
       case "sort":
         methodContent = [method, (enterContentForArrowFunction(button, null)), "arrowFunction"];
         output = array.sort(enterContentForArrowFunction(button, null));

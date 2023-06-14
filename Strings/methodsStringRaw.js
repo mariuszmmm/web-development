@@ -1,14 +1,88 @@
 export const methodsStringRaw = [
-
-  {
-    method: "+",
-    methodContents: [],
-    inputType: null,
-  },
   {
     method: "toString",
     methodContents: [],
     inputType: null,
+  },
+  {
+    method: "trim",
+    methodContents: [],
+    inputType: null,
+  },
+  {
+    method: "toLowerCase",
+    methodContents: [],
+    inputType: null,
+  },
+  {
+    method: "toUpperCase",
+    methodContents: [],
+    inputType: null,
+  },
+  {
+    method: "concat",
+    methodContents: [
+      {
+        button: "(' ',?)",
+        content: "' ', ",
+        destiny: "forAll",
+      },
+    ],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+  {
+    method: "repeat",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^\d+$/,
+  },
+  {
+    method: "charAt",
+    methodContents: [
+      {
+        button: "( )",
+        content: "",
+        destiny: "forNumbers",
+      },
+      {
+        button: "(a.length-?)",
+        content: "a.length - ",
+        destiny: "forNumbers",
+      },
+    ],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+  {
+    method: "includes",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+  {
+    method: "startsWith",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+  {
+    method: "endsWith",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+  {
+    method: "indexOf",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+  {
+    method: "lastIndexOf",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
   },
   {
     method: "slice",
@@ -16,6 +90,32 @@ export const methodsStringRaw = [
     inputType: "text",
     inputPattern: /^\s*-?\d+(\s*,\s*-?\d+\s*)?$/,
   },
+  {
+    method: "substring",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^\s*\d+(\s*,\s*\d+\s*)?$/,
+  },
+  {
+    method: "replaceAll",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^\s*("[^"]*"\s*,\s*"[^"]*"\s*){0,1}$/,
+  },
+  {
+    method: "replace",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^\s*("[^"]*"\s*,\s*"[^"]*"\s*){0,1}$/,
+  },
+  {
+    method: "localeCompare",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+
+
   // {
   //   method: "pop",
   //   methodContents: [],
@@ -35,13 +135,13 @@ export const methodsStringRaw = [
   //   method: "push",
   //   methodContents: [],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "unshift",
   //   methodContents: [],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "join",
@@ -59,19 +159,19 @@ export const methodsStringRaw = [
   //   method: "includes",
   //   methodContents: [],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "indexOf",
   //   methodContents: [],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "lastIndexOf",
   //   methodContents: [],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "map",
@@ -143,7 +243,7 @@ export const methodsStringRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "find",
@@ -200,7 +300,7 @@ export const methodsStringRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "findIndex",
@@ -257,7 +357,7 @@ export const methodsStringRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "filter",
@@ -314,7 +414,7 @@ export const methodsStringRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "some",
@@ -371,7 +471,7 @@ export const methodsStringRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "every",
@@ -428,7 +528,7 @@ export const methodsStringRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "reduce",
@@ -440,7 +540,7 @@ export const methodsStringRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined|)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+|)$/,
   // },
   // {
   //   method: "sort",
