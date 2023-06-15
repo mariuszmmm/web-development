@@ -6,7 +6,7 @@ export const strings = () => {
   let string = "";
   let methodContent = [];
   let output = "";
-  let outputInfo = false;
+  let outputInfo = "Tu będzie wyświetlana wartość output lub informacje dotyczące użytych funkcji";
   let rangeValue;
   let exampleStringSaved = "";
   let showExampleString = false;
@@ -46,7 +46,7 @@ export const strings = () => {
     let element = "";
     element += `
       <span class="labelParagraph--strings strong">
-        string.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
+        string.${methodContent[0]}(${(methodContent[1] !== undefined) ?
         (typeof (methodContent[1]) === "string" ?
           (methodContent[1])
           :
@@ -55,7 +55,7 @@ export const strings = () => {
             :
             methodContent[1]))
         :
-        ""} );
+        ""});
       </span>
     `;
 
@@ -192,27 +192,27 @@ export const strings = () => {
           <div class="valueElements valueElements--strings">
        `;
 
-        // objects.forEach((obj) => {
-        //   if (
-        //     (obj.destiny === "forAll") ||
-        //     (string.every(item => typeof (item) === "number") && obj.destiny === "forNumbers") ||
-        //     (string.every(item => typeof (item) === "string") && obj.destiny === "forStrings") ||
-        //     (string.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects") ||
-        //     (string.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
-        //   ) {
-        //     element += `  
-        //       <button name="${name}" id="${obj.id}" class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
-        //         ${searchUnknown(obj.name)}
-        //       </button>
-        //   `;
-        //   } else {
-        //     element += `  
-        //       <button name="${name}" id="${obj.id}" disabled class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
-        //         ${searchUnknown(obj.name, "disabled")}
-        //       </button>
-        //     `;
-        //   }
-        // });
+         objects.forEach((obj) => {
+           if (
+             (obj.destiny === "forAll") ||
+             (string.every(item => typeof (item) === "number") && obj.destiny === "forNumbers") ||
+             (string.every(item => typeof (item) === "string") && obj.destiny === "forStrings") ||
+             (string.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects") ||
+             (string.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
+           ) {
+             element += `  
+               <button name="${name}" id="${obj.id}" class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
+                 ${searchUnknown(obj.name)}
+               </button>
+           `;
+           } else {
+             element += `  
+               <button name="${name}" id="${obj.id}" disabled class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
+                 ${searchUnknown(obj.name, "disabled")}
+               </button>
+             `;
+           }
+        });
 
         element += `
           </div>
@@ -242,7 +242,10 @@ export const strings = () => {
               </button>  
               <button id="loadFromExample" class="button js-example">
                 from example string
-              </button>          
+              </button>
+              <button id="loadFromOutput" ${typeof(output) === "string" ? "" : "disabled"} class="button js-example">
+                from output
+              </button>
             </div>            
             <span class="methods--label">
               Example string :
@@ -295,7 +298,7 @@ export const strings = () => {
     outputElement.innerHTML += `
       <div class="outputContents outputContents--strings">
         <div class="outputLabel">OUTPUT :</div>
-         <p class="labelParagraph--strings strong"> ${!outputInfo ? (!string ? "" : viewString(output)) : outputInfo}</p>
+         <p class="labelParagraph--strings strong"> ${!outputInfo ? viewString(output) : outputInfo}</p>
         </div>
       </div>
     `;
@@ -354,7 +357,9 @@ export const strings = () => {
       methodContent = [...methodContent, "warning"];
       if (method === "slice") {
         output = `The entered value is not allowed. Please enter a number or two numbers separated by a comma.`;
-      } else {
+      } else if (method === "repeat") {
+        output = `The entered value is not allowed. Please enter a number.`;
+        } else {
         output = `Input value not allowed, use: \" \"`
       };
       input.classList.add("errorInput")
@@ -667,8 +672,14 @@ export const strings = () => {
         methodContent = [method];
         break;
       case "concat":
-        output = string.concat();
-        methodContent = [method];
+       // output = string.concat(enterContentForArrowFunction(button, inputValue));
+      //  methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+      output = string.concat(enterContentForArrowFunction(button, inputValue));
+      methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        
+        
+        console.log(output);
+        console.log(methodContent);
         break;
       case "repeat":
         output = string.repeat(readNumberOrString(inputValue));
@@ -678,26 +689,35 @@ export const strings = () => {
         output = string.charAt(readNumberOrString(inputValue));
         methodContent = [method, inputValue];
         break;
-
+      case "localeCompare":
+      output = string.charAt(readNumberOrString(inputValue));
+      methodContent = [method, inputValue];
+      break;
+      case "replace":
+        output = string.replace(...enterContentForTwoArguments(inputValue));
+        methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
+        console.log(output);
+        console.log(methodContent);
+        break;
 
 
 
 
       case "sort":
         methodContent = [method, (enterContentForArrowFunction(button, null)), "arrowFunction"];
-        output = array.sort(enterContentForArrowFunction(button, null));
+        output = string.sort(enterContentForArrowFunction(button, null));
         break;
       case "join":
-        output = array.join(
+        output = string.join(
           (enterNumberOrString(inputValue) === "") ? "," : (enterNumberOrString(inputValue) === `""`) ? "" : readNumberOrString(inputValue));
         methodContent = [method, inputValue];
         break;
       case "push":
-        output = array.push(readNumberOrString(inputValue));
+        output = string.push(readNumberOrString(inputValue));
         methodContent = [method, inputValue];
         break;
       case "unshift":
-        output = array.unshift(readNumberOrString(inputValue));
+        output = string.unshift(readNumberOrString(inputValue));
         methodContent = [method, inputValue];
         break;
       case "map":
@@ -705,43 +725,43 @@ export const strings = () => {
         methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "find":
-        output = array.find(enterContentForArrowFunction(button, inputValue));
+        output = string.find(enterContentForArrowFunction(button, inputValue));
         methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "findIndex":
-        output = array.findIndex(enterContentForArrowFunction(button, inputValue));
+        output = string.findIndex(enterContentForArrowFunction(button, inputValue));
         methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "reduce":
-        output = array.reduce(enterContentForArrowFunction(button), setAadditionalParameter(inputValue));
+        output = string.reduce(enterContentForArrowFunction(button), setAadditionalParameter(inputValue));
         methodContent = [method, enterContentForArrowFunction(button) + (!!inputValue ? ", " + inputValue : ""), "arrowFunction"];
         break;
       case "filter":
-        output = array.filter(enterContentForArrowFunction(button, inputValue));
+        output = string.filter(enterContentForArrowFunction(button, inputValue));
         methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "some":
-        output = array.some(enterContentForArrowFunction(button, inputValue));
+        output = string.some(enterContentForArrowFunction(button, inputValue));
         methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "every":
-        output = array.every(enterContentForArrowFunction(button, inputValue));
+        output = string.every(enterContentForArrowFunction(button, inputValue));
         methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "includes":
-        output = array.includes(readNumberOrString(inputValue));
+        output = string.includes(readNumberOrString(inputValue));
         methodContent = [method, inputValue];
         break;
       case "slice":
-        output = array.slice(...enterContentForTwoArguments(inputValue));
+        output = string.slice(...enterContentForTwoArguments(inputValue));
         methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
         break;
       case "indexOf":
-        output = array.indexOf(readNumberOrString(inputValue));
+        output = string.indexOf(readNumberOrString(inputValue));
         methodContent = [method, enterNumberOrString(inputValue)];
         break;
       case "lastIndexOf":
-        output = array.lastIndexOf(readNumberOrString(inputValue));
+        output = string.lastIndexOf(readNumberOrString(inputValue));
         methodContent = [method, enterNumberOrString(inputValue)];
         break;
     };

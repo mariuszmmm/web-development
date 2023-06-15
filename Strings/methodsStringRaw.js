@@ -23,8 +23,18 @@ export const methodsStringRaw = [
     method: "concat",
     methodContents: [
       {
-        button: "(' ',?)",
-        content: "' ', ",
+        button: "(?)",
+        content: " ",
+        destiny: "forAll",
+      },
+      {
+        button: "(\" \",?)",
+        content: "\" \", ",
+        destiny: "forAll",
+      },
+      {
+        button: "(\",\",?)",
+        content: "\",\", ",
         destiny: "forAll",
       },
     ],
@@ -35,22 +45,11 @@ export const methodsStringRaw = [
     method: "repeat",
     methodContents: [],
     inputType: "text",
-    inputPattern: /^\d+$/,
+    inputPattern: /^"?\d+"?$/,
   },
   {
     method: "charAt",
-    methodContents: [
-      {
-        button: "( )",
-        content: "",
-        destiny: "forNumbers",
-      },
-      {
-        button: "(a.length-?)",
-        content: "a.length - ",
-        destiny: "forNumbers",
-      },
-    ],
+    methodContents: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+)$/,
   },

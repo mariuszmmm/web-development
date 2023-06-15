@@ -58,7 +58,7 @@ export const arrays = () => {
     let element = "";
     element += `
       <span class="labelParagraph--arrays strong">
-        array.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
+        array.${methodContent[0]}(${(methodContent[1] !== undefined) ?
         (typeof (methodContent[1]) === "string" ?
           (methodContent[1])
           :
@@ -67,7 +67,7 @@ export const arrays = () => {
             :
             methodContent[1]))
         :
-        ""} );
+        ""});
       </span>
     `;
 
@@ -272,7 +272,7 @@ export const arrays = () => {
               </button>
               <button id="randomEmoticons" class="button js-random">
                 random emoticons
-              </button>                  
+              </button>
               <button id="randomElements" class="button js-random">
                 random elements
               </button>
