@@ -5,7 +5,7 @@ import { heightAnimation } from "../Animation/scriptAnimation.js";
 export const arrays = () => {
   let array = [];
   let methodContent = [];
-  let output = "";
+  let output = "The variable \"output\" values or information about the used functions will be displayed here.";
   let rangeValue;
   let exampleArraySaved = [];
   let showExampleArray = false;
@@ -56,9 +56,10 @@ export const arrays = () => {
 
   const vievMethodContent = (methodContent) => {
     let element = "";
+
     element += `
       <span class="labelParagraph--arrays strong">
-        array.${methodContent[0]}(${(methodContent[1] !== undefined) ?
+        let output = array.${methodContent[0]}(${(methodContent[1] !== undefined) ?
         (typeof (methodContent[1]) === "string" ?
           (methodContent[1])
           :
@@ -249,7 +250,7 @@ export const arrays = () => {
         <div>
           <div class="settings--array">
             <span class="methods--label">
-              load array :
+              Load array :
             </span>
             <div class="valueElements">   
               <button id="randomNaturalNumbers" class="button js-random">
@@ -284,7 +285,7 @@ export const arrays = () => {
               </button>            
             </div>            
             <label for="inputRange" class="methods--label">
-              array size : 
+              Array size : 
               <span class="js-rangeValue">
                 ${!!rangeValue ? rangeValue : "10"}
               </span>
@@ -293,7 +294,7 @@ export const arrays = () => {
               <input id="inputRange" type="range" value="${!!rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
             </div>
             <span class="methods--label">
-              example array :
+              Example array :
             </span>
             <div class="valueElements">
               <button id="showExample" class="button ${!!showExampleArray ? "button--active" : ""} js-example">
@@ -308,7 +309,7 @@ export const arrays = () => {
             </div>
           </div>
           <span class="methods--label">
-            methods :
+            Methods :
           </span>
           <div class="settingsElements">
       `;
