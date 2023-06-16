@@ -1,5 +1,5 @@
 import { methodsArrayRaw } from "./methodsArrayRaw.js";
-import { arrayExample, letters, arrayWords, arrayEmoticons, arrayObjects, mixArray } from "./arrays.js";
+import { exampleArray, letters, wordsArray, emoticonsArray, objectsArray, mixArray } from "./arrays.js";
 import { heightAnimation } from "../Animation/scriptAnimation.js";
 
 export const arrays = () => {
@@ -7,7 +7,7 @@ export const arrays = () => {
   let methodContent = [];
   let output = "";
   let rangeValue;
-  let arrayExampleSaved = [];
+  let exampleArraySaved = [];
   let showExampleArray = false;
   let indexButton = 0;
   let methodActive = "";
@@ -58,7 +58,7 @@ export const arrays = () => {
     let element = "";
     element += `
       <span class="labelParagraph--arrays strong">
-        array.${methodContent[0]}( ${(methodContent[1] !== undefined) ?
+        array.${methodContent[0]}(${(methodContent[1] !== undefined) ?
         (typeof (methodContent[1]) === "string" ?
           (methodContent[1])
           :
@@ -67,7 +67,7 @@ export const arrays = () => {
             :
             methodContent[1]))
         :
-        ""} );
+        ""});
       </span>
     `;
 
@@ -144,7 +144,7 @@ export const arrays = () => {
           <p></p>
           ${!!showExampleArray ? `<p class="labelParagraph--arrays strong">const exampleArray = [</p>
           <p class="labelParagraph labelParagraph--arrays">
-            ${viewArray(arrayExampleSaved.length > 0 ? arrayExampleSaved : arrayExample)}
+            ${viewArray(exampleArraySaved.length > 0 ? exampleArraySaved : exampleArray)}
           </p>
           <p class="labelParagraph--arrays strong">];</p>
           <p></p>` : ""}          
@@ -247,8 +247,8 @@ export const arrays = () => {
 
       methodsSetingsElement += `
         <div>
-          <div class="arraySettings">
-            <span class="arrayMethods--label">
+          <div class="settings--array">
+            <span class="methods--label">
               load array :
             </span>
             <div class="valueElements">   
@@ -272,7 +272,7 @@ export const arrays = () => {
               </button>
               <button id="randomEmoticons" class="button js-random">
                 random emoticons
-              </button>                  
+              </button>
               <button id="randomElements" class="button js-random">
                 random elements
               </button>
@@ -283,7 +283,7 @@ export const arrays = () => {
                 from output
               </button>            
             </div>            
-            <label for="inputRange" class="arrayMethods--label">
+            <label for="inputRange" class="methods--label">
               array size : 
               <span class="js-rangeValue">
                 ${!!rangeValue ? rangeValue : "10"}
@@ -292,7 +292,7 @@ export const arrays = () => {
             <div class="valueElements">              
               <input id="inputRange" type="range" value="${!!rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
             </div>
-            <span class="arrayMethods--label">
+            <span class="methods--label">
               example array :
             </span>
             <div class="valueElements">
@@ -307,7 +307,7 @@ export const arrays = () => {
               </button>
             </div>
           </div>
-          <span class="arrayMethods--label">
+          <span class="methods--label">
             methods :
           </span>
           <div class="settingsElements">
@@ -516,7 +516,7 @@ export const arrays = () => {
     const useRandomWords = () => {
       array = [];
       while (array.length < rangeValueElement.textContent) {
-        array.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
+        array.push(wordsArray[Math.floor(Math.random() * wordsArray.length)]);
       };
       output = `The array has been loaded with ${rangeValueElement.textContent} random words.`;
       resetTypeButton("forStrings");
@@ -529,7 +529,7 @@ export const arrays = () => {
         const arrayItem = () => {
           let subArray = [];
           while (subArray.length < 3) {
-            subArray.push(arrayWords[Math.floor(Math.random() * arrayWords.length)]);
+            subArray.push(wordsArray[Math.floor(Math.random() * wordsArray.length)]);
           };
 
           return subArray;
@@ -544,7 +544,7 @@ export const arrays = () => {
     const useRandomObjects = () => {
       array = [];
       while (array.length < rangeValueElement.textContent) {
-        array.push(arrayObjects[Math.floor(Math.random() * arrayObjects.length)]);
+        array.push(objectsArray[Math.floor(Math.random() * objectsArray.length)]);
       };
       output = `The array has been loaded with ${rangeValueElement.textContent} random objects, each having two properties.`;
       resetTypeButton("forObjects");
@@ -554,7 +554,7 @@ export const arrays = () => {
     const useRandomEmoticons = () => {
       array = [];
       while (array.length < rangeValueElement.textContent) {
-        array.push(arrayEmoticons[Math.floor(Math.random() * arrayEmoticons.length)]);
+        array.push(emoticonsArray[Math.floor(Math.random() * emoticonsArray.length)]);
       };
       output = `The array has been loaded with ${rangeValueElement.textContent} random emoticons.`;
       resetTypeButton("forAll");
@@ -611,17 +611,17 @@ export const arrays = () => {
     };
 
     const loadFromExample = () => {
-      if (arrayExampleSaved.length > 0) {
-        array = [...arrayExampleSaved]
+      if (exampleArraySaved.length > 0) {
+        array = [...exampleArraySaved]
       }
-      else { array = [...arrayExample] };
+      else { array = [...exampleArray] };
       output = "The array is loaded from an example array."
       render();
     };
 
     const saveToExample = () => {
       if (array.length > 0) {
-        arrayExampleSaved = [...array];
+        exampleArraySaved = [...array];
         output = "The array stored as an example array.";
         render();
       } else {
@@ -631,7 +631,7 @@ export const arrays = () => {
     };
 
     const resetExample = () => {
-      arrayExampleSaved = [];
+      exampleArraySaved = [];
       output = "The example array has been reset.";
       render();
     };

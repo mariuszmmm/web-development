@@ -435,3 +435,95 @@ body {
   margin: 50px 20px 20px;
   border: 1px solid darkgrey;
 }
+
+.methods--label {
+  display: inline-block;
+  min-width: max-content;
+  text-align: start;
+  margin: 25px 0 0 30px;
+  font-weight: 900;
+  padding: 2px;
+  font-size: 25px;
+}
+
+.rangeContiner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.range {
+  height: 26px;
+  width: 100vw;
+  min-width: 250px;
+}
+
+.methodInput {
+  text-align: start;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 2px 2px;
+  width: 100px;
+  padding: 2px 5px;
+  margin: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+@media (max-width: 960px) {
+  .methodInput {
+    width: 50px;
+    padding: 2px 3px;
+    font-size: 12px;
+  }
+}
+
+.methodName {
+  margin: 0;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+@media (max-width: 960px) {
+  .methodName {
+    font-size: 12px;
+  }
+}
+
+.methodName--parameters {
+  display: flex;
+  flex-wrap: nowrap;
+  min-height: content;
+  width: max-content;
+  margin: 0;
+  font-weight: 900;
+  font-size: 18px;
+  height: 35px;
+  align-items: center;
+}
+
+@media (max-width: 960px) {
+  .methodName--parameters {
+    font-size: 12px;
+    height: 32px;
+  }
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.unknown {
+  color: red;
+}
+
+.errorInput {
+  background: pink;
+  ;
+}
+
+.form {
+  display: flex;
+  flex-wrap: nowrap;
+}
