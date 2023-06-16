@@ -6,27 +6,14 @@ export const strings = () => {
   let string = "";
   let methodContent = [];
   let output = "";
-  let outputInfo = "Tu będzie wyświetlana wartość output lub informacje dotyczące użytych funkcji";
-  let rangeValue;
+  let outputInfo = "The variable \"output\" values or information about the used functions will be displayed here.";
   let exampleStringSaved = "";
   let showExampleString = false;
-  let indexButton = 0;
   let methodActive = "";
 
   const methodsString = methodsStringRaw.map((object) => {
     return {
       method: object.method,
-      methodContents: object.methodContents.map((obj, index) => {
-        indexButton++
-
-        return {
-          id: indexButton,
-          name: obj.button,
-          methodContent: obj.content,
-          active: index === 0,
-          destiny: obj.destiny,
-        }
-      }),
       inputType: object.inputType,
       inputValue: "",
       inputPattern: object.inputPattern
@@ -42,89 +29,43 @@ export const strings = () => {
     return element;
   };
 
+  const viewArray = (exampleArray) => {
+    let element = "";
+
+    exampleArray.forEach((arrayElement, index) => {
+      element += `
+        <span class="labelParagraph--arrays">
+          ${(`"` + arrayElement + `"`)
+        + ((exampleArray.length === index + 1) ? "" : ",")}
+        </span>`;
+    });
+
+    return element;
+  };
+
   const vievMethodContent = (methodContent) => {
     let element = "";
+
     element += `
       <span class="labelParagraph--strings strong">
-        string.${methodContent[0]}(${(methodContent[1] !== undefined) ?
-        (typeof (methodContent[1]) === "string" ?
-          (methodContent[1])
-          :
-          ((typeof (methodContent[1]) === "object") ?
-            methodContent[1].name
-            :
-            methodContent[1]))
-        :
-        ""});
+        let output = string
+        ${methodContent[0] === "+" ? `&nbsp;${methodContent[0]}&nbsp;` : `.${methodContent[0]}(`}${methodContent[1] !== undefined ? (methodContent[1]).trim() : ""}${methodContent[0] === "+" ? "" : ");"}
       </span>
     `;
 
     return element;
   };
 
-  const changeArrowFunctionIfObject = (name) => {
-    let content = "";
-
-    if (!!name) {
-      methodsString.forEach((object) => {
-        if (object.method === name) {
-          object.methodContents.forEach((obj) => {
-            if (obj.active === true) {
-              if (obj.methodContent.includes("({")) {
-                content = "})";
-              };
-              if (obj.methodContent.includes("([")) {
-                content = "])";
-              };
-              if (obj.methodContent.includes("find(")) {
-                content = ")";
-              };
-            };
-          });
-        };
-      });
-
-      return content;
-    };
-  };
-
-  const viewObject = (object) => {
-    let content = "";
-    let index = -1;
-
-    for (let property in object) {
-      index++
-      content += (property + ":") +
-        (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) +
-        ((Object.keys(object).length === index + 1) ? "" : ",&nbsp;")
-    };
-
-    return `<span class="${(Object.keys(object).length < 3) ? "nowrap" : ""}">{&nbsp;${content}&nbsp;}</span>`;
-  };
-
-  const viewSubArray = (subArray) => {
-    let content = "";
-
-    subArray.forEach((subArrayElement, index) => {
-      content += `${typeof (subArrayElement) === "string" ?
-        ((`"` + subArrayElement + `"`) + ((subArray.length === index + 1) ? "" : ",&nbsp;"))
-        :
-        (subArrayElement + ((subArray.length === index + 1) ? "" : ","))}`;
-    });
-
-    return `<span class="${(subArray.length < 4) ? "nowrap" : ""}">[&nbsp;${content}&nbsp;]</span>`;
-  }
-
   const renderLabel = () => {
     const labelElement = document.querySelector(".js-labelContainer");
 
     labelElement.innerHTML = `
         <div class="labelContents labelContents--strings js-labelContents">
-          <p class="labelParagraph--strings strong">const string = ${viewString(string) + ";"}</p>
+          <p class="labelParagraph--strings strong">const string = ${viewString(string)};</p>
           <p></p>
-          ${!!showExampleString ? `<p class="labelParagraph--strings strong">const exampleString = ${viewString(!!exampleStringSaved ? exampleStringSaved : exampleString)}</p>
+          ${showExampleString ? `<p class="labelParagraph--strings strong">const exampleString = ${viewString(exampleStringSaved ? exampleStringSaved : exampleString)}</p>
           <p></p>` : ""}          
-          ${(!!methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
+          ${(methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
         </div>
       `;
   }
@@ -135,52 +76,19 @@ export const strings = () => {
     const methodsSettings = () => {
       let methodsSetingsElement = "";
 
-      const methodsStringSettings = (name, objects, inputType) => {
+      const methodsStringSettings = (name, inputType) => {
         let element = "";
-
-        const searchUnknown = (text, prop) => {
-          if (text.includes("?")) {
-            if (prop !== "disabled") {
-              text = text.replace("?", `<span class="unknown"> ? </span>`)
-            } else {
-              text = text.replace("?", `<span> ? </span>`)
-            };
-          };
-
-          return text;
-        }
 
         element += `
           <form class="form js-form">
             <div class="propertyElements propertyElements--strings">
               <span class="methodName">
-                string.${name}
+                string${name === "+" ? `&nbsp;${name}&nbsp;` : `.${name}`}
               </span>
-              <div class="methodName methodName--parameters">(
-        `;
-
-        objects.forEach((obj) => {
-          element += `
-            ${!!obj.active ?
-              (name === "reduce" ?
-                (obj.methodContent).trim() + ",&nbsp;" : obj.methodContent)
-              : ""}
-          `;
-        });
-
-        element += `
-          ${!!inputType ? `
-            <input type="text" name="${name}" autocomplete="off" class="methodInput js-methodInput" />` : ""} 
-        `;
-
-        objects.forEach((obj) => {
-          element += `
-            ${!!obj.active ? changeArrowFunctionIfObject(name) : ""}
-          `;
-        });
-
-        element += `
-                ) 
+              <div class="methodName methodName--parameters">${name === "+" ? "" : "("}
+                ${inputType ? `
+                  <input type="text" name="${name}" autocomplete="off" class="methodInput js-methodInput" />` : ""}
+                ${name === "+" ? "" : ")"} 
               </div>
             </div>
             <div class="valueElements valueElements--strings">
@@ -190,31 +98,6 @@ export const strings = () => {
             </div>
           </form>
           <div class="valueElements valueElements--strings">
-       `;
-
-         objects.forEach((obj) => {
-           if (
-             (obj.destiny === "forAll") ||
-             (string.every(item => typeof (item) === "number") && obj.destiny === "forNumbers") ||
-             (string.every(item => typeof (item) === "string") && obj.destiny === "forStrings") ||
-             (string.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects") ||
-             (string.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
-           ) {
-             element += `  
-               <button name="${name}" id="${obj.id}" class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
-                 ${searchUnknown(obj.name)}
-               </button>
-           `;
-           } else {
-             element += `  
-               <button name="${name}" id="${obj.id}" disabled class="button button--strings ${!!obj.active ? "button--active" : ""} js-typeButton">
-                 ${searchUnknown(obj.name, "disabled")}
-               </button>
-             `;
-           }
-        });
-
-        element += `
           </div>
         `;
 
@@ -237,13 +120,10 @@ export const strings = () => {
               <button id="randomSentence" class="button js-random">
                 random sentence
               </button>
-              <button id="randomIntegers" class="button js-random">
-                random number
-              </button>  
               <button id="loadFromExample" class="button js-example">
                 from example string
               </button>
-              <button id="loadFromOutput" ${typeof(output) === "string" ? "" : "disabled"} class="button js-example">
+              <button id="loadFromOutput" ${(!outputInfo && typeof (output) === "string") ? "" : "disabled"} class="button js-example">
                 from output
               </button>
             </div>            
@@ -251,7 +131,7 @@ export const strings = () => {
               Example string :
             </span>
             <div class="valueElements">
-              <button id="showExample" class="button ${!!showExampleString ? "button--active" : ""} js-example">
+              <button id="showExample" class="button ${showExampleString ? "button--active" : ""} js-example">
               show example string
               </button>          
               <button id="saveToExample" class="button js-example">
@@ -263,14 +143,14 @@ export const strings = () => {
             </div>
           </div>
           <span class="methods--label">
-            Strings methods :
+            Methods :
           </span>
           <div class="settingsElements">
       `;
 
       methodsString.forEach((object) => {
         methodsSetingsElement += `
-        ${methodsStringSettings(object.method, object.methodContents, object.inputType)}
+        ${methodsStringSettings(object.method, object.inputType)}
       `
       });
 
@@ -298,7 +178,11 @@ export const strings = () => {
     outputElement.innerHTML += `
       <div class="outputContents outputContents--strings">
         <div class="outputLabel">OUTPUT :</div>
-         <p class="labelParagraph--strings strong"> ${!outputInfo ? viewString(output) : outputInfo}</p>
+          <p class="labelParagraph--strings strong">
+            ${!outputInfo ? (Array.isArray(output) ? `
+              <p class="labelParagraph--arrays strong">[ ${viewArray(output)} ]</p>
+              ` : viewString(output)) : outputInfo}
+          </p>
         </div>
       </div>
     `;
@@ -309,9 +193,6 @@ export const strings = () => {
     const formElements = document.querySelectorAll(".js-form");
     const randomElements = document.querySelectorAll(".js-random");
     const exampleElements = document.querySelectorAll(".js-example");
-    const rangeElement = document.querySelector(".js-range");
-    const rangeValueElement = document.querySelector(".js-rangeValue");
-    const typeButtonElements = document.querySelectorAll(".js-typeButton");
     methodContent = [];
 
     inputElements.forEach((input) => {
@@ -321,7 +202,7 @@ export const strings = () => {
         methodsString.forEach((method) => {
           if (method.method === input.name) {
             target.value = "";
-            output = `Enter a value and then click the "run" button or hit enter.`;
+            outputInfo = `Enter a value and then click the "run" button or hit enter.`;
             renderOutput();
           };
         });
@@ -332,53 +213,25 @@ export const strings = () => {
           methodsString.forEach(({ method }) => {
             if (method === input.name) {
               input.classList.remove("errorInput");
-              !!key ? (target.value = key) : (target.value = "");
+              key ? (target.value = key) : (target.value = "");
             };
           });
         };
       });
     });
 
-    const displayWarningAboutArray = () => {
-      methodContent = [...methodContent, "warning"];
-      if (array.includes(null)) {
-        output = `Error: Cannot read properties of null (reading 'length')`;
-      };
-      if (array.includes(undefined)) {
-        output = `Error: Cannot read properties of undefined (reading 'length')`;
-      };
-      if (array.length === 0) {
-        output = `Error: Reduce of empty array with no initial value`;
-      };
-      renderOutput();
-    };
-
     const displayWarningAboutInputValue = ({ method }, input) => {
       methodContent = [...methodContent, "warning"];
-      if (method === "slice") {
-        output = `The entered value is not allowed. Please enter a number or two numbers separated by a comma.`;
+      if (method === "slice" || method === "substring") {
+        outputInfo = `The entered value is not allowed. Please enter a number or two numbers separated by a comma.`;
       } else if (method === "repeat") {
-        output = `The entered value is not allowed. Please enter a number.`;
-        } else {
-        output = `Input value not allowed, use: \" \"`
+        outputInfo = `The entered value is not allowed. Please enter a number.`;
+      } else {
+        outputInfo = `Input value is not allowed, use: \" \"`
       };
       input.classList.add("errorInput")
       input.focus();
       renderOutput();
-    };
-
-    const checkDependency_1 = (method) => {
-      return (
-        ["filter", "find", "findIndex", "some"].includes(method.method)
-        && !!method.methodContents[0].active
-        && (array.includes(null) || array.includes(undefined))
-      )
-    };
-
-    const checkDependency_2 = (method, input) => {
-      return (
-        ["reduce"].includes(method.method) && (array.length === 0) && (input.value === "")
-      )
     };
 
     formElements.forEach((formElement) => {
@@ -392,12 +245,11 @@ export const strings = () => {
               if (method.method === button.id) {
                 const pattern = method.inputPattern;
                 if (pattern.test(input.value)) {
-                  if (checkDependency_1(method) || checkDependency_2(method, input)) {
+                  if ((string.length === 0) && (input.value === "")) {
                     render();
-                    displayWarningAboutArray();
                     return
                   } else {
-                    runMethod(button.id, enterNumberOrString(input.value), method.method);
+                    runMethod(button.id, input.value, method.method);
                     methodActive = input.name;
                     render();
                     methodActive = "";
@@ -420,56 +272,26 @@ export const strings = () => {
       });
     });
 
-    const resetTypeButton = (prop) => {
-      methodsString.forEach((object) => {
-        object.methodContents.forEach((obj) => {
-          if (!!obj.active && (obj.destiny !== prop)) {
-            object.methodContents.forEach((obj, i) => {
-              !i ? obj.active = true : obj.active = false
-            });
-          };
-        });
-      });
-    };
-
-    const useRandomIntegers = () => {
-      string = "";
-      string = Math.floor(Math.random() * 2000 - 1000);
-      outputInfo = "The string has been loaded with a random number.";
-      //  resetTypeButton("forNumbers");
-      render();
-    };
-
     const useRandomLetters = () => {
-      string = "";
-
       string = (letters.charAt(Math.floor(Math.random() * letters.length)));
       outputInfo = "The string has been loaded with a random letter.";
-      resetTypeButton("forStrings");
       render();
     };
 
     const useRandomWords = () => {
-      string = "";
       string = (wordsArray[Math.floor(Math.random() * wordsArray.length)]);
       outputInfo = "The string has been loaded with a random word.";
-      resetTypeButton("forStrings");
       render();
     };
 
     const useRandomSentences = () => {
-      string = "";
       string = (sentencesArray[Math.floor(Math.random() * sentencesArray.length)]);
       outputInfo = "The string has been loaded with a random sentence.";
-      //  resetTypeButton("forObjects");
       render();
     };
 
     randomElements.forEach(element => element.addEventListener("click", ({ target }) => {
       switch (target.id) {
-        case "randomIntegers":
-          useRandomIntegers();
-          break;
         case "randomLetter":
           useRandomLetters();
           break;
@@ -484,17 +306,17 @@ export const strings = () => {
 
     const changeShowexampleString = () => {
       showExampleString = !showExampleString
-      if (!!showExampleString) {
+      if (showExampleString) {
         outputInfo = "The example string has been displayed.";
       } else {
         outputInfo = "The example string has been hidden.";
-      }
+      };
       render();
     };
 
     const loadFromExample = () => {
       if (exampleStringSaved.length > 0) {
-        string = exampleStringSaved
+        string = exampleStringSaved;
       }
       else { string = exampleString };
       outputInfo = "The string is loaded from an example string."
@@ -502,7 +324,7 @@ export const strings = () => {
     };
 
     const saveToExample = () => {
-      if (!!string) {
+      if (string) {
         exampleStringSaved = string;
         outputInfo = "The string stored as an example string.";
         render();
@@ -547,120 +369,47 @@ export const strings = () => {
         };
       });
     });
-
-    typeButtonElements.forEach((button) => {
-      button.addEventListener("click", () => {
-        let activeButton = "";
-        methodsString.forEach((object) => {
-          if (object.method === button.name) {
-            methodActive = button.name
-            object.methodContents.forEach((obj) => {
-              if (obj.id === +button.id) {
-                obj.active = true
-                activeButton = obj.name
-              } else {
-                obj.active = false;
-              };
-            });
-            output = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.` + `${!!object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}` : "."}${!object.inputType ? `<br>Now click the "run" button.` : ""}`;
-            render();
-          };
-        });
-      });
-    });
-  };
-
-  const notString = (inputValue) => {
-    switch (inputValue) {
-      case "null":
-        return { name: null };
-      case "undefined":
-        return { name: undefined };
-      case "NaN":
-        return { name: NaN };
-      case "true":
-        return { name: true };
-      case "false":
-        return { name: false };
-      default:
-        return inputValue;
-    };
-  };
-
-  const enterNumberOrString = (inputValue) => {
-    return (
-      !["null", "true", "false", "undefined", "NaN"].includes(inputValue) ?
-        (typeof (inputValue) === "string" ? (inputValue) : "") :
-        (!isNaN(inputValue) ?
-          (inputValue !== "" ? (Number(inputValue)) : null) :
-          notString(inputValue)
-        )
-    );
   };
 
   const readNumberOrString = (inputValue) => {
     return (
-      (typeof (inputValue) === "string") ?
-        ((inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ?
-          inputValue.slice(1, -1) : (inputValue === "" ? inputValue : Number(inputValue)))
-        :
-        ((typeof (inputValue) === "object") ? inputValue.name : Number(inputValue))
+      (inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ?
+        inputValue.slice(1, -1) : (inputValue === "" ? inputValue : Number(inputValue))
     );
-  };
-
-  const enterContentForArrowFunction = (method, inputValue) => {
-    let content;
-
-    methodsString.forEach((object) => {
-      if (object.method === method) {
-        object.methodContents.forEach((element) => {
-          if (!!element.active) {
-            content = element.methodContent +
-              (!!inputValue ?
-                ((typeof (inputValue) === "object" ? inputValue.name : inputValue) + (changeArrowFunctionIfObject(method))) :
-                ""
-              )
-          };
-        });
-      };
-    });
-
-    if (content !== "") return Function(`return (${content})`)();
   };
 
   const enterContentForTwoArguments = (inputValue) => {
     let content = [];
 
-    if (!isNaN(enterNumberOrString(inputValue))) {
-      return [...content, (enterNumberOrString(inputValue))]
+    if (!isNaN(inputValue)) {
+      return [...content, (inputValue)]
+
     }
     else {
-      return (enterNumberOrString(inputValue).split(",")).map(number => number);
+      return (inputValue.split(",")).map(elem => elem.trim());
     };
   };
 
-  const setAadditionalParameter = (inputValue) => {
-    return (
-      array.every(item => typeof (item) === "number") ?
-        (inputValue === "" ? null : readNumberOrString(inputValue))
-        :
-        (inputValue === "0" ? "" : readNumberOrString(inputValue))
-    )
+  const enterContent = (inputValue) => {
+    let elements;
+
+    if (inputValue.includes(",")) {
+      elements = inputValue.split(",");
+      return elements.map(elem =>
+        readNumberOrString(elem.trim())
+      );
+    };
   };
 
   const runMethod = (button, inputValue, method) => {
     outputInfo = false;
     switch (button) {
-      case "toString":
-        output = string.toString();
-        methodContent = [method];
+      case "+":
+        output = string + (readNumberOrString(inputValue));
+        methodContent = [method, inputValue];
         break;
       case "trim":
         output = string.trim();
-        methodContent = [method];
-        break;
-      case "reverse":
-        output = string.reverse();
         methodContent = [method];
         break;
       case "toLowerCase":
@@ -671,15 +420,17 @@ export const strings = () => {
         output = string.toUpperCase();
         methodContent = [method];
         break;
-      case "concat":
-       // output = string.concat(enterContentForArrowFunction(button, inputValue));
-      //  methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
-      output = string.concat(enterContentForArrowFunction(button, inputValue));
-      methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
-        
-        
-        console.log(output);
-        console.log(methodContent);
+      case "split":
+        output = string.split(!inputValue ? null : readNumberOrString(inputValue));
+        methodContent = [method, inputValue];
+        break;
+      case "slice":
+        output = string.slice(...enterContentForTwoArguments(inputValue));
+        methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
+        break;
+      case "substring":
+        output = string.substring(...enterContentForTwoArguments(inputValue));
+        methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
         break;
       case "repeat":
         output = string.repeat(readNumberOrString(inputValue));
@@ -689,80 +440,37 @@ export const strings = () => {
         output = string.charAt(readNumberOrString(inputValue));
         methodContent = [method, inputValue];
         break;
-      case "localeCompare":
-      output = string.charAt(readNumberOrString(inputValue));
-      methodContent = [method, inputValue];
-      break;
-      case "replace":
-        output = string.replace(...enterContentForTwoArguments(inputValue));
-        methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
-        console.log(output);
-        console.log(methodContent);
-        break;
-
-
-
-
-      case "sort":
-        methodContent = [method, (enterContentForArrowFunction(button, null)), "arrowFunction"];
-        output = string.sort(enterContentForArrowFunction(button, null));
-        break;
-      case "join":
-        output = string.join(
-          (enterNumberOrString(inputValue) === "") ? "," : (enterNumberOrString(inputValue) === `""`) ? "" : readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
-      case "push":
-        output = string.push(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
-      case "unshift":
-        output = string.unshift(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
-      case "map":
-        output = array.map(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
-        break;
-      case "find":
-        output = string.find(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
-        break;
-      case "findIndex":
-        output = string.findIndex(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
-        break;
-      case "reduce":
-        output = string.reduce(enterContentForArrowFunction(button), setAadditionalParameter(inputValue));
-        methodContent = [method, enterContentForArrowFunction(button) + (!!inputValue ? ", " + inputValue : ""), "arrowFunction"];
-        break;
-      case "filter":
-        output = string.filter(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
-        break;
-      case "some":
-        output = string.some(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
-        break;
-      case "every":
-        output = string.every(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
-        break;
       case "includes":
         output = string.includes(readNumberOrString(inputValue));
         methodContent = [method, inputValue];
         break;
-      case "slice":
-        output = string.slice(...enterContentForTwoArguments(inputValue));
-        methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
+      case "startsWith":
+        output = string.startsWith(readNumberOrString(inputValue));
+        methodContent = [method, inputValue];
+        break;
+      case "endsWith":
+        output = string.endsWith(readNumberOrString(inputValue));
+        methodContent = [method, inputValue];
         break;
       case "indexOf":
         output = string.indexOf(readNumberOrString(inputValue));
-        methodContent = [method, enterNumberOrString(inputValue)];
+        methodContent = [method, inputValue];
         break;
       case "lastIndexOf":
         output = string.lastIndexOf(readNumberOrString(inputValue));
-        methodContent = [method, enterNumberOrString(inputValue)];
+        methodContent = [method, inputValue];
+        break;
+      case "replace":
+        output = string.replace(...enterContent(inputValue));
+        methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
+        break;
+      case "replaceAll":
+        output = string.replaceAll(...enterContent(inputValue));
+        methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
+        break;
+      case "localeCompare":
+        output = string.localeCompare(readNumberOrString(inputValue));
+        methodContent = [method, inputValue];
         break;
     };
   };
