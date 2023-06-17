@@ -1,0 +1,100 @@
+.mainContainer--numbers {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "lab set"
+    "out set";
+}
+
+@media (max-width: 1649px) {
+  .mainContainer--numbers {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "set"
+      "lab"
+      "out"
+    ;
+  }
+}
+
+.labelContainer--numbers {
+  position: static;
+}
+
+.labelContents--numbers {
+  min-width: 559px;
+  max-width: 559px;
+  line-height: 1.5;
+  font-family: monospace;
+  min-height: 150px;
+}
+
+@media (max-width: 1649px) {
+  .labelContents--numbers {
+    min-width: 100%;
+  }
+}
+
+@media (min-width: 1650px) {
+  .settingsContainer--numbers {
+    overflow-y: scroll;
+  }
+}
+
+.settings--numbers {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: start;
+}
+
+.labelParagraph--numbers {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 18px;
+  word-break: break-word;
+}
+
+.propertyElements--numbers {
+  width: 515px;
+  justify-self: flex-end;
+}
+
+@media (max-width: 960px) {
+  .propertyElements--numbers {
+    width: 345px;
+  }
+}
+
+.valueElements--numbers {
+  justify-self: flex-start;
+}
+
+.outputContents--numbers {
+  word-spacing: 5px;
+  line-height: 2;
+  padding: 50px 5%;
+  font-size: 18px;
+  justify-content: flex-start;
+  line-height: 2;
+  min-height: 270px;
+  font-family: monospace;
+  display: inline;
+  word-break: break-word;
+  width: 100%;
+  max-width: 559px;
+  min-width: 559px;
+  line-height: 1.5;
+}
+
+@media (max-width: 1649px) {
+  .outputContents--numbers {
+    min-width: 100%;
+  }
+}
+
+.button--numbers {
+  padding: 4px 6px;
+}
