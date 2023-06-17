@@ -372,9 +372,11 @@ export const strings = () => {
   };
 
   const readNumberOrString = (inputValue) => {
+    inputValue = inputValue.trim();
     return (
       (inputValue[0] === `"` && inputValue[inputValue.length - 1] === `"`) ?
-        inputValue.slice(1, -1) : (inputValue === "" ? inputValue : Number(inputValue))
+        inputValue.slice(1, -1) :
+        (inputValue === "" ? inputValue : Number(inputValue))
     );
   };
 
