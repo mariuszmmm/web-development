@@ -79,7 +79,7 @@
   font-size: 18px;
   justify-content: flex-start;
   line-height: 2;
-  min-height: 250px;
+  min-height: 270px;
   font-family: monospace;
   display: inline;
   word-break: break-word;
@@ -92,7 +92,6 @@
 @media (max-width: 1649px) {
   .outputContents--strings {
     min-width: 100%;
-    min-height: 650px;
   }
 }
 
