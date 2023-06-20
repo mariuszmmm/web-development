@@ -88,7 +88,7 @@ export const methodsNumbersRaw = [
   method: "+",
   inputType: null,
 },
-
+//   test
 
   // {
   //   method: "trim",
