@@ -1,4 +1,4 @@
-import { methodsNumbersRaw } from "./methodsNumbersRaw.js";
+import { methodsNumbers } from "./methodsNumbersRaw.js";
 import { heightAnimation } from "../Animation/scriptAnimation.js";
 
 
@@ -11,16 +11,7 @@ export const numbers = () => {
   let exampleStringSaved = "";
   let showExampleString = false;
   let methodActive = "";
-  const char = ["+", "-", "*", "/", "===", "++", "--"];
-
-  const methodsString = methodsNumbersRaw.map((object) => {
-    return {
-      method: object.method,
-      inputType: object.inputType,
-      inputValue: "",
-      inputPattern: object.inputPattern
-    }
-  });
+  const char = ["+", "-", "*", "/", "==="];
 
   const viewString = (exampleString) => {
     let element = "";
@@ -44,7 +35,7 @@ export const numbers = () => {
 
     return element;
   };
-  
+
   const vievMethodContent = (methodContent) => {
     let element = "";
 
@@ -77,21 +68,14 @@ export const numbers = () => {
     const methodsSettings = () => {
       let methodsSetingsElement = "";
 
-      const methodsStringSettings = (name, inputType) => {
+      const methodsNumbersSettings = (name, contents) => {
         let element = "";
-        console.log(name)
 
         element += `
           <form class="form js-form">
             <div class="propertyElements propertyElements--numbers">
-              <span class="methodName">
-                ${char.includes(name) ? `number ${name}&nbsp;` : `${name}(`}
-              </span>
               <div class="methodName methodName--parameters">
-                ${inputType ? `
-                  <input type="text" name="${name}" autocomplete="off" class="methodInput js-methodInput" />` : ["Math.min", "Math.max"].includes(name) ? "&nbsp;...numbers" : "&nbsp;number"}
-                  ${char.includes(name) ? "" : ")"}
-                
+                ${contents.replace("?", `<input type="text" name="${name}" autocomplete="off" class="methodInput js-methodInput" />`)}
               </div>
             </div>
             <div class="valueElements valueElements--numbers">
@@ -129,8 +113,8 @@ export const numbers = () => {
               <button id="nan" class="button js-random">
                 NaN
               </button>
-              <button id="string" class="button js-random">
-                string
+              <button id="randomString" class="button js-random">
+                random string
               </button>
 
 
@@ -169,9 +153,9 @@ export const numbers = () => {
           <div class="settingsElements">
       `;
 
-      methodsString.forEach((object) => {
+      methodsNumbers.forEach((object) => {
         methodsSetingsElement += `
-        ${methodsStringSettings(object.method, object.inputType)}
+        ${methodsNumbersSettings(object.method, object.methodContents)}
       `
       });
 
@@ -220,7 +204,7 @@ export const numbers = () => {
       if (input.name === methodActive) input.focus();
 
       input.addEventListener("click", ({ target }) => {
-        methodsString.forEach((method) => {
+        methodsNumbers.forEach((method) => {
           if (method.method === input.name) {
             target.value = "";
             outputInfo = `Enter a value and then click the "run" button or hit enter.`;
@@ -231,7 +215,7 @@ export const numbers = () => {
 
       input.addEventListener("keyup", ({ key, target }) => {
         if ((key.match(/^[a-zA-Z0-9\W]$/)) && (input.classList.contains("errorInput"))) {
-          methodsString.forEach(({ method }) => {
+          methodsNumbers.forEach(({ method }) => {
             if (method === input.name) {
               input.classList.remove("errorInput");
               key ? (target.value = key) : (target.value = "");
@@ -262,7 +246,7 @@ export const numbers = () => {
 
         inputElements.forEach((input) => {
           if (input.name === button.id) {
-            methodsString.forEach((method) => {
+            methodsNumbers.forEach((method) => {
               if (method.method === button.id) {
                 const pattern = method.inputPattern;
                 if (pattern.test(input.value)) {
@@ -284,8 +268,8 @@ export const numbers = () => {
           };
         });
 
-        methodsString.forEach((method) => {
-          if ((method.method === button.id) && !method.inputType) {
+        methodsNumbers.forEach((method) => {
+          if (method.method === button.id) {
             runMethod(button.id, null, method.method)
             render();
           };
@@ -307,13 +291,13 @@ export const numbers = () => {
       output = `The array "numbers" has been loaded with random numbers.`;
       render();
     };
-    
+
     const useRandomIntegerNumber = () => {
       number = Math.floor(Math.random() * 20000 - 10000);
       output = `The variable "number" has been assigned a random integer number.`;
       render();
     };
-    
+
     const useRandomIntegerNumbers = () => {
       numbers = [];
       while (numbers.length < 10) {
@@ -328,7 +312,7 @@ export const numbers = () => {
       output = `The variable "number" has been assigned a random natural number.`;
       render();
     };
-    
+
     const useRandomNaturalNumbers = () => {
       numbers = [];
       while (numbers.length < 10) {
@@ -350,8 +334,14 @@ export const numbers = () => {
       render();
     };
 
-    const useString = () => {
-      number = "text";
+    const useRandomString = () => {
+      let string = Math.floor(Math.random() * 200000 - 100000) + "";
+      let randomChar = Math.floor(Math.random() * string.length + 2);
+      string = string.split("");
+      let array = string.map((char, index) =>
+        index === randomChar ? "text" : char
+      );
+      number = array.join("");
       output = `The variable "number" has been assigned the value "text."`;
       render();
     };
@@ -386,13 +376,13 @@ export const numbers = () => {
           useRandomNaturalNumber();
           break;
         case "randomNumbers":
-        useRandomNumbers();
-        break;
+          useRandomNumbers();
+          break;
         case "randomIntegerNumbers":
-        useRandomIntegerNumbers();
-        break;
+          useRandomIntegerNumbers();
+          break;
         case "randomNaturalNumbers":
-        useRandomNaturalNumbers();
+          useRandomNaturalNumbers();
           break;
         case "infinity":
           useInfinity();
@@ -400,8 +390,8 @@ export const numbers = () => {
         case "nan":
           useNan();
           break;
-        case "string":
-          useString();
+        case "randomString":
+          useRandomString();
           break;
 
 
@@ -572,6 +562,34 @@ export const numbers = () => {
         break;
       case "Math.min":
         output = Math.min(...numbers);
+        methodContent = [method];
+        break;
+      case "Math.random":
+        output = Math.random();
+        methodContent = [method];
+        break;
+      case "Math.floor(Math.random())":
+        output = Math.floor(Math.random() * readNumberOrString(inputValue));
+        methodContent = [method, inputValue];
+        break;
+      case "++number":
+        output = ++number;
+        methodContent = [method];
+        break;
+      case "number++":
+        output = number++;
+        methodContent = [method];
+        break;
+      case "--number":
+        output = --number;
+        methodContent = [method];
+        break;
+      case "number--":
+        output = number--;
+        methodContent = [method];
+        break;
+      case "Number":
+        output = Number(number);
         methodContent = [method];
         break;
 

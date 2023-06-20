@@ -1,94 +1,105 @@
-export const methodsNumbersRaw = [
+export const methodsNumbers = [
   {
     method: "+",
-    inputType: "text",
+    methodContents: "number + ?",
     inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
   },
   {
     method: "-",
-    inputType: "text",
+    methodContents: "number - ?",
     inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
   },
   {
     method: "*",
-    inputType: "text",
+    methodContents: "number * ?",
     inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
   },
   {
     method: "/",
-    inputType: "text",
+    methodContents: "number / ?",
     inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
   },
   {
     method: "===",
-    inputType: "text",
+    methodContents: "number === ?",
     inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
-  },   
+  },
   {
     method: "toFixed",
-    inputType: "text",
+    methodContents: "toFixed(?)",
     inputPattern: /^\d+|$/,
   },
   {
     method: "Math.sqrt",
-    inputType: null,
+    methodContents: "Math.sqrt( number )",
   },
   {
     method: "isNaN",
-    inputType: null,
+    methodContents: "isNaN( number )",
   },
   {
     method: "Number.isNaN",
-    inputType: null,
+    methodContents: "Number.isNaN( number )",
   },
   {
     method: "Math.round",
-    inputType: null,
+    methodContents: "Math.round( number )",
   },
   {
     method: "Math.ceil",
-    inputType: null,
+    methodContents: "Math.ceil( number )",
   },
   {
     method: "Math.floor",
-    inputType: null,
+    methodContents: "Math.floor( number )",
   },
   {
     method: "Math.max",
-    inputType: null,
+    methodContents: "Math.max( ...numbers )",
   },
   {
     method: "Math.min",
-    inputType: null,
+    methodContents: "Math.min( ...numbers )",
   },
 
   {
     method: "Math.random",
-    inputType: null,
+    methodContents: "Math.random()",
   },
   {
-    method: "Math.flor(Math.random() * 100 )",
-    inputType: null,
+    method: "Math.floor(Math.random())",
+    methodContents: "Math.floor(Math.random() * ?)",
+    inputPattern: /^(?:[2-9]|[1-9]\d+)$/,
   },
-  
   {
-  method: "++",
-  inputType: null,
-},
-{
-  method: "--",
-  inputType: null,
-},
-  
+    method: "++number",
+    methodContents: "++number",
+  },
+  {
+    method: "number++",
+    methodContents: "number++",
+  },
+  {
+    method: "--number",
+    methodContents: "--number",
+  },
+  {
+    method: "number--",
+    methodContents: "number--",
+  },
   {
     method: "Number",
-    inputType: null,
+    methodContents: "Number( number )",
   },
-{
-  method: "+",
-  inputType: null,
-},
-//   test
+
+
+  // {
+  //   method: "+",
+  //   inputType: null,
+  // },
+
+
+  //   test
 
   // {
   //   method: "trim",
