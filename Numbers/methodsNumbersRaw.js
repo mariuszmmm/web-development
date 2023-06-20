@@ -23,54 +23,71 @@ export const methodsNumbersRaw = [
     method: "===",
     inputType: "text",
     inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
-  },
-  {
-    method: "Number.isNaN",
-    inputType: "text",
-    inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
-  },
-  {
-    method: "isNaN",
-    inputType: "text",
-    inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
-  },
-  {
-    method: "Math.round",
-    inputType: "text",
-    inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
-  },
-  {
-    method: "Math.ceil",
-    inputType: "text",
-    inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
-  },
-  {
-    method: "Math.floor",
-    inputType: "text",
-    inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
-  },
+  },   
   {
     method: "toFixed",
     inputType: "text",
-    inputPattern: /^\d+$/,
+    inputPattern: /^\d+|$/,
   },
   {
     method: "Math.sqrt",
-    inputType: "text",
-    inputPattern: /^("[^"]*"|-?\d+(?:[.]\d+)?|Infinity|NaN)$/,
+    inputType: null,
+  },
+  {
+    method: "isNaN",
+    inputType: null,
+  },
+  {
+    method: "Number.isNaN",
+    inputType: null,
+  },
+  {
+    method: "Math.round",
+    inputType: null,
+  },
+  {
+    method: "Math.ceil",
+    inputType: null,
+  },
+  {
+    method: "Math.floor",
+    inputType: null,
   },
   {
     method: "Math.max",
-    inputType: "text",
-    inputPattern: /^\s*(-?\d+(?:.\d+)?(?:\s*,\s*-?\d+(?:.\d+)?){0,9})?\s*$/,
+    inputType: null,
   },
   {
     method: "Math.min",
-    inputType: "text",
-    inputPattern: /^\s*(-?\d+(?:.\d+)?(?:\s*,\s*-?\d+(?:.\d+)?){0,9})?\s*$/,
+    inputType: null,
   },
 
-
+  {
+    method: "Math.random",
+    inputType: null,
+  },
+  {
+    method: "Math.flor(Math.random() * 100 )",
+    inputType: null,
+  },
+  
+  {
+  method: "++",
+  inputType: null,
+},
+{
+  method: "--",
+  inputType: null,
+},
+  
+  {
+    method: "Number",
+    inputType: null,
+  },
+{
+  method: "+",
+  inputType: null,
+},
 
 
   // {
