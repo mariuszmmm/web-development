@@ -107,18 +107,15 @@ export const numbers = () => {
               <button id="randomNaturalNumber" class="button js-random">
                 random natural number
               </button>
+              <button id="randomString" class="button js-random">
+                random string
+              </button>
               <button id="infinity" class="button js-random">
                 Infinity
               </button>
               <button id="nan" class="button js-random">
                 NaN
               </button>
-              <button id="randomString" class="button js-random">
-                random string
-              </button>
-
-
-
               <button id="randomWord" class="button js-random">
                 random word
               </button> 
@@ -335,13 +332,20 @@ export const numbers = () => {
     };
 
     const useRandomString = () => {
-      let string = Math.floor(Math.random() * 200000 - 100000) + "";
-      let randomChar = Math.floor(Math.random() * string.length + 2);
-      string = string.split("");
-      let array = string.map((char, index) =>
+      let string;
+      let randomChar;
+      let array;
+      let random = Math.random();
+      
+      string = Math.floor(Math.random() * 20000 - 10000) + "";
+      randomChar = Math.floor(Math.random() * string.length);
+      array = string.split("").map((char, index) =>
         index === randomChar ? "text" : char
       );
-      number = array.join("");
+     if (random < 0.33) {number = string } else if (random > 0.66) { number = array.join("")} else {
+       number = "text"
+     };
+      
       output = `The variable "number" has been assigned the value "text."`;
       render();
     };
