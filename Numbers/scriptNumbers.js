@@ -39,14 +39,18 @@ export const numbers = () => {
   const vievMethodContent = (methodContent) => {
     let element = "";
 
+    console.log(methodContent)
+
     element += `
       <span class="labelParagraph--numbers strong">
-        let output = ${char.includes(methodContent[0]) ? `number&nbsp;${methodContent[0]}&nbsp;` : `${methodContent[0]}(`}${methodContent[1] !== undefined ? (methodContent[1]).trim() : (["Math.min", "Math.max"].includes(methodContent[0]) ? "...numbers" : "number")}${char.includes(methodContent[0]) ? "" : ");"}
+        const output = ${methodContent[2].replace("?", methodContent[1] )}
       </span>
     `;
 
     return element;
   };
+
+  // char.includes(methodContent[0]) ? `number&nbsp;${methodContent[0]}&nbsp;` : `${methodContent[0]}(`}${methodContent[1] !== null ? (methodContent[1]).trim() : (["Math.min", "Math.max"].includes(methodContent[0]) ? "...numbers" : "number")}${char.includes(methodContent[0]) ? "" : ");"
 
   const renderLabel = () => {
     const labelElement = document.querySelector(".js-labelContainer");
@@ -222,18 +226,56 @@ export const numbers = () => {
       });
     });
 
+    const displayWarningAboutNumber = (method) => {
+      console.log("displayWarningAboutNumber")
+      methodContent = [...methodContent, "warning"];
+      if (number.includes(null)) {
+        console.log("warning:1 ")
+        outputInfo = `Error: Cannot read properties of null (reading 'length')`;
+      };
+      if (number.includes(undefined)) {
+        console.log("warning:2 ")
+        outputInfo = `Error: Cannot read properties of undefined (reading 'length')`;
+      };
+      if (number.length === 0 && method.method === "toFixed") {
+        console.log("warning:3 ")
+        outputInfo = `TypeError: number.toFixed is not a function. The variable "number" is not of type number. `;
+      };
+      renderOutput();
+    };
+
     const displayWarningAboutInputValue = ({ method }, input) => {
+      console.log("displayWarningAboutInputValue")
       methodContent = [...methodContent, "warning"];
       if (method === "slice" || method === "substring") {
         outputInfo = `The entered value is not allowed. Please enter a number or two numbers separated by a comma.`;
       } else if (method === "repeat") {
         outputInfo = `The entered value is not allowed. Please enter a number.`;
+      } else if (method === "toFixed") {
+        outputInfo = `The entered value is not allowed. Please enter a number from 0 to 100.`;
       } else {
         outputInfo = `Input value is not allowed, use: number or \" \"`
       };
       input.classList.add("errorInput")
       input.focus();
       renderOutput();
+    };
+
+
+    const checkDependency_1 = (method) => {
+      console.log("checkDependency_1")
+      return (
+        ["filter", "find", "findIndex", "some", "toFixed"].includes(method.method)
+        && !!method.methodContents[0].active
+        && (number.includes(null) || number.includes(undefined))
+      )
+    };
+
+    const checkDependency_2 = (method, input) => {
+      console.log("checkDependency_2")
+      return (
+        ["toFixed"].includes(method.method) && (number.length === 0) && (input.value === "")
+      )
     };
 
     formElements.forEach((formElement) => {
@@ -247,13 +289,20 @@ export const numbers = () => {
               if (method.method === button.id) {
                 const pattern = method.inputPattern;
                 if (pattern.test(input.value)) {
-                  if ((number.length === 0) && (input.value === "")) {
-                    render();
-                    return
+                  // if ((number.length === 0) && (input.value === "")) {
+                  //   render();
+                  //   return
+
+
+
+                    if (checkDependency_1(method) || checkDependency_2(method, input)) {
+                      render();
+                      displayWarningAboutNumber(method);
+                      return
                   } else {
-                    runMethod(button.id, input.value, method.method);
+                    runMethod(button.id, input.value, method.method, method.methodContents);
                     methodActive = input.name;
-                    render();
+                    method.method === "Math.floor(Math.random())" ? renderOutput() : render();
                     methodActive = "";
                   };
                 } else {
@@ -266,8 +315,8 @@ export const numbers = () => {
         });
 
         methodsNumbers.forEach((method) => {
-          if (method.method === button.id) {
-            runMethod(button.id, null, method.method)
+          if ((method.method === button.id) && !method.inputType) {
+            runMethod(button.id, null, method.method, method.methodContents)
             render();
           };
         });
@@ -336,16 +385,16 @@ export const numbers = () => {
       let randomChar;
       let array;
       let random = Math.random();
-      
+
       string = Math.floor(Math.random() * 20000 - 10000) + "";
       randomChar = Math.floor(Math.random() * string.length);
       array = string.split("").map((char, index) =>
         index === randomChar ? "text" : char
       );
-     if (random < 0.33) {number = string } else if (random > 0.66) { number = array.join("")} else {
-       number = "text"
-     };
-      
+      if (random < 0.33) { number = string } else if (random > 0.66) { number = array.join("") } else {
+        number = "text"
+      };
+
       output = `The variable "number" has been assigned the value "text."`;
       render();
     };
@@ -509,161 +558,161 @@ export const numbers = () => {
     };
   };
 
-  const runMethod = (button, inputValue, method) => {
+  const runMethod = (button, inputValue, method, methodContents) => {
     outputInfo = false;
     switch (button) {
       case "+":
         output = number + (readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
+        methodContent = [method, inputValue, methodContents];
         break;
       case "-":
         output = number - (readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
+        methodContent = [method, inputValue, methodContents];
         break;
       case "*":
         output = number * (readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
+        methodContent = [method, inputValue, methodContents];
         break;
       case "/":
         output = number / (readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
+        methodContent = [method, inputValue, methodContents];
         break;
       case "===":
         output = number === (readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
+        methodContent = [method, inputValue, methodContents];
         break;
       case "Number.isNaN":
         output = Number.isNaN(number);
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "isNaN":
         output = isNaN(number);
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "Math.round":
         output = Math.round(number);
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "Math.ceil":
         output = Math.ceil(number);
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "Math.floor":
         output = Math.floor(number);
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "toFixed":
         output = number.toFixed(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
+        methodContent = [method, inputValue, methodContents];
         break;
       case "Math.sqrt":
         output = Math.sqrt(number);
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "Math.max":
         output = Math.max(...numbers);
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "Math.min":
         output = Math.min(...numbers);
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "Math.random":
         output = Math.random();
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "Math.floor(Math.random())":
         output = Math.floor(Math.random() * readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
+        methodContent = [method, inputValue, methodContents];
         break;
       case "++number":
         output = ++number;
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "number++":
         output = number++;
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "--number":
         output = --number;
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "number--":
         output = number--;
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
       case "Number":
         output = Number(number);
-        methodContent = [method];
+        methodContent = [method, null, methodContents];
         break;
 
 
 
       //     do usunięcia
-      case "trim":
-        output = string.trim();
-        methodContent = [method];
-        break;
-      case "toLowerCase":
-        output = string.toLowerCase();
-        methodContent = [method];
-        break;
-      case "toUpperCase":
-        output = string.toUpperCase();
-        methodContent = [method];
-        break;
-      case "split":
-        output = string.split(!inputValue ? null : readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
-      case "slice":
-        output = string.slice(...enterContentForManyArguments(inputValue));
-        methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
-        break;
-      case "substring":
-        output = string.substring(...enterContentForManyArguments(inputValue));
-        methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
-        break;
-      case "repeat":
-        output = string.repeat(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
-      case "charAt":
-        output = string.charAt(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
-      case "includes":
-        output = string.includes(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
-      case "startsWith":
-        output = string.startsWith(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
-      case "endsWith":
-        output = string.endsWith(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
-      case "indexOf":
-        output = string.indexOf(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
-      case "lastIndexOf":
-        output = string.lastIndexOf(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
-      case "replace":
-        output = string.replace(...enterContent(inputValue));
-        methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
-        break;
-      case "replaceAll":
-        output = string.replaceAll(...enterContent(inputValue));
-        methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
-        break;
-      case "localeCompare":
-        output = string.localeCompare(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
-        break;
+      // case "trim":
+      //   output = string.trim();
+      //   methodContent = [method];
+      //   break;
+      // case "toLowerCase":
+      //   output = string.toLowerCase();
+      //   methodContent = [method];
+      //   break;
+      // case "toUpperCase":
+      //   output = string.toUpperCase();
+      //   methodContent = [method];
+      //   break;
+      // case "split":
+      //   output = string.split(!inputValue ? null : readNumberOrString(inputValue));
+      //   methodContent = [method, inputValue];
+      //   break;
+      // case "slice":
+      //   output = string.slice(...enterContentForManyArguments(inputValue));
+      //   methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
+      //   break;
+      // case "substring":
+      //   output = string.substring(...enterContentForManyArguments(inputValue));
+      //   methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
+      //   break;
+      // case "repeat":
+      //   output = string.repeat(readNumberOrString(inputValue));
+      //   methodContent = [method, inputValue];
+      //   break;
+      // case "charAt":
+      //   output = string.charAt(readNumberOrString(inputValue));
+      //   methodContent = [method, inputValue];
+      //   break;
+      // case "includes":
+      //   output = string.includes(readNumberOrString(inputValue));
+      //   methodContent = [method, inputValue];
+      //   break;
+      // case "startsWith":
+      //   output = string.startsWith(readNumberOrString(inputValue));
+      //   methodContent = [method, inputValue];
+      //   break;
+      // case "endsWith":
+      //   output = string.endsWith(readNumberOrString(inputValue));
+      //   methodContent = [method, inputValue];
+      //   break;
+      // case "indexOf":
+      //   output = string.indexOf(readNumberOrString(inputValue));
+      //   methodContent = [method, inputValue];
+      //   break;
+      // case "lastIndexOf":
+      //   output = string.lastIndexOf(readNumberOrString(inputValue));
+      //   methodContent = [method, inputValue];
+      //   break;
+      // case "replace":
+      //   output = string.replace(...enterContent(inputValue));
+      //   methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
+      //   break;
+      // case "replaceAll":
+      //   output = string.replaceAll(...enterContent(inputValue));
+      //   methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
+      //   break;
+      // case "localeCompare":
+      //   output = string.localeCompare(readNumberOrString(inputValue));
+      //   methodContent = [method, inputValue];
+      //   break;
     };
   };
 
