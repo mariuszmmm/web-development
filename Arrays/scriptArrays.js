@@ -59,7 +59,7 @@ export const arrays = () => {
 
     element += `
       <span class="labelParagraph--arrays strong">
-        let output = array.${methodContent[0]}(${(methodContent[1] !== undefined) ?
+        const output = array.${methodContent[0]}(${(methodContent[1] !== undefined) ?
         (typeof (methodContent[1]) === "string" ?
           (methodContent[1])
           :

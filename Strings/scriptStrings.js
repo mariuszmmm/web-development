@@ -48,8 +48,7 @@ export const strings = () => {
 
     element += `
       <span class="labelParagraph--strings strong">
-        let output = string
-        ${methodContent[0] === "+" ? `&nbsp;${methodContent[0]}&nbsp;` : `.${methodContent[0]}(`}${methodContent[1] !== undefined ? (methodContent[1]).trim() : ""}${methodContent[0] === "+" ? "" : ");"}
+        const output = string${methodContent[0] === "+" ? `&nbsp;${methodContent[0]}&nbsp;` : `.${methodContent[0]}(`}${methodContent[1] !== undefined ? (methodContent[1]).trim() : ""}${methodContent[0] === "+" ? "" : ");"}
       </span>
     `;
 
@@ -274,19 +273,19 @@ export const strings = () => {
 
     const useRandomLetters = () => {
       string = (letters.charAt(Math.floor(Math.random() * letters.length)));
-      outputInfo = "The string has been loaded with a random letter.";
+      outputInfo = "The random letter  has been saved in the variable \"string\".";
       render();
     };
 
     const useRandomWords = () => {
       string = (wordsArray[Math.floor(Math.random() * wordsArray.length)]);
-      outputInfo = "The string has been loaded with a random word.";
+      outputInfo = "The random word has been saved in the variable \"string\".";
       render();
     };
 
     const useRandomSentences = () => {
       string = (sentencesArray[Math.floor(Math.random() * sentencesArray.length)]);
-      outputInfo = "The string has been loaded with a random sentence.";
+      outputInfo = "The random sentence has been saved in the variable \"string\".";
       render();
     };
 
@@ -307,9 +306,9 @@ export const strings = () => {
     const changeShowexampleString = () => {
       showExampleString = !showExampleString
       if (showExampleString) {
-        outputInfo = "The example string has been displayed.";
+        outputInfo = "The variable \"exampleString\" has been displayed.";
       } else {
-        outputInfo = "The example string has been hidden.";
+        outputInfo = "The variable \"exampleString\" has been hidden.";
       };
       render();
     };
@@ -319,31 +318,31 @@ export const strings = () => {
         string = exampleStringSaved;
       }
       else { string = exampleString };
-      outputInfo = "The string is loaded from an example string."
+      outputInfo = "The value from the variable \"exampleString\" has been saved in the variable \"string\"."
       render();
     };
 
     const saveToExample = () => {
       if (string) {
         exampleStringSaved = string;
-        outputInfo = "The string stored as an example string.";
+        outputInfo = "The value from the variable \"string\" has been saved in the variable \"exampleString\".";
         render();
       } else {
-        outputInfo = "Not stored. The string is empty.";
+        outputInfo = "Not saved. The variable \"string\" is empty.";
         renderOutput();
       };
     };
 
     const resetExample = () => {
       exampleStringSaved = "";
-      outputInfo = "The example string has been reset.";
+      outputInfo = "The initial value has been restored in the variable \"exampleString\".";
       render();
     };
 
     const loadFromOutput = () => {
       if (typeof (output) === "string") {
         string = output;
-        outputInfo = "The string has been loaded from the output.";
+        outputInfo = "The value from the variable \"output\" has been stored in the variable \"string\".";
         render();
       };
     };
@@ -404,7 +403,7 @@ export const strings = () => {
   };
 
   const runMethod = (button, inputValue, method) => {
-    outputInfo = false;
+    outputInfo = "";
     switch (button) {
       case "+":
         output = string + (readNumberOrString(inputValue));

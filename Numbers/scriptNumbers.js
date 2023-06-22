@@ -120,16 +120,7 @@ export const numbers = () => {
               <button id="nan" class="button js-random">
                 NaN
               </button>
-              <button id="randomWord" class="button js-random">
-                random word
-              </button> 
-              <button id="randomSentence" class="button js-random">
-                random sentence
-              </button>
-              <button id="loadFromExample" class="button js-example">
-                from example string
-              </button>
-              <button id="loadFromOutput" ${(!outputInfo && typeof (output) === "string") ? "" : "disabled"} class="button js-example">
+              <button id="loadFromOutput" ${(output && !outputInfo) ? "" : "disabled"} class="button js-example">
                 from output
               </button>
             </div>            
@@ -256,7 +247,7 @@ export const numbers = () => {
       } else {
         outputInfo = `Input value is not allowed, use: number or \" \"`
       };
-      input.classList.add("errorInput")
+      method === "Math.floor(Math.random())" ? input.value = "" : input.classList.add("errorInput")
       input.focus();
       renderOutput();
     };
@@ -325,7 +316,7 @@ export const numbers = () => {
 
     const useRandomNumber = () => {
       number = Math.random() * 20000 - 10000;
-      output = `The variable "number" has been assigned a random number.`;
+      outputInfo = `The variable "number" has been assigned a random number.`;
       render();
     };
 
@@ -334,13 +325,13 @@ export const numbers = () => {
       while (numbers.length < 10) {
         numbers.push(Math.random() * 20000 - 10000);
       };
-      output = `The array "numbers" has been loaded with random numbers.`;
+      outputInfo = `The array "numbers" has been loaded with random numbers.`;
       render();
     };
 
     const useRandomIntegerNumber = () => {
       number = Math.floor(Math.random() * 20000 - 10000);
-      output = `The variable "number" has been assigned a random integer number.`;
+      outputInfo = `The variable "number" has been assigned a random integer number.`;
       render();
     };
 
@@ -349,13 +340,13 @@ export const numbers = () => {
       while (numbers.length < 10) {
         numbers.push(Math.floor(Math.random() * 20000 - 10000));
       };
-      output = `The array "numbers" has been loaded with random integer numbers.`;
+      outputInfo = `The array "numbers" has been loaded with random integer numbers.`;
       render();
     };
 
     const useRandomNaturalNumber = () => {
       number = Math.floor(Math.random() * 1000);
-      output = `The variable "number" has been assigned a random natural number.`;
+      outputInfo = `The variable "number" has been assigned a random natural number.`;
       render();
     };
 
@@ -364,19 +355,19 @@ export const numbers = () => {
       while (numbers.length < 10) {
         numbers.push(Math.floor(Math.random() * 10000));
       };
-      output = `The array "numbers" has been loaded with random natural numbers.`;
+      outputInfo = `The array "numbers" has been loaded with random natural numbers.`;
       render();
     };
 
     const useInfinity = () => {
       number = Infinity;
-      output = `The variable "number" has been assigned the value of Infinity.`;
+      outputInfo = `The variable "number" has been assigned the value of Infinity.`;
       render();
     };
 
     const useNan = () => {
       number = NaN;
-      output = `The variable "number" has been assigned the value of NaN.`;
+      outputInfo = `The variable "number" has been assigned the value of NaN.`;
       render();
     };
 
@@ -395,25 +386,7 @@ export const numbers = () => {
         number = "text"
       };
 
-      output = `The variable "number" has been assigned the value "text."`;
-      render();
-    };
-
-    const useRandomLetters = () => {
-      string = (letters.charAt(Math.floor(Math.random() * letters.length)));
-      outputInfo = "The string has been loaded with a random letter.";
-      render();
-    };
-
-    const useRandomWords = () => {
-      string = (wordsArray[Math.floor(Math.random() * wordsArray.length)]);
-      outputInfo = "The string has been loaded with a random word.";
-      render();
-    };
-
-    const useRandomSentences = () => {
-      string = (sentencesArray[Math.floor(Math.random() * sentencesArray.length)]);
-      outputInfo = "The string has been loaded with a random sentence.";
+      outputInfo = `The variable "number" has been assigned the value "text."`;
       render();
     };
 
@@ -437,92 +410,30 @@ export const numbers = () => {
         case "randomNaturalNumbers":
           useRandomNaturalNumbers();
           break;
+        case "randomString":
+        useRandomString();
+        break;
         case "infinity":
           useInfinity();
           break;
         case "nan":
           useNan();
           break;
-        case "randomString":
-          useRandomString();
-          break;
-
-
-
-
-
-        case "randomWord":
-          useRandomWords();
-          break;
-        case "randomSentence":
-          useRandomSentences();
-          break;
       };
     }));
 
-    const changeShowExampleString = () => {
-      showExampleString = !showExampleString
-      if (showExampleString) {
-        outputInfo = "The example string has been displayed.";
-      } else {
-        outputInfo = "The example string has been hidden.";
-      };
-      render();
-    };
-
-    const loadFromExample = () => {
-      if (exampleStringSaved.length > 0) {
-        string = exampleStringSaved;
-      }
-      else { string = exampleString };
-      outputInfo = "The string is loaded from an example string."
-      render();
-    };
-
-    const saveToExample = () => {
-      if (string) {
-        exampleStringSaved = string;
-        outputInfo = "The string stored as an example string.";
-        render();
-      } else {
-        outputInfo = "Not stored. The string is empty.";
-        renderOutput();
-      };
-    };
-
-    const resetExample = () => {
-      exampleStringSaved = "";
-      outputInfo = "The example string has been reset.";
-      render();
-    };
 
     const loadFromOutput = () => {
-      if (typeof (output) === "string") {
-        string = output;
-        outputInfo = "The string has been loaded from the output.";
+      if (output) {
+        number = output;
+        outputInfo = "The value from the variable \"output\" has been stored in the variable \"number\".";
         render();
       };
     };
 
     exampleElements.forEach((element) => {
       element.addEventListener("click", ({ target }) => {
-        switch (target.id) {
-          case "showExample":
-            changeShowExampleString();
-            break;
-          case "loadFromExample":
-            loadFromExample();
-            break;
-          case "saveToExample":
-            saveToExample();
-            break;
-          case "resetExample":
-            resetExample();
-            break;
-          case "loadFromOutput":
-            loadFromOutput();
-            break;
-        };
+        target.id === "loadFromOutput" ? loadFromOutput() : "";
       });
     });
   };
@@ -559,7 +470,7 @@ export const numbers = () => {
   };
 
   const runMethod = (button, inputValue, method, methodContents) => {
-    outputInfo = false;
+    outputInfo = "";
     switch (button) {
       case "+":
         output = number + (readNumberOrString(inputValue));
@@ -645,74 +556,10 @@ export const numbers = () => {
         output = Number(number);
         methodContent = [method, null, methodContents];
         break;
-
-
-
-      //     do usunięcia
-      // case "trim":
-      //   output = string.trim();
-      //   methodContent = [method];
-      //   break;
-      // case "toLowerCase":
-      //   output = string.toLowerCase();
-      //   methodContent = [method];
-      //   break;
-      // case "toUpperCase":
-      //   output = string.toUpperCase();
-      //   methodContent = [method];
-      //   break;
-      // case "split":
-      //   output = string.split(!inputValue ? null : readNumberOrString(inputValue));
-      //   methodContent = [method, inputValue];
-      //   break;
-      // case "slice":
-      //   output = string.slice(...enterContentForManyArguments(inputValue));
-      //   methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
-      //   break;
-      // case "substring":
-      //   output = string.substring(...enterContentForManyArguments(inputValue));
-      //   methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
-      //   break;
-      // case "repeat":
-      //   output = string.repeat(readNumberOrString(inputValue));
-      //   methodContent = [method, inputValue];
-      //   break;
-      // case "charAt":
-      //   output = string.charAt(readNumberOrString(inputValue));
-      //   methodContent = [method, inputValue];
-      //   break;
-      // case "includes":
-      //   output = string.includes(readNumberOrString(inputValue));
-      //   methodContent = [method, inputValue];
-      //   break;
-      // case "startsWith":
-      //   output = string.startsWith(readNumberOrString(inputValue));
-      //   methodContent = [method, inputValue];
-      //   break;
-      // case "endsWith":
-      //   output = string.endsWith(readNumberOrString(inputValue));
-      //   methodContent = [method, inputValue];
-      //   break;
-      // case "indexOf":
-      //   output = string.indexOf(readNumberOrString(inputValue));
-      //   methodContent = [method, inputValue];
-      //   break;
-      // case "lastIndexOf":
-      //   output = string.lastIndexOf(readNumberOrString(inputValue));
-      //   methodContent = [method, inputValue];
-      //   break;
-      // case "replace":
-      //   output = string.replace(...enterContent(inputValue));
-      //   methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
-      //   break;
-      // case "replaceAll":
-      //   output = string.replaceAll(...enterContent(inputValue));
-      //   methodContent = [method, (enterContentForManyArguments(inputValue).join(", ")), "twoArguments"];
-      //   break;
-      // case "localeCompare":
-      //   output = string.localeCompare(readNumberOrString(inputValue));
-      //   methodContent = [method, inputValue];
-      //   break;
+      case "toString":
+      output = number.toString();
+      methodContent = [method, null, methodContents];
+      break;
     };
   };
 
