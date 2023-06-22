@@ -1,35 +1,31 @@
 import { methodsNumbers } from "./methodsNumbersRaw.js";
 import { heightAnimation } from "../Animation/scriptAnimation.js";
 
-
 export const numbers = () => {
   let number = "";
   let numbers = [];
   let methodContent = [];
   let output = "";
-  let outputInfo = "The variable \"output\" values or information about the used functions will be displayed here.";
-  let exampleStringSaved = "";
-  let showExampleString = false;
+  let outputInfo = "Here, the value of the \"output\" variable or information about the used functions will be displayed..";
   let methodActive = "";
-  const char = ["+", "-", "*", "/", "==="];
 
-  const viewString = (exampleString) => {
+  const viewNumberOrString = (variable) => {
     let element = "";
     element += `
-      ${(typeof (exampleString) === "string" ?
-        (`"` + exampleString + `"`) : exampleString)}`;
+      ${(typeof (variable) === "string" ?
+        (`"` + variable + `"`) : variable)}`;
 
     return element;
   };
 
-  const viewArray = (exampleArray) => {
+  const viewArray = (array) => {
     let element = "";
 
-    exampleArray.forEach((arrayElement, index) => {
+    array.forEach((arrayElement, index) => {
       element += `
         <span class="labelParagraph--arrays">
           ${(arrayElement)
-        + ((exampleArray.length === index + 1) ? "" : ",")}
+        + ((array.length === index + 1) ? "" : ",")}
         </span>`;
     });
 
@@ -39,25 +35,21 @@ export const numbers = () => {
   const vievMethodContent = (methodContent) => {
     let element = "";
 
-    console.log(methodContent)
-
     element += `
       <span class="labelParagraph--numbers strong">
-        const output = ${methodContent[2].replace("?", methodContent[1] )}
+        let output = ${methodContent[2].replace("?", methodContent[1])}
       </span>
     `;
 
     return element;
   };
 
-  // char.includes(methodContent[0]) ? `number&nbsp;${methodContent[0]}&nbsp;` : `${methodContent[0]}(`}${methodContent[1] !== null ? (methodContent[1]).trim() : (["Math.min", "Math.max"].includes(methodContent[0]) ? "...numbers" : "number")}${char.includes(methodContent[0]) ? "" : ");"
-
   const renderLabel = () => {
     const labelElement = document.querySelector(".js-labelContainer");
 
     labelElement.innerHTML = `
         <div class="labelContents labelContents--numbers js-labelContents">
-          <p class="labelParagraph--numbers strong">const number = ${viewString(number)};</p>
+          <p class="labelParagraph--numbers strong">let number = ${viewNumberOrString(number)};</p>
           <p></p>
           <p class="labelParagraph--numbers strong">const numbers = [${viewArray(numbers)}];</p>
           <p></p>        
@@ -128,7 +120,7 @@ export const numbers = () => {
               Load numbers :
             </span>
             <div class="valueElements">
-            <button id="randomNumbers" class="button js-random">
+              <button id="randomNumbers" class="button js-random">
                 random numbers
               </button>
               <button id="randomIntegerNumbers" class="button js-random">
@@ -178,7 +170,7 @@ export const numbers = () => {
           <p class="labelParagraph--numbers strong">
             ${!outputInfo ? (Array.isArray(output) ? `
               <p class="labelParagraph--arrays strong">[ ${viewArray(output)} ]</p>
-              ` : viewString(output)) : outputInfo}
+              ` : viewNumberOrString(output)) : outputInfo}
           </p>
         </div>
       </div>
@@ -218,32 +210,19 @@ export const numbers = () => {
     });
 
     const displayWarningAboutNumber = (method) => {
-      console.log("displayWarningAboutNumber")
       methodContent = [...methodContent, "warning"];
-      if (number.includes(null)) {
-        console.log("warning:1 ")
-        outputInfo = `Error: Cannot read properties of null (reading 'length')`;
-      };
-      if (number.includes(undefined)) {
-        console.log("warning:2 ")
-        outputInfo = `Error: Cannot read properties of undefined (reading 'length')`;
-      };
-      if (number.length === 0 && method.method === "toFixed") {
-        console.log("warning:3 ")
-        outputInfo = `TypeError: number.toFixed is not a function. The variable "number" is not of type number. `;
+      if (typeof(number) !== "number" && method.method === "toFixed") {
+        outputInfo = `Error: number.toFixed is not a function. The variable "number" is not of type number.`;
       };
       renderOutput();
     };
 
     const displayWarningAboutInputValue = ({ method }, input) => {
-      console.log("displayWarningAboutInputValue")
       methodContent = [...methodContent, "warning"];
-      if (method === "slice" || method === "substring") {
-        outputInfo = `The entered value is not allowed. Please enter a number or two numbers separated by a comma.`;
-      } else if (method === "repeat") {
-        outputInfo = `The entered value is not allowed. Please enter a number.`;
-      } else if (method === "toFixed") {
+      if (method === "toFixed") {
         outputInfo = `The entered value is not allowed. Please enter a number from 0 to 100.`;
+      } else if (method === "Math.floor(Math.random())") {
+        outputInfo = `The entered value is invalid. Please enter a natural number greater than 1.`
       } else {
         outputInfo = `Input value is not allowed, use: number or \" \"`
       };
@@ -252,20 +231,9 @@ export const numbers = () => {
       renderOutput();
     };
 
-
-    const checkDependency_1 = (method) => {
-      console.log("checkDependency_1")
+    const checkDependency = (method) => {
       return (
-        ["filter", "find", "findIndex", "some", "toFixed"].includes(method.method)
-        && !!method.methodContents[0].active
-        && (number.includes(null) || number.includes(undefined))
-      )
-    };
-
-    const checkDependency_2 = (method, input) => {
-      console.log("checkDependency_2")
-      return (
-        ["toFixed"].includes(method.method) && (number.length === 0) && (input.value === "")
+        ["toFixed"].includes(method.method) && (typeof(number) !== "number")
       )
     };
 
@@ -280,16 +248,10 @@ export const numbers = () => {
               if (method.method === button.id) {
                 const pattern = method.inputPattern;
                 if (pattern.test(input.value)) {
-                  // if ((number.length === 0) && (input.value === "")) {
-                  //   render();
-                  //   return
-
-
-
-                    if (checkDependency_1(method) || checkDependency_2(method, input)) {
-                      render();
-                      displayWarningAboutNumber(method);
-                      return
+                  if (checkDependency(method)) {
+                    render();
+                    displayWarningAboutNumber(method);
+                    return
                   } else {
                     runMethod(button.id, input.value, method.method, method.methodContents);
                     methodActive = input.name;
@@ -316,7 +278,7 @@ export const numbers = () => {
 
     const useRandomNumber = () => {
       number = Math.random() * 20000 - 10000;
-      outputInfo = `The variable "number" has been assigned a random number.`;
+      outputInfo = `A random number has been saved in the variable "number".`;
       render();
     };
 
@@ -325,13 +287,13 @@ export const numbers = () => {
       while (numbers.length < 10) {
         numbers.push(Math.random() * 20000 - 10000);
       };
-      outputInfo = `The array "numbers" has been loaded with random numbers.`;
+      outputInfo = `Random numbers have been saved in the array "numbers".`;
       render();
     };
 
     const useRandomIntegerNumber = () => {
       number = Math.floor(Math.random() * 20000 - 10000);
-      outputInfo = `The variable "number" has been assigned a random integer number.`;
+      outputInfo = `A random integer number has been saved in the variable "number".`;
       render();
     };
 
@@ -340,13 +302,13 @@ export const numbers = () => {
       while (numbers.length < 10) {
         numbers.push(Math.floor(Math.random() * 20000 - 10000));
       };
-      outputInfo = `The array "numbers" has been loaded with random integer numbers.`;
+      outputInfo = `Random integers have been saved in the array "numbers".`;
       render();
     };
 
     const useRandomNaturalNumber = () => {
       number = Math.floor(Math.random() * 1000);
-      outputInfo = `The variable "number" has been assigned a random natural number.`;
+      outputInfo = `A random natural number has been saved in the variable "number".`;
       render();
     };
 
@@ -355,19 +317,19 @@ export const numbers = () => {
       while (numbers.length < 10) {
         numbers.push(Math.floor(Math.random() * 10000));
       };
-      outputInfo = `The array "numbers" has been loaded with random natural numbers.`;
+      outputInfo = `Random natural numbers have been saved in the array "numbers".`;
       render();
     };
 
     const useInfinity = () => {
       number = Infinity;
-      outputInfo = `The variable "number" has been assigned the value of Infinity.`;
+      outputInfo = `Infinity has been saved in the variable "number".`;
       render();
     };
 
     const useNan = () => {
       number = NaN;
-      outputInfo = `The variable "number" has been assigned the value of NaN.`;
+      outputInfo = `NaN has been saved in the variable "number".`;
       render();
     };
 
@@ -386,7 +348,7 @@ export const numbers = () => {
         number = "text"
       };
 
-      outputInfo = `The variable "number" has been assigned the value "text."`;
+      outputInfo = `A random string value has been saved in the variable "number".`;
       render();
     };
 
@@ -411,8 +373,8 @@ export const numbers = () => {
           useRandomNaturalNumbers();
           break;
         case "randomString":
-        useRandomString();
-        break;
+          useRandomString();
+          break;
         case "infinity":
           useInfinity();
           break;
@@ -421,7 +383,6 @@ export const numbers = () => {
           break;
       };
     }));
-
 
     const loadFromOutput = () => {
       if (output) {
@@ -447,28 +408,6 @@ export const numbers = () => {
     );
   };
 
-  const enterContentForManyArguments = (inputValue) => {
-    let content = [];
-    if (!isNaN(inputValue)) {
-      return [...content, (inputValue)]
-
-    }
-    else {
-      return (inputValue.split(",")).map(elem => elem.trim());
-    };
-  };
-
-  const enterContent = (inputValue) => {
-    let elements;
-
-    if (inputValue.includes(",")) {
-      elements = inputValue.split(",");
-      return elements.map(elem =>
-        readNumberOrString(elem.trim())
-      );
-    };
-  };
-
   const runMethod = (button, inputValue, method, methodContents) => {
     outputInfo = "";
     switch (button) {
@@ -492,49 +431,37 @@ export const numbers = () => {
         output = number === (readNumberOrString(inputValue));
         methodContent = [method, inputValue, methodContents];
         break;
-      case "Number.isNaN":
-        output = Number.isNaN(number);
+      case "=":
+        output = number = (readNumberOrString(inputValue));
+        methodContent = [method, inputValue, methodContents];
+        break;
+      case "+=":
+        output = number += (readNumberOrString(inputValue));
+        methodContent = [method, inputValue, methodContents];
+        break;
+      case "toFixed":
+        output = number.toFixed(readNumberOrString(inputValue));
+        methodContent = [method, inputValue, methodContents];
+        break;
+      case "toString":
+        output = number.toString();
         methodContent = [method, null, methodContents];
         break;
       case "isNaN":
         output = isNaN(number);
         methodContent = [method, null, methodContents];
         break;
-      case "Math.round":
-        output = Math.round(number);
+      case "Number.isNaN":
+        output = Number.isNaN(number);
         methodContent = [method, null, methodContents];
         break;
-      case "Math.ceil":
-        output = Math.ceil(number);
+      case "Number":
+        output = Number(number);
         methodContent = [method, null, methodContents];
         break;
-      case "Math.floor":
-        output = Math.floor(number);
+      case "+number":
+        output = +number;
         methodContent = [method, null, methodContents];
-        break;
-      case "toFixed":
-        output = number.toFixed(readNumberOrString(inputValue));
-        methodContent = [method, inputValue, methodContents];
-        break;
-      case "Math.sqrt":
-        output = Math.sqrt(number);
-        methodContent = [method, null, methodContents];
-        break;
-      case "Math.max":
-        output = Math.max(...numbers);
-        methodContent = [method, null, methodContents];
-        break;
-      case "Math.min":
-        output = Math.min(...numbers);
-        methodContent = [method, null, methodContents];
-        break;
-      case "Math.random":
-        output = Math.random();
-        methodContent = [method, null, methodContents];
-        break;
-      case "Math.floor(Math.random())":
-        output = Math.floor(Math.random() * readNumberOrString(inputValue));
-        methodContent = [method, inputValue, methodContents];
         break;
       case "++number":
         output = ++number;
@@ -552,14 +479,38 @@ export const numbers = () => {
         output = number--;
         methodContent = [method, null, methodContents];
         break;
-      case "Number":
-        output = Number(number);
+      case "Math.min":
+        output = Math.min(...numbers);
         methodContent = [method, null, methodContents];
         break;
-      case "toString":
-      output = number.toString();
-      methodContent = [method, null, methodContents];
-      break;
+      case "Math.max":
+        output = Math.max(...numbers);
+        methodContent = [method, null, methodContents];
+        break;
+      case "Math.sqrt":
+        output = Math.sqrt(number);
+        methodContent = [method, null, methodContents];
+        break;
+      case "Math.round":
+        output = Math.round(number);
+        methodContent = [method, null, methodContents];
+        break;
+      case "Math.ceil":
+        output = Math.ceil(number);
+        methodContent = [method, null, methodContents];
+        break;
+      case "Math.floor":
+        output = Math.floor(number);
+        methodContent = [method, null, methodContents];
+        break;
+      case "Math.random":
+        output = Math.random();
+        methodContent = [method, null, methodContents];
+        break;
+      case "Math.floor(Math.random())":
+        output = Math.floor(Math.random() * readNumberOrString(inputValue));
+        methodContent = [method, inputValue, methodContents];
+        break;
     };
   };
 
