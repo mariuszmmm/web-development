@@ -60,6 +60,7 @@
 .propertyElements--strings {
   width: 515px;
   justify-self: flex-end;
+  align-items: center;
 }
 
 @media (max-width: 960px) {

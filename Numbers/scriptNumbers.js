@@ -6,7 +6,7 @@ export const numbers = () => {
   let numbers = [];
   let methodContent = [];
   let output = "";
-  let outputInfo = "Here, the value of the \"output\" variable or information about the used functions will be displayed..";
+  let outputInfo = "The variable \"output\" values or information about the used functions will be displayed here.";
   let methodActive = "";
 
   const viewNumberOrString = (variable) => {
@@ -211,7 +211,7 @@ export const numbers = () => {
 
     const displayWarningAboutNumber = (method) => {
       methodContent = [...methodContent, "warning"];
-      if (typeof(number) !== "number" && method.method === "toFixed") {
+      if (typeof (number) !== "number" && method.method === "toFixed") {
         outputInfo = `Error: number.toFixed is not a function. The variable "number" is not of type number.`;
       };
       renderOutput();
@@ -233,7 +233,7 @@ export const numbers = () => {
 
     const checkDependency = (method) => {
       return (
-        ["toFixed"].includes(method.method) && (typeof(number) !== "number")
+        ["toFixed"].includes(method.method) && (typeof (number) !== "number")
       )
     };
 

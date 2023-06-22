@@ -5,6 +5,10 @@ export const methodsStringRaw = [
     inputPattern: /^\s*("[^"]*"|\-?\d+)\s*$/,
   },
   {
+    method: "length",
+    inputType: null,
+  },
+  {
     method: "trim",
     inputType: null,
   },

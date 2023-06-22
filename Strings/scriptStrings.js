@@ -48,7 +48,7 @@ export const strings = () => {
 
     element += `
       <span class="labelParagraph--strings strong">
-        const output = string${methodContent[0] === "+" ? `&nbsp;${methodContent[0]}&nbsp;` : `.${methodContent[0]}(`}${methodContent[1] !== undefined ? (methodContent[1]).trim() : ""}${methodContent[0] === "+" ? "" : ");"}
+        let output = string${methodContent[0] === "+" ? `&nbsp;${methodContent[0]}&nbsp;` : `.${methodContent[0]}${methodContent[0] === "length" ? "" : "("}`}${methodContent[1] !== undefined ? (methodContent[1]).trim() : ""}${["+", "length"].includes(methodContent[0]) ? "" : ");"}
       </span>
     `;
 
@@ -60,9 +60,9 @@ export const strings = () => {
 
     labelElement.innerHTML = `
         <div class="labelContents labelContents--strings js-labelContents">
-          <p class="labelParagraph--strings strong">const string = ${viewString(string)};</p>
+          <p class="labelParagraph--strings strong">let string = ${viewString(string)};</p>
           <p></p>
-          ${showExampleString ? `<p class="labelParagraph--strings strong">const exampleString = ${viewString(exampleStringSaved ? exampleStringSaved : exampleString)}</p>
+          ${showExampleString ? `<p class="labelParagraph--strings strong">let exampleString = ${viewString(exampleStringSaved ? exampleStringSaved : exampleString)}</p>
           <p></p>` : ""}          
           ${(methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
         </div>
@@ -82,12 +82,12 @@ export const strings = () => {
           <form class="form js-form">
             <div class="propertyElements propertyElements--strings">
               <span class="methodName">
-                string${name === "+" ? `&nbsp;${name}&nbsp;` : `.${name}`}
+                string${name === "+" ? `&nbsp;${name}` : `.${name}`}
               </span>
-              <div class="methodName methodName--parameters">${name === "+" ? "" : "("}
+              <div class="methodName methodName--parameters">${["+", "length"].includes(name) ? "&nbsp;" : "("}
                 ${inputType ? `
                   <input type="text" name="${name}" autocomplete="off" class="methodInput js-methodInput" />` : ""}
-                ${name === "+" ? "" : ")"} 
+                ${["+", "length"].includes(name) ? "" : ")"} 
               </div>
             </div>
             <div class="valueElements valueElements--strings">
@@ -408,6 +408,10 @@ export const strings = () => {
       case "+":
         output = string + (readNumberOrString(inputValue));
         methodContent = [method, inputValue];
+        break;
+      case "length":
+        output = string.length;
+        methodContent = [method];
         break;
       case "trim":
         output = string.trim();
