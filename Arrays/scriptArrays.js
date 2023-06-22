@@ -5,7 +5,8 @@ import { heightAnimation } from "../Animation/scriptAnimation.js";
 export const arrays = () => {
   let array = [];
   let methodContent = [];
-  let output = "The variable \"output\" values or information about the used functions will be displayed here.";
+  let output = "";
+  let outputInfo = "The variable \"output\" values or information about the used functions will be displayed here.";
   let rangeValue;
   let exampleArraySaved = [];
   let showExampleArray = false;
@@ -17,7 +18,6 @@ export const arrays = () => {
       method: object.method,
       methodContents: object.methodContents.map((obj, index) => {
         indexButton++
-
         return {
           id: indexButton,
           name: obj.button,
@@ -59,7 +59,7 @@ export const arrays = () => {
 
     element += `
       <span class="labelParagraph--arrays strong">
-        const output = array.${methodContent[0]}(${(methodContent[1] !== undefined) ?
+        let output = array.${methodContent[0]}(${(methodContent[1] !== undefined) ?
         (typeof (methodContent[1]) === "string" ?
           (methodContent[1])
           :
@@ -280,7 +280,7 @@ export const arrays = () => {
               <button id="loadFromExample" class="button js-example">
                 from example array
               </button>          
-              <button id="loadFromOutput" ${Array.isArray(output) ? "" : "disabled"} class="button js-example">
+              <button id="loadFromOutput" ${(Array.isArray(output) && !outputInfo) ? "" : "disabled"} class="button js-example">
                 from output
               </button>            
             </div>            
@@ -342,19 +342,19 @@ export const arrays = () => {
 
     outputElement.innerHTML = "";
     outputElement.innerHTML += `
-      <div class="outputContents outputContents--arrays">
-        <div class="outputLabel">OUTPUT :</div>
-        ${Array.isArray(output) ? `
-        <p class="labelParagraph--arrays strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
-        <p class="labelParagraph--arrays strong"> ${output !== null ? viewObject(output) : output} </p>`
+    <div class="outputContents outputContents--arrays">
+      <div class="outputLabel">OUTPUT :</div>
+      ${!outputInfo ? (Array.isArray(output) ? `
+      <p class="labelParagraph--arrays strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
+      <p class="labelParagraph--arrays strong"> ${output !== null ? viewObject(output) : output} </p>`
         :
-        ((typeof (output) === "string" && !methodContent.includes("warning")) ?
+        (typeof (output) === "string" ?
           (output !== "" ? `"` + output + `"` : output)
           :
           output
-        )}  
-        </div>
-      </div>
+        )) : outputInfo}
+  </div>
+  </div >
     `;
   };
 
@@ -375,7 +375,7 @@ export const arrays = () => {
         methodsArray.forEach((method) => {
           if (method.method === input.name) {
             target.value = "";
-            output = `Enter a value and then click the "run" button or hit enter.`;
+            outputInfo = `Enter a value and then click the "run" button or hit enter.`;
             renderOutput();
           };
         });
@@ -396,13 +396,13 @@ export const arrays = () => {
     const displayWarningAboutArray = () => {
       methodContent = [...methodContent, "warning"];
       if (array.includes(null)) {
-        output = `Error: Cannot read properties of null (reading 'length')`;
+        outputInfo = `Error: Cannot read properties of null (reading 'length')`;
       };
       if (array.includes(undefined)) {
-        output = `Error: Cannot read properties of undefined (reading 'length')`;
+        outputInfo = `Error: Cannot read properties of undefined (reading 'length')`;
       };
       if (array.length === 0) {
-        output = `Error: Reduce of empty array with no initial value`;
+        outputInfo = `Error: Reduce of empty array with no initial value`;
       };
       renderOutput();
     };
@@ -410,9 +410,9 @@ export const arrays = () => {
     const displayWarningAboutInputValue = ({ method }, input) => {
       methodContent = [...methodContent, "warning"];
       if (method === "slice") {
-        output = `The entered value is not allowed. Please enter a number or two numbers separated by a comma.`;
+        outputInfo = `The entered value is not allowed. Please enter a number or two numbers separated by a comma.`;
       } else {
-        output = `Input value not allowed, use: \" \"`
+        outputInfo = `Input value not allowed, use: \" \"`
       };
       input.classList.add("errorInput")
       input.focus();
@@ -489,7 +489,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(Math.floor(Math.random() * 100));
       };
-      output = `The array has been loaded with ${rangeValueElement.textContent} random natural numbers.`;
+      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random natural numbers.`;
       resetTypeButton("forNumbers");
       render();
     };
@@ -499,7 +499,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(Math.floor(Math.random() * 200 - 100));
       };
-      output = `The array has been loaded with ${rangeValueElement.textContent} random integers.`;
+      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random integers.`;
       resetTypeButton("forNumbers");
       render();
     };
@@ -509,7 +509,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(letters.charAt(Math.floor(Math.random() * letters.length)));
       };
-      output = `The array has been loaded with ${rangeValueElement.textContent} random letters.`;
+      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random letters.`;
       resetTypeButton("forStrings");
       render();
     };
@@ -519,7 +519,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(wordsArray[Math.floor(Math.random() * wordsArray.length)]);
       };
-      output = `The array has been loaded with ${rangeValueElement.textContent} random words.`;
+      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random words.`;
       resetTypeButton("forStrings");
       render();
     };
@@ -537,7 +537,7 @@ export const arrays = () => {
         };
         array.push(arrayItem());
       };
-      output = `The array has been loaded with ${rangeValueElement.textContent} random three-element arrays.`;
+      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random three-element arrays.`;
       resetTypeButton("forArrays");
       render();
     };
@@ -547,7 +547,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(objectsArray[Math.floor(Math.random() * objectsArray.length)]);
       };
-      output = `The array has been loaded with ${rangeValueElement.textContent} random objects, each having two properties.`;
+      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random objects, each having two properties.`;
       resetTypeButton("forObjects");
       render();
     };
@@ -557,7 +557,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(emoticonsArray[Math.floor(Math.random() * emoticonsArray.length)]);
       };
-      output = `The array has been loaded with ${rangeValueElement.textContent} random emoticons.`;
+      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random emoticons.`;
       resetTypeButton("forAll");
       render();
     };
@@ -567,7 +567,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
       };
-      output = `The array has been loaded with ${rangeValueElement.textContent} random elements.`;
+      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random elements.`;
       resetTypeButton("forAll");
       render();
     };
@@ -604,9 +604,9 @@ export const arrays = () => {
     const changeShowExampleArray = () => {
       showExampleArray = !showExampleArray
       if (!!showExampleArray) {
-        output = "The example array has been displayed.";
+        outputInfo = "The example array has been displayed.";
       } else {
-        output = "The example array has been hidden.";
+        outputInfo = "The example array has been hidden.";
       }
       render();
     };
@@ -616,31 +616,31 @@ export const arrays = () => {
         array = [...exampleArraySaved]
       }
       else { array = [...exampleArray] };
-      output = "The array is loaded from an example array."
+      outputInfo = "The array is loaded from an example array."
       render();
     };
 
     const saveToExample = () => {
       if (array.length > 0) {
         exampleArraySaved = [...array];
-        output = "The array stored as an example array.";
+        outputInfo = "The array stored as an example array.";
         render();
       } else {
-        output = "Not stored. The array is empty.";
+        outputInfo = "Not stored. The array is empty.";
         renderOutput();
       };
     };
 
     const resetExample = () => {
       exampleArraySaved = [];
-      output = "The example array has been reset.";
+      outputInfo = "The example array has been reset.";
       render();
     };
 
     const loadFromOutput = () => {
       if (Array.isArray(output)) {
         array = [...output];
-        output = "The array has been loaded from the output.";
+        outputInfo = "The array has been loaded from the output.";
         render();
       };
     };
@@ -670,7 +670,7 @@ export const arrays = () => {
     rangeElement.addEventListener("input", ({ target }) => {
       rangeValueElement.textContent = target.value;
       rangeValue = rangeValueElement.textContent;
-      output = `The array size has been set to ${rangeValue} ${rangeValue === "1" ? "element" : "elements"}.
+      outputInfo = `The array size has been set to ${rangeValue} ${rangeValue === "1" ? "element" : "elements"}.
       <br>Choose a button and load the array.`
       renderOutput();
     });
@@ -689,7 +689,7 @@ export const arrays = () => {
                 obj.active = false;
               };
             });
-            output = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.` + `${!!object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}` : "."}${!object.inputType ? `<br>Now click the "run" button.` : ""}`;
+            outputInfo = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.` + `${!!object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}` : "."}${!object.inputType ? `<br>Now click the "run" button.` : ""}`;
             render();
           };
         });
@@ -776,6 +776,7 @@ export const arrays = () => {
   };
 
   const runMethod = (button, inputValue, method) => {
+    outputInfo = "";
     switch (button) {
       case "pop":
         output = array.pop();
