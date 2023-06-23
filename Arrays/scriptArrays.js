@@ -485,11 +485,13 @@ export const arrays = () => {
     };
 
     const useRandomNaturalNumbers = () => {
+      console.log(+rangeValueElement.textContent)
       array = [];
       while (array.length < rangeValueElement.textContent) {
         array.push(Math.floor(Math.random() * 100));
       };
-      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random natural numbers.`;
+
+      outputInfo = `${rangeValueElement.textContent} random natural ${+rangeValueElement.textContent > 1 ? "numbers have" : "number has"} been saved in the array "array".`;
       resetTypeButton("forNumbers");
       render();
     };
@@ -499,7 +501,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(Math.floor(Math.random() * 200 - 100));
       };
-      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random integers.`;
+      outputInfo = `${rangeValueElement.textContent} random integer ${+rangeValueElement.textContent > 1 ? "numbers have" : "number has"} been saved in the array "array".`;
       resetTypeButton("forNumbers");
       render();
     };
@@ -509,7 +511,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(letters.charAt(Math.floor(Math.random() * letters.length)));
       };
-      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random letters.`;
+      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "letters have" : "letter has"} been saved in the array "array".`;
       resetTypeButton("forStrings");
       render();
     };
@@ -519,7 +521,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(wordsArray[Math.floor(Math.random() * wordsArray.length)]);
       };
-      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random words.`;
+      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "words have" : "word has"} been saved in the array "array".`;
       resetTypeButton("forStrings");
       render();
     };
@@ -537,7 +539,7 @@ export const arrays = () => {
         };
         array.push(arrayItem());
       };
-      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random three-element arrays.`;
+      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "arrays with 3 elements have" : "array with 3 elements has"} been saved in the array "array".`;
       resetTypeButton("forArrays");
       render();
     };
@@ -547,7 +549,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(objectsArray[Math.floor(Math.random() * objectsArray.length)]);
       };
-      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random objects, each having two properties.`;
+      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "objects with 2 properties have" : "object with 2 properties has"} been saved in the array "array".`;
       resetTypeButton("forObjects");
       render();
     };
@@ -557,7 +559,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(emoticonsArray[Math.floor(Math.random() * emoticonsArray.length)]);
       };
-      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random emoticons.`;
+      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "emoticons have" : "emoticon has"} been saved in the array "array"`;
       resetTypeButton("forAll");
       render();
     };
@@ -567,7 +569,7 @@ export const arrays = () => {
       while (array.length < rangeValueElement.textContent) {
         array.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
       };
-      outputInfo = `The array has been loaded with ${rangeValueElement.textContent} random elements.`;
+      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "elements have" : "element has"} been saved in the array "array"`;
       resetTypeButton("forAll");
       render();
     };
@@ -604,9 +606,9 @@ export const arrays = () => {
     const changeShowExampleArray = () => {
       showExampleArray = !showExampleArray
       if (!!showExampleArray) {
-        outputInfo = "The example array has been displayed.";
+        outputInfo = "The variable \"exampleArray\" has been displayed.";
       } else {
-        outputInfo = "The example array has been hidden.";
+        outputInfo = "The variable \"exampleArray\" has been hidden.";
       }
       render();
     };
@@ -616,31 +618,31 @@ export const arrays = () => {
         array = [...exampleArraySaved]
       }
       else { array = [...exampleArray] };
-      outputInfo = "The array is loaded from an example array."
+      outputInfo = "The value from the variable \"exampleArray\" has been saved in the variable \"array\"."
       render();
     };
 
     const saveToExample = () => {
       if (array.length > 0) {
         exampleArraySaved = [...array];
-        outputInfo = "The array stored as an example array.";
+        outputInfo = "The value from the variable \"array\" has been saved in the variable \"exampleArray\".";
         render();
       } else {
-        outputInfo = "Not stored. The array is empty.";
+        outputInfo = "Not saved. The variable \"array\" is empty.";
         renderOutput();
       };
     };
 
     const resetExample = () => {
       exampleArraySaved = [];
-      outputInfo = "The example array has been reset.";
+      outputInfo = "The initial value has been restored in the variable \"exampleArray\".";
       render();
     };
 
     const loadFromOutput = () => {
       if (Array.isArray(output)) {
         array = [...output];
-        outputInfo = "The array has been loaded from the output.";
+        outputInfo = "The value from the variable \"output\" has been stored in the variable \"array\".";
         render();
       };
     };
@@ -671,7 +673,7 @@ export const arrays = () => {
       rangeValueElement.textContent = target.value;
       rangeValue = rangeValueElement.textContent;
       outputInfo = `The array size has been set to ${rangeValue} ${rangeValue === "1" ? "element" : "elements"}.
-      <br>Choose a button and load the array.`
+      <br>Choose a button and save the elements in the array.`
       renderOutput();
     });
 

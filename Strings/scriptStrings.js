@@ -303,7 +303,7 @@ export const strings = () => {
       };
     }));
 
-    const changeShowexampleString = () => {
+    const changeShowExampleString = () => {
       showExampleString = !showExampleString
       if (showExampleString) {
         outputInfo = "The variable \"exampleString\" has been displayed.";
@@ -351,7 +351,7 @@ export const strings = () => {
       element.addEventListener("click", ({ target }) => {
         switch (target.id) {
           case "showExample":
-            changeShowexampleString();
+            changeShowExampleString();
             break;
           case "loadFromExample":
             loadFromExample();
