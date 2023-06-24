@@ -1,4 +1,4 @@
-.mainContainer--arrays {
+.mainContainer--objects {
   display: grid;
   gap: 10px;
   grid-template-columns: auto 1fr;
@@ -9,7 +9,7 @@
 }
 
 @media (max-width: 1649px) {
-  .mainContainer--arrays {
+  .mainContainer--objects {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr;
     grid-template-areas:
@@ -20,11 +20,11 @@
   }
 }
 
-.labelContainer--arrays {
+.labelContainer--objects {
   position: static;
 }
 
-.labelContents--arrays {
+.labelContents--objects {
   min-width: 559px;
   max-width: 559px;
   line-height: 1.5;
@@ -33,46 +33,47 @@
 }
 
 @media (max-width: 1649px) {
-  .labelContents--arrays {
+  .labelContents--objects {
     min-width: 100%;
   }
 }
 
 @media (min-width: 1650px) {
-  .settingsContainer--arrays {
+  .settingsContainer--objects {
     overflow-y: scroll;
   }
 }
 
-.settings--arrays {
+.settings--objects {
   display: grid;
   grid-template-columns: 1fr;
   align-content: start;
 }
 
-.labelParagraph--arrays {
+.labelParagraph--objects {
   margin-top: 5px;
   margin-bottom: 5px;
   font-size: 18px;
   word-break: break-word;
 }
 
-.propertyElements--arrays {
+.propertyElements--objects {
   width: 515px;
   justify-self: flex-end;
+  align-items: center;
 }
 
 @media (max-width: 960px) {
-  .propertyElements--arrays {
+  .propertyElements--objects {
     width: 345px;
   }
 }
 
-.valueElements--arrays {
+.valueElements--objects {
   justify-self: flex-start;
 }
 
-.outputContents--arrays {
+.outputContents--objects {
   word-spacing: 5px;
   line-height: 2;
   padding: 50px 5%;
@@ -90,11 +91,11 @@
 }
 
 @media (max-width: 1649px) {
-  .outputContents--arrays {
+  .outputContents--objects {
     min-width: 100%;
   }
 }
 
-.button--arrays {
+.button--objects {
   padding: 4px 6px;
 }

@@ -8,6 +8,7 @@ import { flex } from '../Flex/scriptFlex.js';
 import { grid } from '../Grid/scriptGrid.js';
 import { numbers } from '../Numbers/scriptNumbers.js';
 import { strings } from '../Strings/scriptStrings.js';
+import { objects } from '../Objects/scriptObjects.js';
 import { arrays } from '../Arrays/scriptArrays.js';
 import { opacityAnimation } from '../Animation/scriptAnimation.js';
 {
@@ -45,6 +46,8 @@ import { opacityAnimation } from '../Animation/scriptAnimation.js';
         case "JS Strings": opacityAnimation(() => strings(), mainContainerElement);
           break;
         case "JS Arrays": opacityAnimation(() => arrays(), mainContainerElement);
+          break;
+        case "JS Objects": opacityAnimation(() => objects(), mainContainerElement);
           break;
       };
     };
