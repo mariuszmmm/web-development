@@ -5,7 +5,12 @@ export const methodsObjectRaw = [
     inputType: null,
   },
   {
-    method: "object[age]",
+    method: "object.surname",
+    methodContents: [],
+    inputType: null,
+  },
+  {
+    method: "object['age']",
     methodContents: [],
     inputType: null,
   },
@@ -30,7 +35,12 @@ export const methodsObjectRaw = [
     inputType: null,
   },
   {
-    method: "object[friend][surname]",
+    method: "object.friend.surname",
+    methodContents: [],
+    inputType: null,
+  },
+  {
+    method: "object['friend']['age']",
     methodContents: [],
     inputType: null,
   },
@@ -45,43 +55,62 @@ export const methodsObjectRaw = [
     inputType: null,
   },
   {
-    method: "=",
-    methodContents: [
-      {
-        button: "object.name=?",
-        content: "object.name = ",
-        destiny: "forAll",
-      },
-      {
-        button: "object.surname=?",
-        content: "object.surname = ",
-        destiny: "forAll",
-      },
-      {
-        button: "object.age=?",
-        content: "object.age = ",
-        destiny: "forAll",
-      },
-      {
-        button: "object.friend.name=?",
-        content: "object.friend.name = ",
-        destiny: "forAll",
-      },
-      {
-        button: "object.frirnd.surname=?",
-        content: "object.friend.surname = ",
-        destiny: "forAll",
-      },
-      {
-        button: "object.frirnd.age=?",
-        content: "object.friend.age = ",
-        destiny: "forAll",
-      },
-    ],
-    inputType: "text",
-    inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    method: "object.friend === object.friend",
+    methodContents: [],
+    inputType: null,
   },
-  
+  {
+    method: "object.friend === exampleObject.friend",
+    methodContents: [],
+    inputType: null,
+  },
+  {
+    method: "{ ...object }",
+    methodContents: [],
+    inputType: null,
+  },
+  {
+    method: "{ ...exampleObject }",
+    methodContents: [],
+    inputType: null,
+  },
+  {
+    method: "object.name = ",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+  {
+    method: "object.surname = ",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+  {
+    method: "object.age = ",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+  {
+    method: "object['friend']['name'] = ",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+  {
+    method: "object['friend']['surname'] = ",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+  {
+    method: "object['friend']['age'] = ",
+    methodContents: [],
+    inputType: "text",
+    inputPattern: /^("[^"]*"|\-?\d+)$/,
+  },
+
   // {
   //   method: "shift",
   //   methodContents: [],
@@ -96,13 +125,13 @@ export const methodsObjectRaw = [
   //   method: "push",
   //   methodContents: [],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "unshift",
   //   methodContents: [],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "join",
@@ -120,19 +149,19 @@ export const methodsObjectRaw = [
   //   method: "includes",
   //   methodContents: [],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "indexOf",
   //   methodContents: [],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "lastIndexOf",
   //   methodContents: [],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "map",
@@ -204,7 +233,7 @@ export const methodsObjectRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "find",
@@ -261,7 +290,7 @@ export const methodsObjectRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "findIndex",
@@ -318,7 +347,7 @@ export const methodsObjectRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "filter",
@@ -375,7 +404,7 @@ export const methodsObjectRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "some",
@@ -432,7 +461,7 @@ export const methodsObjectRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "every",
@@ -489,7 +518,7 @@ export const methodsObjectRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+)$/,
   // },
   // {
   //   method: "reduce",
@@ -501,7 +530,7 @@ export const methodsObjectRaw = [
   //     },
   //   ],
   //   inputType: "text",
-  //   inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined|)$/,
+  //   inputPattern: /^("[^"]*"|\-?\d+|)$/,
   // },
   // {
   //   method: "sort",
