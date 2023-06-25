@@ -254,6 +254,10 @@ body {
   background-color: #32fa64;
 }
 
+.button:disabled {
+  background-color: hsl(0, 0%, 60%);
+}
+
 .input {
   text-align: start;
   border: 1px solid black;
