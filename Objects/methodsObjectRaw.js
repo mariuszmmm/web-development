@@ -10,7 +10,7 @@ export const methodsObject = [
     inputType: null,
   },
   {
-    method: "object['age']",
+    method: "object.age",
     inputValue: "",
     inputType: null,
   },
@@ -30,12 +30,12 @@ export const methodsObject = [
     inputType: null,
   },
   {
-    method: "object.friend.name",
+    method: "object['friend']['name']",
     inputValue: "",
     inputType: null,
   },
   {
-    method: "object.friend.surname",
+    method: "object['friend']['surname']",
     inputValue: "",
     inputType: null,
   },
@@ -45,7 +45,12 @@ export const methodsObject = [
     inputType: null,
   },
   {
-    method: "object === object",
+    method: "object = exampleObject",
+    inputValue: "",
+    inputType: null,
+  },
+  {
+    method: "object = { ...exampleObject }",
     inputValue: "",
     inputType: null,
   },
@@ -60,22 +65,7 @@ export const methodsObject = [
     inputType: null,
   },
   {
-    method: "object.friend === object.friend",
-    inputValue: "",
-    inputType: null,
-  },
-  {
     method: "object.friend === exampleObject.friend",
-    inputValue: "",
-    inputType: null,
-  },
-  {
-    method: "{ ...object }",
-    inputValue: "",
-    inputType: null,
-  },
-  {
-    method: "{ ...exampleObject }",
     inputValue: "",
     inputType: null,
   },
