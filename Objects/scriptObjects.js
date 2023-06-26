@@ -1,13 +1,12 @@
 import { methodsObject } from "./methodsObjectRaw.js";
 import { objectsArray, exampleObject } from "./objects.js";
 import { heightAnimation } from "../Animation/scriptAnimation.js";
-//test
+
 export const objects = () => {
   let object = {};
   let methodContent = [];
   let output = "";
   let outputInfo = "The variable \"output\" values or information about the used functions will be displayed here.";
-  let exampleObjectSaved = [];
   let showExampleObject = false;
   let methodActive = "";
 
@@ -30,32 +29,6 @@ export const objects = () => {
     `;
 
     return element;
-  };
-
-  const changeArrowFunctionIfObject = (name) => {
-    let content = "";
-
-    if (name) {
-      methodsObject.forEach((object) => {
-        if (object.method === name) {
-          object.methodContents.forEach((obj) => {
-            if (obj.active === true) {
-              if (obj.methodContent.includes("({")) {
-                content = "})";
-              };
-              if (obj.methodContent.includes("([")) {
-                content = "])";
-              };
-              if (obj.methodContent.includes("find(")) {
-                content = ")";
-              };
-            };
-          });
-        };
-      });
-
-      return content;
-    };
   };
 
   const viewObject = (obj) => {
@@ -109,7 +82,7 @@ export const objects = () => {
           <p></p>
           ${showExampleObject ? `<p class="labelParagraph--objects strong">const exampleObject = {</p>
           <div class="labelParagraph labelParagraph--objects">
-            ${Object.keys(exampleObjectSaved).length > 0 ? viewObject(exampleObjectSaved) : viewObject(exampleObject)}
+            ${viewObject(exampleObject)}
           </div>
           <p class="labelParagraph--objects strong">};</p>  
           <p></p>` : ""}          
@@ -124,20 +97,8 @@ export const objects = () => {
     const methodsSettings = () => {
       let methodsSetingsElement = "";
 
-      const methodsObjectSettings = (name, objects, inputType) => {
+      const methodsObjectSettings = (name, inputType) => {
         let element = "";
-  
-        const searchUnknown = (text, prop) => {
-          if (text.includes("?")) {
-            if (prop !== "disabled") {
-              text = text.replace("?", `<span class="unknown"> ? </span>`)
-            } else {
-              text = text.replace("?", `<span> ? </span>`)
-            };
-          };
-
-          return text;
-        }
 
         element += `
           <form class="form js-form">
@@ -150,7 +111,7 @@ export const objects = () => {
 
         element += `
           ${inputType ? `
-            <input type="text" name="${name}" autocomplete="off" class="methodInput js-methodInput" />` : ""} 
+            <input type="text" name="${name}" ${Object.keys(object).length > 0 ? "" : "disabled"} autocomplete="off" class="methodInput js-methodInput" />` : ""} 
         `;
 
         element += ` 
@@ -181,13 +142,7 @@ export const objects = () => {
             <div class="valueElements">   
               <button id="randomObject" class="button js-random">
                 random object
-              </button>
-              <button id="loadFromExample" class="button js-example">
-                from example object
-              </button>          
-              <button id="loadFromOutput" ${((typeof (output) === "object") && !outputInfo) ? "" : "disabled"} class="button js-example">
-                from output
-              </button>            
+              </button>                  
             </div>            
             <span class="methods--label">
               Example object :
@@ -196,12 +151,6 @@ export const objects = () => {
               <button id="showExample" class="button ${showExampleObject ? "button--active" : ""} js-example">
               show example object
               </button>          
-              <button id="saveToExample" class="button js-example">
-                save object to example object
-              </button>
-              <button id="resetExample" class="button js-example">
-                reset example object
-              </button>
             </div>
           </div>
           <span class="methods--label">
@@ -212,7 +161,7 @@ export const objects = () => {
 
       methodsObject.forEach((object) => {
         methodsSetingsElement += `
-        ${methodsObjectSettings(object.method, object.methodContents, object.inputType)}
+        ${methodsObjectSettings(object.method, object.inputType)}
       `
       });
 
@@ -259,7 +208,6 @@ export const objects = () => {
     const formElements = document.querySelectorAll(".js-form");
     const randomElements = document.querySelectorAll(".js-random");
     const exampleElements = document.querySelectorAll(".js-example");
-    const typeButtonElements = document.querySelectorAll(".js-typeButton");
     methodContent = [];
 
     inputElements.forEach((input) => {
@@ -287,7 +235,7 @@ export const objects = () => {
       });
     });
 
-    const displayWarningAboutInputValue = ({ method }, input) => {
+    const displayWarningAboutInputValue = (input) => {
       methodContent = [...methodContent, "warning"];
       outputInfo = `Input value is not allowed, use: number or \" \"`
       input.classList.add("errorInput")
@@ -311,7 +259,7 @@ export const objects = () => {
                   render();
                   methodActive = "";
                 } else {
-                  displayWarningAboutInputValue(method, input);
+                  displayWarningAboutInputValue(input);
                   return
                 };
               };
@@ -330,8 +278,8 @@ export const objects = () => {
 
     const useRandomObject = () => {
       object = {};
-
       object = (objectsArray[Math.floor(Math.random() * objectsArray.length)]);
+      outputInfo = "A random object has been saved in the variable \"object\".";
       render();
     };
 
@@ -353,81 +301,13 @@ export const objects = () => {
       render();
     };
 
-    const loadFromExample = () => {
-      if (Object.keys(exampleObjectSaved).length > 0) {
-        object = exampleObjectSaved
-      }
-      else { object = exampleObject };
-      outputInfo = "The value from the variable \"exampleObject\" has been saved in the variable \"object\"."
-      render();
-    };
-
-    const saveToExample = () => {
-      if (Object.keys(object).length > 0) {
-        exampleObjectSaved = object;
-        outputInfo = "The value from the variable \"object\" has been saved in the variable \"exampleObject\".";
-        render();
-      } else {
-        outputInfo = "Not saved. The variable \"object\" is empty.";
-        renderOutput();
-      };
-    };
-
-    const resetExample = () => {
-      exampleObjectSaved = [];
-      outputInfo = "The initial value has been restored in the variable \"exampleObject\".";
-      render();
-    };
-
-    const loadFromOutput = () => {
-      if (typeof (output) === "object") {
-        object = output;
-        outputInfo = "The value from the variable \"output\" has been stored in the variable \"object\".";
-        render();
-      };
-    };
-
     exampleElements.forEach((element) => {
       element.addEventListener("click", ({ target }) => {
         switch (target.id) {
           case "showExample":
             changeShowExampleObject();
             break;
-          case "loadFromExample":
-            loadFromExample();
-            break;
-          case "saveToExample":
-            saveToExample();
-            break;
-          case "resetExample":
-            resetExample();
-            break;
-          case "loadFromOutput":
-            loadFromOutput();
-            break;
         };
-      });
-    });
-
-    typeButtonElements.forEach((button) => {
-      button.addEventListener("click", () => {
-        let activeButton = "";
-        methodsObject.forEach((object) => {
-          if (object.method === button.name) {
-            methodActive = button.name
-            object.methodContents.forEach((obj) => {
-              if (obj.id === +button.id) {
-                obj.active = true
-                activeButton = obj.name
-              } else {
-                obj.active = false;
-              };
-            });
-
-            outputInfo = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.` + `${object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}` : "."}${!object.inputType ? `<br>Now click the "run" button.` : ""}`;
-            render();
-          };
-        });
       });
     });
   };
@@ -460,8 +340,8 @@ export const objects = () => {
         output = object.surname;
         methodContent = [method];
         break;
-      case "object['age']":
-        output = object["age"];
+      case "object.age":
+        output = object.age;
         methodContent = [method];
         break;
       case "object.sayHello()":
@@ -477,44 +357,36 @@ export const objects = () => {
         output = object.friend;
         methodContent = [method];
         break;
-      case "object.friend.name":
-        output = object.friend.name;
+      case "object['friend']['name']":
+        output = object["friend"]["name"];
         methodContent = [method];
         break;
-      case "object.friend.surname":
-        output = object.friend.surname;
+      case "object['friend']['surname']":
+        output = object["friend"]["surname"];
         methodContent = [method];
         break;
       case "object['friend']['age']":
         output = object["friend"]["age"];
         methodContent = [method];
         break;
-      case "object === object":
-        output = object === object;
-        methodContent = [method];
-        break;
       case "object === exampleObject":
         output = object === exampleObject;
         methodContent = [method];
         break;
-      case "object.friend === object.friend":
-        output = object.friend === object.friend;
+      case "object.name === exampleObject.name":
+        output = object.name === exampleObject.name;
         methodContent = [method];
-        break;
-     case "object.name === exampleObject.name":
-     output = object.name === exampleObject.name;
-     methodContent = [method];
         break;
       case "object.friend === exampleObject.friend":
         output = object.friend === exampleObject.friend;
         methodContent = [method];
         break;
-      case "{ ...object }":
-        output = { ...object };
+      case "object = exampleObject":
+        output = object = exampleObject;
         methodContent = [method];
         break;
-      case "{ ...exampleObject }":
-        output = { ...exampleObject };
+      case "object = { ...exampleObject }":
+        output = object = { ...exampleObject };
         methodContent = [method];
         break;
       case "object.name = ":

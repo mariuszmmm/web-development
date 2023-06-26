@@ -46,8 +46,9 @@
 
 .settings--objects {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: auto 1fr;
   align-content: start;
+  align-items: end;
 }
 
 .labelParagraph--objects {
