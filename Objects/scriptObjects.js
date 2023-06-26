@@ -1,7 +1,7 @@
 import { methodsObject } from "./methodsObjectRaw.js";
 import { objectsArray, exampleObject } from "./objects.js";
 import { heightAnimation } from "../Animation/scriptAnimation.js";
-
+//test
 export const objects = () => {
   let object = {};
   let methodContent = [];
