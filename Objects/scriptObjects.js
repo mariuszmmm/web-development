@@ -58,14 +58,14 @@ export const objects = () => {
     };
   };
 
-  const viewObject = (object) => {
+  const viewObject = (obj) => {
     let content = "";
     let index = 0;
 
-    for (const property in object) {
+    for (const prop in obj) {
       ++index
       content += `<div class="labelParagraph labelParagraph--objects">` +
-        (typeof (object[property]) === "string" ? (property + `: "` + object[property] + `"`) : (typeof (object[property]) === "number") ? (property + `: ` + object[property]) : `${typeof (object[property]) === "object" ? `${property + `: ` + viewSubObject(object[property])}` : viewFunction(object[property])}`) + `${(Object.keys(object).length === index) ? "" : ","}</div>`
+        (typeof (obj[prop]) === "string" ? (prop + `: "` + obj[prop] + `"`) : (typeof (obj[prop]) === "number") ? (prop + `: ` + obj[prop]) : `${typeof (obj[prop]) === "object" ? `${prop + `: ` + viewSubObject(obj[prop])}` : viewFunction(obj[prop])}`) + `${(Object.keys(obj).length === index) ? "" : ","}</div>`
     };
 
     return content;
@@ -126,8 +126,7 @@ export const objects = () => {
 
       const methodsObjectSettings = (name, objects, inputType) => {
         let element = "";
-        console.log(objects)
-        console.log(object)
+  
         const searchUnknown = (text, prop) => {
           if (text.includes("?")) {
             if (prop !== "disabled") {
@@ -236,8 +235,6 @@ export const objects = () => {
 
   const renderOutput = () => {
     const outputElement = document.querySelector(".js-outputContainer");
-
-    console.log(output)
 
     outputElement.innerHTML = "";
     outputElement.innerHTML += `
@@ -503,6 +500,10 @@ export const objects = () => {
       case "object.friend === object.friend":
         output = object.friend === object.friend;
         methodContent = [method];
+        break;
+     case "object.name === exampleObject.name":
+     output = object.name === exampleObject.name;
+     methodContent = [method];
         break;
       case "object.friend === exampleObject.friend":
         output = object.friend === exampleObject.friend;
