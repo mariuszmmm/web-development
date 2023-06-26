@@ -1,33 +1,9 @@
-// export const objectsArray = [
-//   { name: "Emily", age: 25 },
-//   { name: "Jacob", age: 42 },
-//   { name: "Mia", age: 19 },
-//   { name: "Oliver", age: 33 },
-//   { name: "Sophia", age: 27 },
-//   { name: "William", age: 36 },
-//   { name: "Emma", age: 21 },
-//   { name: "Liam", age: 29 },
-//   { name: "Ava", age: 18 },
-//   { name: "Noah", age: 31 },
-//   { name: "Emma", age: 27 },
-//   { name: "Olivia", age: 35 },
-//   { name: "William", age: 22 },
-//   { name: "Sophia", age: 29 },
-//   { name: "Ethan", age: 26 },
-//   { name: "Ava", age: 30 },
-//   { name: "Noah", age: 28 },
-//   { name: "Isabella", age: 31 },
-//   { name: "James", age: 24 },
-//   { name: "Mia", age: 33 },
-// ]
-export const exampleObject = [
-  {
+export const exampleObject = {
     name: "Leonardo", surname: "DiCaprio", age: 49,
     sayHello() { console.log(`Hi! My name is ${this.name} ${this.surname} and I am ${this.age} years old.`); },
     getFullName() { return `${this.name} ${this.surname}`; },
     friend: { name: "Tobey", surname: "Maguire", age: 48 }
-  },
-]
+  };
 
 export const objectsArray = [
   {

@@ -55,6 +55,11 @@ export const methodsObject = [
     inputType: null,
   },
   {
+    method: "object.name === exampleObject.name",
+    inputValue: "",
+    inputType: null,
+  },
+  {
     method: "object.friend === object.friend",
     inputValue: "",
     inputType: null,
