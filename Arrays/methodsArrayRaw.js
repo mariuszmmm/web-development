@@ -15,40 +15,60 @@ export const methodsArrayRaw = [
     inputType: null,
   },
   {
-    method: "[ ...array ]",
-methodContents: [
-  {
-    button: null,
-    content: "[ ...array ]",
-    destiny: "forAll",
-      },
-   ],
-    inputType: null,
-    immutability: true,
-  },
-  {
-    method: "[ ...array, ...exampleArray ]",
+    method: "[...array]",
     methodContents: [
       {
         button: null,
-        content: "[ ...array, ...exampleArray ]",
+        content: "[...array]",
         destiny: "forAll",
       },
-   ],
+    ],
     inputType: null,
-    immutability: true,
+    spreadSyntax: true,
   },
   {
-    method: "[...array,element]",
+    method: "[...array, ...exampleArray]",
     methodContents: [
-        {
-          button: "[...array,{city:'N/A'}]",
-          content: "[ ...array, { city: 'N/A' }]",
-          destiny: "forAll",
+      {
+        button: null,
+        content: "[...array, ...exampleArray]",
+        destiny: "forAll",
       },
-   ],
+    ],
     inputType: null,
-    immutability: true,
+    spreadSyntax: true,
+  },
+  {
+    method: "[...array, element]",
+    methodContents: [
+      {
+        button: "[...array, 100]",
+        content: "[...array, 100]",
+        destiny: "forAll",
+      },
+      {
+        button: "[...array, -20]",
+        content: "[...array, -20]",
+        destiny: "forAll",
+      },
+      {
+        button: "[...array, 'text']",
+        content: "[...array, 'text']",
+        destiny: "forAll",
+      },
+      {
+        button: "[...array, [1, 2, 3]]",
+        content: "[...array, [ 1, 2, 3]]",
+        destiny: "forAll",
+      },
+      {
+        button: "[...array, { city: 'N/A' }]",
+        content: "[...array, { city: 'N/A' }]",
+        destiny: "forAll",
+      },
+    ],
+    inputType: null,
+    spreadSyntax: true,
   },
   {
     method: "push",
