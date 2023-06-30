@@ -72,7 +72,7 @@ export const numbers = () => {
             <div class="propertyElements propertyElements--numbers">
               <div class="methodName methodName--parameters">
                 ${contents.replace("?", `<input type="text" name="${name}" autocomplete="off" class="methodInput js-methodInput" />`)}
-              </div>
+              </div>&nbsp;
             </div>
             <div class="valueElements valueElements--numbers">
               <button id="${name}" class="button button--numbers button--run">

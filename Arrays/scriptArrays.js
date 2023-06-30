@@ -28,6 +28,7 @@ export const arrays = () => {
       }),
       inputType: object.inputType,
       inputValue: "",
+      immutability: object.immutability,
       inputPattern: object.inputPattern
     }
   });
@@ -56,10 +57,12 @@ export const arrays = () => {
 
   const vievMethodContent = (methodContent) => {
     let element = "";
+    let method = methodContent[0].replaceAll("'", "\"");
+    console.log(methodContent[2])
 
     element += `
       <span class="labelParagraph--arrays strong">
-        let output = array.${methodContent[0]}(${(methodContent[1] !== undefined) ?
+        let output = ${methodContent[2] ? "" : "array."}${method}${methodContent[2] ? "" : "("}${(methodContent[1] !== undefined) ?
         (typeof (methodContent[1]) === "string" ?
           (methodContent[1])
           :
@@ -68,7 +71,7 @@ export const arrays = () => {
             :
             methodContent[1]))
         :
-        ""});
+        ""}${methodContent[2] ? "" : ")"};
       </span>
     `;
 
@@ -160,10 +163,11 @@ export const arrays = () => {
     const methodsSettings = () => {
       let methodsSetingsElement = "";
 
-      const methodsArraySettings = (name, objects, inputType) => {
+      const methodsArraySettings = (name, objects, inputType, immutability) => {
         let element = "";
 
         const searchUnknown = (text, prop) => {
+          text = text.replaceAll("'", "\"")
           if (text.includes("?")) {
             if (prop !== "disabled") {
               text = text.replace("?", `<span class="unknown"> ? </span>`)
@@ -179,16 +183,16 @@ export const arrays = () => {
           <form class="form js-form">
             <div class="propertyElements propertyElements--arrays">
               <span class="methodName">
-                array.${name}
+                ${immutability ? "" : `array.${name}`}
               </span>
-              <div class="methodName methodName--parameters">(
+              <div class="methodName methodName--parameters">${immutability ? "&nbsp;" : "("}
         `;
 
         objects.forEach((obj) => {
           element += `
             ${!!obj.active ?
               (name === "reduce" ?
-                (obj.methodContent).trim() + ",&nbsp;" : obj.methodContent)
+                (obj.methodContent).trim() + ",&nbsp;" : obj.methodContent.replaceAll("'", "\""))
               : ""}
           `;
         });
@@ -205,7 +209,7 @@ export const arrays = () => {
         });
 
         element += `
-                ) 
+                ${immutability ? `&nbsp;` : ")&nbsp;"} 
               </div>
             </div>
             <div class="valueElements valueElements--arrays">
@@ -225,17 +229,19 @@ export const arrays = () => {
             (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects") ||
             (array.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
           ) {
+            obj.name ? 
             element += `  
               <button name="${name}" id="${obj.id}" class="button button--array ${!!obj.active ? "button--active" : ""} js-typeButton">
                 ${searchUnknown(obj.name)}
               </button>
-          `;
+          ` : "";
           } else {
+            name ?
             element += `  
               <button name="${name}" id="${obj.id}" disabled class="button button--array ${!!obj.active ? "button--active" : ""} js-typeButton">
                 ${searchUnknown(obj.name, "disabled")}
               </button>
-            `;
+            ` : "";
           }
         });
 
@@ -316,7 +322,7 @@ export const arrays = () => {
 
       methodsArray.forEach((object) => {
         methodsSetingsElement += `
-        ${methodsArraySettings(object.method, object.methodContents, object.inputType)}
+        ${methodsArraySettings(object.method, object.methodContents, object.inputType, object.immutability)}
       `
       });
 
@@ -369,7 +375,9 @@ export const arrays = () => {
     methodContent = [];
 
     inputElements.forEach((input) => {
-      if (input.name === methodActive) input.focus();
+      if (input.name === methodActive) { 
+      console.log(methodActive)
+        input.focus(); }
 
       input.addEventListener("click", ({ target }) => {
         methodsArray.forEach((method) => {
@@ -434,10 +442,10 @@ export const arrays = () => {
     };
 
     formElements.forEach((formElement) => {
+      methodActive = "";
       formElement.addEventListener("submit", (event) => {
         event.preventDefault();
         const button = event.submitter;
-
         inputElements.forEach((input) => {
           if (input.name === button.id) {
             methodsArray.forEach((method) => {
@@ -449,7 +457,7 @@ export const arrays = () => {
                     displayWarningAboutArray();
                     return
                   } else {
-                    runMethod(button.id, enterNumberOrString(input.value), method.method);
+                    runMethod(button.id, enterNumberOrString(input.value), method.method, method.immutability);
                     methodActive = input.name;
                     render();
                     methodActive = "";
@@ -465,7 +473,7 @@ export const arrays = () => {
 
         methodsArray.forEach((method) => {
           if ((method.method === button.id) && !method.inputType) {
-            runMethod(button.id, null, method.method)
+            runMethod(button.id, null, method.method, method.immutability)
             render();
           };
         });
@@ -575,6 +583,7 @@ export const arrays = () => {
     };
 
     randomElements.forEach(element => element.addEventListener("click", ({ target }) => {
+      methodActive = "";
       switch (target.id) {
         case "randomNaturalNumbers":
           useRandomNaturalNumbers();
@@ -777,7 +786,7 @@ export const arrays = () => {
     )
   };
 
-  const runMethod = (button, inputValue, method) => {
+  const runMethod = (button, inputValue, method, immutability) => {
     outputInfo = "";
     switch (button) {
       case "pop":
@@ -792,6 +801,27 @@ export const arrays = () => {
         output = array.reverse();
         methodContent = [method];
         break;
+      case "[ ...array ]":
+      output = [...array, ];
+      methodContent = [method, , immutability];
+      break;
+      case "[ ...array, ...exampleArray ]":
+        output = exampleArraySaved.length > 0 ? [...array, ...exampleArraySaved] : [...array, ...exampleArray];
+        methodContent = [method, , immutability];
+        break;     
+      case "[...array,element]":
+//      output = [ ...array, {city: "N/A"}];
+  //    methodContent = [method, , immutability];
+      
+             output =  (enterContentForArrowFunction(button, null));
+              methodContent = [method, (enterContentForArrowFunction(button, null)), "arrowFunction"];
+
+      
+      
+      break;
+        
+        
+        
       case "sort":
         methodContent = [method, (enterContentForArrowFunction(button, null)), "arrowFunction"];
         output = array.sort(enterContentForArrowFunction(button, null));
