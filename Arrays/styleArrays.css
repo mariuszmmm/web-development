@@ -60,6 +60,7 @@
 .propertyElements--arrays {
   width: 515px;
   justify-self: flex-end;
+  
 }
 
 @media (max-width: 960px) {

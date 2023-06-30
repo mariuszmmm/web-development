@@ -49,7 +49,7 @@ export const methodsNumbers = [
   },
   {
     method: "toString",
-    methodContents: "number.toString()",
+    methodContents: "number.toString( )",
     inputType: null,
   },
   {
@@ -124,7 +124,7 @@ export const methodsNumbers = [
   },
   {
     method: "Math.random",
-    methodContents: "Math.random()",
+    methodContents: "Math.random( )",
     inputType: null,
   },
   {

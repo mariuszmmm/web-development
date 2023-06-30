@@ -15,12 +15,12 @@ export const methodsObject = [
     inputType: null,
   },
   {
-    method: "object.sayHello()",
+    method: "object.sayHello( )",
     inputValue: "",
     inputType: null,
   },
   {
-    method: "object.getFullName()",
+    method: "object.getFullName( )",
     inputValue: "",
     inputType: null,
   },

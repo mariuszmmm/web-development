@@ -15,6 +15,42 @@ export const methodsArrayRaw = [
     inputType: null,
   },
   {
+    method: "[ ...array ]",
+methodContents: [
+  {
+    button: null,
+    content: "[ ...array ]",
+    destiny: "forAll",
+      },
+   ],
+    inputType: null,
+    immutability: true,
+  },
+  {
+    method: "[ ...array, ...exampleArray ]",
+    methodContents: [
+      {
+        button: null,
+        content: "[ ...array, ...exampleArray ]",
+        destiny: "forAll",
+      },
+   ],
+    inputType: null,
+    immutability: true,
+  },
+  {
+    method: "[...array,element]",
+    methodContents: [
+        {
+          button: "[...array,{city:'N/A'}]",
+          content: "[ ...array, { city: 'N/A' }]",
+          destiny: "forAll",
+      },
+   ],
+    inputType: null,
+    immutability: true,
+  },
+  {
     method: "push",
     methodContents: [],
     inputType: "text",

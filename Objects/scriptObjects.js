@@ -115,7 +115,7 @@ export const objects = () => {
         `;
 
         element += ` 
-              </div>
+              </div>&nbsp;
             </div>
             <div class="valueElements valueElements--objects">
               <button id="${name}" ${Object.keys(object).length > 0 ? "" : "disabled"} class="button button--array button--run">
