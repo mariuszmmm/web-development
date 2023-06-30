@@ -28,7 +28,7 @@ export const arrays = () => {
       }),
       inputType: object.inputType,
       inputValue: "",
-      immutability: object.immutability,
+      spreadSyntax: object.spreadSyntax,
       inputPattern: object.inputPattern
     }
   });
@@ -58,20 +58,21 @@ export const arrays = () => {
   const vievMethodContent = (methodContent) => {
     let element = "";
     let method = methodContent[0].replaceAll("'", "\"");
-    console.log(methodContent[2])
+    let contentWithInputValue = methodContent[1];
+    let contentType = methodContent[2];
 
     element += `
       <span class="labelParagraph--arrays strong">
-        let output = ${methodContent[2] ? "" : "array."}${method}${methodContent[2] ? "" : "("}${(methodContent[1] !== undefined) ?
-        (typeof (methodContent[1]) === "string" ?
-          (methodContent[1])
+        let output = ${contentType ? "" : "array."}${method}${contentType ? "" : "("}${(contentWithInputValue !== undefined) ?
+        (typeof (contentWithInputValue) === "string" ?
+          (contentWithInputValue)
           :
-          ((typeof (methodContent[1]) === "object") ?
-            methodContent[1].name
+          ((typeof (contentWithInputValue) === "object") ?
+            contentWithInputValue.name
             :
-            methodContent[1]))
+            contentWithInputValue))
         :
-        ""}${methodContent[2] ? "" : ")"};
+        ""}${contentType ? "" : ")"};
       </span>
     `;
 
@@ -81,7 +82,7 @@ export const arrays = () => {
   const changeArrowFunctionIfObject = (name) => {
     let content = "";
 
-    if (!!name) {
+    if (name) {
       methodsArray.forEach((object) => {
         if (object.method === name) {
           object.methodContents.forEach((obj) => {
@@ -110,7 +111,7 @@ export const arrays = () => {
 
     for (let property in object) {
       index++
-      content += (property + ":") +
+      content += (property + ": ") +
         (typeof (object[property]) === "string" ? (`"` + object[property] + `"`) : object[property]) +
         ((Object.keys(object).length === index + 1) ? "" : ",&nbsp;")
     };
@@ -125,10 +126,10 @@ export const arrays = () => {
       content += `${typeof (subArrayElement) === "string" ?
         ((`"` + subArrayElement + `"`) + ((subArray.length === index + 1) ? "" : ",&nbsp;"))
         :
-        (subArrayElement + ((subArray.length === index + 1) ? "" : ","))}`;
+        (subArrayElement + ((subArray.length === index + 1) ? "" : ", "))}`;
     });
 
-    return `<span class="${(subArray.length < 4) ? "nowrap" : ""}">[&nbsp;${content}&nbsp;]</span>`;
+    return `<span class="${(subArray.length < 4) ? "nowrap" : ""}">[${content}]</span>`;
   }
 
   const renderLabel = () => {
@@ -136,23 +137,22 @@ export const arrays = () => {
 
     labelElement.innerHTML = `
         <div class="labelContents labelContents--arrays js-labelContents">
-          <p class="labelParagraph--arrays strong">const array = [
-          ${array.length > 0 ? `
+          <p class="labelParagraph--arrays strong">
+            const array = [${array.length > 0 ? `
           </p>
           <p class="labelParagraph labelParagraph--arrays">
             ${viewArray(array)}
           </p>
           <p class="labelParagraph--arrays strong">
-          ` : ""}
-          ];</p>
+          ` : ""}];</p>
           <p></p>
-          ${!!showExampleArray ? `<p class="labelParagraph--arrays strong">const exampleArray = [</p>
+          ${showExampleArray ? `<p class="labelParagraph--arrays strong">const exampleArray = [</p>
           <p class="labelParagraph labelParagraph--arrays">
             ${viewArray(exampleArraySaved.length > 0 ? exampleArraySaved : exampleArray)}
           </p>
           <p class="labelParagraph--arrays strong">];</p>
           <p></p>` : ""}          
-          ${(!!methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
+          ${(methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
         </div>
       `;
   }
@@ -163,7 +163,7 @@ export const arrays = () => {
     const methodsSettings = () => {
       let methodsSetingsElement = "";
 
-      const methodsArraySettings = (name, objects, inputType, immutability) => {
+      const methodsArraySettings = (name, objects, inputType, spreadSyntax) => {
         let element = "";
 
         const searchUnknown = (text, prop) => {
@@ -183,14 +183,14 @@ export const arrays = () => {
           <form class="form js-form">
             <div class="propertyElements propertyElements--arrays">
               <span class="methodName">
-                ${immutability ? "" : `array.${name}`}
+                ${spreadSyntax ? "" : `array.${name}`}
               </span>
-              <div class="methodName methodName--parameters">${immutability ? "&nbsp;" : "("}
+              <div class="methodName methodName--parameters">${spreadSyntax ? "&nbsp;" : "("}
         `;
 
         objects.forEach((obj) => {
           element += `
-            ${!!obj.active ?
+            ${obj.active ?
               (name === "reduce" ?
                 (obj.methodContent).trim() + ",&nbsp;" : obj.methodContent.replaceAll("'", "\""))
               : ""}
@@ -198,18 +198,18 @@ export const arrays = () => {
         });
 
         element += `
-          ${!!inputType ? `
+          ${inputType ? `
             <input type="text" name="${name}" autocomplete="off" class="methodInput js-methodInput" />` : ""} 
         `;
 
         objects.forEach((obj) => {
           element += `
-            ${!!obj.active ? changeArrowFunctionIfObject(name) : ""}
+            ${obj.active ? changeArrowFunctionIfObject(name) : ""}
           `;
         });
 
         element += `
-                ${immutability ? `&nbsp;` : ")&nbsp;"} 
+                ${spreadSyntax ? `&nbsp;` : ")&nbsp;"} 
               </div>
             </div>
             <div class="valueElements valueElements--arrays">
@@ -229,16 +229,16 @@ export const arrays = () => {
             (array.every(item => typeof (item) === "object" && !Array.isArray(item)) && obj.destiny === "forObjects") ||
             (array.every(item => Array.isArray(item)) && obj.destiny === "forArrays")
           ) {
-            obj.name ? 
-            element += `  
-              <button name="${name}" id="${obj.id}" class="button button--array ${!!obj.active ? "button--active" : ""} js-typeButton">
+            obj.name ?
+              element += `  
+              <button name="${name}" id="${obj.id}" class="button button--array ${obj.active ? "button--active" : ""} js-typeButton">
                 ${searchUnknown(obj.name)}
               </button>
           ` : "";
           } else {
             name ?
-            element += `  
-              <button name="${name}" id="${obj.id}" disabled class="button button--array ${!!obj.active ? "button--active" : ""} js-typeButton">
+              element += `  
+              <button name="${name}" id="${obj.id}" disabled class="button button--array ${obj.active ? "button--active" : ""} js-typeButton">
                 ${searchUnknown(obj.name, "disabled")}
               </button>
             ` : "";
@@ -293,17 +293,17 @@ export const arrays = () => {
             <label for="inputRange" class="methods--label">
               Array size : 
               <span class="js-rangeValue">
-                ${!!rangeValue ? rangeValue : "10"}
+                ${rangeValue ? rangeValue : "10"}
               </span>
             </label>          
             <div class="valueElements">              
-              <input id="inputRange" type="range" value="${!!rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
+              <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
             </div>
             <span class="methods--label">
               Example array :
             </span>
             <div class="valueElements">
-              <button id="showExample" class="button ${!!showExampleArray ? "button--active" : ""} js-example">
+              <button id="showExample" class="button ${showExampleArray ? "button--active" : ""} js-example">
               show example array
               </button>          
               <button id="saveToExample" class="button js-example">
@@ -322,7 +322,7 @@ export const arrays = () => {
 
       methodsArray.forEach((object) => {
         methodsSetingsElement += `
-        ${methodsArraySettings(object.method, object.methodContents, object.inputType, object.immutability)}
+        ${methodsArraySettings(object.method, object.methodContents, object.inputType, object.spreadSyntax)}
       `
       });
 
@@ -351,7 +351,7 @@ export const arrays = () => {
     <div class="outputContents outputContents--arrays">
       <div class="outputLabel">OUTPUT :</div>
       ${!outputInfo ? (Array.isArray(output) ? `
-      <p class="labelParagraph--arrays strong">[ ${viewArray(output)} ]</p>` : (typeof (output) === "object") ? ` 
+      <p class="labelParagraph--arrays strong">[${viewArray(output)}]</p>` : (typeof (output) === "object") ? ` 
       <p class="labelParagraph--arrays strong"> ${output !== null ? viewObject(output) : output} </p>`
         :
         (typeof (output) === "string" ?
@@ -375,9 +375,9 @@ export const arrays = () => {
     methodContent = [];
 
     inputElements.forEach((input) => {
-      if (input.name === methodActive) { 
-      console.log(methodActive)
-        input.focus(); }
+      if (input.name === methodActive) {
+        input.focus();
+      }
 
       input.addEventListener("click", ({ target }) => {
         methodsArray.forEach((method) => {
@@ -394,7 +394,7 @@ export const arrays = () => {
           methodsArray.forEach(({ method }) => {
             if (method === input.name) {
               input.classList.remove("errorInput");
-              !!key ? (target.value = key) : (target.value = "");
+              key ? (target.value = key) : (target.value = "");
             };
           });
         };
@@ -430,7 +430,7 @@ export const arrays = () => {
     const checkDependency_1 = (method) => {
       return (
         ["filter", "find", "findIndex", "some"].includes(method.method)
-        && !!method.methodContents[0].active
+        && method.methodContents[0].active
         && (array.includes(null) || array.includes(undefined))
       )
     };
@@ -457,7 +457,7 @@ export const arrays = () => {
                     displayWarningAboutArray();
                     return
                   } else {
-                    runMethod(button.id, enterNumberOrString(input.value), method.method, method.immutability);
+                    runMethod(button.id, enterNumberOrString(input.value), method.method, method.spreadSyntax);
                     methodActive = input.name;
                     render();
                     methodActive = "";
@@ -473,7 +473,7 @@ export const arrays = () => {
 
         methodsArray.forEach((method) => {
           if ((method.method === button.id) && !method.inputType) {
-            runMethod(button.id, null, method.method, method.immutability)
+            runMethod(button.id, null, method.method, method.spreadSyntax)
             render();
           };
         });
@@ -483,7 +483,7 @@ export const arrays = () => {
     const resetTypeButton = (prop) => {
       methodsArray.forEach((object) => {
         object.methodContents.forEach((obj) => {
-          if (!!obj.active && (obj.destiny !== prop)) {
+          if (obj.active && (obj.destiny !== prop)) {
             object.methodContents.forEach((obj, i) => {
               !i ? obj.active = true : obj.active = false
             });
@@ -493,7 +493,6 @@ export const arrays = () => {
     };
 
     const useRandomNaturalNumbers = () => {
-      console.log(+rangeValueElement.textContent)
       array = [];
       while (array.length < rangeValueElement.textContent) {
         array.push(Math.floor(Math.random() * 100));
@@ -614,7 +613,7 @@ export const arrays = () => {
 
     const changeShowExampleArray = () => {
       showExampleArray = !showExampleArray
-      if (!!showExampleArray) {
+      if (showExampleArray) {
         outputInfo = "The variable \"exampleArray\" has been displayed.";
       } else {
         outputInfo = "The variable \"exampleArray\" has been hidden.";
@@ -700,7 +699,12 @@ export const arrays = () => {
                 obj.active = false;
               };
             });
-            outputInfo = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.` + `${!!object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}` : "."}${!object.inputType ? `<br>Now click the "run" button.` : ""}`;
+
+            object.spreadSyntax ?
+              outputInfo = `You have chosen the syntax ${activeButton.replaceAll("'", "\"").replaceAll(" ", "&nbsp;")}. <br>
+            Now click the "Run" button.`
+              :
+              outputInfo = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.` + `${object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}` : "."}${!object.inputType ? `<br>Now click the "run" button.` : ""}`;
             render();
           };
         });
@@ -752,9 +756,9 @@ export const arrays = () => {
     methodsArray.forEach((object) => {
       if (object.method === method) {
         object.methodContents.forEach((element) => {
-          if (!!element.active) {
+          if (element.active) {
             content = element.methodContent +
-              (!!inputValue ?
+              (inputValue ?
                 ((typeof (inputValue) === "object" ? inputValue.name : inputValue) + (changeArrowFunctionIfObject(method))) :
                 ""
               )
@@ -777,6 +781,26 @@ export const arrays = () => {
     };
   };
 
+  const enterContentForSpreadSyntax = (method, forMethodContent) => {
+    let content;
+
+    methodsArray.forEach((object) => {
+      if (object.method === method) {
+        object.methodContents.forEach((element) => {
+          if (element.active) {
+            content = (element.name).replace("[...array,", "").replace("]", "");
+          };
+        });
+      };
+    });
+
+    if (content !== "") {
+      if (forMethodContent) {
+        return content
+      } else return Function(`return (${content})`)();
+    };
+  };
+
   const setAadditionalParameter = (inputValue) => {
     return (
       array.every(item => typeof (item) === "number") ?
@@ -786,7 +810,7 @@ export const arrays = () => {
     )
   };
 
-  const runMethod = (button, inputValue, method, immutability) => {
+  const runMethod = (button, inputValue, method, spreadSyntax) => {
     outputInfo = "";
     switch (button) {
       case "pop":
@@ -801,27 +825,18 @@ export const arrays = () => {
         output = array.reverse();
         methodContent = [method];
         break;
-      case "[ ...array ]":
-      output = [...array, ];
-      methodContent = [method, , immutability];
-      break;
-      case "[ ...array, ...exampleArray ]":
+      case "[...array]":
+        output = [...array];
+        methodContent = [method, , spreadSyntax];
+        break;
+      case "[...array, ...exampleArray]":
         output = exampleArraySaved.length > 0 ? [...array, ...exampleArraySaved] : [...array, ...exampleArray];
-        methodContent = [method, , immutability];
-        break;     
-      case "[...array,element]":
-//      output = [ ...array, {city: "N/A"}];
-  //    methodContent = [method, , immutability];
-      
-             output =  (enterContentForArrowFunction(button, null));
-              methodContent = [method, (enterContentForArrowFunction(button, null)), "arrowFunction"];
-
-      
-      
-      break;
-        
-        
-        
+        methodContent = [method, , spreadSyntax];
+        break;
+      case "[...array, element]":
+        output = [...array, enterContentForSpreadSyntax(button)];
+        methodContent = [method.replace("element", (enterContentForSpreadSyntax(button, "forMethodContent"))), , spreadSyntax];
+        break;
       case "sort":
         methodContent = [method, (enterContentForArrowFunction(button, null)), "arrowFunction"];
         output = array.sort(enterContentForArrowFunction(button, null));
@@ -853,7 +868,7 @@ export const arrays = () => {
         break;
       case "reduce":
         output = array.reduce(enterContentForArrowFunction(button), setAadditionalParameter(inputValue));
-        methodContent = [method, enterContentForArrowFunction(button) + (!!inputValue ? ", " + inputValue : ""), "arrowFunction"];
+        methodContent = [method, enterContentForArrowFunction(button) + (inputValue ? ", " + inputValue : ""), "arrowFunction"];
         break;
       case "filter":
         output = array.filter(enterContentForArrowFunction(button, inputValue));
