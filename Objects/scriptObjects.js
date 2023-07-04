@@ -9,6 +9,7 @@ export const objects = () => {
   let outputInfo = "The variable \"output\" values or information about the used functions will be displayed here.";
   let showExampleObject = false;
   let methodActive = "";
+  let specActive = "methods";
 
   const vievMethodContent = (methodContent) => {
     let element = "";
@@ -61,7 +62,7 @@ export const objects = () => {
       content += `<p class="labelParagraph labelParagraph--objects">` + (prop + ": ") +
         (typeof (obj[prop]) === "string" ? (`"` + obj[prop] + `"`) : (typeof (obj[prop]) === "number") ? (obj[prop]) : obj[prop]) + `,</p>`
     };
-    content = `{<div class="labelParagraph--objects">${content}</div>},`
+    content = `{<div class="labelParagraph--objects">${content}</div>}`
 
     return content;
   };
@@ -153,17 +154,50 @@ export const objects = () => {
               </button>          
             </div>
           </div>
+          <label>
           <span class="methods--label">
-            Methods :
-          </span>
+            Spec : 
+         </span>
+            <select class="button js-select">
+            <option value="methods" ${specActive === "methods" ? "selected" : ""}>
+            methods
+            </option>
+            <option value="spreadSyntax" ${specActive === "spreadSyntax" ? "selected" : ""}>
+            spread syntax
+            </option>
+            <option value="immutability" ${specActive === "immutability" ? "selected" : ""}>
+            immutability 
+            </option>
+          </select>
+          </label>
           <div class="settingsElements">
       `;
-
+if (specActive === "methods") {
       methodsObject.forEach((object) => {
+        if (object.spec === "method") {
         methodsSetingsElement += `
         ${methodsObjectSettings(object.method, object.inputType)}
-      `
+      `};
       });
+};
+
+if (specActive === "spreadSyntax") {
+      methodsObject.forEach((object) => {
+        if (object.spec === "spreadSyntax") {
+        methodsSetingsElement += `
+        ${methodsObjectSettings(object.method, object.inputType)}
+      `};
+      });
+};
+
+if (specActive === "immutability") {
+  methodsObject.forEach((object) => {
+      if (object.spec === "immutability") {
+    methodsSetingsElement += `
+        ${methodsObjectSettings(object.method, object.inputType)}
+      `};
+  });
+};
 
       methodsSetingsElement += `
           </div>            
@@ -208,6 +242,7 @@ export const objects = () => {
     const formElements = document.querySelectorAll(".js-form");
     const randomElements = document.querySelectorAll(".js-random");
     const exampleElements = document.querySelectorAll(".js-example");
+   const selectElement = document.querySelector(".js-select")
     methodContent = [];
 
     inputElements.forEach((input) => {
@@ -233,6 +268,22 @@ export const objects = () => {
           });
         };
       });
+    });
+    
+    selectElement.addEventListener("change", ()=>{
+
+      switch (selectElement.value) {
+        case "methods":
+          specActive = "methods";
+        break;
+        case "spreadSyntax":
+          specActive = "spreadSyntax";
+          break;
+        case "immutability":
+          specActive = "immutability";
+          break;
+      }
+      render();
     });
 
     const displayWarningAboutInputValue = (input) => {
@@ -413,6 +464,18 @@ export const objects = () => {
         output = object["friend"]["age"] = readNumberOrString(inputValue);
         methodContent = [method, inputValue];
         break;
+      case "{ ...object, name: 'Tom' }":
+      output = { ...object, name: 'Tom' };
+      methodContent = [method];
+      break;
+      case "{ ...object, city: 'N/A' }":
+      output = { ...object, city: 'N/A' };
+      methodContent = [method];
+      break;
+
+        
+        
+        
     };
   };
 
