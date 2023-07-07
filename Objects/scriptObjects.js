@@ -272,23 +272,7 @@ export const objects = () => {
       outputInfo = "";
       output = "";
 
-      switch (selectElement.value) {
-        case "methods":
-          specActive = "methods";
-          break;
-        case "iteration":
-          specActive = "iteration";
-          break;
-        case "destructuring":
-          specActive = "destructuring";
-          break;
-        case "spreadSyntax":
-          specActive = "spreadSyntax";
-          break;
-        case "immutability":
-          specActive = "immutability";
-          break;
-      }
+      specActive = selectElement.value
       render();
     });
 
