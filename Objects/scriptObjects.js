@@ -11,21 +11,34 @@ export const objects = () => {
   let methodActive = "";
   let specActive = "methods";
 
-  const vievMethodContent = (methodContent) => {
+  const viewMethodContent = (methodContent) => {
     let element = "";
+    const [method, inputValue, , content, additionalContents] = methodContent;
+    console.log(methodContent)
 
-    element += `
-      <span class="labelParagraph--objects strong">
-        let output = ${methodContent[0].replaceAll("'", "\"")}${(methodContent[1] !== undefined) ?
-        (typeof (methodContent[1]) === "string" ?
-          (methodContent[1])
-          :
-          ((typeof (methodContent[1]) === "object") ?
-            methodContent[1].name
-            :
-            methodContent[1]))
-        :
-        ""};
+        if (additionalContents)  {
+          additionalContents.forEach((elem, index)=> {
+          if (index === 0) {
+            element += `  
+            <p class="strong">${elem.replaceAll("'", "\"")}${(inputValue !== undefined) ? inputValue + ";" : ""}</p>
+            `;
+          };
+          if (index > 0) {
+            if (additionalContents.length === index + 1) {
+            element += `  
+            <p class="labelParagraph--objects strong">${elem.replaceAll("'", "\"") };</p>
+            `;} else {
+           element += `<p class="labelParagraph strong">${elem.replaceAll("'", "\"") }</p>`;
+            }
+          }
+          })
+        } 
+        
+        if (content.length > 0) {
+             element += `<p class="strong">let output = ${content}</p>`;
+        };
+        
+   element += `
       </span>
     `;
 
@@ -87,7 +100,7 @@ export const objects = () => {
           </div>
           <p class="labelParagraph--objects strong">};</p>  
           <p></p>` : ""}          
-          ${(methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
+          ${(methodContent[0] && !methodContent.includes("warning")) ? viewMethodContent(methodContent) : ""}
         </div>
       `;
   }
@@ -154,13 +167,13 @@ export const objects = () => {
               </button>          
             </div>
           </div>
-          <label>
+
           <span class="methods--label">
             Spec : 
          </span>
             <select class="button js-select">
             <option value="methods" ${specActive === "methods" ? "selected" : ""}>
-            methods
+             using object properties and methods
             </option>
             <option value="spreadSyntax" ${specActive === "spreadSyntax" ? "selected" : ""}>
             spread syntax
@@ -169,7 +182,7 @@ export const objects = () => {
             immutability 
             </option>
           </select>
-          </label>
+
           <div class="settingsElements">
       `;
 if (specActive === "methods") {
@@ -305,7 +318,7 @@ if (specActive === "immutability") {
               if (method.method === button.id) {
                 const pattern = method.inputPattern;
                 if (pattern.test(input.value)) {
-                  runMethod(button.id, enterNumberOrString(input.value), method.method);
+                  runMethod(button.id, enterNumberOrString(input.value), method.method, method.contents, method.additionalContents);
                   methodActive = input.name;
                   render();
                   methodActive = "";
@@ -320,7 +333,7 @@ if (specActive === "immutability") {
 
         methodsObject.forEach((method) => {
           if ((method.method === button.id) && !method.inputType) {
-            runMethod(button.id, null, method.method)
+            runMethod(button.id, null, method.method, method.contents, method.additionalContents)
             render();
           };
         });
@@ -378,104 +391,130 @@ if (specActive === "immutability") {
         ((typeof (inputValue) === "object") ? inputValue.name : Number(inputValue))
     );
   };
+  
+    const enterContent = (content) => {
+      
+      return Function(`return (${content})`)();
+    };
 
-  const runMethod = (button, inputValue, method) => {
+
+  const runMethod = (button, inputValue, method, content, additionalContents) => {
     outputInfo = "";
-
+    output = "";
+    
     switch (button) {
       case "object.name":
         output = object.name;
-        methodContent = [method];
+        methodContent = [method, , , content];
         break;
       case "object.surname":
         output = object.surname;
-        methodContent = [method];
+        methodContent = [method, , , content];
         break;
       case "object.age":
         output = object.age;
-        methodContent = [method];
+        methodContent = [method, , , content];
         break;
       case "object.sayHello()":
         object.sayHello();
-        output = object.sayHello;
-        methodContent = [method];
+        methodContent = [method, , , content, additionalContents];
+        outputInfo = "Check the console";
         break;
       case "object.getFullName()":
-        output = object.getFullName()
-        methodContent = [method];
+           object.getFullName();
+        methodContent = [method, , , content, additionalContents];
+        outputInfo = "Check the console";
         break;
       case "object.friend":
         output = object.friend;
-        methodContent = [method];
+        methodContent = [method, , , content];
         break;
       case "object['friend']['name']":
         output = object["friend"]["name"];
-        methodContent = [method];
+        methodContent = [method, , , content];
         break;
       case "object['friend']['surname']":
         output = object["friend"]["surname"];
-        methodContent = [method];
+        methodContent = [method, , , content];
         break;
       case "object['friend']['age']":
         output = object["friend"]["age"];
-        methodContent = [method];
+        methodContent = [method, , , content];
         break;
+      case "object = exampleObject":
+      object = exampleObject;
+        methodContent = [method, , , content, additionalContents];
+        outputInfo = "The variable \"object\" has been changed.";
+      break;
       case "object === exampleObject":
         output = object === exampleObject;
-        methodContent = [method];
+        methodContent = [method, , , content];
         break;
       case "object.name === exampleObject.name":
         output = object.name === exampleObject.name;
-        methodContent = [method];
+        methodContent = [method, , , content];
         break;
       case "object.friend === exampleObject.friend":
         output = object.friend === exampleObject.friend;
-        methodContent = [method];
-        break;
-      case "object = exampleObject":
-        output = object = exampleObject;
-        methodContent = [method];
-        break;
-      case "object = { ...exampleObject }":
-        output = object = { ...exampleObject };
-        methodContent = [method];
+        methodContent = [method, , , content];
         break;
       case "object.name = ":
-        output = object.name = readNumberOrString(inputValue);
-        methodContent = [method, inputValue];
+        object.name = readNumberOrString(inputValue);
+        methodContent = [method, inputValue, , content, additionalContents];
+        outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object.surname = ":
-        output = object.surname = readNumberOrString(inputValue);
-        methodContent = [method, inputValue];
+        object.surname = readNumberOrString(inputValue);
+        methodContent = [method, inputValue, , content, additionalContents];
+        outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object.age = ":
-        output = object.age = readNumberOrString(inputValue);
-        methodContent = [method, inputValue];
+        object.age = readNumberOrString(inputValue);
+        methodContent = [method, inputValue, , content, additionalContents];
+        outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object['friend']['name'] = ":
-        output = object["friend"]["name"] = readNumberOrString(inputValue);
-        methodContent = [method, inputValue];
+        object["friend"]["name"] = readNumberOrString(inputValue);
+        methodContent = [method, inputValue, , content, additionalContents];
+        outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object['friend']['surname'] = ":
-        output = object["friend"]["surname"] = readNumberOrString(inputValue);
-        methodContent = [method, inputValue];
+         object["friend"]["surname"] = readNumberOrString(inputValue);
+        methodContent = [method, inputValue, , content, additionalContents];
+        outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object['friend']['age'] = ":
-        output = object["friend"]["age"] = readNumberOrString(inputValue);
-        methodContent = [method, inputValue];
+        object["friend"]["age"] = readNumberOrString(inputValue);
+        methodContent = [method, inputValue, , content, additionalContents];
+      outputInfo = "The variable \"object\" has been changed.";
         break;
-      case "{ ...object, name: 'Tom' }":
+      case "cloning an object (shallow copy)":
+      output = { ...object };
+      methodContent = [method, , , content];
+      break;
+      case "merging objects":
+        const additionalObject = { city: "New York", hobby: "swimming" };
+      output = { ...object, ...additionalObject };
+      methodContent = [method, , , content, additionalContents];
+      break;
+      case "editing object properties":
       output = { ...object, name: 'Tom' };
-      methodContent = [method];
+      methodContent = [method, , , content];
       break;
-      case "{ ...object, city: 'N/A' }":
+      case "adding properties to an object":
       output = { ...object, city: 'N/A' };
-      methodContent = [method];
+      methodContent = [method, , , content];
       break;
-
-        
-        
-        
+      case "removal of object's property":
+        const { age, ...rest } = object;
+      output = rest;
+      methodContent = [method, , , content, additionalContents];
+      break;
+      case "iteration":
+      for ( const property in object) { console.log(`${property}: ${object[property]}`) };
+      methodContent = [method, , , content, additionalContents];
+      outputInfo = "Check the console";
+      break;
     };
   };
 
