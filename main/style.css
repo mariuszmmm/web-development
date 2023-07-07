@@ -10,8 +10,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   background-color: grey;
   font-size: 15px;
-  /* user-select: none; */
-  /* ważne nie usuwać !!! */
+  user-select: none;
 }
 
 @media (max-width: 768px) {

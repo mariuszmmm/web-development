@@ -318,7 +318,6 @@ export const objects = () => {
     });
 
     const useRandomObject = () => {
-      object = {};
       object = (objectsArray[Math.floor(Math.random() * objectsArray.length)]);
       outputInfo = "A random object has been saved in the variable \"object\".";
       render();
