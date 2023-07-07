@@ -10,7 +10,8 @@ body {
   font-family: 'Montserrat', sans-serif;
   background-color: grey;
   font-size: 15px;
-  user-select: none;
+  /* user-select: none; */
+  /* ważne nie usuwać !!! */
 }
 
 @media (max-width: 768px) {
@@ -212,6 +213,24 @@ body {
   margin: 4px;
   font-weight: 700;
   cursor: pointer;
+}
+
+select, option {
+  text-align: start;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 2px 2px;
+  min-width: max-content;
+  padding: 4px 10px;
+  margin: 4px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.selectLabel {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 25px;
 }
 
 @media (max-width: 768px) {

@@ -13,32 +13,32 @@ export const objects = () => {
 
   const viewMethodContent = (methodContent) => {
     let element = "";
-    const [method, inputValue, , content, additionalContents] = methodContent;
-    console.log(methodContent)
+    const [, inputValue, , content, additionalContents] = methodContent;
 
-        if (additionalContents)  {
-          additionalContents.forEach((elem, index)=> {
-          if (index === 0) {
-            element += `  
+    if (additionalContents) {
+      additionalContents.forEach((elem, index) => {
+        if (index === 0) {
+          element += `  
             <p class="strong">${elem.replaceAll("'", "\"")}${(inputValue !== undefined) ? inputValue + ";" : ""}</p>
             `;
-          };
-          if (index > 0) {
-            if (additionalContents.length === index + 1) {
-            element += `  
-            <p class="labelParagraph--objects strong">${elem.replaceAll("'", "\"") };</p>
-            `;} else {
-           element += `<p class="labelParagraph strong">${elem.replaceAll("'", "\"") }</p>`;
-            }
-          }
-          })
-        } 
-        
-        if (content.length > 0) {
-             element += `<p class="strong">let output = ${content}</p>`;
         };
-        
-   element += `
+        if (index > 0) {
+          if (additionalContents.length === index + 1) {
+            element += `  
+            <p class="labelParagraph--objects strong">${elem.replaceAll("'", "\"")};</p>
+            `;
+          } else {
+            element += `<p class="labelParagraph strong">${elem.replaceAll("'", "\"")}</p>`;
+          }
+        }
+      })
+    }
+
+    if (content.length > 0) {
+      element += `<p class="strong">let output = ${content}</p>`;
+    };
+
+    element += `
       </span>
     `;
 
@@ -84,15 +84,13 @@ export const objects = () => {
     const labelElement = document.querySelector(".js-labelContainer");
     labelElement.innerHTML = `
         <div class="labelContents labelContents--objects js-labelContents">
-          <p class="labelParagraph--objects strong">const object = {
-          ${Object.keys(object).length > 0 ? `
+          <p class="labelParagraph--objects strong">const object = {${Object.keys(object).length > 0 ? `
           </p>
           <div class="labelParagraph labelParagraph--objects">
             ${viewObject(object)}
           </div>
           <p class="labelParagraph--objects strong">
-          ` : ""}
-          };</p>
+          ` : ""}};</p>
           <p></p>
           ${showExampleObject ? `<p class="labelParagraph--objects strong">const exampleObject = {</p>
           <div class="labelParagraph labelParagraph--objects">
@@ -167,50 +165,37 @@ export const objects = () => {
               </button>          
             </div>
           </div>
-
-          <span class="methods--label">
-            Spec : 
-         </span>
-            <select class="button js-select">
-            <option value="methods" ${specActive === "methods" ? "selected" : ""}>
-             using object properties and methods
-            </option>
-            <option value="spreadSyntax" ${specActive === "spreadSyntax" ? "selected" : ""}>
-            spread syntax
-            </option>
-            <option value="immutability" ${specActive === "immutability" ? "selected" : ""}>
-            immutability 
-            </option>
-          </select>
-
+          <label class="selectLabel">
+            <span class="methods--label">
+              Spec : 
+            </span>
+            <select class="js-select">
+              <option value="methods" ${specActive === "methods" ? "selected" : ""}>
+                using object properties and methods
+              </option>
+              <option value="iteration" ${specActive === "iteration" ? "selected" : ""}>
+                iteration
+              </option>
+              <option value="destructuring" ${specActive === "destructuring" ? "selected" : ""}>
+                destructuring
+              </option>
+              <option value="spreadSyntax" ${specActive === "spreadSyntax" ? "selected" : ""}>
+                spread syntax
+              </option>
+              <option value="immutability" ${specActive === "immutability" ? "selected" : ""}>
+                immutability 
+              </option>
+            </select>
+          </label>
           <div class="settingsElements">
       `;
-if (specActive === "methods") {
+
       methodsObject.forEach((object) => {
-        if (object.spec === "method") {
-        methodsSetingsElement += `
+        if (object.spec === specActive) {
+          methodsSetingsElement += `
         ${methodsObjectSettings(object.method, object.inputType)}
       `};
       });
-};
-
-if (specActive === "spreadSyntax") {
-      methodsObject.forEach((object) => {
-        if (object.spec === "spreadSyntax") {
-        methodsSetingsElement += `
-        ${methodsObjectSettings(object.method, object.inputType)}
-      `};
-      });
-};
-
-if (specActive === "immutability") {
-  methodsObject.forEach((object) => {
-      if (object.spec === "immutability") {
-    methodsSetingsElement += `
-        ${methodsObjectSettings(object.method, object.inputType)}
-      `};
-  });
-};
 
       methodsSetingsElement += `
           </div>            
@@ -255,7 +240,7 @@ if (specActive === "immutability") {
     const formElements = document.querySelectorAll(".js-form");
     const randomElements = document.querySelectorAll(".js-random");
     const exampleElements = document.querySelectorAll(".js-example");
-   const selectElement = document.querySelector(".js-select")
+    const selectElement = document.querySelector(".js-select")
     methodContent = [];
 
     inputElements.forEach((input) => {
@@ -282,13 +267,21 @@ if (specActive === "immutability") {
         };
       });
     });
-    
-    selectElement.addEventListener("change", ()=>{
+
+    selectElement.addEventListener("change", () => {
+      outputInfo = "";
+      output = "";
 
       switch (selectElement.value) {
         case "methods":
           specActive = "methods";
-        break;
+          break;
+        case "iteration":
+          specActive = "iteration";
+          break;
+        case "destructuring":
+          specActive = "destructuring";
+          break;
         case "spreadSyntax":
           specActive = "spreadSyntax";
           break;
@@ -348,11 +341,7 @@ if (specActive === "immutability") {
     };
 
     randomElements.forEach(element => element.addEventListener("click", ({ target }) => {
-      switch (target.id) {
-        case "randomObject":
-          useRandomObject();
-          break;
-      };
+      target.id === "randomObject" ? useRandomObject() : "";
     }));
 
     const changeShowExampleObject = () => {
@@ -367,11 +356,7 @@ if (specActive === "immutability") {
 
     exampleElements.forEach((element) => {
       element.addEventListener("click", ({ target }) => {
-        switch (target.id) {
-          case "showExample":
-            changeShowExampleObject();
-            break;
-        };
+        target.id === "showExample" ? changeShowExampleObject() : "";
       });
     });
   };
@@ -391,17 +376,11 @@ if (specActive === "immutability") {
         ((typeof (inputValue) === "object") ? inputValue.name : Number(inputValue))
     );
   };
-  
-    const enterContent = (content) => {
-      
-      return Function(`return (${content})`)();
-    };
-
 
   const runMethod = (button, inputValue, method, content, additionalContents) => {
     outputInfo = "";
     output = "";
-    
+
     switch (button) {
       case "object.name":
         output = object.name;
@@ -421,9 +400,8 @@ if (specActive === "immutability") {
         outputInfo = "Check the console";
         break;
       case "object.getFullName()":
-           object.getFullName();
-        methodContent = [method, , , content, additionalContents];
-        outputInfo = "Check the console";
+        output = object.getFullName();
+        methodContent = [method, , , content];
         break;
       case "object.friend":
         output = object.friend;
@@ -441,11 +419,6 @@ if (specActive === "immutability") {
         output = object["friend"]["age"];
         methodContent = [method, , , content];
         break;
-      case "object = exampleObject":
-      object = exampleObject;
-        methodContent = [method, , , content, additionalContents];
-        outputInfo = "The variable \"object\" has been changed.";
-      break;
       case "object === exampleObject":
         output = object === exampleObject;
         methodContent = [method, , , content];
@@ -473,48 +446,82 @@ if (specActive === "immutability") {
         methodContent = [method, inputValue, , content, additionalContents];
         outputInfo = "The variable \"object\" has been changed.";
         break;
+      case "object.city = ":
+        object.city = readNumberOrString(inputValue);
+        methodContent = [method, inputValue, , content, additionalContents];
+        outputInfo = "The variable \"object\" has been changed.";
+        break;
       case "object['friend']['name'] = ":
         object["friend"]["name"] = readNumberOrString(inputValue);
         methodContent = [method, inputValue, , content, additionalContents];
         outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object['friend']['surname'] = ":
-         object["friend"]["surname"] = readNumberOrString(inputValue);
+        object["friend"]["surname"] = readNumberOrString(inputValue);
         methodContent = [method, inputValue, , content, additionalContents];
         outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object['friend']['age'] = ":
         object["friend"]["age"] = readNumberOrString(inputValue);
         methodContent = [method, inputValue, , content, additionalContents];
-      outputInfo = "The variable \"object\" has been changed.";
+        outputInfo = "The variable \"object\" has been changed.";
+        break;
+      case "for...in":
+        for (const property in object) { console.log(`${property}: ${object[property]}`) };
+        methodContent = [method, , , content, additionalContents];
+        outputInfo = "Check the console";
+        break;
+      case "const { name, surname, ...rest } = object":
+        const { name, surname, ...objectWithoutNameAndSurname } = object;
+        console.log(name, surname);
+        methodContent = [method, , , content, additionalContents];
+        outputInfo = "Check the console";
+        break;
+      case "const { city = 'N/A' } = object":
+        const { city = "N/A" } = object;
+        console.log(city);
+        methodContent = [method, , , content, additionalContents];
+        outputInfo = "Check the console";
+        break;
+      case "const { surname: lastName } = object":
+        const { surname: lastName } = object;
+        console.log(lastName);
+        methodContent = [method, , , content, additionalContents];
+        outputInfo = "Check the console";
+        break;
+      case "const { friend: { name: friendName } } = object":
+        const { friend: { name: friendName } } = object;
+        console.log(friendName);
+        methodContent = [method, , , content, additionalContents];
+        outputInfo = "Check the console";
+        break;
+      case "function argument destructuring":
+        const getObjectFullNameWithAge = ({ name, surname, age }) => `${name} ${surname} ${age}`;
+        output = getObjectFullNameWithAge(object);
+        methodContent = [method, , , content, additionalContents];
         break;
       case "cloning an object (shallow copy)":
-      output = { ...object };
-      methodContent = [method, , , content];
-      break;
+        output = { ...object };
+        methodContent = [method, , , content];
+        break;
       case "merging objects":
         const additionalObject = { city: "New York", hobby: "swimming" };
-      output = { ...object, ...additionalObject };
-      methodContent = [method, , , content, additionalContents];
-      break;
-      case "editing object properties":
-      output = { ...object, name: 'Tom' };
-      methodContent = [method, , , content];
-      break;
+        output = { ...object, ...additionalObject };
+        methodContent = [method, , , content, additionalContents];
+        break;
       case "adding properties to an object":
-      output = { ...object, city: 'N/A' };
-      methodContent = [method, , , content];
-      break;
+        output = { ...object, city: 'N/A' };
+        methodContent = [method, , , content];
+        break;
+      case "editing object properties":
+        output = { ...object, name: 'Tom' };
+        methodContent = [method, , , content];
+        break;
       case "removal of object's property":
         const { age, ...rest } = object;
-      output = rest;
-      methodContent = [method, , , content, additionalContents];
-      break;
-      case "iteration":
-      for ( const property in object) { console.log(`${property}: ${object[property]}`) };
-      methodContent = [method, , , content, additionalContents];
-      outputInfo = "Check the console";
-      break;
+        output = rest;
+        methodContent = [method, , , content, additionalContents];
+        break;
     };
   };
 
