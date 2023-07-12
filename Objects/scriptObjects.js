@@ -4,16 +4,16 @@ import { heightAnimation } from "../Animation/scriptAnimation.js";
 
 export const objects = () => {
   let object = {};
-  let methodContent = [];
+  let dataArray = [];
   let output = "";
   let outputInfo = "The variable \"output\" values or information about the used functions will be displayed here.";
   let showExampleObject = false;
   let methodActive = "";
   let specActive = "methods";
 
-  const viewMethodContent = (methodContent) => {
+  const viewMethodContent = (dataArray) => {
     let element = "";
-    const [, inputValue, , content, additionalContents] = methodContent;
+    const [, inputValue, , content, additionalContents] = dataArray;
 
     if (additionalContents) {
       additionalContents.forEach((elem, index) => {
@@ -98,7 +98,7 @@ export const objects = () => {
           </div>
           <p class="labelParagraph--objects strong">};</p>  
           <p></p>` : ""}          
-          ${(methodContent[0] && !methodContent.includes("warning")) ? viewMethodContent(methodContent) : ""}
+          ${(dataArray[0] && !dataArray.includes("warning")) ? viewMethodContent(dataArray) : ""}
         </div>
       `;
   }
@@ -241,7 +241,7 @@ export const objects = () => {
     const randomElements = document.querySelectorAll(".js-random");
     const exampleElements = document.querySelectorAll(".js-example");
     const selectElement = document.querySelector(".js-select")
-    methodContent = [];
+    dataArray = [];
 
     inputElements.forEach((input) => {
       if (input.name === methodActive) input.focus();
@@ -277,7 +277,7 @@ export const objects = () => {
     });
 
     const displayWarningAboutInputValue = (input) => {
-      methodContent = [...methodContent, "warning"];
+      dataArray = [...dataArray, "warning"];
       outputInfo = `Input value is not allowed, use: number or \" \"`
       input.classList.add("errorInput")
       input.focus();
@@ -367,143 +367,143 @@ export const objects = () => {
     switch (button) {
       case "object.name":
         output = object.name;
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "object.surname":
         output = object.surname;
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "object.age":
         output = object.age;
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "object.sayHello()":
         object.sayHello();
-        methodContent = [method, , , content, additionalContents];
+        dataArray = [method, , , content, additionalContents];
         outputInfo = "Check the console";
         break;
       case "object.getFullName()":
         output = object.getFullName();
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "object.friend":
         output = object.friend;
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "object['friend']['name']":
         output = object["friend"]["name"];
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "object['friend']['surname']":
         output = object["friend"]["surname"];
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "object['friend']['age']":
         output = object["friend"]["age"];
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "object === exampleObject":
         output = object === exampleObject;
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "object.name === exampleObject.name":
         output = object.name === exampleObject.name;
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "object.friend === exampleObject.friend":
         output = object.friend === exampleObject.friend;
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "object.name = ":
         object.name = readNumberOrString(inputValue);
-        methodContent = [method, inputValue, , content, additionalContents];
+        dataArray = [method, inputValue, , content, additionalContents];
         outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object.surname = ":
         object.surname = readNumberOrString(inputValue);
-        methodContent = [method, inputValue, , content, additionalContents];
+        dataArray = [method, inputValue, , content, additionalContents];
         outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object.age = ":
         object.age = readNumberOrString(inputValue);
-        methodContent = [method, inputValue, , content, additionalContents];
+        dataArray = [method, inputValue, , content, additionalContents];
         outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object.city = ":
         object.city = readNumberOrString(inputValue);
-        methodContent = [method, inputValue, , content, additionalContents];
+        dataArray = [method, inputValue, , content, additionalContents];
         outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object['friend']['name'] = ":
         object["friend"]["name"] = readNumberOrString(inputValue);
-        methodContent = [method, inputValue, , content, additionalContents];
+        dataArray = [method, inputValue, , content, additionalContents];
         outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object['friend']['surname'] = ":
         object["friend"]["surname"] = readNumberOrString(inputValue);
-        methodContent = [method, inputValue, , content, additionalContents];
+        dataArray = [method, inputValue, , content, additionalContents];
         outputInfo = "The variable \"object\" has been changed.";
         break;
       case "object['friend']['age'] = ":
         object["friend"]["age"] = readNumberOrString(inputValue);
-        methodContent = [method, inputValue, , content, additionalContents];
+        dataArray = [method, inputValue, , content, additionalContents];
         outputInfo = "The variable \"object\" has been changed.";
         break;
       case "for...in":
         for (const property in object) { console.log(`${property}: ${object[property]}`) };
-        methodContent = [method, , , content, additionalContents];
+        dataArray = [method, , , content, additionalContents];
         outputInfo = "Check the console";
         break;
       case "const { name, surname, ...rest } = object":
         const { name, surname, ...objectWithoutNameAndSurname } = object;
         console.log(name, surname);
-        methodContent = [method, , , content, additionalContents];
+        dataArray = [method, , , content, additionalContents];
         outputInfo = "Check the console";
         break;
       case "const { city = 'N/A' } = object":
         const { city = "N/A" } = object;
         console.log(city);
-        methodContent = [method, , , content, additionalContents];
+        dataArray = [method, , , content, additionalContents];
         outputInfo = "Check the console";
         break;
       case "const { surname: lastName } = object":
         const { surname: lastName } = object;
         console.log(lastName);
-        methodContent = [method, , , content, additionalContents];
+        dataArray = [method, , , content, additionalContents];
         outputInfo = "Check the console";
         break;
       case "const { friend: { name: friendName } } = object":
         const { friend: { name: friendName } } = object;
         console.log(friendName);
-        methodContent = [method, , , content, additionalContents];
+        dataArray = [method, , , content, additionalContents];
         outputInfo = "Check the console";
         break;
       case "function argument destructuring":
         const getObjectFullNameWithAge = ({ name, surname, age }) => `${name} ${surname} ${age}`;
         output = getObjectFullNameWithAge(object);
-        methodContent = [method, , , content, additionalContents];
+        dataArray = [method, , , content, additionalContents];
         break;
       case "cloning an object (shallow copy)":
         output = { ...object };
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "merging objects":
         const additionalObject = { city: "New York", hobby: "swimming" };
         output = { ...object, ...additionalObject };
-        methodContent = [method, , , content, additionalContents];
+        dataArray = [method, , , content, additionalContents];
         break;
       case "adding properties to an object":
         output = { ...object, city: 'N/A' };
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "editing object properties":
         output = { ...object, name: 'Tom' };
-        methodContent = [method, , , content];
+        dataArray = [method, , , content];
         break;
       case "removal of object's property":
         const { age, ...rest } = object;
         output = rest;
-        methodContent = [method, , , content, additionalContents];
+        dataArray = [method, , , content, additionalContents];
         break;
     };
   };
