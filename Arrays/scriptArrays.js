@@ -4,7 +4,7 @@ import { heightAnimation } from "../Animation/scriptAnimation.js";
 
 export const arrays = () => {
   let array = [];
-  let methodContent = [];
+  let dataArray = [];
   let output = "";
   let outputInfo = "The variable \"output\" values or information about the used functions will be displayed here.";
   let rangeValue;
@@ -12,11 +12,15 @@ export const arrays = () => {
   let showExampleArray = false;
   let indexButton = 0;
   let methodActive = "";
+  let specActive = "methods";
 
   const methodsArray = methodsArrayRaw.map((object) => {
     return {
       method: object.method,
-      methodContents: object.methodContents.map((obj, index) => {
+      // inputValue: "",
+      inputType: object.inputType,
+      inputPattern: object.inputPattern,
+      methodContents: object.contents.map((obj, index) => {
         indexButton++
         return {
           id: indexButton,
@@ -26,10 +30,10 @@ export const arrays = () => {
           destiny: obj.destiny,
         }
       }),
-      inputType: object.inputType,
-      inputValue: "",
-      spreadSyntax: object.spreadSyntax,
-      inputPattern: object.inputPattern
+
+      // spreadSyntax: object.spreadSyntax,
+      additionalContents: object.additionalContents,
+      spec: object.spec,
     }
   });
 
@@ -55,11 +59,11 @@ export const arrays = () => {
     return element;
   };
 
-  const vievMethodContent = (methodContent) => {
+  const vievMethodContent = (dataArray) => {
     let element = "";
-    let method = methodContent[0].replaceAll("'", "\"");
-    let contentWithInputValue = methodContent[1];
-    let contentType = methodContent[2];
+    let method = dataArray[0].replaceAll("'", "\"");
+    let contentWithInputValue = dataArray[1];
+    let contentType = dataArray[2];
 
     element += `
       <span class="labelParagraph--arrays strong">
@@ -152,7 +156,7 @@ export const arrays = () => {
           </p>
           <p class="labelParagraph--arrays strong">];</p>
           <p></p>` : ""}          
-          ${(methodContent[0] && !methodContent.includes("warning")) ? vievMethodContent(methodContent) : ""}
+          ${(dataArray[0] && !dataArray.includes("warning")) ? vievMethodContent(dataArray) : ""}
         </div>
       `;
   }
@@ -314,17 +318,38 @@ export const arrays = () => {
               </button>
             </div>
           </div>
+          <label class="selectLabel">
           <span class="methods--label">
-            Methods :
+            Spec : 
           </span>
-          <div class="settingsElements">
+          <select class="js-select">
+          <option value="methods" ${specActive === "methods" ? "selected" : ""}>
+            array methods
+          </option>
+          <option value="iteration" ${specActive === "iteration" ? "selected" : ""}>
+            iteration
+          </option>
+          <option value="destructuring" ${specActive === "destructuring" ? "selected" : ""}>
+            destructuring
+          </option>
+          <option value="spreadSyntax" ${specActive === "spreadSyntax" ? "selected" : ""}>
+            spread syntax
+          </option>
+          <option value="immutability" ${specActive === "immutability" ? "selected" : ""}>
+            immutability 
+          </option>
+        </select>
+      </label>
+      <div class="settingsElements">
       `;
-
+      // sprawdzić czy wszystkie argumenty methodsArraySettings  są potrzebne
       methodsArray.forEach((object) => {
-        methodsSetingsElement += `
+        if (object.spec === specActive) {
+          methodsSetingsElement += `
         ${methodsArraySettings(object.method, object.methodContents, object.inputType, object.spreadSyntax)}
-      `
+      `};
       });
+
 
       methodsSetingsElement += `
           </div>            
@@ -372,7 +397,8 @@ export const arrays = () => {
     const rangeElement = document.querySelector(".js-range");
     const rangeValueElement = document.querySelector(".js-rangeValue");
     const typeButtonElements = document.querySelectorAll(".js-typeButton");
-    methodContent = [];
+    const selectElement = document.querySelector(".js-select")
+    dataArray = [];
 
     inputElements.forEach((input) => {
       if (input.name === methodActive) {
@@ -401,8 +427,16 @@ export const arrays = () => {
       });
     });
 
+    selectElement.addEventListener("change", () => {
+      outputInfo = "";
+      output = "";
+
+      specActive = selectElement.value
+      render();
+    });
+
     const displayWarningAboutArray = () => {
-      methodContent = [...methodContent, "warning"];
+      dataArray = [...dataArray, "warning"];
       if (array.includes(null)) {
         outputInfo = `Error: Cannot read properties of null (reading 'length')`;
       };
@@ -416,7 +450,7 @@ export const arrays = () => {
     };
 
     const displayWarningAboutInputValue = ({ method }, input) => {
-      methodContent = [...methodContent, "warning"];
+      dataArray = [...dataArray, "warning"];
       if (method === "slice") {
         outputInfo = `The entered value is not allowed. Please enter a number or two numbers separated by a comma.`;
       } else {
@@ -815,88 +849,88 @@ export const arrays = () => {
     switch (button) {
       case "pop":
         output = array.pop();
-        methodContent = [method];
+        dataArray = [method];
         break;
       case "shift":
         output = array.shift();
-        methodContent = [method];
+        dataArray = [method];
         break;
       case "reverse":
         output = array.reverse();
-        methodContent = [method];
+        dataArray = [method];
         break;
       case "[...array]":
         output = [...array];
-        methodContent = [method, , spreadSyntax];
+        dataArray = [method, , spreadSyntax];
         break;
       case "[...array, ...exampleArray]":
         output = exampleArraySaved.length > 0 ? [...array, ...exampleArraySaved] : [...array, ...exampleArray];
-        methodContent = [method, , spreadSyntax];
+        dataArray = [method, , spreadSyntax];
         break;
       case "[...array, element]":
         output = [...array, enterContentForSpreadSyntax(button)];
-        methodContent = [method.replace("element", (enterContentForSpreadSyntax(button, "forMethodContent"))), , spreadSyntax];
+        dataArray = [method.replace("element", (enterContentForSpreadSyntax(button, "forMethodContent"))), , spreadSyntax];
         break;
       case "sort":
-        methodContent = [method, (enterContentForArrowFunction(button, null)), "arrowFunction"];
+        dataArray = [method, (enterContentForArrowFunction(button, null)), "arrowFunction"];
         output = array.sort(enterContentForArrowFunction(button, null));
         break;
       case "join":
         output = array.join(
           (enterNumberOrString(inputValue) === "") ? "," : (enterNumberOrString(inputValue) === `""`) ? "" : readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
+        dataArray = [method, inputValue];
         break;
       case "push":
         output = array.push(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
+        dataArray = [method, inputValue];
         break;
       case "unshift":
         output = array.unshift(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
+        dataArray = [method, inputValue];
         break;
       case "map":
         output = array.map(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "find":
         output = array.find(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "findIndex":
         output = array.findIndex(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "reduce":
         output = array.reduce(enterContentForArrowFunction(button), setAadditionalParameter(inputValue));
-        methodContent = [method, enterContentForArrowFunction(button) + (inputValue ? ", " + inputValue : ""), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button) + (inputValue ? ", " + inputValue : ""), "arrowFunction"];
         break;
       case "filter":
         output = array.filter(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "some":
         output = array.some(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "every":
         output = array.every(enterContentForArrowFunction(button, inputValue));
-        methodContent = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
         break;
       case "includes":
         output = array.includes(readNumberOrString(inputValue));
-        methodContent = [method, inputValue];
+        dataArray = [method, inputValue];
         break;
       case "slice":
         output = array.slice(...enterContentForTwoArguments(inputValue));
-        methodContent = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
+        dataArray = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
         break;
       case "indexOf":
         output = array.indexOf(readNumberOrString(inputValue));
-        methodContent = [method, enterNumberOrString(inputValue)];
+        dataArray = [method, enterNumberOrString(inputValue)];
         break;
       case "lastIndexOf":
         output = array.lastIndexOf(readNumberOrString(inputValue));
-        methodContent = [method, enterNumberOrString(inputValue)];
+        dataArray = [method, enterNumberOrString(inputValue)];
         break;
     };
   };
