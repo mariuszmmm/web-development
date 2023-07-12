@@ -1,28 +1,24 @@
 export const methodsObject = [
   {
     method: "object.name",
-    inputValue: "",
     inputType: null,
     contents: ["object.name;"],
     spec: "methods",
   },
   {
     method: "object.surname",
-    inputValue: "",
     inputType: null,
     contents: ["object.surname;"],
     spec: "methods",
   },
   {
     method: "object.age",
-    inputValue: "",
     inputType: null,
     contents: ["object.age;"],
     spec: "methods",
   },
   {
     method: "object.sayHello()",
-    inputValue: "",
     inputType: null,
     contents: [],
     additionalContents: ["object.sayHello();"],
@@ -30,63 +26,54 @@ export const methodsObject = [
   },
   {
     method: "object.getFullName()",
-    inputValue: "",
     inputType: null,
     contents: ["object.getFullName();"],
     spec: "methods",
   },
   {
     method: "object.friend",
-    inputValue: "",
     inputType: null,
     contents: ["object.friend;"],
     spec: "methods",
   },
   {
     method: "object['friend']['name']",
-    inputValue: "",
     inputType: null,
     contents: ["object['friend']['name']"],
     spec: "methods",
   },
   {
     method: "object['friend']['surname']",
-    inputValue: "",
     inputType: null,
     contents: ["object['friend']['surname']"],
     spec: "methods",
   },
   {
     method: "object['friend']['age']",
-    inputValue: "",
     inputType: null,
     contents: ["object['friend']['age']"],
     spec: "methods",
   },
   {
     method: "object === exampleObject",
-    inputValue: "",
     inputType: null,
     contents: ["object === exampleObject"],
     spec: "methods",
   },
   {
     method: "object.name === exampleObject.name",
-    inputValue: "",
     inputType: null,
     contents: ["object.name === exampleObject.name"],
     spec: "methods",
   },
   {
     method: "object.friend === exampleObject.friend",
-    inputValue: "",
     inputType: null,
     contents: ["object.friend === exampleObject.friend"],
     spec: "methods",
   },
   {
     method: "object.name = ",
-    inputValue: "",
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+)$/,
     contents: [],
@@ -95,7 +82,6 @@ export const methodsObject = [
   },
   {
     method: "object.surname = ",
-    inputValue: "",
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+)$/,
     contents: [],
@@ -104,7 +90,6 @@ export const methodsObject = [
   },
   {
     method: "object.age = ",
-    inputValue: "",
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+)$/,
     contents: [],
@@ -113,7 +98,6 @@ export const methodsObject = [
   },
   {
     method: "object.city = ",
-    inputValue: "",
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+)$/,
     contents: [],
@@ -122,7 +106,6 @@ export const methodsObject = [
   },
   {
     method: "object['friend']['name'] = ",
-    inputValue: "",
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+)$/,
     contents: [],
@@ -131,7 +114,6 @@ export const methodsObject = [
   },
   {
     method: "object['friend']['surname'] = ",
-    inputValue: "",
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+)$/,
     contents: [],
@@ -140,7 +122,6 @@ export const methodsObject = [
   },
   {
     method: "object['friend']['age'] = ",
-    inputValue: "",
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+)$/,
     contents: [],
@@ -149,7 +130,6 @@ export const methodsObject = [
   },
   {
     method: "for...in",
-    inputValue: "",
     inputType: null,
     contents: [],
     additionalContents: ["for ( const property in object) {", "console.log(`${property}: ${object[property]}`)", "}"],
@@ -157,7 +137,6 @@ export const methodsObject = [
   },
   {
     method: "const { name, surname, ...rest } = object",
-    inputValue: "",
     inputType: null,
     contents: [],
     additionalContents: ["const { name, surname, ...objectWithoutNameAndSurname } = object;",
@@ -166,7 +145,6 @@ export const methodsObject = [
   },
   {
     method: "const { city = 'N/A' } = object",
-    inputValue: "",
     inputType: null,
     contents: [],
     additionalContents: ["const { city = 'N/A' } = object;",
@@ -175,7 +153,6 @@ export const methodsObject = [
   },
   {
     method: "const { surname: lastName } = object",
-    inputValue: "",
     inputType: null,
     contents: [],
     additionalContents: ["const { surname: lastName } = object;",
@@ -184,7 +161,6 @@ export const methodsObject = [
   },
   {
     method: "const { friend: { name: friendName } } = object",
-    inputValue: "",
     inputType: null,
     contents: [],
     additionalContents: ["const { friend: { name: friendName } } = object;",
@@ -193,7 +169,6 @@ export const methodsObject = [
   },
   {
     method: "function argument destructuring",
-    inputValue: "",
     inputType: null,
     contents: ["getObjectFullNameWithAge(object)"],
     additionalContents: ["const getObjectFullNameWithAge = ({ name, surname, age }) => `${name} ${surname} ${age}`;"],
@@ -201,14 +176,12 @@ export const methodsObject = [
   },
   {
     method: "cloning an object (shallow copy)",
-    inputValue: "",
     inputType: null,
     contents: ["{ ...object };"],
     spec: "spreadSyntax",
   },
   {
     method: "merging objects",
-    inputValue: "",
     inputType: null,
     contents: ["{ ...object, ...additionalObject };"],
     additionalContents: ["const additionalObject = {", "city: 'New York',", "hobby: 'swimming',", "}"],
@@ -216,21 +189,18 @@ export const methodsObject = [
   },
   {
     method: "adding properties to an object",
-    inputValue: "",
     inputType: null,
     contents: ["{ ...object, city: 'N/A' }"],
     spec: "immutability",
   },
   {
     method: "editing object properties",
-    inputValue: "",
     inputType: null,
     contents: ["{ ...object, name: 'Tom' }"],
     spec: "immutability",
   },
   {
     method: "removal of object's property",
-    inputValue: "",
     inputType: null,
     contents: ["rest"],
     additionalContents: ["const { age, ...rest } = object"],
