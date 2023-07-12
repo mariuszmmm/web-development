@@ -1,22 +1,25 @@
 export const methodsArrayRaw = [
   {
     method: "pop",
-    methodContents: [],
     inputType: null,
+    contents: [],
+    spec: "methods",
   },
   {
     method: "shift",
-    methodContents: [],
+    contents: [],
     inputType: null,
+    spec: "methods",
   },
   {
     method: "reverse",
-    methodContents: [],
+    contents: [],
     inputType: null,
+    spec: "methods",
   },
   {
     method: "[...array]",
-    methodContents: [
+    contents: [
       {
         button: null,
         content: "[...array]",
@@ -28,7 +31,7 @@ export const methodsArrayRaw = [
   },
   {
     method: "[...array, ...exampleArray]",
-    methodContents: [
+    contents: [
       {
         button: null,
         content: "[...array, ...exampleArray]",
@@ -40,7 +43,7 @@ export const methodsArrayRaw = [
   },
   {
     method: "[...array, element]",
-    methodContents: [
+    contents: [
       {
         button: "[...array, 100]",
         content: "[...array, 100]",
@@ -72,49 +75,49 @@ export const methodsArrayRaw = [
   },
   {
     method: "push",
-    methodContents: [],
+    contents: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
   },
   {
     method: "unshift",
-    methodContents: [],
+    contents: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
   },
   {
     method: "join",
-    methodContents: [],
+    contents: [],
     inputType: "text",
     inputPattern: /^$|^("[^"]*"|\-?\d+)$/,
   },
   {
     method: "slice",
-    methodContents: [],
+    contents: [],
     inputType: "text",
     inputPattern: /^\s*-?\d+(\s*,\s*-?\d+\s*)?$/,
   },
   {
     method: "includes",
-    methodContents: [],
+    contents: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
   },
   {
     method: "indexOf",
-    methodContents: [],
+    contents: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
   },
   {
     method: "lastIndexOf",
-    methodContents: [],
+    contents: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
   },
   {
     method: "map",
-    methodContents: [
+    contents: [
       {
         button: "(a=>a*?)",
         content: "a => a * ",
@@ -186,7 +189,7 @@ export const methodsArrayRaw = [
   },
   {
     method: "find",
-    methodContents: [
+    contents: [
       {
         button: "(a=>a.length>?)",
         content: "a => a.length > ",
@@ -243,7 +246,7 @@ export const methodsArrayRaw = [
   },
   {
     method: "findIndex",
-    methodContents: [
+    contents: [
       {
         button: "(a=>a.length>?)",
         content: "a => a.length > ",
@@ -300,7 +303,7 @@ export const methodsArrayRaw = [
   },
   {
     method: "filter",
-    methodContents: [
+    contents: [
       {
         button: "(a=>a.length>?)",
         content: "a => a.length > ",
@@ -357,7 +360,7 @@ export const methodsArrayRaw = [
   },
   {
     method: "some",
-    methodContents: [
+    contents: [
       {
         button: "(a=>a.length>?)",
         content: "a => a.length > ",
@@ -414,7 +417,7 @@ export const methodsArrayRaw = [
   },
   {
     method: "every",
-    methodContents: [
+    contents: [
       {
         button: "(a=>a.length>?)",
         content: "a => a.length > ",
@@ -471,7 +474,7 @@ export const methodsArrayRaw = [
   },
   {
     method: "reduce",
-    methodContents: [
+    contents: [
       {
         button: "((acc,cur)=>acc+cur,?)",
         content: "(acc, cur) => acc + cur ",
@@ -483,7 +486,7 @@ export const methodsArrayRaw = [
   },
   {
     method: "sort",
-    methodContents: [
+    contents: [
       {
         button: "( )",
         content: "",
