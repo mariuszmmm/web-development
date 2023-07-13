@@ -18,102 +18,53 @@ export const methodsArrayRaw = [
     spec: "methods",
   },
   {
-    method: "[...array]",
-    contents: [
-      {
-        button: null,
-        content: "[...array]",
-        destiny: "forAll",
-      },
-    ],
-    inputType: null,
-    spreadSyntax: true,
-  },
-  {
-    method: "[...array, ...exampleArray]",
-    contents: [
-      {
-        button: null,
-        content: "[...array, ...exampleArray]",
-        destiny: "forAll",
-      },
-    ],
-    inputType: null,
-    spreadSyntax: true,
-  },
-  {
-    method: "[...array, element]",
-    contents: [
-      {
-        button: "[...array, 100]",
-        content: "[...array, 100]",
-        destiny: "forAll",
-      },
-      {
-        button: "[...array, -20]",
-        content: "[...array, -20]",
-        destiny: "forAll",
-      },
-      {
-        button: "[...array, 'text']",
-        content: "[...array, 'text']",
-        destiny: "forAll",
-      },
-      {
-        button: "[...array, [1, 2, 3]]",
-        content: "[...array, [ 1, 2, 3]]",
-        destiny: "forAll",
-      },
-      {
-        button: "[...array, { city: 'N/A' }]",
-        content: "[...array, { city: 'N/A' }]",
-        destiny: "forAll",
-      },
-    ],
-    inputType: null,
-    spreadSyntax: true,
-  },
-  {
     method: "push",
     contents: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    spec: "methods",
   },
   {
     method: "unshift",
     contents: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    spec: "methods",
   },
   {
     method: "join",
     contents: [],
     inputType: "text",
     inputPattern: /^$|^("[^"]*"|\-?\d+)$/,
+    spec: "methods",
   },
   {
     method: "slice",
     contents: [],
     inputType: "text",
     inputPattern: /^\s*-?\d+(\s*,\s*-?\d+\s*)?$/,
+    spec: "methods",
   },
   {
     method: "includes",
     contents: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    spec: "methods",
   },
   {
     method: "indexOf",
     contents: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    spec: "methods",
   },
   {
     method: "lastIndexOf",
     contents: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    spec: "methods",
   },
   {
     method: "map",
@@ -186,6 +137,7 @@ export const methodsArrayRaw = [
     ],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    spec: "methods",
   },
   {
     method: "find",
@@ -243,6 +195,7 @@ export const methodsArrayRaw = [
     ],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    spec: "methods",
   },
   {
     method: "findIndex",
@@ -300,6 +253,7 @@ export const methodsArrayRaw = [
     ],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    spec: "methods",
   },
   {
     method: "filter",
@@ -357,6 +311,7 @@ export const methodsArrayRaw = [
     ],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    spec: "methods",
   },
   {
     method: "some",
@@ -414,6 +369,7 @@ export const methodsArrayRaw = [
     ],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    spec: "methods",
   },
   {
     method: "every",
@@ -471,6 +427,7 @@ export const methodsArrayRaw = [
     ],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
+    spec: "methods",
   },
   {
     method: "reduce",
@@ -483,6 +440,7 @@ export const methodsArrayRaw = [
     ],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined|)$/,
+    spec: "methods",
   },
   {
     method: "sort",
@@ -544,5 +502,70 @@ export const methodsArrayRaw = [
       },
     ],
     inputType: null,
+    spec: "methods",
+  },
+
+
+
+
+
+
+
+  
+  {
+    method: "[...array]",
+    contents: [
+      {
+        button: null,
+        content: "[...array]",
+        destiny: "forAll",
+      },
+    ],
+    inputType: null,
+    spec: "spreadSyntax",
+  },
+  {
+    method: "[...array, ...exampleArray]",
+    contents: [
+      {
+        button: null,
+        content: "[...array, ...exampleArray]",
+        destiny: "forAll",
+      },
+    ],
+    inputType: null,
+    spec: "spreadSyntax",
+  },
+  {
+    method: "[...array, element]",
+    contents: [
+      {
+        button: "[...array, 100]",
+        content: "[...array, 100]",
+        destiny: "forAll",
+      },
+      {
+        button: "[...array, -20]",
+        content: "[...array, -20]",
+        destiny: "forAll",
+      },
+      {
+        button: "[...array, 'text']",
+        content: "[...array, 'text']",
+        destiny: "forAll",
+      },
+      {
+        button: "[...array, [1, 2, 3]]",
+        content: "[...array, [ 1, 2, 3]]",
+        destiny: "forAll",
+      },
+      {
+        button: "[...array, { city: 'N/A' }]",
+        content: "[...array, { city: 'N/A' }]",
+        destiny: "forAll",
+      },
+    ],
+    inputType: null,
+    spec: "spreadSyntax",
   },
 ];
