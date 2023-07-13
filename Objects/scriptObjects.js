@@ -86,9 +86,9 @@ export const objects = () => {
         <div class="labelContents labelContents--objects js-labelContents">
           <p class="labelParagraph--objects strong">const object = {${Object.keys(object).length > 0 ? `
           </p>
-          <div class="labelParagraph labelParagraph--objects">
+          <p class="labelParagraph labelParagraph--objects">
             ${viewObject(object)}
-          </div>
+          </p>
           <p class="labelParagraph--objects strong">
           ` : ""}};</p>
           <p></p>
