@@ -7,7 +7,8 @@ export const arrays = () => {
   let dataArray = [];
   let output = "";
   let outputInfo = "The variable \"output\" values or information about the used functions will be displayed here.";
-  let rangeValue;
+  let arraySize = 10;
+  let editIndex = 0;
   let exampleArraySaved = [];
   let showExampleArray = false;
   let indexButton = 0;
@@ -20,7 +21,8 @@ export const arrays = () => {
       // inputValue: "",
       inputType: object.inputType,
       inputPattern: object.inputPattern,
-      methodContents: object.contents.map((obj, index) => {
+      contents: object.contents,
+      contentsWithButtons: object.contentsWithButtons.map((obj, index) => {
         indexButton++
         return {
           id: indexButton,
@@ -31,7 +33,7 @@ export const arrays = () => {
         }
       }),
 
-      // spreadSyntax: object.spreadSyntax,
+      //  spec: object.spreadSyntax,
       additionalContents: object.additionalContents,
       spec: object.spec,
     }
@@ -61,27 +63,89 @@ export const arrays = () => {
 
   const vievMethodContent = (dataArray) => {
     let element = "";
-    let method = dataArray[0].replaceAll("'", "\"");
-    let contentWithInputValue = dataArray[1];
-    let contentType = dataArray[2];
+    // let method = dataArray[0].replaceAll("'", "\"");
+    // let inputValue = dataArray[1];
+    // let spec = dataArray[2];
+    // let content = dataArray[3];
+    let [method, inputValue, spec, content, additionalContents] = dataArray;
+    content = content.map(elem => elem.replaceAll("'", "\""))
 
-    element += `
+    if (additionalContents) {
+      additionalContents.forEach((elem, index) => {
+        if (index === 0) {
+          element += `  
+            <p class="labelParagraph--arrays strong">${elem.replaceAll("'", "\"")}${(inputValue !== undefined) ? inputValue + ";" : ""}</p>
+            <p></p>
+            `;
+        };
+        if (index > 0) {
+          if (additionalContents.length === index + 1) {
+            element += `  
+            <p class="labelParagraph--arrays strong">${elem.replaceAll("'", "\"")};</p>
+            `;
+          } else {
+            element += `<p class="labelParagraph labelParagraph--arrays strong">${elem.replaceAll("'", "\"")}</p>`;
+          }
+        }
+      })
+    }
+
+    const viewContent = () => {
+      let element = "";
+
+      if (content.length > 1) {
+        element += `[`;
+        content.forEach((elem, index) => {
+          // if (index === 0) {
+          element += `  
+                <p class="labelParagraph labelParagraph--arrays strong">${elem.replaceAll("'", "\"")}</p>
+            `;
+          // };
+          // if (index > 0) {
+          //   if (content.length === index + 1) {
+          //     element += `  
+          //     <p class="labelParagraph strong">${elem.replaceAll("'", "\"")};</p>
+          //     `;
+          //   } else {
+          //     element += `<p class="labelParagraph strong">${elem.replaceAll("'", "\"")}</p>`;
+          //   }
+          // }
+        })
+        element += `];`;
+      } else {
+        if (spec === "methods") {
+          element += `array.${content}${(inputValue !== undefined) ? `(${inputValue});` : "();"}`;
+        } else {
+          element += `[${content}];`;
+        }
+      }
+      return element;
+    }
+
+    // ${spec === "methods" ? `array.${viewContent()}(` : `[${viewContent()}]`}
+
+    if (content.length > 0) {
+      element += `
       <span class="labelParagraph--arrays strong">
-        let output = ${contentType ? "" : "array."}${method}${contentType ? "" : "("}${(contentWithInputValue !== undefined) ?
-        (typeof (contentWithInputValue) === "string" ?
-          (contentWithInputValue)
-          :
-          ((typeof (contentWithInputValue) === "object") ?
-            contentWithInputValue.name
-            :
-            contentWithInputValue))
-        :
-        ""}${contentType ? "" : ")"};
-      </span>
-    `;
+        let output = ${viewContent()}
+    `};
 
     return element;
   };
+
+
+  // ${(inputValue !== undefined) ?
+  //   (typeof (inputValue) === "string" ?
+  //     (inputValue)
+  //     :
+  //     ((typeof (inputValue) === "object") ?
+  //       inputValue.name
+  //       :
+  //       inputValue))
+  //   :
+  //   ""}
+
+  // ${spec === "methods" ? ")" : ""}
 
   const changeArrowFunctionIfObject = (name) => {
     let content = "";
@@ -89,7 +153,7 @@ export const arrays = () => {
     if (name) {
       methodsArray.forEach((object) => {
         if (object.method === name) {
-          object.methodContents.forEach((obj) => {
+          object.contentsWithButtons.forEach((obj) => {
             if (obj.active === true) {
               if (obj.methodContent.includes("({")) {
                 content = "})";
@@ -149,13 +213,14 @@ export const arrays = () => {
           </p>
           <p class="labelParagraph--arrays strong">
           ` : ""}];</p>
-          <p></p>
+        <br>
           ${showExampleArray ? `<p class="labelParagraph--arrays strong">const exampleArray = [</p>
           <p class="labelParagraph labelParagraph--arrays">
             ${viewArray(exampleArraySaved.length > 0 ? exampleArraySaved : exampleArray)}
           </p>
           <p class="labelParagraph--arrays strong">];</p>
-          <p></p>` : ""}          
+          <br>
+          ` : ""}          
           ${(dataArray[0] && !dataArray.includes("warning")) ? vievMethodContent(dataArray) : ""}
         </div>
       `;
@@ -167,7 +232,7 @@ export const arrays = () => {
     const methodsSettings = () => {
       let methodsSetingsElement = "";
 
-      const methodsArraySettings = (name, objects, inputType, spreadSyntax) => {
+      const methodsArraySettings = (name, objects, inputType, spec) => {
         let element = "";
 
         const searchUnknown = (text, prop) => {
@@ -187,33 +252,40 @@ export const arrays = () => {
           <form class="form js-form">
             <div class="propertyElements propertyElements--arrays">
               <span class="methodName">
-                ${spreadSyntax ? "" : `array.${name}`}
+                ${spec === "methods" ? `array.${name}` : ""}
               </span>
-              <div class="methodName methodName--parameters">${spreadSyntax ? "&nbsp;" : "("}
+              <div class="methodName methodName--parameters">${spec === "methods" ? "(" : "&nbsp;"}
         `;
-
-        objects.forEach((obj) => {
-          element += `
+        if (spec === "methods") {
+          objects.forEach((obj) => {
+            element += `
             ${obj.active ?
-              (name === "reduce" ?
-                (obj.methodContent).trim() + ",&nbsp;" : obj.methodContent.replaceAll("'", "\""))
-              : ""}
+                (name === "reduce" ?
+                  (obj.methodContent).trim() + ",&nbsp;" : obj.methodContent.replaceAll("'", "\""))
+                : ""}
           `;
-        });
+          });
+        } else {
+          element += `
+            ${name}
+        `;
+        }
 
         element += `
-          ${inputType ? `
+          ${inputType === "text" ? `
             <input type="text" name="${name}" autocomplete="off" class="methodInput js-methodInput" />` : ""} 
         `;
 
-        objects.forEach((obj) => {
-          element += `
+        if (spec === "methods") {
+          objects.forEach((obj) => {
+            element += `
             ${obj.active ? changeArrowFunctionIfObject(name) : ""}
           `;
-        });
+          });
+        };
 
         element += `
-                ${spreadSyntax ? `&nbsp;` : ")&nbsp;"} 
+                ${spec === "methods" ? ")&nbsp;" : `&nbsp;`} 
               </div>
             </div>
             <div class="valueElements valueElements--arrays">
@@ -225,6 +297,36 @@ export const arrays = () => {
           <div class="valueElements valueElements--arrays">
        `;
 
+        element += `
+       ${inputType === "range" ? `
+
+
+             
+          <input id="editIndex" type="range" value=${editIndex} min="0" max="${arraySize - 1}" step="1" class="rangeEditIndex js-rangeEditIndex" />
+          <label for="editIndex" class="range--label">
+          edited index:
+          <span class="js-editIndex">
+          ${editIndex}
+          </span>
+        </label>
+  
+
+    ` : ""} 
+     `;
+
+  //    <label for="arraySize" class="methods--label">
+  //    Array size : 
+  //    <span class="js-arraySize">
+  //      ${arraySize ? arraySize : "10"}
+  //    </span>
+  //  </label>          
+  //  <div class="valueElements">              
+  //    <input id="arraySize" type="range" value="${arraySize ? arraySize : "10"}" min="1" max="30" step="1" class="rangeArraySize js-rangeArraySize" />
+  //  </div>
+
+
+
+        // if (spec === "methods") {
         objects.forEach((obj) => {
           if (
             (obj.destiny === "forAll") ||
@@ -235,19 +337,20 @@ export const arrays = () => {
           ) {
             obj.name ?
               element += `  
-              <button name="${name}" id="${obj.id}" class="button button--array ${obj.active ? "button--active" : ""} js-typeButton">
+              <button name="${name}" id="${obj.id}" class="button button--arrays ${obj.active ? "button--active" : ""} js-typeButton">
                 ${searchUnknown(obj.name)}
               </button>
           ` : "";
           } else {
             name ?
               element += `  
-              <button name="${name}" id="${obj.id}" disabled class="button button--array ${obj.active ? "button--active" : ""} js-typeButton">
+              <button name="${name}" id="${obj.id}" disabled class="button button--arrays ${obj.active ? "button--active" : ""} js-typeButton">
                 ${searchUnknown(obj.name, "disabled")}
               </button>
             ` : "";
           }
         });
+        // };
 
         element += `
           </div>
@@ -294,14 +397,14 @@ export const arrays = () => {
                 from output
               </button>            
             </div>            
-            <label for="inputRange" class="methods--label">
+            <label for="arraySize" class="methods--label">
               Array size : 
-              <span class="js-rangeValue">
-                ${rangeValue ? rangeValue : "10"}
+              <span class="js-arraySize">
+                ${arraySize}
               </span>
             </label>          
             <div class="valueElements">              
-              <input id="inputRange" type="range" value="${rangeValue ? rangeValue : "10"}" min="1" max="30" step="1" class="range js-range" />
+              <input id="arraySize" type="range" value="${arraySize}" min="1" max="30" step="1" class="rangeArraySize js-rangeArraySize" />
             </div>
             <span class="methods--label">
               Example array :
@@ -346,7 +449,7 @@ export const arrays = () => {
       methodsArray.forEach((object) => {
         if (object.spec === specActive) {
           methodsSetingsElement += `
-        ${methodsArraySettings(object.method, object.methodContents, object.inputType, object.spreadSyntax)}
+        ${methodsArraySettings(object.method, object.contentsWithButtons, object.inputType, object.spec)}
       `};
       });
 
@@ -394,8 +497,11 @@ export const arrays = () => {
     const formElements = document.querySelectorAll(".js-form");
     const randomElements = document.querySelectorAll(".js-random");
     const exampleElements = document.querySelectorAll(".js-example");
-    const rangeElement = document.querySelector(".js-range");
-    const rangeValueElement = document.querySelector(".js-rangeValue");
+    const rangeArraySizeElement = document.querySelector(".js-rangeArraySize");
+    const rangeEditIndexElement = document.querySelector(".js-rangeEditIndex");
+
+    const arraySizeElement = document.querySelector(".js-arraySize");
+    const editIndexElement = document.querySelector(".js-editIndex");
     const typeButtonElements = document.querySelectorAll(".js-typeButton");
     const selectElement = document.querySelector(".js-select")
     dataArray = [];
@@ -464,7 +570,7 @@ export const arrays = () => {
     const checkDependency_1 = (method) => {
       return (
         ["filter", "find", "findIndex", "some"].includes(method.method)
-        && method.methodContents[0].active
+        && method.contentsWithButtons[0].active
         && (array.includes(null) || array.includes(undefined))
       )
     };
@@ -491,7 +597,8 @@ export const arrays = () => {
                     displayWarningAboutArray();
                     return
                   } else {
-                    runMethod(button.id, enterNumberOrString(input.value), method.method, method.spreadSyntax);
+                    // let contents = (typeof (method.contents[0]) === "object" ? method.contents[0].methodContent : method.contents)
+                    runMethod(button.id, enterNumberOrString(input.value), method.method, method.spec, method.contents, method.contentsWithButtons, method.additionalContents);
                     methodActive = input.name;
                     render();
                     methodActive = "";
@@ -506,8 +613,13 @@ export const arrays = () => {
         });
 
         methodsArray.forEach((method) => {
-          if ((method.method === button.id) && !method.inputType) {
-            runMethod(button.id, null, method.method, method.spreadSyntax)
+
+          // console.log(method.method , button.id, !method.inputType )
+          if ((method.method === button.id) && [null, "range"].includes(method.inputType)) {
+            // console.log(method.inputType, !method.inputType  )
+            // console.log(method.method , button.id )
+            // let contents = (typeof (method.contents[0]) === "object" ? method.contents[0].methodContent : method.contents)
+            runMethod(button.id, null, method.method, method.spec, method.contents, method.contentsWithButtons, method.additionalContents)
             render();
           };
         });
@@ -516,9 +628,9 @@ export const arrays = () => {
 
     const resetTypeButton = (prop) => {
       methodsArray.forEach((object) => {
-        object.methodContents.forEach((obj) => {
+        object.contentsWithButtons.forEach((obj) => {
           if (obj.active && (obj.destiny !== prop)) {
-            object.methodContents.forEach((obj, i) => {
+            object.contentsWithButtons.forEach((obj, i) => {
               !i ? obj.active = true : obj.active = false
             });
           };
@@ -528,48 +640,48 @@ export const arrays = () => {
 
     const useRandomNaturalNumbers = () => {
       array = [];
-      while (array.length < rangeValueElement.textContent) {
+      while (array.length < arraySizeElement.textContent) {
         array.push(Math.floor(Math.random() * 100));
       };
 
-      outputInfo = `${rangeValueElement.textContent} random natural ${+rangeValueElement.textContent > 1 ? "numbers have" : "number has"} been saved in the array "array".`;
+      outputInfo = `${arraySizeElement.textContent} random natural ${+arraySizeElement.textContent > 1 ? "numbers have" : "number has"} been saved in the array "array".`;
       resetTypeButton("forNumbers");
       render();
     };
 
     const useRandomIntegers = () => {
       array = [];
-      while (array.length < rangeValueElement.textContent) {
+      while (array.length < arraySizeElement.textContent) {
         array.push(Math.floor(Math.random() * 200 - 100));
       };
-      outputInfo = `${rangeValueElement.textContent} random integer ${+rangeValueElement.textContent > 1 ? "numbers have" : "number has"} been saved in the array "array".`;
+      outputInfo = `${arraySizeElement.textContent} random integer ${+arraySizeElement.textContent > 1 ? "numbers have" : "number has"} been saved in the array "array".`;
       resetTypeButton("forNumbers");
       render();
     };
 
     const useRandomLetters = () => {
       array = [];
-      while (array.length < rangeValueElement.textContent) {
+      while (array.length < arraySizeElement.textContent) {
         array.push(letters.charAt(Math.floor(Math.random() * letters.length)));
       };
-      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "letters have" : "letter has"} been saved in the array "array".`;
+      outputInfo = `${arraySizeElement.textContent} random ${+arraySizeElement.textContent > 1 ? "letters have" : "letter has"} been saved in the array "array".`;
       resetTypeButton("forStrings");
       render();
     };
 
     const useRandomWords = () => {
       array = [];
-      while (array.length < rangeValueElement.textContent) {
+      while (array.length < arraySizeElement.textContent) {
         array.push(wordsArray[Math.floor(Math.random() * wordsArray.length)]);
       };
-      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "words have" : "word has"} been saved in the array "array".`;
+      outputInfo = `${arraySizeElement.textContent} random ${+arraySizeElement.textContent > 1 ? "words have" : "word has"} been saved in the array "array".`;
       resetTypeButton("forStrings");
       render();
     };
 
     const useRandomArrays = () => {
       array = [];
-      while (array.length < rangeValueElement.textContent) {
+      while (array.length < arraySizeElement.textContent) {
         const arrayItem = () => {
           let subArray = [];
           while (subArray.length < 3) {
@@ -580,37 +692,37 @@ export const arrays = () => {
         };
         array.push(arrayItem());
       };
-      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "arrays with 3 elements have" : "array with 3 elements has"} been saved in the array "array".`;
+      outputInfo = `${arraySizeElement.textContent} random ${+arraySizeElement.textContent > 1 ? "arrays with 3 elements have" : "array with 3 elements has"} been saved in the array "array".`;
       resetTypeButton("forArrays");
       render();
     };
 
     const useRandomObjects = () => {
       array = [];
-      while (array.length < rangeValueElement.textContent) {
+      while (array.length < arraySizeElement.textContent) {
         array.push(objectsArray[Math.floor(Math.random() * objectsArray.length)]);
       };
-      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "objects with 2 properties have" : "object with 2 properties has"} been saved in the array "array".`;
+      outputInfo = `${arraySizeElement.textContent} random ${+arraySizeElement.textContent > 1 ? "objects with 2 properties have" : "object with 2 properties has"} been saved in the array "array".`;
       resetTypeButton("forObjects");
       render();
     };
 
     const useRandomEmoticons = () => {
       array = [];
-      while (array.length < rangeValueElement.textContent) {
+      while (array.length < arraySizeElement.textContent) {
         array.push(emoticonsArray[Math.floor(Math.random() * emoticonsArray.length)]);
       };
-      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "emoticons have" : "emoticon has"} been saved in the array "array"`;
+      outputInfo = `${arraySizeElement.textContent} random ${+arraySizeElement.textContent > 1 ? "emoticons have" : "emoticon has"} been saved in the array "array"`;
       resetTypeButton("forAll");
       render();
     };
 
     const useRandomElements = () => {
       array = [];
-      while (array.length < rangeValueElement.textContent) {
+      while (array.length < arraySizeElement.textContent) {
         array.push(mixArray[Math.floor(Math.random() * mixArray.length)]);
       };
-      outputInfo = `${rangeValueElement.textContent} random ${+rangeValueElement.textContent > 1 ? "elements have" : "element has"} been saved in the array "array"`;
+      outputInfo = `${arraySizeElement.textContent} random ${+arraySizeElement.textContent > 1 ? "elements have" : "element has"} been saved in the array "array"`;
       resetTypeButton("forAll");
       render();
     };
@@ -711,13 +823,26 @@ export const arrays = () => {
       });
     });
 
-    rangeElement.addEventListener("input", ({ target }) => {
-      rangeValueElement.textContent = target.value;
-      rangeValue = rangeValueElement.textContent;
-      outputInfo = `The array size has been set to ${rangeValue} ${rangeValue === "1" ? "element" : "elements"}.
+    rangeArraySizeElement.addEventListener("input", ({ target }) => {
+      arraySizeElement.textContent = target.value;
+      arraySize = +arraySizeElement.textContent;
+      if(arraySize <= editIndex) {
+        editIndex = arraySize - 1
+      }
+      outputInfo = `The array size has been set to ${arraySize} ${arraySize === "1" ? "element" : "elements"}.
       <br>Choose a button and save the elements in the array.`
       renderOutput();
     });
+
+    if(rangeEditIndexElement) {
+    rangeEditIndexElement.addEventListener("input", ({ target }) => {
+      editIndexElement.textContent = target.value;
+      editIndex = +editIndexElement.textContent;
+      // outputInfo = `The array size has been set to ${arraySize} ${arraySize === "1" ? "element" : "elements"}.
+      // <br>Choose a button and save the elements in the array.`
+      // renderOutput();
+    });
+  };
 
     typeButtonElements.forEach((button) => {
       button.addEventListener("click", () => {
@@ -725,7 +850,7 @@ export const arrays = () => {
         methodsArray.forEach((object) => {
           if (object.method === button.name) {
             methodActive = button.name
-            object.methodContents.forEach((obj) => {
+            object.contentsWithButtons.forEach((obj) => {
               if (obj.id === +button.id) {
                 obj.active = true
                 activeButton = obj.name
@@ -734,11 +859,11 @@ export const arrays = () => {
               };
             });
 
-            object.spreadSyntax ?
+            object.spec === "spreadSyntax" ?
               outputInfo = `You have chosen the syntax ${activeButton.replaceAll("'", "\"").replaceAll(" ", "&nbsp;")}. <br>
             Now click the "Run" button.`
               :
-              outputInfo = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton}.` + `${object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}` : "."}${!object.inputType ? `<br>Now click the "run" button.` : ""}`;
+              outputInfo = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton.replaceAll("'", "\"")}.` + `${object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}` : "."}${!object.inputType ? `<br>Now click the "run" button.` : ""}`;
             render();
           };
         });
@@ -789,7 +914,7 @@ export const arrays = () => {
 
     methodsArray.forEach((object) => {
       if (object.method === method) {
-        object.methodContents.forEach((element) => {
+        object.contentsWithButtons.forEach((element) => {
           if (element.active) {
             content = element.methodContent +
               (inputValue ?
@@ -815,25 +940,47 @@ export const arrays = () => {
     };
   };
 
-  const enterContentForSpreadSyntax = (method, forMethodContent) => {
+  const enterContentForSpreadSyntax = (method, forDataArray) => {
     let content;
+    let contentForDataArray;
 
     methodsArray.forEach((object) => {
       if (object.method === method) {
-        object.methodContents.forEach((element) => {
+        object.contentsWithButtons.forEach((element) => {
           if (element.active) {
             content = (element.name).replace("[...array,", "").replace("]", "");
+            contentForDataArray = (element.name).replace("[", "").replace("]", "");
           };
         });
       };
     });
 
     if (content !== "") {
-      if (forMethodContent) {
-        return content
+      if (forDataArray) {
+        return contentForDataArray
       } else return Function(`return (${content})`)();
     };
   };
+
+  const enterContentForEditedElement = (method) => {
+    let content;
+
+
+    //    kontynuować od tego miejsca  !!
+    methodsArray.forEach((object) => {
+      if (object.method === method) {
+        object.contentsWithButtons.forEach((element) => {
+          if (element.active) {
+            content = (element.name);
+          };
+        });
+      };
+    });
+
+
+    return Function(`eval(${content})`)();
+    // eval(`(${content})`);
+  }
 
   const setAadditionalParameter = (inputValue) => {
     return (
@@ -844,94 +991,165 @@ export const arrays = () => {
     )
   };
 
-  const runMethod = (button, inputValue, method, spreadSyntax) => {
+  const runMethod = (button, inputValue, method, spec, content, contentsWithButtons, additionalContents) => {
     outputInfo = "";
+
+    console.log("test- główny")
+// nie działa prawidłodo editIndex jak zrobimy do dodamy lub
+// usunięmy element z tablicy
+// należy po tej czynności zaktualizować zmienna arraySize
     switch (button) {
       case "pop":
         output = array.pop();
-        dataArray = [method];
+        dataArray = [method, , spec, content];
         break;
       case "shift":
         output = array.shift();
-        dataArray = [method];
+        dataArray = [method, , spec, content];
         break;
       case "reverse":
         output = array.reverse();
-        dataArray = [method];
+        dataArray = [method, , spec, content];
         break;
-      case "[...array]":
-        output = [...array];
-        dataArray = [method, , spreadSyntax];
+      case "push":
+          /// nie działa na null , NaN -  wyświwtla [object]
+        output = array.push(readNumberOrString(inputValue));
+        dataArray = [method, inputValue, spec, content];
         break;
-      case "[...array, ...exampleArray]":
-        output = exampleArraySaved.length > 0 ? [...array, ...exampleArraySaved] : [...array, ...exampleArray];
-        dataArray = [method, , spreadSyntax];
-        break;
-      case "[...array, element]":
-        output = [...array, enterContentForSpreadSyntax(button)];
-        dataArray = [method.replace("element", (enterContentForSpreadSyntax(button, "forMethodContent"))), , spreadSyntax];
-        break;
-      case "sort":
-        dataArray = [method, (enterContentForArrowFunction(button, null)), "arrowFunction"];
-        output = array.sort(enterContentForArrowFunction(button, null));
+      case "unshift":
+          /// nie działa na null , NaN -  wyświwtla [object]
+        output = array.unshift(readNumberOrString(inputValue));
+        dataArray = [method, inputValue, spec, content];
         break;
       case "join":
         output = array.join(
           (enterNumberOrString(inputValue) === "") ? "," : (enterNumberOrString(inputValue) === `""`) ? "" : readNumberOrString(inputValue));
-        dataArray = [method, inputValue];
+          dataArray = [method, inputValue, spec, content];
+          break;
+      case "slice":
+        output = array.slice(...enterContentForTwoArguments(inputValue));
+        dataArray = [method, (enterContentForTwoArguments(inputValue).join(", ")), spec, content];
         break;
-      case "push":
-        output = array.push(readNumberOrString(inputValue));
-        dataArray = [method, inputValue];
+      case "includes":
+
+      /// nie działa na null , NaN -  wyświwtla [object]
+        output = array.includes(readNumberOrString(inputValue));
+        dataArray = [method, inputValue, spec, content];
         break;
-      case "unshift":
-        output = array.unshift(readNumberOrString(inputValue));
-        dataArray = [method, inputValue];
+      case "indexOf":
+          /// nie działa na null , NaN - nic nie wyświwtla 
+        output = array.indexOf(readNumberOrString(inputValue));
+        dataArray = [method, enterNumberOrString(inputValue), spec, content];
+        break;
+      case "lastIndexOf":
+          /// nie działa na null , NaN - nic nie wyświwtla 
+        output = array.lastIndexOf(readNumberOrString(inputValue));
+        dataArray = [method, enterNumberOrString(inputValue), spec, content];
         break;
       case "map":
         output = array.map(enterContentForArrowFunction(button, inputValue));
-        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), spec, content];
         break;
       case "find":
         output = array.find(enterContentForArrowFunction(button, inputValue));
-        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), spec, content];
         break;
       case "findIndex":
         output = array.findIndex(enterContentForArrowFunction(button, inputValue));
-        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
-        break;
-      case "reduce":
-        output = array.reduce(enterContentForArrowFunction(button), setAadditionalParameter(inputValue));
-        dataArray = [method, enterContentForArrowFunction(button) + (inputValue ? ", " + inputValue : ""), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), spec, content];
         break;
       case "filter":
         output = array.filter(enterContentForArrowFunction(button, inputValue));
-        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), spec, content];
         break;
       case "some":
         output = array.some(enterContentForArrowFunction(button, inputValue));
-        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), spec, content];
         break;
       case "every":
         output = array.every(enterContentForArrowFunction(button, inputValue));
-        dataArray = [method, enterContentForArrowFunction(button, inputValue), "arrowFunction"];
+        dataArray = [method, enterContentForArrowFunction(button, inputValue), spec, content];
         break;
-      case "includes":
-        output = array.includes(readNumberOrString(inputValue));
-        dataArray = [method, inputValue];
+      case "reduce":
+        output = array.reduce(enterContentForArrowFunction(button), setAadditionalParameter(inputValue));
+        dataArray = [method, enterContentForArrowFunction(button) + (inputValue ? ", " + inputValue : ""), spec, content];
         break;
-      case "slice":
-        output = array.slice(...enterContentForTwoArguments(inputValue));
-        dataArray = [method, (enterContentForTwoArguments(inputValue).join(", ")), "twoArguments"];
+      case "sort":
+        output = array.sort(enterContentForArrowFunction(button, null));
+        dataArray = [method, (enterContentForArrowFunction(button, null)), spec, content];
         break;
-      case "indexOf":
-        output = array.indexOf(readNumberOrString(inputValue));
-        dataArray = [method, enterNumberOrString(inputValue)];
+
+
+
+
+
+
+
+      case "cloning an array (shallow copy)":
+        output = [...array];
+        dataArray = [method, , spec, content];
         break;
-      case "lastIndexOf":
-        output = array.lastIndexOf(readNumberOrString(inputValue));
-        dataArray = [method, enterNumberOrString(inputValue)];
+      case "merging arrays":
+        output = exampleArraySaved.length > 0 ? [...array, ...exampleArraySaved] : [...array, ...exampleArray];
+        dataArray = [method, , spec, content];
         break;
+
+      case "adding an element to an array":
+        output = [...array, enterContentForSpreadSyntax(button)];
+        // dataArray = [method, , spec, enterContentForSpreadSyntax(button, "forDataArray")];
+        dataArray = [method, , spec, [enterContentForSpreadSyntax(button, "forDataArray")], additionalContents];
+
+        break;
+      case "editing an element of an array":
+        // output = [...array.slice(0, editIndex), { ...array[editIndex], age: 30 }, ...array.slice(editIndex + 1)]
+console.log("test")
+        output = [...array.slice(0, editIndex), { ...array[editIndex], age: 30 }, ...array.slice(editIndex + 1)]
+        // output = [...array, enterContentForSpreadSyntax(button)];
+        // dataArray = [method.replace("element", (enterContentForSpreadSyntax(button, "forMethodContent"))), , spec];
+        dataArray = [method, , spec, content, additionalContents];
+        break;
+      case "removing an element from an array":
+        output = [...array.slice(0, editIndex), ...array.slice(editIndex + 1)]
+        // output = [...array, enterContentForSpreadSyntax(button)];
+        // dataArray = [method.replace("element", (enterContentForSpreadSyntax(button, "forMethodContent"))), , spec];
+        dataArray = [method, , spec, content, additionalContents];
+        break;
+
+      case "for...of":
+        for (const element of array) { console.log(element) };
+        dataArray = [method, , spec, content, additionalContents];
+        outputInfo = "Check the console";
+        break;
+      case "forEach":
+        array.forEach((element, index) => { console.log(`${index + 1}. ${element}`) });
+        dataArray = [method, , spec, content, additionalContents];
+        outputInfo = "Check the console";
+        break;
+
+
+      case "const [element_1, element_2] = array":
+        const [element_1, element_2] = array;
+        console.log(element_1, element_2);
+        dataArray = [method, , spec, content, additionalContents];
+        outputInfo = "Check the console";
+        break;
+      case "const [element_1, ,element_3 = 0] = array":
+        const [, , element_3 = 0] = array;
+        console.log(element_3);
+        dataArray = [method, , spec, content, additionalContents];
+        outputInfo = "Check the console";
+        break;
+      case "const [element_1, element_2, ...rest] = array":
+        const [, , ...rest] = array;
+        console.log(rest);
+        dataArray = [method, , spec, content, additionalContents];
+        outputInfo = "Check the console";
+        break;
+
+
+
+
+
     };
   };
 
