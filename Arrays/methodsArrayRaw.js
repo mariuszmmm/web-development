@@ -2,73 +2,84 @@ export const methodsArrayRaw = [
   {
     method: "pop",
     inputType: null,
-    contents: [],
+    contents: ["pop"],
+    contentsWithButtons: [],
     spec: "methods",
   },
   {
     method: "shift",
-    contents: [],
+    contents: ["shift"],
+    contentsWithButtons: [],
     inputType: null,
     spec: "methods",
   },
   {
     method: "reverse",
-    contents: [],
+    contents: ["reverse"],
+    contentsWithButtons: [],
     inputType: null,
     spec: "methods",
   },
   {
     method: "push",
-    contents: [],
+    contents: ["push"],
+    contentsWithButtons: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
     spec: "methods",
   },
   {
     method: "unshift",
-    contents: [],
+    contents: ["unshift"],
+    contentsWithButtons: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
     spec: "methods",
   },
   {
     method: "join",
-    contents: [],
+    contents: ["join"],
+    contentsWithButtons: [],
     inputType: "text",
     inputPattern: /^$|^("[^"]*"|\-?\d+)$/,
     spec: "methods",
   },
   {
     method: "slice",
-    contents: [],
+    contents: ["slice"],
+    contentsWithButtons: [],
     inputType: "text",
     inputPattern: /^\s*-?\d+(\s*,\s*-?\d+\s*)?$/,
     spec: "methods",
   },
   {
     method: "includes",
-    contents: [],
+    contents: ["includes"],
+    contentsWithButtons: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
     spec: "methods",
   },
   {
     method: "indexOf",
-    contents: [],
+    contents: ["indexOf"],
+    contentsWithButtons: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
     spec: "methods",
   },
   {
     method: "lastIndexOf",
-    contents: [],
+    contents: ["lastIndexOf"],
+    contentsWithButtons: [],
     inputType: "text",
     inputPattern: /^("[^"]*"|\-?\d+|null|false|true|NaN|undefined)$/,
     spec: "methods",
   },
   {
     method: "map",
-    contents: [
+    contents: ["map"],
+    contentsWithButtons: [
       {
         button: "(a=>a*?)",
         content: "a => a * ",
@@ -141,7 +152,8 @@ export const methodsArrayRaw = [
   },
   {
     method: "find",
-    contents: [
+    contents: ["find"],
+    contentsWithButtons: [
       {
         button: "(a=>a.length>?)",
         content: "a => a.length > ",
@@ -199,7 +211,8 @@ export const methodsArrayRaw = [
   },
   {
     method: "findIndex",
-    contents: [
+    contents: ["findIndex"],
+    contentsWithButtons: [
       {
         button: "(a=>a.length>?)",
         content: "a => a.length > ",
@@ -257,7 +270,8 @@ export const methodsArrayRaw = [
   },
   {
     method: "filter",
-    contents: [
+    contents: ["filter"],
+    contentsWithButtons: [
       {
         button: "(a=>a.length>?)",
         content: "a => a.length > ",
@@ -315,7 +329,8 @@ export const methodsArrayRaw = [
   },
   {
     method: "some",
-    contents: [
+    contents: ["some"],
+    contentsWithButtons: [
       {
         button: "(a=>a.length>?)",
         content: "a => a.length > ",
@@ -373,7 +388,8 @@ export const methodsArrayRaw = [
   },
   {
     method: "every",
-    contents: [
+    contents: ["every"],
+    contentsWithButtons: [
       {
         button: "(a=>a.length>?)",
         content: "a => a.length > ",
@@ -431,7 +447,8 @@ export const methodsArrayRaw = [
   },
   {
     method: "reduce",
-    contents: [
+    contents: ["reduce"],
+    contentsWithButtons: [
       {
         button: "((acc,cur)=>acc+cur,?)",
         content: "(acc, cur) => acc + cur ",
@@ -444,7 +461,8 @@ export const methodsArrayRaw = [
   },
   {
     method: "sort",
-    contents: [
+    contents: ["sort"],
+    contentsWithButtons: [
       {
         button: "( )",
         content: "",
@@ -505,40 +523,27 @@ export const methodsArrayRaw = [
     spec: "methods",
   },
 
-
-
-
-
-
-
   
   {
-    method: "[...array]",
-    contents: [
-      {
-        button: null,
-        content: "[...array]",
-        destiny: "forAll",
-      },
-    ],
+    method: "cloning an array (shallow copy)",
+    contents: ["...array"],
+    contentsWithButtons: [],
     inputType: null,
     spec: "spreadSyntax",
   },
   {
-    method: "[...array, ...exampleArray]",
-    contents: [
-      {
-        button: null,
-        content: "[...array, ...exampleArray]",
-        destiny: "forAll",
-      },
-    ],
+    method: "merging arrays",
+    contents: ["...array, ...exampleArray"],
+    contentsWithButtons: [],
     inputType: null,
     spec: "spreadSyntax",
   },
+
+
   {
-    method: "[...array, element]",
-    contents: [
+    method: "adding an element to an array",
+    contents: [],
+    contentsWithButtons: [
       {
         button: "[...array, 100]",
         content: "[...array, 100]",
@@ -566,6 +571,69 @@ export const methodsArrayRaw = [
       },
     ],
     inputType: null,
-    spec: "spreadSyntax",
+    spec: "immutability",
+  },
+  {
+    method: "editing an element of an array",
+    inputType: "range",
+    contents: ["...array.slice(0,editIndex),",
+    "{ ...array[editIndex], age: 30 }",
+    "...array.slice(editIndex + 1)"],
+    contentsWithButtons: [],
+    additionalContents: [],
+    spec: "immutability",
+  },
+
+  //  stworzyć addEvent do removeIndex na wspólnym InptutType === "range"
+  {
+    method: "removing an element from an array",
+    inputType: null,
+    contents: ["...array.slice(0,removeIndex),", "...array.slice(removeIndex + 1)"],
+    contentsWithButtons: [],
+    additionalContents: [],
+    spec: "immutability",
+  },
+  {
+    method: "for...of",
+    inputType: null,
+    contents: [],
+    contentsWithButtons: [],
+    additionalContents: ["for (const element in array) {", "console.log(element)", "}"],
+    spec: "iteration",
+  },
+  {
+    method: "forEach",
+    inputType: null,
+    contents: [],
+    contentsWithButtons: [],
+    additionalContents: ["array.forEach((element, index) => {", "console.log(`${index  + 1}. ${element}`)", "})"],
+    spec: "iteration",
+  },
+  {
+    method: "const [element_1, element_2] = array",
+    inputType: null,
+    contents: [],
+    contentsWithButtons: [],
+    additionalContents: ["const [element_1, element_2] = array;",
+      "console.log(element_1, element_2)"],
+    spec: "destructuring",
+  },
+  {
+    method: "const [element_1, ,element_3 = 0] = array",
+    inputType: null,
+    contents: [],
+    contentsWithButtons: [],
+    additionalContents: ["const [element_1, ,element_3 = 0] = array;",
+      "console.log(element_3)"],
+    spec: "destructuring",
+  },
+  {
+    method: "const [element_1, element_2, ...rest] = array",
+    inputType: null,
+    contents: [],
+    contentsWithButtons: [],
+    additionalContents: ["const [element_1, element_2, ...rest] = array;",
+      "console.log(rest)"],
+    spec: "destructuring",
   },
 ];
