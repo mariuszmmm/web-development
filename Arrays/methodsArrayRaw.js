@@ -522,8 +522,6 @@ export const methodsArrayRaw = [
     inputType: null,
     spec: "methods",
   },
-
-  
   {
     method: "cloning an array (shallow copy)",
     contents: ["...array"],
@@ -538,8 +536,6 @@ export const methodsArrayRaw = [
     inputType: null,
     spec: "spreadSyntax",
   },
-
-
   {
     method: "adding an element to an array",
     contents: [],
@@ -577,14 +573,12 @@ export const methodsArrayRaw = [
     method: "editing an element of an array",
     inputType: "range",
     contents: ["...array.slice(0,editIndex),",
-    "{ ...array[editIndex], age: 30 }",
-    "...array.slice(editIndex + 1)"],
+      "{ ...array[editIndex], age: 30 },",
+      "...array.slice(editIndex + 1)"],
     contentsWithButtons: [],
     additionalContents: [],
     spec: "immutability",
   },
-
-  //  stworzyć addEvent do removeIndex na wspólnym InptutType === "range"
   {
     method: "removing an element from an array",
     inputType: "range",
