@@ -9,6 +9,7 @@ export const arrays = () => {
   let outputInfo = "The variable \"output\" values or information about the used functions will be displayed here.";
   let arraySize = 10;
   let editIndex = 0;
+  let removeIndex = 0;
   let exampleArraySaved = [];
   let showExampleArray = false;
   let indexButton = 0;
@@ -113,8 +114,9 @@ export const arrays = () => {
         })
         element += `];`;
       } else {
+        console.log(method, inputValue, spec, content, additionalContents)
         if (spec === "methods") {
-          element += `array.${content}${(inputValue !== undefined) ? `(${inputValue});` : "();"}`;
+          element += `array.${content}${(inputValue !== undefined) ? `(${typeof (inputValue) === "object" ? inputValue.name : inputValue});` : "();"}`;
         } else {
           element += `[${content}];`;
         }
@@ -298,31 +300,38 @@ export const arrays = () => {
        `;
 
         element += `
-       ${inputType === "range" ? `
-
-
-             
-          <input id="editIndex" type="range" value=${editIndex} min="0" max="${arraySize - 1}" step="1" class="rangeEditIndex js-rangeEditIndex" />
+       ${name === "editing an element of an array" ? `
+   
+          <input id="editIndex" type="range" value=${editIndex} min="0" max="${array.length - 1}" step="1" class="rangeIndex js-rangeEditIndex" />
           <label for="editIndex" class="range--label">
-          edited index:
+          index of edit:
           <span class="js-editIndex">
           ${editIndex}
           </span>
-        </label>
-  
-
+          </label>
     ` : ""} 
+
+    ${name === "removing an element from an array" ? `
+   
+    <input id="removeIndex" type="range" value=${removeIndex} min="0" max="${array.length - 1}" step="1" class="rangeIndex js-rangeRemoveIndex" />
+    <label for="removeIndex" class="range--label">
+    index of remove:
+    <span class="js-removeIndex">
+    ${removeIndex}
+    </span>
+    </label>
+` : ""} 
      `;
 
-  //    <label for="arraySize" class="methods--label">
-  //    Array size : 
-  //    <span class="js-arraySize">
-  //      ${arraySize ? arraySize : "10"}
-  //    </span>
-  //  </label>          
-  //  <div class="valueElements">              
-  //    <input id="arraySize" type="range" value="${arraySize ? arraySize : "10"}" min="1" max="30" step="1" class="rangeArraySize js-rangeArraySize" />
-  //  </div>
+        //    <label for="arraySize" class="methods--label">
+        //    Array size : 
+        //    <span class="js-arraySize">
+        //      ${arraySize ? arraySize : "10"}
+        //    </span>
+        //  </label>          
+        //  <div class="valueElements">              
+        //    <input id="arraySize" type="range" value="${arraySize ? arraySize : "10"}" min="1" max="30" step="1" class="rangeArraySize js-rangeArraySize" />
+        //  </div>
 
 
 
@@ -499,9 +508,11 @@ export const arrays = () => {
     const exampleElements = document.querySelectorAll(".js-example");
     const rangeArraySizeElement = document.querySelector(".js-rangeArraySize");
     const rangeEditIndexElement = document.querySelector(".js-rangeEditIndex");
+    const rangeRemoveIndexElement = document.querySelector(".js-rangeRemoveIndex");
 
     const arraySizeElement = document.querySelector(".js-arraySize");
     const editIndexElement = document.querySelector(".js-editIndex");
+    const removeIndexElement = document.querySelector(".js-removeIndex");
     const typeButtonElements = document.querySelectorAll(".js-typeButton");
     const selectElement = document.querySelector(".js-select")
     dataArray = [];
@@ -536,6 +547,9 @@ export const arrays = () => {
     selectElement.addEventListener("change", () => {
       outputInfo = "";
       output = "";
+
+      if ((editIndex > (array.length - 1)) && (array.length > 0)) editIndex = (array.length - 1);
+      if ((removeIndex > (array.length - 1)) && (array.length > 0)) removeIndex = (array.length - 1);
 
       specActive = selectElement.value
       render();
@@ -755,6 +769,17 @@ export const arrays = () => {
           useRandomElements();
           break;
       };
+
+      if ((editIndex > (array.length - 1)) && (array.length > 0)) {
+        editIndex = (array.length - 1)
+        render()
+      };
+      if ((removeIndex > (array.length - 1)) && (array.length > 0)) {
+        removeIndex = (array.length - 1)
+        render()
+      };
+      
+
     }));
 
     const changeShowExampleArray = () => {
@@ -826,23 +851,46 @@ export const arrays = () => {
     rangeArraySizeElement.addEventListener("input", ({ target }) => {
       arraySizeElement.textContent = target.value;
       arraySize = +arraySizeElement.textContent;
-      if(arraySize <= editIndex) {
-        editIndex = arraySize - 1
-      }
+      // if(arraySize <= editIndex) {
+      //   editIndex = arraySize - 1
+      // }
       outputInfo = `The array size has been set to ${arraySize} ${arraySize === "1" ? "element" : "elements"}.
       <br>Choose a button and save the elements in the array.`
       renderOutput();
     });
 
-    if(rangeEditIndexElement) {
-    rangeEditIndexElement.addEventListener("input", ({ target }) => {
-      editIndexElement.textContent = target.value;
-      editIndex = +editIndexElement.textContent;
-      // outputInfo = `The array size has been set to ${arraySize} ${arraySize === "1" ? "element" : "elements"}.
-      // <br>Choose a button and save the elements in the array.`
-      // renderOutput();
-    });
-  };
+    if (rangeEditIndexElement) {
+      rangeEditIndexElement.addEventListener("input", ({ target }) => {
+        editIndexElement.textContent = target.value;
+        editIndex = +editIndexElement.textContent;
+
+
+
+        outputInfo = `You have chosen to create a new array using the spread syntax. <br>
+        The new array will contain the elements of the "array", with the changed element at index ${editIndex}. <br>
+        Now click the "Run" button.`
+        renderOutput();
+        // outputInfo = `The array size has been set to ${arraySize} ${arraySize === "1" ? "element" : "elements"}.
+        // <br>Choose a button and save the elements in the array.`
+        // renderOutput();
+      });
+    };
+
+    if (rangeRemoveIndexElement) {
+      rangeRemoveIndexElement.addEventListener("input", ({ target }) => {
+        removeIndexElement.textContent = target.value;
+        removeIndex = +removeIndexElement.textContent;
+
+        
+        outputInfo = `You have chosen to create a new array using the spread syntax. <br>
+        The new array will contain the elements of the "array", with the element at index ${removeIndex} deleted. <br>
+        Now click the "Run" button.`
+        renderOutput();
+        // outputInfo = `The array size has been set to ${arraySize} ${arraySize === "1" ? "element" : "elements"}.
+        // <br>Choose a button and save the elements in the array.`
+        // renderOutput();
+      });
+    };
 
     typeButtonElements.forEach((button) => {
       button.addEventListener("click", () => {
@@ -859,8 +907,11 @@ export const arrays = () => {
               };
             });
 
-            object.spec === "spreadSyntax" ?
-              outputInfo = `You have chosen the syntax ${activeButton.replaceAll("'", "\"").replaceAll(" ", "&nbsp;")}. <br>
+
+
+            object.spec === "immutability" ?
+              outputInfo = `You have chosen to create a new array using the spread syntax. <br> 
+            The new array will contain all the elements of the "array", with the added element ${activeButton.replace("[...array,", "").replace("]", "").replaceAll("'", "\"")} at the end. <br>
             Now click the "Run" button.`
               :
               outputInfo = `You have chosen the "${object.method}" method` + `${activeButton !== "( )" ? ` with the function ${activeButton.replaceAll("'", "\"")}.` + `${object.inputType ? "<br>Complete the function by entering a value in the input field." + `${activeButton === "(a=>a%2===?)" ? "<br>It is recommended to enter 1 or 0." : ""}` : ""}` : "."}${!object.inputType ? `<br>Now click the "run" button.` : ""}`;
@@ -889,11 +940,12 @@ export const arrays = () => {
   };
 
   const enterNumberOrString = (inputValue) => {
+    console.log(!isNaN(inputValue))
     return (
       !["null", "true", "false", "undefined", "NaN"].includes(inputValue) ?
         (typeof (inputValue) === "string" ? (inputValue) : "") :
         (!isNaN(inputValue) ?
-          (inputValue !== "" ? (Number(inputValue)) : null) :
+          (inputValue !== "" ? (Number(inputValue)) : inputValue) :
           notString(inputValue)
         )
     );
@@ -995,9 +1047,9 @@ export const arrays = () => {
     outputInfo = "";
 
     console.log("test- główny")
-// nie działa prawidłodo editIndex jak zrobimy do dodamy lub
-// usunięmy element z tablicy
-// należy po tej czynności zaktualizować zmienna arraySize
+    // nie działa prawidłodo editIndex jak zrobimy do dodamy lub
+    // usunięmy element z tablicy
+    // należy po tej czynności zaktualizować zmienna arraySize
     switch (button) {
       case "pop":
         output = array.pop();
@@ -1012,39 +1064,39 @@ export const arrays = () => {
         dataArray = [method, , spec, content];
         break;
       case "push":
-          /// nie działa na null , NaN -  wyświwtla [object]
+        /// nie działa na null , NaN -  wyświwtla [object]
         output = array.push(readNumberOrString(inputValue));
         dataArray = [method, inputValue, spec, content];
         break;
       case "unshift":
-          /// nie działa na null , NaN -  wyświwtla [object]
+        /// nie działa na null , NaN -  wyświwtla [object]
         output = array.unshift(readNumberOrString(inputValue));
         dataArray = [method, inputValue, spec, content];
         break;
       case "join":
         output = array.join(
           (enterNumberOrString(inputValue) === "") ? "," : (enterNumberOrString(inputValue) === `""`) ? "" : readNumberOrString(inputValue));
-          dataArray = [method, inputValue, spec, content];
-          break;
+        dataArray = [method, inputValue, spec, content];
+        break;
       case "slice":
         output = array.slice(...enterContentForTwoArguments(inputValue));
         dataArray = [method, (enterContentForTwoArguments(inputValue).join(", ")), spec, content];
         break;
       case "includes":
 
-      /// nie działa na null , NaN -  wyświwtla [object]
+        /// nie działa na null , NaN -  wyświwtla [object]
         output = array.includes(readNumberOrString(inputValue));
         dataArray = [method, inputValue, spec, content];
         break;
       case "indexOf":
-          /// nie działa na null , NaN - nic nie wyświwtla 
+        /// nie działa na null , NaN - nic nie wyświwtla 
         output = array.indexOf(readNumberOrString(inputValue));
-        dataArray = [method, enterNumberOrString(inputValue), spec, content];
+        dataArray = [method, inputValue, spec, content];
         break;
       case "lastIndexOf":
-          /// nie działa na null , NaN - nic nie wyświwtla 
+        /// nie działa na null , NaN - nic nie wyświwtla 
         output = array.lastIndexOf(readNumberOrString(inputValue));
-        dataArray = [method, enterNumberOrString(inputValue), spec, content];
+        dataArray = [method, inputValue, spec, content];
         break;
       case "map":
         output = array.map(enterContentForArrowFunction(button, inputValue));
@@ -1102,14 +1154,14 @@ export const arrays = () => {
         break;
       case "editing an element of an array":
         // output = [...array.slice(0, editIndex), { ...array[editIndex], age: 30 }, ...array.slice(editIndex + 1)]
-console.log("test")
+        console.log("test")
         output = [...array.slice(0, editIndex), { ...array[editIndex], age: 30 }, ...array.slice(editIndex + 1)]
         // output = [...array, enterContentForSpreadSyntax(button)];
         // dataArray = [method.replace("element", (enterContentForSpreadSyntax(button, "forMethodContent"))), , spec];
         dataArray = [method, , spec, content, additionalContents];
         break;
       case "removing an element from an array":
-        output = [...array.slice(0, editIndex), ...array.slice(editIndex + 1)]
+        output = [...array.slice(0, removeIndex), ...array.slice(removeIndex + 1)]
         // output = [...array, enterContentForSpreadSyntax(button)];
         // dataArray = [method.replace("element", (enterContentForSpreadSyntax(button, "forMethodContent"))), , spec];
         dataArray = [method, , spec, content, additionalContents];
@@ -1151,6 +1203,7 @@ console.log("test")
 
 
     };
+    arraySize = array.length
   };
 
   const renderMainContainer = () => {
