@@ -587,7 +587,7 @@ export const methodsArrayRaw = [
   //  stworzyć addEvent do removeIndex na wspólnym InptutType === "range"
   {
     method: "removing an element from an array",
-    inputType: null,
+    inputType: "range",
     contents: ["...array.slice(0,removeIndex),", "...array.slice(removeIndex + 1)"],
     contentsWithButtons: [],
     additionalContents: [],

@@ -132,7 +132,7 @@ export const methodsObject = [
     method: "for...in",
     inputType: null,
     contents: [],
-    additionalContents: ["for ( const property in object) {", "console.log(`${property}: ${object[property]}`)", "}"],
+    additionalContents: ["for (const property in object) {", "console.log(`${property}: ${object[property]}`)", "}"],
     spec: "iteration",
   },
   {
