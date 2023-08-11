@@ -33,7 +33,7 @@ export const startPage = () => {
     labelElement.innerHTML = "";
     labelElement.innerHTML = `
       <div class="labelContents labelContents--clock">
-        TIME
+        Web Development
       </div>         
     `;
   };
