@@ -110,9 +110,8 @@ export const positioning = () => {
         <div class="outputLabelLeft">LEFT</div>
         <div class="outputLabelRight">RIGHT</div>
         <div class="outputLabelBottom">BOTTOM</div>
-
         <div class="outputParent js-outputParent">
-        <div class="outputLabelCenter">parent</div>
+          <div class="outputLabelCenter">parent</div>
           <div class="outputChild--withSize">child_1</div>
           <div class="outputChild--withSize childSelected js-child">child_2</div>
         </div>

@@ -325,11 +325,6 @@ select, option {
   align-items: center;
 }
 
-/* .range {
-
-  min-width: 250px;
-} */
-
 .propertyElements {
   display: flex;
   flex-wrap: nowrap;
@@ -347,7 +342,6 @@ select, option {
 }
 
 .valueElements--range {
-  /* width: 100%; */
   min-width: max-content;
   display: flex;
   flex-wrap: wrap;
@@ -579,7 +573,6 @@ select, option {
 
 .errorInput {
   background: pink;
-  ;
 }
 
 .form {

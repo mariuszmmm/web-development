@@ -5,7 +5,8 @@
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "lab set"
-    "out set";
+    "out set"
+  ;
 }
 
 @media (max-width: 1649px) {

@@ -1,39 +1,40 @@
 .mainContainer--startPage {
-   display: grid;
-   gap: 10px;
-   grid-template-columns: 1fr;
-   grid-template-rows: auto 1fr;
-   grid-template-areas:
-      "lab"
-      "out";
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "lab"
+    "out"
+  ;
 }
 
 .labelContents--clock {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   font-size: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 45px;
 }
 
 .outputContents--startPage {
-   height: 100%;
+  height: 100%;
 }
 
 .clockContents {
-   font-family: 'Chivo Mono', monospace;
-   padding: 30px;
-   margin: 50px;
-   width: 450px;
-   font-size: 75px;
-   border: 5px solid silver;
-   border-radius: 25px;
-   box-shadow: 0px 0px 10px 10px rgb(60, 206, 250);
-   text-align: center;
+  font-family: 'Chivo Mono', monospace;
+  padding: 30px;
+  margin: 50px;
+  width: 450px;
+  font-size: 75px;
+  border: 5px solid silver;
+  border-radius: 25px;
+  box-shadow: 0px 0px 10px 10px rgb(60, 206, 250);
+  text-align: center;
 }
 
 @media (max-width: 768px) {
-   .clockContents {
-      width: max-content;
-      font-size: 10vw;
-   }
+  .clockContents {
+    width: max-content;
+    font-size: 10vw;
+  }
 }
