@@ -7,7 +7,7 @@ The application is available at: https://mariuszmmm.github.io/web-development/
 
 <br>
 
-## Description:
+## Description
 The "Web Development" application presents the basic issues needed to create websites.
 It has been divided into modules:
 - Terminal
@@ -26,7 +26,7 @@ Modules contain a description of a given topic or present examples of applicatio
 
 <br>
 
-## Technologies:
+## Technologies
 - HTML
 - CSS 
 - CSS-Grid
