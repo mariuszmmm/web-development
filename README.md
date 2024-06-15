@@ -2,8 +2,8 @@
 
 ![Web-Development](/images/share.png)
 
-## Demo:
-→  https://mariuszmmm.github.io/web-development/  ←
+## Demo
+The application is available at: https://mariuszmmm.github.io/web-development/
 
 <br>
 
