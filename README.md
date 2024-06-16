@@ -3,33 +3,27 @@
 ![Web-Development](/images/share.png)
 
 ## Demo
-The application is available at: https://mariuszmmm.github.io/web-development/
-
-<br>
+The application is available at: [https://mariuszmmm.github.io/web-development/](https://mariuszmmm.github.io/web-development/)
 
 ## Description
-The "Web Development" application presents the basic issues needed to create websites.
-It has been divided into modules:
+The "Web Development" application covers the fundamental concepts required to create websites. It is organized into the following modules:
+
 - Terminal
 - HTML Tags
 - HTML Inputs
 - HTML Sections
 - CSS Positioning
-- CSS Flex
+- CSS Flexbox
 - CSS Grid
 - JS Numbers
 - JS Strings
 - JS Arrays
 - JS Objects
 
-Modules contain a description of a given topic or present examples of applications.
-
-<br>
-
 ## Technologies
 - HTML
-- CSS 
-- CSS-Grid
-- CSS-Flexbox
-- Media queries
-- JS/ES6+
+- CSS
+  - CSS Grid
+  - CSS Flexbox
+  - Media Queries
+- JavaScript (ES6+)
