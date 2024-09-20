@@ -2,15 +2,16 @@ html {
   box-sizing: border-box;
 }
 
-*, ::after, ::before {
+*,
+::after,
+::before {
   box-sizing: inherit;
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   background-color: grey;
   font-size: 15px;
-  user-select: none;
 }
 
 @media (max-width: 768px) {
@@ -214,7 +215,8 @@ body {
   cursor: pointer;
 }
 
-select, option {
+select,
+option {
   text-align: start;
   border: 1px solid black;
   border-radius: 5px;
@@ -353,14 +355,14 @@ select, option {
   position: absolute;
   top: 1%;
   left: 50%;
-  transform: translateX(-50%)
+  transform: translateX(-50%);
 }
 
 .outputLabelLeft {
   position: absolute;
   left: 1%;
   top: 50%;
-  transform: translateY(-50%)
+  transform: translateY(-50%);
 }
 
 .outputLabelRight {
@@ -374,7 +376,7 @@ select, option {
   position: absolute;
   bottom: 1%;
   left: 50%;
-  transform: translateX(-50%)
+  transform: translateX(-50%);
 }
 
 .outputLabelCenter {
